@@ -1,0 +1,14 @@
+import { createTheme } from '@mui/material';
+import { typography } from './typography/typography';
+import { palette } from './palette/palette';
+import { breakpoints } from './breakpoints/breakpoints';
+
+export const theme = createTheme({
+  breakpoints,
+  palette,
+  typography,
+  shape: {
+    borderRadius: 12,
+  },
+  spacing: 8,
+});
