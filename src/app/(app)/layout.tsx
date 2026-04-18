@@ -2,7 +2,7 @@ import { AppBar, Box, Drawer, Typography } from '@mui/material';
 import { styles } from './styles';
 import { APPBAR_HEIGHT, SIDEBAR_WIDTH } from '@/shared/config/layout';
 
-const App = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+const AppLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const sx = styles({
     sidebarWidth: SIDEBAR_WIDTH,
     appbarHeight: APPBAR_HEIGHT,
@@ -21,4 +21,4 @@ const App = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   );
 };
 
-export default App;
+export default AppLayout;

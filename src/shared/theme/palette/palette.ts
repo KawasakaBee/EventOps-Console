@@ -1,12 +1,16 @@
-export const statusColorMap = new Map([
-  ['draft', 'neutral'],
-  ['submitted', 'info'],
-  ['in_review', 'warning'],
-  ['changes_request', 'changed'],
-  ['accepted', 'success'],
-  ['regected', 'error'],
-  ['scheduled', 'accent'],
-]);
+declare module '@mui/material/styles' {
+  interface Palette {
+    neutral: Palette['primary'];
+    orange: Palette['primary'];
+    purple: Palette['primary'];
+  }
+
+  interface PaletteOptions {
+    neutral?: PaletteOptions['primary'];
+    orange?: PaletteOptions['primary'];
+    purple?: PaletteOptions['primary'];
+  }
+}
 
 export const palette = {
   background: {
@@ -14,24 +18,34 @@ export const palette = {
     paper: '#fff',
   },
   text: {
-    primary: '#0a0a0a',
-    secondary: '#f1eaea',
+    primary: '#0a0a0aff',
+    secondary: '#ffffff',
     disabled: '#68676862',
   },
   divider: '#000000',
   primary: {
-    main: '#21c2eb',
+    main: '#093b67',
+    light: '#1661a3',
   },
-  success: {
-    main: '#48db48',
-  },
-  warning: {
-    main: '#dfa63e',
-  },
-  error: {
-    main: '#e91818',
+  neutral: {
+    main: '#858185',
   },
   info: {
-    main: '#0e10b1',
+    main: '#00bcd4',
+  },
+  warning: {
+    main: '#ffc107',
+  },
+  orange: {
+    main: '#ff5722',
+  },
+  success: {
+    main: '#4caf50',
+  },
+  error: {
+    main: '#f44336',
+  },
+  purple: {
+    main: '#dd44eb',
   },
 };

@@ -8,7 +8,7 @@ export const theme = createTheme({
   palette,
   typography,
   shape: {
-    borderRadius: 12,
+    borderRadius: 8,
   },
   spacing: 8,
 });

@@ -7,7 +7,7 @@ interface IStyledProps {
   appbarHeight?: number;
 }
 
-type Styles = (opions?: IStyledProps) => {
+type Styles = (options?: IStyledProps) => {
   readonly [key in Key]: SxProps<Theme>;
 };
 
@@ -20,8 +20,8 @@ export const styles: Styles = (options: IStyledProps = {}) => {
       gridTemplateAreas: "'sidebar appbar' 'sidebar content'",
       gridTemplateColumns: `${sidebarWidth}px 1fr`,
       gridTemplateRows: `${appbarHeight}px 1fr`,
-      width: 1,
-      height: 1,
+      width: '100vw',
+      height: '100dvh',
       bgcolor: 'background.default',
     },
     appbar: {
