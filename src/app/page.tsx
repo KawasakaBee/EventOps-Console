@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 const Root = () => {
-  redirect('/dashboard');
+  redirect('/login');
   return <>Hello world!</>;
 };
 
