@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-export async function GET() {
+export async function POST() {
   const cookiesStore = await cookies();
   const role = cookiesStore.get('demo-role');
 

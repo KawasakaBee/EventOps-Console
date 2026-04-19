@@ -1,6 +1,5 @@
 export const routesByRole: Record<Role, Route[]> = {
   admin: [
-    '/login',
     '/dashboard',
     '/proposals',
     '/proposals/[id]',
@@ -11,7 +10,6 @@ export const routesByRole: Record<Role, Route[]> = {
     '/audit',
   ],
   manager: [
-    '/login',
     '/dashboard',
     '/proposals',
     '/proposals/[id]',
@@ -21,8 +19,8 @@ export const routesByRole: Record<Role, Route[]> = {
     '/settings',
     '/audit',
   ],
-  reviewer: ['/login', '/proposals', '/proposals/[id]'],
-  speaker: ['/login', '/proposals/[id]', '/submit', '/my-proposals'],
+  reviewer: ['/proposals', '/proposals/[id]'],
+  speaker: ['/proposals/[id]', '/submit', '/my-proposals'],
 };
 
 export const permissionsByRole: Record<Role, Permission[]> = {

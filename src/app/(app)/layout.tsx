@@ -1,47 +1,41 @@
-'use client';
-
-import { AppBar, Box, Drawer, Typography } from '@mui/material';
+import { Box, Drawer, Typography } from '@mui/material';
 import { styles } from './styles';
 import { APPBAR_HEIGHT, SIDEBAR_WIDTH } from '@/shared/config/layout';
-import Button from '@/shared/ui/Button/Button';
-import { useRouter } from 'next/navigation';
+import AppBar from '@/components/AppBar/AppBar';
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
-const AppLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  const router = useRouter();
-
+const AppLayout = async ({
+  children,
+}: Readonly<{ children: React.ReactNode }>) => {
   const sx = styles({
     sidebarWidth: SIDEBAR_WIDTH,
     appbarHeight: APPBAR_HEIGHT,
   });
 
-  const handleLogout = async () => {
+  const hasSession = async (): Promise<boolean> => {
     try {
-      const response = await fetch('/api/logout', { method: 'GET' });
+      const cookiesStore = await cookies();
+      const role = cookiesStore.get('demo-role')?.value;
 
-      if (response.ok) {
-        router.push('/login');
-      }
+      if (!role) return false;
+
+      return true;
     } catch (err) {
       console.error(err);
+      return false;
     }
   };
+
+  const user = await hasSession();
+  if (!user) redirect('/login');
 
   return (
     <Box sx={sx.page}>
       <Drawer variant="permanent" sx={sx.sidebar}>
         <Typography variant="h2">This is sidebar</Typography>
       </Drawer>
-      <AppBar sx={sx.appbar}>
-        <Button
-          mode="button"
-          variant="contained"
-          size="medium"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
-        <Typography variant="h2">This is AppBar</Typography>
-      </AppBar>
+      <AppBar sx={sx.appbar} />
       <Box sx={sx.content}>{children}</Box>
     </Box>
   );

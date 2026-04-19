@@ -27,20 +27,7 @@ const Login = () => {
 
       if (response.ok) {
         router.push(redirectByRole[role]);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleUser = async () => {
-    try {
-      const response = await fetch('/api/me', {
-        method: 'GET',
-      });
-
-      if (response.ok) {
-        console.log(await response.json());
+        router.refresh();
       }
     } catch (err) {
       console.error(err);
@@ -62,14 +49,6 @@ const Login = () => {
           </Button>
         ))}
       </Stack>
-      <Button
-        mode="button"
-        variant="contained"
-        size="medium"
-        onClick={handleUser}
-      >
-        Показать мои данные!
-      </Button>
     </>
   );
 };
