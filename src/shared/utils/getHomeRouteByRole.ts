@@ -1,3 +1,5 @@
+import { Role, Route } from '../types/primitives.types';
+
 const homePages = {
   admin: '/dashboard',
   manager: '/dashboard',

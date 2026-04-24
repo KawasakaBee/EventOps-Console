@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { manager, reviewer, speaker } from '@/shared/data';
+import { ErrorEnvelope } from '@/shared/types/api.types';
 
 export async function GET() {
   const cookiesStore = await cookies();
@@ -13,7 +14,7 @@ export async function GET() {
           code: 'ROLE_NOT_FOUND',
           message: 'Роль не найдена',
         },
-      },
+      } as ErrorEnvelope,
       { status: 401 },
     );
   }
@@ -33,7 +34,7 @@ export async function GET() {
         code: 'USER_NOT_FOUND',
         message: 'Пользователь не найден',
       },
-    },
+    } as ErrorEnvelope,
     { status: 401 },
   );
 }

@@ -1,9 +1,10 @@
+import { PostDemoLoginRequest } from '@/shared/api/contracts/auth.contract';
 import { NextResponse } from 'next/server';
 
 const allowedDemoRoles = ['manager', 'reviewer', 'speaker'] as const;
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  const body = (await request.json()) as PostDemoLoginRequest;
   const role = body.role;
 
   const isRoleAllowed = allowedDemoRoles.includes(role);

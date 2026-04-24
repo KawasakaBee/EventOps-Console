@@ -1,11 +1,85 @@
+'use client';
+
 import Button from '@/shared/ui/Button/Button';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import SectionCard from '@/shared/ui/SectionCard/SectionCard';
-import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { List, ListItem, Typography } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
+import { useEffect, useState } from 'react';
+import {
+  GetProposalsListResponse,
+  PostProposalRequest,
+  PostProposalResponse,
+} from '@/shared/api/contracts/proposal.contract';
+import { ProposalListItem } from '@/entities/proposal/model/types';
+import { Speaker } from '@/entities/speaker/model/types';
+import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+
+const testSpeaker: Speaker = {
+  id: '3',
+  userId: '3',
+  name: 'Third Speaker',
+  email: 'thirdSpeaker@gmail.com',
+  company: 'Third speaker company',
+  position: 'Third speaker positions',
+  bio: 'Third speaker bio',
+  contacts: 'Third speaker contacts',
+  pastTalks: 'Third speaker past talks',
+  avatarUrl: 'Third speaker avatarUrl',
+};
+
+const body: PostProposalRequest = {
+  title: 'Самая новая заявка',
+  abstract: 'Abstract',
+  format: 'talk',
+  duration: 30,
+  level: 'middle',
+  trackId: '4',
+  speakers: [testSpeaker],
+  tags: ['Backend', 'CSS'],
+  consent: true,
+  status: 'draft',
+};
 
 const Proposals = () => {
+  const [proposalsList, setProposalsList] = useState<ProposalListItem[]>([]);
+
+  const getProposalList = async () => {
+    try {
+      const response = await fetchWithDemoAuth('/api/proposals');
+
+      if (!response.ok) return;
+
+      const parsedResponse: GetProposalsListResponse = await response.json();
+      return parsedResponse.items;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const createProposal = async () => {
+    try {
+      const response = await fetchWithDemoAuth('/api/proposals', {
+        method: 'POST',
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) return;
+
+      const parsedResponse: PostProposalResponse = await response.json();
+      setProposalsList((prev) =>
+        prev ? [...prev, parsedResponse.proposal] : prev,
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const data = (await getProposalList()) as ProposalListItem[];
+      setProposalsList(data);
+    })();
+  }, []);
+
   return (
     <>
       <PageHeader
@@ -13,70 +87,32 @@ const Proposals = () => {
         subtitle="This is PageHeader Subtitle"
       >
         This is custom text inside PageHeader
+        <Button
+          mode="button"
+          variant="contained"
+          size="medium"
+          onClick={createProposal}
+        >
+          Создать новую заявку
+        </Button>
       </PageHeader>
-      <Typography variant="h1">This is Dashboard</Typography>
-      <Button
-        mode="button"
-        variant="contained"
-        size="medium"
-        isDisableElevation
-      >
-        This is button
-      </Button>
-      <Button
-        mode="iconButton"
-        variant="contained"
-        size="medium"
-        ariaLabel="Icon Button"
-        icon={HomeIcon}
-      />
-      <List>
-        <ListItem>
-          <SectionCard
-            title="This is Section Card Title"
-            actions={
-              <StatusChip
-                status="accepted"
-                shape="rounded"
+      <Typography variant="h1">This is Proposals List</Typography>
+      {proposalsList && proposalsList.length !== 0 && (
+        <List>
+          {proposalsList.map((proposal) => (
+            <ListItem key={proposal.id}>
+              <Button
+                mode="link"
+                variant="contained"
                 size="medium"
-                type="contained"
-              />
-            }
-          >
-            This is Section Card
-          </SectionCard>
-        </ListItem>
-        <ListItem>
-          <SectionCard
-            title="This is Section Card Title"
-            actions={
-              <StatusChip
-                status="draft"
-                shape="rounded"
-                size="medium"
-                type="outlined"
-              />
-            }
-          >
-            This is Section Card
-          </SectionCard>
-        </ListItem>
-        <ListItem>
-          <SectionCard
-            title="This is Section Card Title"
-            actions={
-              <StatusChip
-                status="rejected"
-                shape="square"
-                size="small"
-                type="contained"
-              />
-            }
-          >
-            This is Section Card
-          </SectionCard>
-        </ListItem>
-      </List>
+                to={`/proposals/${proposal.id}`}
+              >
+                Открыть заявку №{proposal.id}
+              </Button>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </>
   );
 };

@@ -45,11 +45,17 @@
     "eslint-config-next": "16.2.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.3.5",
+    "msw": "^2.13.4",
     "playwright": "^1.59.1",
     "prettier": "^3.8.2",
     "storybook": "^10.3.5",
     "typescript": "^5",
     "vite": "^8.0.8",
     "vitest": "^4.1.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

@@ -1,12 +1,13 @@
 'use client';
 
+import { PostDemoLoginRequest } from '@/shared/api/contracts/auth.contract';
 import Button from '@/shared/ui/Button/Button';
 import { Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 const roles = ['manager', 'reviewer', 'speaker'] as const;
 
-const redirectByRole: Record<DemoLoginRequest['role'], string> = {
+const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
   manager: '/dashboard',
   reviewer: '/proposals',
   speaker: '/my-proposals',
@@ -15,7 +16,7 @@ const redirectByRole: Record<DemoLoginRequest['role'], string> = {
 const Login = () => {
   const router = useRouter();
 
-  const handleDemoLogin = async (role: DemoLoginRequest['role']) => {
+  const handleDemoLogin = async (role: PostDemoLoginRequest['role']) => {
     try {
       const response = await fetch('/api/demo-login', {
         method: 'POST',

@@ -1,3 +1,6 @@
+import { User } from '@/entities/user/model/types';
+import { Permission, Role, Route } from '../types/primitives.types';
+
 export const routesByRole: Record<Role, Route[]> = {
   admin: [
     '/dashboard',
@@ -60,7 +63,7 @@ export const permissionsByRole: Record<Role, Permission[]> = {
   speaker: ['proposals:view', 'proposals:create', 'proposals:update'],
 };
 
-export const manager: CurrentUser = {
+export const manager: User = {
   id: '2',
   name: 'Manager',
   email: 'manager@gmail.com',
@@ -69,7 +72,7 @@ export const manager: CurrentUser = {
   permissions: permissionsByRole.manager,
 };
 
-export const reviewer: CurrentUser = {
+export const reviewer: User = {
   id: '3',
   name: 'Reviewer',
   email: 'reviewer@gmail.com',
@@ -78,7 +81,7 @@ export const reviewer: CurrentUser = {
   permissions: permissionsByRole.reviewer,
 };
 
-export const speaker: CurrentUser = {
+export const speaker: User = {
   id: '4',
   name: 'Speaker',
   email: 'speaker@gmail.com',

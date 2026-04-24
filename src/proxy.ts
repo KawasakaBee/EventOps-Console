@@ -2,15 +2,18 @@ import { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import canAccessRoute from './shared/utils/canAccessRoute';
 import getHomeRouteByRole from './shared/utils/getHomeRouteByRole';
+import { PostDemoLoginRequest } from './shared/api/contracts/auth.contract';
+import normalizeRoute from './shared/utils/normalizeRoute';
 
 const proxy = (request: NextRequest) => {
   const role = request.cookies.get('demo-role')?.value as
-    | DemoLoginRequest['role']
+    | PostDemoLoginRequest['role']
     | undefined;
-  const path = request.nextUrl.pathname as Route;
+  const path = request.nextUrl.pathname;
+  const route = normalizeRoute(path);
 
-  if (role) {
-    const access = canAccessRoute(role, path);
+  if (role && route) {
+    const access = canAccessRoute(role, route);
 
     if (!access) {
       const homePage = getHomeRouteByRole(role);
