@@ -7,7 +7,7 @@ export const initialUsers = [
     name: 'User 1',
     email: 'user1@gmail.com',
     role: 'admin',
-    eventIds: [],
+    eventIds: ['1'],
     permissions: permissionsByRole.admin,
   },
   {
@@ -15,7 +15,7 @@ export const initialUsers = [
     name: 'User 2',
     email: 'user2@gmail.com',
     role: 'manager',
-    eventIds: [],
+    eventIds: ['1'],
     permissions: permissionsByRole.manager,
   },
   {
@@ -23,7 +23,7 @@ export const initialUsers = [
     name: 'User 3',
     email: 'user3@gmail.com',
     role: 'reviewer',
-    eventIds: [],
+    eventIds: ['1'],
     permissions: permissionsByRole.reviewer,
   },
   {
@@ -31,7 +31,7 @@ export const initialUsers = [
     name: 'Speaker 4',
     email: 'speaker4@gmail.com',
     role: 'speaker',
-    eventIds: [],
+    eventIds: ['1'],
     permissions: permissionsByRole.speaker,
   },
   {
@@ -39,7 +39,7 @@ export const initialUsers = [
     name: 'Speaker 5',
     email: 'speaker5@gmail.com',
     role: 'speaker',
-    eventIds: [],
+    eventIds: ['1'],
     permissions: permissionsByRole.speaker,
   },
 ] satisfies User[];

@@ -5,6 +5,7 @@ export interface Event {
   title: string;
   description: string;
   place: string;
+  trackIds: ID[];
   startTime: ISODateString;
   createdAt: ISODateString;
 }

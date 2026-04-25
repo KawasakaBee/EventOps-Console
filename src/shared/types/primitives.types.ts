@@ -49,6 +49,7 @@ export const errorCodes = [
   'REVIEWER_NOT_FOUND',
   'HISTORY_NOT_FOUND',
   'FORBIDDEN',
+  'INVALID_QUERY',
 ] as const;
 
 export type ErrorCode = (typeof errorCodes)[number];

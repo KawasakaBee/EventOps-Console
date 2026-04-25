@@ -1,16 +1,19 @@
 import {
   Proposal,
   ProposalAction,
-  ProposalFormat,
-  ProposalLevel,
   ProposalListItem,
-  ProposalStatus,
 } from '@/entities/proposal/model/types';
 import { QueryParams } from '@/shared/types/api.types';
 import { reviewers } from '../db/reviews';
 import { ID, Role } from '@/shared/types/primitives.types';
 import { speakers } from '../db/speakers';
 import { proposals } from '../db/proposals';
+import {
+  isProposalFormat,
+  isProposalLevel,
+  isProposalStatus,
+} from '@/shared/utils/typeGuards';
+import { parsePositiveInt } from '@/shared/utils/parsePositiveInt';
 export const proposalsToProposalListItem = (
   proposals: Proposal[],
 ): ProposalListItem[] =>
@@ -28,17 +31,13 @@ export const parseProposalsListQuery = (requestUrl: string): QueryParams => {
   const url = new URL(requestUrl);
 
   return {
-    page: url.searchParams.get('page')
-      ? Number(url.searchParams.get('page'))
-      : 1,
-    pageSize: url.searchParams.get('pageSize')
-      ? Number(url.searchParams.get('pageSize'))
-      : 20,
+    page: parsePositiveInt(url.searchParams.get('page'), 1),
+    pageSize: parsePositiveInt(url.searchParams.get('pageSize'), 20),
     search: url.searchParams.get('search'),
-    status: url.searchParams.getAll('status') as ProposalStatus[],
+    status: url.searchParams.getAll('status').filter(isProposalStatus),
     trackId: url.searchParams.getAll('trackId'),
-    level: url.searchParams.getAll('level') as ProposalLevel[],
-    format: url.searchParams.getAll('format') as ProposalFormat[],
+    level: url.searchParams.getAll('level').filter(isProposalLevel),
+    format: url.searchParams.getAll('format').filter(isProposalFormat),
     reviewerId: url.searchParams.get('reviewerId'),
     sortBy: url.searchParams.get('sortBy'),
     sortOrder: url.searchParams.get('sortOrder') ?? 'asc',

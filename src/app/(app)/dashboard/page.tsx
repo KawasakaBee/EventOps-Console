@@ -6,6 +6,7 @@ import { User } from '@/entities/user/model/types';
 import { Dashboard as DashboardType } from '@/entities/dashboard/model/types';
 import { GetDashboardResponse } from '@/shared/api/contracts/dashboard.contract';
 import { getCurrentUser } from '@/shared/utils/getCurrentUser';
+import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -23,6 +24,8 @@ const Dashboard = () => {
 
     const getDashboard = async () => {
       try {
+        if (!user) return;
+
         const response = await fetch(
           `/api/events/${user?.eventIds[0]}/dashboard?range=30d`,
         );
@@ -54,18 +57,81 @@ const Dashboard = () => {
       <Typography variant="h1">This is Dashboard</Typography>
       {dashboard && (
         <Box>
-          <Typography variant="h5">
-            Total submission is {dashboard.kpis.totalSubmissions}
-          </Typography>
-          <Typography variant="h5">
-            Accepted is {dashboard.kpis.accepted}
-          </Typography>
-          <Typography variant="h5">
-            Rejected is {dashboard.kpis.rejected}
-          </Typography>
-          <Typography variant="h5">
-            In review is {dashboard.kpis.inReview}
-          </Typography>
+          {dashboard.kpis && (
+            <SectionCard title="KPIS" actions>
+              <Typography variant="h5">
+                Total submissions - {dashboard.kpis.totalSubmissions}
+              </Typography>
+              <Typography variant="h5">
+                Proposal in review - {dashboard.kpis.inReview}
+              </Typography>
+              <Typography variant="h5">
+                Accepted proposals - {dashboard.kpis.accepted}
+              </Typography>
+              <Typography variant="h5">
+                Rejected proposals - {dashboard.kpis.rejected}
+              </Typography>
+            </SectionCard>
+          )}
+          {dashboard.submissionsByStatus.length !== 0 && (
+            <SectionCard title="Submissions by status" actions>
+              {dashboard.submissionsByStatus.map((proposal) => (
+                <Box key={proposal.status}>
+                  <Typography variant="h5">
+                    Proposal status: {proposal.status}
+                  </Typography>
+                  <Typography variant="h5">Count - {proposal.count}</Typography>
+                </Box>
+              ))}
+            </SectionCard>
+          )}
+
+          {dashboard.byTrack.length !== 0 && (
+            <SectionCard title="Proposals by trask ID" actions>
+              {dashboard.byTrack.map((proposal) => (
+                <Box key={proposal.trackId}>
+                  <Typography variant="h5">
+                    Proposal track ID: {proposal.trackId}
+                  </Typography>
+                  <Typography variant="h5">Count - {proposal.count}</Typography>
+                </Box>
+              ))}
+            </SectionCard>
+          )}
+
+          {dashboard.recentSubmissions.length !== 0 && (
+            <SectionCard title="Recent submissions" actions>
+              {dashboard.recentSubmissions.map((proposal) => (
+                <Box key={proposal.trackId}>
+                  <Typography variant="h5">
+                    Proposal: {proposal.title}
+                  </Typography>
+                  <Typography variant="h5">
+                    Proposal: {proposal.format}
+                  </Typography>
+                  <Typography variant="h5">
+                    Proposal: {proposal.level}
+                  </Typography>
+                  <Typography variant="h5">
+                    Proposal: {proposal.status}
+                  </Typography>
+                </Box>
+              ))}
+            </SectionCard>
+          )}
+          {dashboard.attentionItems.length !== 0 && (
+            <SectionCard title="Attention block" actions>
+              {dashboard.attentionItems.map((item) => (
+                <Box key={item.id}>
+                  <Typography variant="h5">
+                    Attention theme: {item.type}
+                  </Typography>
+                  <Typography variant="h5">Attention: {item.title}</Typography>
+                  <Typography variant="h5">Count - {item.count}</Typography>
+                </Box>
+              ))}
+            </SectionCard>
+          )}
         </Box>
       )}
     </>

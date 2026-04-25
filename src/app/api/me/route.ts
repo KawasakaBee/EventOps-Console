@@ -14,8 +14,8 @@ export async function GET() {
           code: 'ROLE_NOT_FOUND',
           message: 'Роль не найдена',
         },
-      } as ErrorEnvelope,
-      { status: 401 },
+      } satisfies ErrorEnvelope,
+      { status: 404 },
     );
   }
 
@@ -34,7 +34,7 @@ export async function GET() {
         code: 'USER_NOT_FOUND',
         message: 'Пользователь не найден',
       },
-    } as ErrorEnvelope,
-    { status: 401 },
+    } satisfies ErrorEnvelope,
+    { status: 404 },
   );
 }

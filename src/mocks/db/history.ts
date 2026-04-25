@@ -63,9 +63,9 @@ export const appendProposalHistory = (
 
   const historyItem = createHistory(proposalId, userId, action);
 
-  const changedValues = Object.keys(patch) as (keyof Partial<Proposal>)[];
+  const changedKeys = Object.keys(patch) as (keyof Proposal)[];
 
-  let resultValues: ProposalFieldChange[] = changedValues.map((value) => ({
+  let resultValues: ProposalFieldChange[] = changedKeys.map((value) => ({
     field: value,
     previousValue: proposal[value],
     nextValue: patch[value],

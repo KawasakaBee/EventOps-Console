@@ -11,7 +11,6 @@ import {
 import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
 import Button from '@/shared/ui/Button/Button';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import { getCurrentUser } from '@/shared/utils/getCurrentUser';
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -64,12 +63,9 @@ const ProposalItem = () => {
 
   const assignReviewer = async () => {
     try {
-      const user = await getCurrentUser();
-      if (!user) return;
-
       const response = await fetchWithDemoAuth(
         `/api/proposals/${id}/assign-reviewer`,
-        { method: 'POST', body: JSON.stringify({ reviewerId: user.id }) },
+        { method: 'POST', body: JSON.stringify({ reviewerId: '3' }) },
       );
 
       if (!response.ok) return;

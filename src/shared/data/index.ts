@@ -68,7 +68,7 @@ export const manager: User = {
   name: 'Manager',
   email: 'manager@gmail.com',
   role: 'manager',
-  eventIds: [],
+  eventIds: ['1'],
   permissions: permissionsByRole.manager,
 };
 
@@ -77,7 +77,7 @@ export const reviewer: User = {
   name: 'Reviewer',
   email: 'reviewer@gmail.com',
   role: 'reviewer',
-  eventIds: [],
+  eventIds: ['1'],
   permissions: permissionsByRole.reviewer,
 };
 
@@ -86,6 +86,6 @@ export const speaker: User = {
   name: 'Speaker',
   email: 'speaker@gmail.com',
   role: 'speaker',
-  eventIds: [],
+  eventIds: ['1'],
   permissions: permissionsByRole.speaker,
 };

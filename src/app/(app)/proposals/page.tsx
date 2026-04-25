@@ -75,8 +75,8 @@ const Proposals = () => {
 
   useEffect(() => {
     (async () => {
-      const data = (await getProposalList()) as ProposalListItem[];
-      setProposalsList(data);
+      const data: ProposalListItem[] | undefined = await getProposalList();
+      if (data) setProposalsList(data);
     })();
   }, []);
 

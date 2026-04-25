@@ -31,7 +31,6 @@ import {
   getSpeakersById,
 } from '../utils/filters';
 import { ErrorEnvelope } from '@/shared/types/api.types';
-import { ID, Role } from '@/shared/types/primitives.types';
 import { appendProposalHistory } from '../db/history';
 import { assignReviewer, createReview, reviewers } from '../db/reviews';
 import { createComment } from '../db/comments';
@@ -52,6 +51,7 @@ import {
   getProposalsListAccess,
   isManagerLike,
 } from '../utils/proposal-access';
+import { isId, isRole } from '@/shared/utils/typeGuards';
 
 const userError = HttpResponse.json(
   {
@@ -59,7 +59,7 @@ const userError = HttpResponse.json(
       code: 'USER_NOT_FOUND',
       message: 'Пользователь не найден',
     },
-  } as ErrorEnvelope,
+  } satisfies ErrorEnvelope,
   { status: 404 },
 );
 
@@ -69,7 +69,7 @@ const proposalError = HttpResponse.json(
       code: 'PROPOSAL_NOT_FOUND',
       message: 'Заявка не найдена',
     },
-  } as ErrorEnvelope,
+  } satisfies ErrorEnvelope,
   { status: 404 },
 );
 
@@ -79,7 +79,7 @@ const forbiddenError = HttpResponse.json(
       code: 'FORBIDDEN',
       message: 'Доступ запрещён',
     },
-  } as ErrorEnvelope,
+  } satisfies ErrorEnvelope,
   { status: 403 },
 );
 
@@ -89,7 +89,7 @@ const reviewerError = HttpResponse.json(
       code: 'REVIEWER_NOT_FOUND',
       message: 'Ревьюер не найден',
     },
-  } as ErrorEnvelope,
+  } satisfies ErrorEnvelope,
   { status: 404 },
 );
 
@@ -100,10 +100,10 @@ export const proposalHandlers = [
 
     let result = proposals;
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
 
     const queryParams = parseProposalsListQuery(request.url);
-    const access = getProposalsListAccess(userRole as Role, queryParams);
+    const access = getProposalsListAccess(userRole, queryParams);
 
     if (access === 'forbidden') return forbiddenError;
 
@@ -131,18 +131,15 @@ export const proposalHandlers = [
   http.get('/api/proposals/:id', ({ request, params }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id as ID;
+    const id = params.id;
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
+    if (!isId(id)) return proposalError;
 
     const proposal = getProposalById(id);
     if (!proposal) return proposalError;
 
-    const isUserHaveAccess = canReadProposal(
-      proposal,
-      userId,
-      userRole as Role,
-    );
+    const isUserHaveAccess = canReadProposal(proposal, userId, userRole);
 
     if (!isUserHaveAccess) return forbiddenError;
 
@@ -152,7 +149,7 @@ export const proposalHandlers = [
     const history = getHistoryByProposalId(proposal.id);
 
     const availableActions = getAvailableProposalActions(
-      userRole as Role,
+      userRole,
       proposal,
       userId,
     );
@@ -173,11 +170,11 @@ export const proposalHandlers = [
   http.post('/api/proposals', async ({ request }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const body = (await request.json()) as PostProposalRequest;
+    const body = (await request.json()) as PostProposalRequest; //Провалидировать
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
 
-    const isUserCanCreateProposal = canCreateProposal(userRole as Role);
+    const isUserCanCreateProposal = canCreateProposal(userRole);
     if (!isUserCanCreateProposal) return forbiddenError;
 
     const response: PostProposalResponse = {
@@ -190,16 +187,13 @@ export const proposalHandlers = [
   http.patch('/api/proposals/:id', async ({ request, params }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id as ID;
-    const body = (await request.json()) as PatchProposalRequest;
+    const id = params.id;
+    const body = (await request.json()) as PatchProposalRequest; //Провалидировать
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
+    if (!isId(id)) return proposalError;
 
-    const isUserCanChangeProposal = canChangeProposal(
-      userRole as Role,
-      id,
-      userId,
-    );
+    const isUserCanChangeProposal = canChangeProposal(userRole, id, userId);
     if (!isUserCanChangeProposal) return forbiddenError;
 
     const history = appendProposalHistory(id, userId, body, 'updated');
@@ -218,13 +212,14 @@ export const proposalHandlers = [
   http.patch('/api/proposals/:id/status', async ({ request, params }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id as ID;
+    const id = params.id;
     const { status, reason } =
-      (await request.json()) as PatchProposalStatusRequest;
+      (await request.json()) as PatchProposalStatusRequest; //Провалидировать
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
+    if (!isId(id)) return proposalError;
 
-    const canUserChangeProposalStatus = isManagerLike(userRole as Role);
+    const canUserChangeProposalStatus = isManagerLike(userRole);
     if (!canUserChangeProposalStatus) return forbiddenError;
 
     const history = appendProposalHistory(
@@ -252,11 +247,12 @@ export const proposalHandlers = [
     async ({ request, params }) => {
       const userId = request.headers.get('x-demo-user-id');
       const userRole = request.headers.get('x-demo-user-role');
-      const id = params.id as ID;
+      const id = params.id;
       const { reviewerId } =
-        (await request.json()) as PostAssignReviewerRequest;
+        (await request.json()) as PostAssignReviewerRequest; //Провалидировать
 
-      if (!userId || !userRole) return userError;
+      if (!userId || !isRole(userRole)) return userError;
+      if (!isId(id)) return proposalError;
 
       const reviewer = reviewers.find((item) => item.id === reviewerId);
       if (!reviewer) return reviewerError;
@@ -264,7 +260,7 @@ export const proposalHandlers = [
       const proposal = proposals.find((proposal) => proposal.id === id);
       if (!proposal) return proposalError;
 
-      const canUserChangeProposalStatus = isManagerLike(userRole as Role);
+      const canUserChangeProposalStatus = isManagerLike(userRole);
       if (!canUserChangeProposalStatus) return forbiddenError;
 
       assignReviewer(id, reviewerId);
@@ -281,12 +277,13 @@ export const proposalHandlers = [
   http.post('/api/proposals/:id/reviews', async ({ request, params }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id as ID;
-    const body = (await request.json()) as PostCreateReviewRequest;
+    const id = params.id;
+    const body = (await request.json()) as PostCreateReviewRequest; //Провалидировать
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
+    if (!isId(id)) return proposalError;
 
-    const isUserCanCreateReview = canCreateReview(userRole as Role, id, userId);
+    const isUserCanCreateReview = canCreateReview(userRole, id, userId);
     if (!isUserCanCreateReview) return forbiddenError;
 
     const review = createReview(id, userId, body);
@@ -303,19 +300,16 @@ export const proposalHandlers = [
   http.post('/api/proposals/:id/comments', async ({ request, params }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id as ID;
-    const { message } = (await request.json()) as PostCreateCommentRequest;
+    const id = params.id;
+    const { message } = (await request.json()) as PostCreateCommentRequest; //Провалидировать
 
-    if (!userId || !userRole) return userError;
+    if (!userId || !isRole(userRole)) return userError;
+    if (!isId(id)) return proposalError;
 
-    const isUserCanCreateComment = canUserCreateComment(
-      userRole as Role,
-      id,
-      userId,
-    );
+    const isUserCanCreateComment = canUserCreateComment(userRole, id, userId);
     if (!isUserCanCreateComment) return forbiddenError;
 
-    const comment = createComment(id, userId, userRole as Role, message);
+    const comment = createComment(id, userId, userRole, message);
 
     const response: PostCreateCommentResponse = {
       comment,
