@@ -26,7 +26,7 @@ import {
 } from '@/shared/utils/typeGuards';
 import { ID } from '@/shared/types/primitives.types';
 import {
-  formatDicrionary,
+  formatDictionary,
   levelDictionary,
   statusDictionary,
 } from '@/shared/data';
@@ -60,19 +60,19 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
 
   const filterArrayQueryParams = <T extends string>(
     value: T[] | string,
-    qeuryType: string,
+    queryType: string,
     queryTypeCheck: (value: unknown) => value is T,
   ) => {
     const params = new URLSearchParams(searchParams.toString());
 
     if (Array.isArray(value)) {
-      params.delete(qeuryType);
+      params.delete(queryType);
       value.forEach((value) => {
-        params.append(qeuryType, value);
+        params.append(queryType, value);
       });
     } else {
       if (!queryTypeCheck(value)) return;
-      params.set(qeuryType, value);
+      params.set(queryType, value);
     }
     params.set('page', '1');
 
@@ -113,7 +113,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
   };
 
   return (
-    <SectionCard title="Фильтры">
+    <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
       <TextField sx={sx.filterSearchInput} />
       <Stack direction="row" sx={sx.filtersWrapper}>
         <FormControl disabled={isLoading} sx={sx.filterInput}>
@@ -178,7 +178,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
           >
             {proposalFormats.map((format) => (
               <MenuItem key={`Select-option-${format}`} value={format}>
-                {formatDicrionary.get(format)}
+                {formatDictionary.get(format)}
               </MenuItem>
             ))}
           </Select>

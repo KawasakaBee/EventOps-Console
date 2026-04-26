@@ -14,7 +14,7 @@ const StatusChip = ({ status, shape, size, type }: IStatusChipProps) => {
   return (
     <Box sx={sx.statusChipWrapper} data-testid="status-chip">
       <SelectedIcon sx={sx.statusChipIcon} />
-      <Typography sx={sx.statusChipLabel} variant="h6">
+      <Typography sx={sx.statusChipLabel} variant="h3">
         {label}
       </Typography>
     </Box>

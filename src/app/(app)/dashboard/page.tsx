@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { User } from '@/entities/user/model/types';
 import { Dashboard as DashboardType } from '@/entities/dashboard/model/types';
 import { GetDashboardResponse } from '@/shared/api/contracts/dashboard.contract';
-import { getCurrentUser } from '@/shared/utils/getCurrentUser';
+import getCurrentUser from '@/shared/utils/getCurrentUser';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 
 const Dashboard = () => {

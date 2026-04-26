@@ -84,9 +84,6 @@ interface IBaseProps {
   size: ButtonSize;
   isDisableElevation?: boolean;
   sx?: SxProps<Theme>;
-  onClick?: (
-    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>,
-  ) => void;
 }
 
 export interface IButtonProps extends IBaseProps {
@@ -97,6 +94,7 @@ export interface IButtonProps extends IBaseProps {
   isDisabled?: boolean;
   startIcon?: SvgIconComponent | null;
   endIcon?: SvgIconComponent | null;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface ILinkButtonProps extends IBaseProps {
@@ -106,6 +104,7 @@ export interface ILinkButtonProps extends IBaseProps {
   isRelativeLink?: boolean;
   isNewTab?: boolean;
   ariaLabel?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 export interface IIconButtonProps extends IBaseProps {
@@ -113,6 +112,7 @@ export interface IIconButtonProps extends IBaseProps {
   ariaLabel: string;
   icon: SvgIconComponent;
   isDisabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export type IButton = IButtonProps | ILinkButtonProps | IIconButtonProps;

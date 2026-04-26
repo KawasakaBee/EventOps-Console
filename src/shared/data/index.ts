@@ -1,8 +1,14 @@
 import { User } from '@/entities/user/model/types';
-import { Permission, Role, Route } from '../types/primitives.types';
+import {
+  Permission,
+  ProposalListRowActions,
+  Role,
+  Route,
+} from '../types/primitives.types';
 import {
   ProposalFormat,
   ProposalLevel,
+  ProposalListItem,
   ProposalStatus,
 } from '@/entities/proposal/model/types';
 
@@ -68,6 +74,29 @@ export const permissionsByRole: Record<Role, Permission[]> = {
   speaker: ['proposals:view', 'proposals:create', 'proposals:update'],
 };
 
+export const proposalListRowActionsByRole: Record<
+  Role,
+  ProposalListRowActions[]
+> = {
+  admin: ['viewDetails', 'assignReviewer', 'changeStatus'],
+  manager: ['viewDetails', 'assignReviewer', 'changeStatus'],
+  reviewer: ['viewDetails', 'createReview'],
+  speaker: ['viewDetails', 'editDraft'],
+};
+
+export const proposalListRowActionsByStatus: Record<
+  ProposalStatus,
+  ProposalListRowActions[]
+> = {
+  draft: ['viewDetails', 'editDraft'],
+  submitted: ['viewDetails', 'assignReviewer', 'changeStatus'],
+  rejected: ['viewDetails', 'changeStatus'],
+  accepted: ['viewDetails', 'changeStatus'],
+  changes_requested: ['viewDetails', 'changeStatus'],
+  in_review: ['viewDetails', 'assignReviewer', 'changeStatus', 'createReview'],
+  scheduled: ['viewDetails', 'changeStatus'],
+};
+
 export const manager: User = {
   id: '2',
   name: 'Manager',
@@ -111,7 +140,7 @@ export const statusDictionary: Map<ProposalStatus, string> = new Map([
   ['draft', 'Черновик'],
   ['submitted', 'Отправлена'],
   ['in_review', 'На ревью'],
-  ['changes_requested', 'Запрос на изменения'],
+  ['changes_requested', 'Запрошены изменения'],
   ['accepted', 'Принята'],
   ['rejected', 'Отклонена'],
   ['scheduled', 'В расписании'],
@@ -123,8 +152,42 @@ export const levelDictionary: Map<ProposalLevel, string> = new Map([
   ['senior', 'Сеньор'],
 ]);
 
-export const formatDicrionary: Map<ProposalFormat, string> = new Map([
+export const formatDictionary: Map<ProposalFormat, string> = new Map([
   ['lightning', 'Молния'],
   ['talk', 'Беседа'],
   ['workshop', 'Воркшоп'],
 ]);
+
+export const proposalListItemDictionary: Map<
+  keyof ProposalListItem | 'actions',
+  string
+> = new Map([
+  ['id', 'ID'],
+  ['title', 'Название'],
+  ['status', 'Статус'],
+  ['format', 'Формат'],
+  ['level', 'Уровень'],
+  ['trackId', 'Отслеживаемый ID'],
+  ['updatedAt', 'Последнее обновление'],
+  ['actions', 'Доступные действия'],
+]);
+
+export const proposalListItemKeys: (keyof ProposalListItem | 'actions')[] = [
+  'id',
+  'title',
+  'status',
+  'format',
+  'level',
+  'trackId',
+  'updatedAt',
+  'actions',
+];
+
+export const proposalActionsDictionary: Map<ProposalListRowActions, string> =
+  new Map([
+    ['viewDetails', 'Просмотреть детали'],
+    ['assignReviewer', 'Назначить ревьюера'],
+    ['changeStatus', 'Изменить статус'],
+    ['createReview', 'Создать ревью'],
+    ['editDraft', 'Редактировать черновик'],
+  ]);

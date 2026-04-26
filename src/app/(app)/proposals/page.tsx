@@ -5,8 +5,6 @@ import PageHeader from '@/shared/ui/PageHeader/PageHeader';
 import {
   CircularProgress,
   Grid,
-  List,
-  ListItem,
   MenuItem,
   Pagination,
   Select,
@@ -18,7 +16,7 @@ import { ProposalListItem } from '@/entities/proposal/model/types';
 import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
 import { PaginationEnvelope } from '@/shared/types/api.types';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { parsePositiveInt } from '@/shared/utils/parsePositiveInt';
+import parsePositiveInt from '@/shared/utils/parsePositiveInt';
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@/shared/config/layout';
 import { isPageSize } from '@/shared/utils/typeGuards';
 import { PageSize } from '@/shared/types/primitives.types';
@@ -29,6 +27,9 @@ import { GetTracksResponse } from '@/shared/api/contracts/track.contract';
 import { ReviewerListItem } from '@/entities/review/model/types';
 import { GetReviewersResponse } from '@/shared/api/contracts/reviewer.contract';
 import { styles } from './styles';
+import ProposalsTable from '@/components/ProposalsTable/ProposalsTable';
+import { User } from '@/entities/user/model/types';
+import getCurrentUser from '@/shared/utils/getCurrentUser';
 
 const Proposals = () => {
   const router = useRouter();
@@ -40,6 +41,7 @@ const Proposals = () => {
     useState<PaginationEnvelope<ProposalListItem> | null>(null);
   const [tracksList, setTracksList] = useState<Track[]>([]);
   const [reviewersList, setReviewersList] = useState<ReviewerListItem[]>([]);
+  const [user, setUser] = useState<User | null>(null);
 
   const selectedPageSize = useMemo((): PageSize => {
     const queryPageSize = searchParams.get('pageSize');
@@ -97,8 +99,21 @@ const Proposals = () => {
       }
     };
 
+    const getUser = async () => {
+      try {
+        const response = await getCurrentUser();
+
+        if (!response) return;
+
+        setUser(response);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     getTracks();
     getReviewersList();
+    getUser();
   }, []);
 
   useEffect(() => {
@@ -190,21 +205,13 @@ const Proposals = () => {
         <CircularProgress />
       ) : (
         proposalList &&
-        proposalList.length !== 0 && (
-          <List>
-            {proposalList.map((proposal) => (
-              <ListItem key={proposal.id}>
-                <Button
-                  mode="link"
-                  variant="contained"
-                  size="medium"
-                  to={`/proposals/${proposal.id}`}
-                >
-                  Открыть заявку {proposal.title}
-                </Button>
-              </ListItem>
-            ))}
-          </List>
+        proposalList.length !== 0 &&
+        user && (
+          <ProposalsTable
+            proposals={proposalList}
+            tracks={tracksList}
+            role={user.role}
+          />
         )
       )}
       <Stack direction="row" spacing={4} sx={sx.paginationWrapper}>

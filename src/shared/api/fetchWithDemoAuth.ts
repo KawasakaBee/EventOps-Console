@@ -1,4 +1,4 @@
-import { getCurrentUser } from '../utils/getCurrentUser';
+import getCurrentUser from '../utils/getCurrentUser';
 
 type FetchWithDemoAutoUserInit = RequestInit & {
   headers?: HeadersInit;

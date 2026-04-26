@@ -13,7 +13,7 @@ import {
   isProposalLevel,
   isProposalStatus,
 } from '@/shared/utils/typeGuards';
-import { parsePositiveInt } from '@/shared/utils/parsePositiveInt';
+import parsePositiveInt from '@/shared/utils/parsePositiveInt';
 export const proposalsToProposalListItem = (
   proposals: Proposal[],
 ): ProposalListItem[] =>

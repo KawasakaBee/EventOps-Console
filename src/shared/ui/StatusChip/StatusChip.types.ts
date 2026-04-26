@@ -13,27 +13,27 @@ export const statusChipConfig = {
     icon: DraftsIcon,
   },
   submitted: {
-    label: 'Отправлено',
+    label: 'Отправлена',
     color: 'info',
     icon: EmailIcon,
   },
   in_review: {
-    label: 'На рассмотрении',
+    label: 'На ревью',
     color: 'warning',
     icon: PreviewIcon,
   },
   changes_requested: {
-    label: 'Ожидание изменений',
+    label: 'Запрошены изменения',
     color: 'orange',
     icon: SettingsIcon,
   },
   accepted: {
-    label: 'Подтверждён',
+    label: 'Принята',
     color: 'success',
     icon: CheckIcon,
   },
   rejected: {
-    label: 'Отклонён',
+    label: 'Отклонена',
     color: 'error',
     icon: ClearIcon,
   },

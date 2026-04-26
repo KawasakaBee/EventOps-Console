@@ -1,4 +1,4 @@
-export const parsePositiveInt = (
+const parsePositiveInt = (
   value: string | null,
   defaultValue: number,
 ): number => {
@@ -10,3 +10,5 @@ export const parsePositiveInt = (
 
   return parsedValue;
 };
+
+export default parsePositiveInt;

@@ -19,10 +19,10 @@ export const styles: Styles = (options: IStyledProps) => {
   return {
     statusChipWrapper: {
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       gap: 0.5,
-      width: 'max-content',
+      width: size === 'small' ? 170 : size === 'medium' ? 220 : 250,
       border: `1px solid ${color}`,
       borderRadius: shape === 'rounded' ? 1.5 : 0,
       paddingInline: size === 'small' ? 0.5 : size === 'medium' ? 1 : 2,
@@ -33,6 +33,9 @@ export const styles: Styles = (options: IStyledProps) => {
       fill: color,
     },
     statusChipLabel: {
+      mb: 0,
+      fontSize: size === 'small' ? 12 : size === 'medium' ? 16 : 20,
+      lineHeight: '1.2',
       color: type === 'contained' ? 'text.secondary' : 'inherit',
     },
   };

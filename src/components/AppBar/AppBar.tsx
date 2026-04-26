@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { IAppBarProps } from './AppBar.types';
 import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
 import { useEffect, useState } from 'react';
-import { getCurrentUser } from '@/shared/utils/getCurrentUser';
+import getCurrentUser from '@/shared/utils/getCurrentUser';
 import { User } from '@/entities/user/model/types';
 
 const AppBar: React.FC<IAppBarProps> = ({ sx }) => {

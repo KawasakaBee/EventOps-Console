@@ -6,9 +6,17 @@ const SectionCard: React.FC<ISectionCardProps> = ({
   children,
   title,
   actions,
+  restSx,
 }) => {
+  const sx = styles();
+
   return (
-    <Card sx={styles().sectionCard}>
+    <Card
+      sx={[
+        sx.sectionCard,
+        ...(Array.isArray(restSx) ? restSx : restSx ? [restSx] : []),
+      ]}
+    >
       <Typography variant="h3">{title}</Typography>
       {actions}
       {children}

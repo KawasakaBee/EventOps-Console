@@ -1,4 +1,4 @@
-export const checkUniqueIds = (
+const checkUniqueIds = (
   items: { id: string }[],
   entityName: string,
   errors: string[],
@@ -13,3 +13,5 @@ export const checkUniqueIds = (
     }
   }
 };
+
+export default checkUniqueIds;

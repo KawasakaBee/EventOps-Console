@@ -1,7 +1,7 @@
 import { User } from '@/entities/user/model/types';
 import { GetCurrentUserResponse } from '../api/contracts/auth.contract';
 
-export const getCurrentUser = async (): Promise<User | null> => {
+const getCurrentUser = async (): Promise<User | null> => {
   try {
     const response = await fetch('/api/me');
 
@@ -14,3 +14,5 @@ export const getCurrentUser = async (): Promise<User | null> => {
     return null;
   }
 };
+
+export default getCurrentUser;
