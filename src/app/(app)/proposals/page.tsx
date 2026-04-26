@@ -65,6 +65,9 @@ const Proposals = () => {
 
     filters.delete('page');
     filters.delete('pageSize');
+    filters.delete('sortBy');
+    filters.delete('sortOrder');
+    filters.delete('owner');
 
     return filters.size;
   }, [searchParams]);

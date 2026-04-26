@@ -32,6 +32,7 @@ import {
 } from '@/shared/data';
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
+import ProposalSearchInput from '../ProposalSearchInput/ProposalSearchInput';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
   tracks,
@@ -67,7 +68,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
 
     if (Array.isArray(value)) {
       params.delete(queryType);
-      value.forEach((value) => {
+      value.filter(queryTypeCheck).forEach((value) => {
         params.append(queryType, value);
       });
     } else {
@@ -114,7 +115,11 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
 
   return (
     <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
-      <TextField sx={sx.filterSearchInput} />
+      <ProposalSearchInput
+        isLoading={isLoading}
+        sxFormControl={sx.filterInput}
+        sxSearchInput={sx.filterSearchInput}
+      />
       <Stack direction="row" sx={sx.filtersWrapper}>
         <FormControl disabled={isLoading} sx={sx.filterInput}>
           <InputLabel id="proposal-status-select">Статус заявки</InputLabel>
@@ -184,12 +189,13 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
           </Select>
         </FormControl>
 
-        <FormControl disabled={isLoading} sx={sx.filterInput}>
+        <FormControl sx={sx.filterInput}>
           <Autocomplete
             options={reviewerOptions}
             value={autocompleteValue}
             renderInput={(params) => <TextField {...params} label="Ревьюер" />}
             onChange={(_, option) => handleReviewerFilter(option?.id)}
+            disabled={isLoading}
           />
         </FormControl>
 

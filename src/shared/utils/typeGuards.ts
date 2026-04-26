@@ -3,7 +3,16 @@ import {
   dashboardRanges,
 } from '@/entities/dashboard/model/types';
 import { PostDemoLoginRequest } from '../api/contracts/auth.contract';
-import { ID, PageSize, Role, roles } from '../types/primitives.types';
+import {
+  ID,
+  PageSize,
+  Role,
+  roles,
+  sortBy,
+  SortBy,
+  sortOrder,
+  SortOrder,
+} from '../types/primitives.types';
 import {
   ProposalFormat,
   proposalFormats,
@@ -42,3 +51,9 @@ export const isProposalLevel = (value: unknown): value is ProposalLevel =>
 export const isPageSize = (value: unknown): value is PageSize =>
   typeof value === 'number' &&
   PAGE_SIZE_OPTIONS.some((option) => option === value);
+
+export const isSortBy = (value: unknown): value is SortBy =>
+  typeof value === 'string' && sortBy.some((option) => option === value);
+
+export const isSortOrder = (value: unknown): value is SortOrder =>
+  typeof value === 'string' && sortOrder.some((option) => option === value);

@@ -38,7 +38,6 @@ import {
   paginateProposals,
   parseProposalsListQuery,
   proposalsToProposalListItem,
-  applyProposalSort,
   getAvailableProposalActions,
 } from '../utils/helpers';
 import {
@@ -57,6 +56,7 @@ import {
   reviewerError,
   userError,
 } from '../db/errors';
+import { applyProposalSort } from '../utils/sort';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {

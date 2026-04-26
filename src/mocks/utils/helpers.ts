@@ -9,9 +9,12 @@ import { ID, Role } from '@/shared/types/primitives.types';
 import { speakers } from '../db/speakers';
 import { proposals } from '../db/proposals';
 import {
+  isPageSize,
   isProposalFormat,
   isProposalLevel,
   isProposalStatus,
+  isSortBy,
+  isSortOrder,
 } from '@/shared/utils/typeGuards';
 import parsePositiveInt from '@/shared/utils/parsePositiveInt';
 export const proposalsToProposalListItem = (
@@ -29,18 +32,22 @@ export const proposalsToProposalListItem = (
 
 export const parseProposalsListQuery = (requestUrl: string): QueryParams => {
   const url = new URL(requestUrl);
+  const pageSize = parsePositiveInt(url.searchParams.get('pageSize'), 20);
+
+  const sortBy = url.searchParams.get('sortBy');
+  const sortOrder = url.searchParams.get('sortOrder');
 
   return {
     page: parsePositiveInt(url.searchParams.get('page'), 1),
-    pageSize: parsePositiveInt(url.searchParams.get('pageSize'), 20),
+    pageSize: isPageSize(pageSize) ? pageSize : 20,
     search: url.searchParams.get('search'),
     status: url.searchParams.getAll('status').filter(isProposalStatus),
     trackId: url.searchParams.getAll('trackId'),
     level: url.searchParams.getAll('level').filter(isProposalLevel),
     format: url.searchParams.getAll('format').filter(isProposalFormat),
     reviewerId: url.searchParams.get('reviewerId'),
-    sortBy: url.searchParams.get('sortBy'),
-    sortOrder: url.searchParams.get('sortOrder') ?? 'asc',
+    sortBy: sortBy && isSortBy(sortBy) ? sortBy : null,
+    sortOrder: sortOrder && isSortOrder(sortOrder) ? sortOrder : 'asc',
     owner: url.searchParams.get('owner'),
   };
 };
@@ -54,27 +61,6 @@ export const applyProposalSearch = (
   return proposals.filter((proposal) =>
     proposal.title.toLowerCase().includes(search.toLowerCase()),
   );
-};
-
-export const applyProposalSort = (
-  queryParams: QueryParams,
-  proposals: Proposal[],
-): Proposal[] => {
-  const sortBy = queryParams.sortBy;
-  if (!sortBy) return proposals;
-
-  if (sortBy === 'createdAt' || sortBy === 'updatedAt') {
-    return proposals.toSorted((a, b) => {
-      const aValue = new Date(a[sortBy]).getTime();
-      const bValue = new Date(b[sortBy]).getTime();
-
-      return queryParams.sortOrder === 'asc'
-        ? aValue - bValue
-        : bValue - aValue;
-    });
-  }
-
-  return proposals;
 };
 
 export const paginateProposals = (

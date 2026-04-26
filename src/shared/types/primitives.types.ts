@@ -67,3 +67,19 @@ export const proposalListRowActions = [
 ] as const;
 
 export type ProposalListRowActions = (typeof proposalListRowActions)[number];
+
+export const sortBy = [
+  'id',
+  'title',
+  'status',
+  'format',
+  'level',
+  'trackId',
+  'updatedAt',
+] as const;
+
+export type SortBy = (typeof sortBy)[number];
+
+export const sortOrder = ['asc', 'desc'] as const;
+
+export type SortOrder = (typeof sortOrder)[number];

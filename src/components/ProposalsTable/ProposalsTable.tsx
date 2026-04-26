@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
 } from '@mui/material';
 import { IProposalsTableProps, ITableRowProps } from './ProposalsTable.types';
 import {
@@ -19,12 +20,28 @@ import isoToLocalDate from '@/shared/utils/isoToLocalDate';
 import { styles } from './styles';
 import RowActions from '../RowActions/RowActions';
 import getProposalListRowActions from '@/shared/utils/getProposalListRowActions';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { isSortBy, isSortOrder } from '@/shared/utils/typeGuards';
+import { SortBy } from '@/shared/types/primitives.types';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
   tracks,
   role,
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const untypedSortBy = searchParams.get('sortBy');
+  const untypedSortOrder = searchParams.get('sortOrder');
+  const sortBy =
+    untypedSortBy && isSortBy(untypedSortBy) ? untypedSortBy : null;
+  const sortOrder =
+    untypedSortOrder && isSortOrder(untypedSortOrder)
+      ? untypedSortOrder
+      : 'asc';
+
   const sx = styles();
 
   const renderCell = ({ rowName, data, tracksList }: ITableRowProps) => {
@@ -55,14 +72,43 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
     }
   };
 
+  const handleSort = (by: SortBy | 'actions') => {
+    if (by === 'actions') return;
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    const isSameColumn = sortBy === by;
+    const nextSortOrder = isSameColumn
+      ? sortOrder === 'asc'
+        ? 'desc'
+        : 'asc'
+      : 'desc';
+
+    params.set('sortBy', by);
+    params.set('sortOrder', nextSortOrder);
+    params.set('page', '1');
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <TableHead>
           <TableRow>
             {proposalListItemKeys.map((key) => (
-              <TableCell key={`Table-head-cell-${key}`}>
-                {proposalListItemDictionary.get(key)}
+              <TableCell
+                sortDirection={sortBy === key ? sortOrder : false}
+                key={`Table-head-cell-${key}`}
+              >
+                <TableSortLabel
+                  active={sortBy === key}
+                  direction={sortBy === key ? sortOrder : 'asc'}
+                  sx={sx.tableSortLabel}
+                  onClick={() => handleSort(key)}
+                >
+                  {proposalListItemDictionary.get(key)}
+                </TableSortLabel>
               </TableCell>
             ))}
           </TableRow>
