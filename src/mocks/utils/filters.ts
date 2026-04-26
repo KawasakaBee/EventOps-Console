@@ -42,13 +42,18 @@ export const applyProposalFilters = (
   const formatSet = queryParams.format.length
     ? new Set(queryParams.format)
     : null;
+  const reviewer = reviewers.find((item) => item.id === queryParams.reviewerId);
+  const reviewerSet = reviewer ? new Set(reviewer.proposalIds) : null;
+
+  if (queryParams.reviewerId && !reviewer) return [];
 
   return proposals.filter((proposal) => {
     return (
       (!statusSet || statusSet.has(proposal.status)) &&
       (!trackSet || trackSet.has(proposal.trackId)) &&
       (!levelSet || levelSet.has(proposal.level)) &&
-      (!formatSet || formatSet.has(proposal.format))
+      (!formatSet || formatSet.has(proposal.format)) &&
+      (!reviewerSet || reviewerSet.has(proposal.id))
     );
   });
 };

@@ -3,6 +3,7 @@ import { history } from '../db/history';
 import { proposals } from '../db/proposals';
 import { reviews } from '../db/reviews';
 import { speakers } from '../db/speakers';
+import { tracks } from '../db/track';
 import { users } from '../db/users';
 import { MockScenario } from './types';
 
@@ -17,4 +18,5 @@ export const applyScenario = (scenario: MockScenario) => {
   replaceArray(reviews, scenario.reviews);
   replaceArray(comments, scenario.comments);
   replaceArray(history, scenario.history);
+  replaceArray(tracks, scenario.tracks);
 };

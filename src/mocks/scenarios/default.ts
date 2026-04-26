@@ -3,6 +3,7 @@ import { history } from '../db/history';
 import { proposals } from '../db/proposals';
 import { reviews } from '../db/reviews';
 import { speakers } from '../db/speakers';
+import { tracks } from '../db/track';
 import { users } from '../db/users';
 import { MockScenario } from './types';
 
@@ -13,6 +14,7 @@ export const buildDefaultScenario = (): MockScenario => ({
   reviews: reviews,
   comments: comments,
   history: history,
+  tracks: tracks,
 });
 
 export const buildEmptyProposals = (): MockScenario => ({
@@ -22,4 +24,5 @@ export const buildEmptyProposals = (): MockScenario => ({
   reviews: [],
   comments: [],
   history: [],
+  tracks: [],
 });

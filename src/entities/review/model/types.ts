@@ -26,3 +26,5 @@ export interface Reviewer {
   proposalIds: ID[];
   reviews: Review[];
 }
+
+export type ReviewerListItem = Pick<Reviewer, 'id' | 'name'>;

@@ -1,4 +1,5 @@
 import { Event } from '@/entities/event/model/types';
+import { tracks } from './track';
 
 const initialEvents = [
   {
@@ -6,7 +7,7 @@ const initialEvents = [
     title: 'Test conf',
     description: 'Test conf description',
     place: 'Moscow',
-    trackIds: ['1'],
+    trackIds: tracks.map((track) => track.id),
     startTime: '2026-04-21T07:00:00+03:00',
     createdAt: '2026-04-21T07:00:00+03:00',
   },

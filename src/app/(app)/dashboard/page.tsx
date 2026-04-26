@@ -102,7 +102,7 @@ const Dashboard = () => {
           {dashboard.recentSubmissions.length !== 0 && (
             <SectionCard title="Recent submissions" actions>
               {dashboard.recentSubmissions.map((proposal) => (
-                <Box key={proposal.trackId}>
+                <Box key={proposal.id}>
                   <Typography variant="h5">
                     Proposal: {proposal.title}
                   </Typography>

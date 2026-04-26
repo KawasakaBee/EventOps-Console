@@ -2,117 +2,230 @@
 
 import Button from '@/shared/ui/Button/Button';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import { List, ListItem, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
 import {
-  GetProposalsListResponse,
-  PostProposalRequest,
-  PostProposalResponse,
-} from '@/shared/api/contracts/proposal.contract';
+  CircularProgress,
+  Grid,
+  List,
+  ListItem,
+  MenuItem,
+  Pagination,
+  Select,
+  Stack,
+} from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
+import { GetProposalsListResponse } from '@/shared/api/contracts/proposal.contract';
 import { ProposalListItem } from '@/entities/proposal/model/types';
-import { Speaker } from '@/entities/speaker/model/types';
 import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
-
-const testSpeaker: Speaker = {
-  id: '3',
-  userId: '3',
-  name: 'Third Speaker',
-  email: 'thirdSpeaker@gmail.com',
-  company: 'Third speaker company',
-  position: 'Third speaker positions',
-  bio: 'Third speaker bio',
-  contacts: 'Third speaker contacts',
-  pastTalks: 'Third speaker past talks',
-  avatarUrl: 'Third speaker avatarUrl',
-};
-
-const body: PostProposalRequest = {
-  title: 'Самая новая заявка',
-  abstract: 'Abstract',
-  format: 'talk',
-  duration: 30,
-  level: 'middle',
-  trackId: '4',
-  speakers: [testSpeaker],
-  tags: ['Backend', 'CSS'],
-  consent: true,
-  status: 'draft',
-};
+import { PaginationEnvelope } from '@/shared/types/api.types';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { parsePositiveInt } from '@/shared/utils/parsePositiveInt';
+import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@/shared/config/layout';
+import { isPageSize } from '@/shared/utils/typeGuards';
+import { PageSize } from '@/shared/types/primitives.types';
+import SectionCard from '@/shared/ui/SectionCard/SectionCard';
+import ProposalsFilterBar from '@/components/ProposalsFilterBar/ProposalsFilterBar';
+import { Track } from '@/entities/track/model/types';
+import { GetTracksResponse } from '@/shared/api/contracts/track.contract';
+import { ReviewerListItem } from '@/entities/review/model/types';
+import { GetReviewersResponse } from '@/shared/api/contracts/reviewer.contract';
+import { styles } from './styles';
 
 const Proposals = () => {
-  const [proposalsList, setProposalsList] = useState<ProposalListItem[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const getProposalList = async () => {
-    try {
-      const response = await fetchWithDemoAuth('/api/proposals');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [pagination, setPagination] =
+    useState<PaginationEnvelope<ProposalListItem> | null>(null);
+  const [tracksList, setTracksList] = useState<Track[]>([]);
+  const [reviewersList, setReviewersList] = useState<ReviewerListItem[]>([]);
 
-      if (!response.ok) return;
+  const selectedPageSize = useMemo((): PageSize => {
+    const queryPageSize = searchParams.get('pageSize');
 
-      const parsedResponse: GetProposalsListResponse = await response.json();
-      return parsedResponse.items;
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    if (!queryPageSize) return DEFAULT_PAGE_SIZE;
 
-  const createProposal = async () => {
-    try {
-      const response = await fetchWithDemoAuth('/api/proposals', {
-        method: 'POST',
-        body: JSON.stringify(body),
-      });
+    const parsedPageSize = Number(queryPageSize);
 
-      if (!response.ok) return;
+    if (!isPageSize(parsedPageSize)) return DEFAULT_PAGE_SIZE;
 
-      const parsedResponse: PostProposalResponse = await response.json();
-      setProposalsList((prev) =>
-        prev ? [...prev, parsedResponse.proposal] : prev,
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    return parsedPageSize;
+  }, [searchParams]);
+  const selectedPage = useMemo(
+    () => parsePositiveInt(searchParams.get('page'), 1),
+    [searchParams],
+  );
+  const activeFiltersCount = useMemo((): number => {
+    const filters = new Set(
+      Array.from(searchParams.entries()).flatMap((obj) => obj[0]),
+    );
+
+    filters.delete('page');
+    filters.delete('pageSize');
+
+    return filters.size;
+  }, [searchParams]);
+
+  const proposalList = pagination?.items;
+  const sx = styles();
 
   useEffect(() => {
-    (async () => {
-      const data: ProposalListItem[] | undefined = await getProposalList();
-      if (data) setProposalsList(data);
-    })();
+    const getTracks = async () => {
+      try {
+        const response = await fetchWithDemoAuth('/api/tracks');
+
+        if (!response.ok) return;
+
+        const parsedResponse: GetTracksResponse = await response.json();
+        setTracksList(parsedResponse.tracks);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getReviewersList = async () => {
+      try {
+        const response = await fetchWithDemoAuth('/api/reviewers');
+
+        if (!response.ok) return;
+
+        const parsedResponse: GetReviewersResponse = await response.json();
+        setReviewersList(parsedResponse.reviewers);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getTracks();
+    getReviewersList();
   }, []);
+
+  useEffect(() => {
+    const getPagination = async () => {
+      try {
+        setIsLoading(true);
+
+        const queryString = searchParams.toString();
+
+        const response = await fetchWithDemoAuth(
+          queryString ? `/api/proposals?${queryString}` : '/api/proposals',
+        );
+
+        if (!response.ok) return;
+
+        const parsedResponse: GetProposalsListResponse = await response.json();
+        setPagination(parsedResponse);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getPagination();
+  }, [searchParams]);
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('page', String(page));
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handlePageSizeChange = (pageSize: PageSize) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('pageSize', String(pageSize));
+    params.set('page', '1');
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <>
       <PageHeader
-        title="This is PageHeader title"
-        subtitle="This is PageHeader Subtitle"
+        title="Заявки"
+        subtitle="Управление докладами, ревью и статусами программы "
       >
-        This is custom text inside PageHeader
-        <Button
-          mode="button"
-          variant="contained"
-          size="medium"
-          onClick={createProposal}
-        >
-          Создать новую заявку
-        </Button>
+        <Stack direction="row" spacing={2}>
+          <Button mode="button" variant="contained" size="small">
+            Bulk actions
+          </Button>
+          <Button mode="button" variant="outlined" size="small">
+            Экспорт
+          </Button>
+        </Stack>
       </PageHeader>
-      <Typography variant="h1">This is Proposals List</Typography>
-      {proposalsList && proposalsList.length !== 0 && (
-        <List>
-          {proposalsList.map((proposal) => (
-            <ListItem key={proposal.id}>
-              <Button
-                mode="link"
-                variant="contained"
-                size="medium"
-                to={`/proposals/${proposal.id}`}
-              >
-                Открыть заявку №{proposal.id}
-              </Button>
-            </ListItem>
-          ))}
-        </List>
+      {pagination && (
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid size={3}>
+            <SectionCard title="Всего заявок: ">{pagination.total}</SectionCard>
+          </Grid>
+          <Grid size={3}>
+            <SectionCard title="Страница: ">{selectedPage}</SectionCard>
+          </Grid>
+          <Grid size={3}>
+            <SectionCard title="Заявок на странице: ">
+              {selectedPageSize}
+            </SectionCard>
+          </Grid>
+          <Grid size={3}>
+            <SectionCard title="Активные фильтры: ">
+              {activeFiltersCount}
+            </SectionCard>
+          </Grid>
+        </Grid>
       )}
+      {tracksList && (
+        <ProposalsFilterBar
+          searchParams={searchParams}
+          isLoading={isLoading}
+          tracks={tracksList}
+          reviewers={reviewersList}
+        />
+      )}
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        proposalList &&
+        proposalList.length !== 0 && (
+          <List>
+            {proposalList.map((proposal) => (
+              <ListItem key={proposal.id}>
+                <Button
+                  mode="link"
+                  variant="contained"
+                  size="medium"
+                  to={`/proposals/${proposal.id}`}
+                >
+                  Открыть заявку {proposal.title}
+                </Button>
+              </ListItem>
+            ))}
+          </List>
+        )
+      )}
+      <Stack direction="row" spacing={4} sx={sx.paginationWrapper}>
+        <Pagination
+          count={pagination?.totalPages ?? 1}
+          page={selectedPage}
+          disabled={isLoading}
+          onChange={(_, page) => handlePageChange(page)}
+        />
+        <Select
+          value={selectedPageSize}
+          onChange={(event) => handlePageSizeChange(event.target.value)}
+          disabled={isLoading}
+        >
+          {PAGE_SIZE_OPTIONS.map((option) => (
+            <MenuItem key={`Select-option-${option}`} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </Stack>
     </>
   );
 };

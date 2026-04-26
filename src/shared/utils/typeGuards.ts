@@ -3,7 +3,7 @@ import {
   dashboardRanges,
 } from '@/entities/dashboard/model/types';
 import { PostDemoLoginRequest } from '../api/contracts/auth.contract';
-import { ID, Role, roles } from '../types/primitives.types';
+import { ID, PageSize, Role, roles } from '../types/primitives.types';
 import {
   ProposalFormat,
   proposalFormats,
@@ -12,6 +12,7 @@ import {
   ProposalStatus,
   proposalStatuses,
 } from '@/entities/proposal/model/types';
+import { PAGE_SIZE_OPTIONS } from '../config/layout';
 
 export const isRole = (value: unknown): value is Role =>
   typeof value === 'string' && roles.some((role) => role === value);
@@ -37,3 +38,7 @@ export const isProposalFormat = (value: unknown): value is ProposalFormat =>
 
 export const isProposalLevel = (value: unknown): value is ProposalLevel =>
   typeof value === 'string' && proposalLevels.some((level) => level === value);
+
+export const isPageSize = (value: unknown): value is PageSize =>
+  typeof value === 'number' &&
+  PAGE_SIZE_OPTIONS.some((option) => option === value);

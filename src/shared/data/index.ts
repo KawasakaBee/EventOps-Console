@@ -1,5 +1,10 @@
 import { User } from '@/entities/user/model/types';
 import { Permission, Role, Route } from '../types/primitives.types';
+import {
+  ProposalFormat,
+  ProposalLevel,
+  ProposalStatus,
+} from '@/entities/proposal/model/types';
 
 export const routesByRole: Record<Role, Route[]> = {
   admin: [
@@ -89,3 +94,37 @@ export const speaker: User = {
   eventIds: ['1'],
   permissions: permissionsByRole.speaker,
 };
+
+export const routesDictionary: Map<Route, string> = new Map([
+  ['/dashboard', 'Панель управления'],
+  ['/proposals', 'Заявки'],
+  ['/submit', 'Создать заявку'],
+  ['/my-proposals', 'Мои заявки'],
+  ['/speakers', 'Спикеры'],
+  ['/schedule', 'Расписание'],
+  ['/analytics', 'Аналитика'],
+  ['/settings', 'Настройки'],
+  ['/audit', 'Аудит'],
+]);
+
+export const statusDictionary: Map<ProposalStatus, string> = new Map([
+  ['draft', 'Черновик'],
+  ['submitted', 'Отправлена'],
+  ['in_review', 'На ревью'],
+  ['changes_requested', 'Запрос на изменения'],
+  ['accepted', 'Принята'],
+  ['rejected', 'Отклонена'],
+  ['scheduled', 'В расписании'],
+]);
+
+export const levelDictionary: Map<ProposalLevel, string> = new Map([
+  ['junior', 'Джуниор'],
+  ['middle', 'Миддл'],
+  ['senior', 'Сеньор'],
+]);
+
+export const formatDicrionary: Map<ProposalFormat, string> = new Map([
+  ['lightning', 'Молния'],
+  ['talk', 'Беседа'],
+  ['workshop', 'Воркшоп'],
+]);

@@ -1,0 +1,52 @@
+import { ErrorEnvelope } from '@/shared/types/api.types';
+import { HttpResponse } from 'msw';
+
+export const rangeError = HttpResponse.json(
+  {
+    error: {
+      code: 'INVALID_QUERY',
+      message: 'Неверный querry range',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 400 },
+);
+
+export const userError = HttpResponse.json(
+  {
+    error: {
+      code: 'USER_NOT_FOUND',
+      message: 'Пользователь не найден',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 404 },
+);
+
+export const proposalError = HttpResponse.json(
+  {
+    error: {
+      code: 'PROPOSAL_NOT_FOUND',
+      message: 'Заявка не найдена',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 404 },
+);
+
+export const forbiddenError = HttpResponse.json(
+  {
+    error: {
+      code: 'FORBIDDEN',
+      message: 'Доступ запрещён',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 403 },
+);
+
+export const reviewerError = HttpResponse.json(
+  {
+    error: {
+      code: 'REVIEWER_NOT_FOUND',
+      message: 'Ревьюер не найден',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 404 },
+);

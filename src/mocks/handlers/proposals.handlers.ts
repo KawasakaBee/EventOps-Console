@@ -30,7 +30,6 @@ import {
   getReviewsByProposalId,
   getSpeakersById,
 } from '../utils/filters';
-import { ErrorEnvelope } from '@/shared/types/api.types';
 import { appendProposalHistory } from '../db/history';
 import { assignReviewer, createReview, reviewers } from '../db/reviews';
 import { createComment } from '../db/comments';
@@ -52,46 +51,12 @@ import {
   isManagerLike,
 } from '../utils/proposal-access';
 import { isId, isRole } from '@/shared/utils/typeGuards';
-
-const userError = HttpResponse.json(
-  {
-    error: {
-      code: 'USER_NOT_FOUND',
-      message: 'Пользователь не найден',
-    },
-  } satisfies ErrorEnvelope,
-  { status: 404 },
-);
-
-const proposalError = HttpResponse.json(
-  {
-    error: {
-      code: 'PROPOSAL_NOT_FOUND',
-      message: 'Заявка не найдена',
-    },
-  } satisfies ErrorEnvelope,
-  { status: 404 },
-);
-
-const forbiddenError = HttpResponse.json(
-  {
-    error: {
-      code: 'FORBIDDEN',
-      message: 'Доступ запрещён',
-    },
-  } satisfies ErrorEnvelope,
-  { status: 403 },
-);
-
-const reviewerError = HttpResponse.json(
-  {
-    error: {
-      code: 'REVIEWER_NOT_FOUND',
-      message: 'Ревьюер не найден',
-    },
-  } satisfies ErrorEnvelope,
-  { status: 404 },
-);
+import {
+  forbiddenError,
+  proposalError,
+  reviewerError,
+  userError,
+} from '../db/errors';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {

@@ -1,9 +1,13 @@
+import { PAGE_SIZE_OPTIONS } from '../config/layout';
+
 export type ID = string;
 export type ISODateString = string;
 
 export const roles = ['admin', 'manager', 'reviewer', 'speaker'] as const;
 
 export type Role = (typeof roles)[number];
+
+export type PageSize = (typeof PAGE_SIZE_OPTIONS)[number];
 
 export const routes = [
   '/login',

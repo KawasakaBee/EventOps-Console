@@ -3,6 +3,7 @@ import { HistoryEntry } from '@/entities/history/model/types';
 import { Proposal } from '@/entities/proposal/model/types';
 import { Review } from '@/entities/review/model/types';
 import { Speaker } from '@/entities/speaker/model/types';
+import { Track } from '@/entities/track/model/types';
 import { User } from '@/entities/user/model/types';
 
 export interface MockScenario {
@@ -12,4 +13,5 @@ export interface MockScenario {
   reviews: Review[];
   comments: Comment[];
   history: HistoryEntry[];
+  tracks: Track[];
 }

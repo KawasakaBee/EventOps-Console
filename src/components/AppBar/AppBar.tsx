@@ -4,15 +4,20 @@ import Button from '@/shared/ui/Button/Button';
 import { AppBar as MuiAppBar, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { IAppBarProps } from './AppBar.types';
+import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { useEffect, useState } from 'react';
+import { getCurrentUser } from '@/shared/utils/getCurrentUser';
+import { User } from '@/entities/user/model/types';
 
 const AppBar: React.FC<IAppBarProps> = ({ sx }) => {
   const router = useRouter();
 
+  const [user, setUser] = useState<User | null>(null);
+
   const handleLogout = async () => {
     try {
-      const response = await fetch('/api/logout', {
+      const response = await fetchWithDemoAuth('/api/logout', {
         method: 'POST',
-        headers: { 'Content-type': 'application/json' },
       });
 
       if (response.ok) {
@@ -23,8 +28,20 @@ const AppBar: React.FC<IAppBarProps> = ({ sx }) => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      const data = await getCurrentUser();
+      if (data) setUser(data);
+    })();
+  }, []);
+
   return (
     <MuiAppBar sx={sx}>
+      {user && user.name && (
+        <Typography variant="h2" sx={{ mb: 0 }}>
+          {user.name}
+        </Typography>
+      )}
       <Button
         mode="button"
         variant="contained"
@@ -33,7 +50,6 @@ const AppBar: React.FC<IAppBarProps> = ({ sx }) => {
       >
         Logout
       </Button>
-      <Typography variant="h2">This is AppBar</Typography>
     </MuiAppBar>
   );
 };

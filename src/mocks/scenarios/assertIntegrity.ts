@@ -11,6 +11,7 @@ export const assertIntegrity = (data: MockScenario) => {
   const proposalsById = new Map(
     data.proposals.map((proposal) => [proposal.id, proposal]),
   );
+  const tracksById = new Map(data.tracks.map((track) => [track.id, track]));
 
   // Проверки на дублирующиеся id
   checkUniqueIds(data.users, 'users', errors);
@@ -19,6 +20,7 @@ export const assertIntegrity = (data: MockScenario) => {
   checkUniqueIds(data.reviews, 'reviews', errors);
   checkUniqueIds(data.comments, 'comments', errors);
   checkUniqueIds(data.history, 'history', errors);
+  checkUniqueIds(data.tracks, 'tracks', errors);
 
   //   Проверка на существование указанных в заявках спикеров в списке реальных спикеров
   for (const proposal of data.proposals) {
@@ -100,6 +102,15 @@ export const assertIntegrity = (data: MockScenario) => {
           `Юзер ${speaker.id} указан как спикер, хотя имеет другую роль`,
         );
       }
+    }
+  }
+
+  //   Проверка на существование треков, указанных в заявках в списке реальных треков
+  for (const proposal of data.proposals) {
+    if (!tracksById.has(proposal.trackId)) {
+      errors.push(
+        `УЗаявка ${proposal.id} ссылается на несуществующий трек ${proposal.trackId}`,
+      );
     }
   }
 
