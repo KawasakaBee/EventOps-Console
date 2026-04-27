@@ -4,4 +4,5 @@ export interface IProposalSearchInputProps {
   isLoading: boolean;
   sxFormControl: SxProps<Theme>;
   sxSearchInput: SxProps<Theme>;
+  searchValue: string;
 }

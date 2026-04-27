@@ -2,16 +2,19 @@
 
 import { theme } from '@/shared/theme/theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import MswProvider from './msw-provider';
+import MswProvider from './MswProvider';
+import StoreProvider from './StoreProvider';
 
 const Providers = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
-    <MswProvider>
+    <StoreProvider>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
+        <MswProvider>
+          <CssBaseline />
+          {children}
+        </MswProvider>
       </ThemeProvider>
-    </MswProvider>
+    </StoreProvider>
   );
 };
 

@@ -33,6 +33,15 @@ import {
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
 import ProposalSearchInput from '../ProposalSearchInput/ProposalSearchInput';
+import { useEffect } from 'react';
+import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
+import {
+  FiltersState,
+  hydrateFilters,
+  patchFilters,
+  resetFilters,
+} from '@/features/ProposalsFilters/model/proposalsFiltersSlice';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
   tracks,
@@ -42,42 +51,55 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const reviewerId = searchParams.get('reviewerId');
+  const dispatch = useAppDispatch();
+  const filters = useAppSelector((state) => state.proposalsFilters.filters);
 
-  const statusesList = searchParams.getAll('status').filter(isProposalStatus);
-  const trackIdsList = searchParams.getAll('trackId');
-  const levelsList = searchParams.getAll('level').filter(isProposalLevel);
-  const formatsList = searchParams.getAll('format').filter(isProposalFormat);
+  const statusesList = filters.status;
+  const trackIdsList = filters.trackId;
+  const levelsList = filters.level;
+  const formatsList = filters.format;
 
   const reviewerOptions = reviewers.map((item) => ({
     label: item.name,
     id: item.id,
   }));
 
-  const autocompleteValue =
-    reviewerOptions.find((item) => item.id === reviewerId) ?? null;
+  const selectedReviewer =
+    reviewerOptions.find((item) => item.id === filters.reviewerId) ?? null;
+
+  const queryString = searchParams.toString();
 
   const sx = styles();
 
+  useEffect(() => {
+    const { search, status, trackId, level, format, reviewerId } =
+      parseProposalsListQuery(`${pathname}?${queryString}`);
+
+    const filtersStoreBody: FiltersState = {
+      filters: {
+        search,
+        status,
+        trackId,
+        level,
+        format,
+        reviewerId,
+      },
+    };
+
+    dispatch(hydrateFilters(filtersStoreBody));
+  }, [pathname, queryString, dispatch]);
+
   const filterArrayQueryParams = <T extends string>(
     value: T[] | string,
-    queryType: string,
+    queryType: keyof FiltersState['filters'],
     queryTypeCheck: (value: unknown) => value is T,
   ) => {
-    const params = new URLSearchParams(searchParams.toString());
-
     if (Array.isArray(value)) {
-      params.delete(queryType);
-      value.filter(queryTypeCheck).forEach((value) => {
-        params.append(queryType, value);
-      });
+      dispatch(patchFilters({ [queryType]: value }));
     } else {
       if (!queryTypeCheck(value)) return;
-      params.set(queryType, value);
+      dispatch(patchFilters({ [queryType]: [value] }));
     }
-    params.set('page', '1');
-
-    router.push(`${pathname}?${params.toString()}`);
   };
 
   const handleStatusFilter = (value: ProposalStatus[] | string) => {
@@ -97,19 +119,51 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
   };
 
   const handleReviewerFilter = (id: ID | undefined) => {
+    if (id) {
+      dispatch(patchFilters({ reviewerId: id }));
+    } else {
+      dispatch(patchFilters({ reviewerId: null }));
+    }
+  };
+
+  const setFilterParam = (
+    queryType: keyof FiltersState['filters'],
+    params: URLSearchParams,
+  ) => {
+    params.delete(queryType);
+    if (
+      queryType === 'status' ||
+      queryType === 'trackId' ||
+      queryType === 'level' ||
+      queryType === 'format'
+    ) {
+      filters[queryType].forEach((val) => params.append(queryType, val));
+    }
+    if (
+      (queryType === 'search' || queryType === 'reviewerId') &&
+      filters[queryType]
+    ) {
+      params.set(queryType, filters[queryType]);
+    }
+  };
+
+  const handleApply = () => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (id) {
-      params.set('reviewerId', id);
-    } else {
-      params.delete('reviewerId');
-    }
+    setFilterParam('search', params);
+    setFilterParam('status', params);
+    setFilterParam('trackId', params);
+    setFilterParam('level', params);
+    setFilterParam('format', params);
+    setFilterParam('reviewerId', params);
     params.set('page', '1');
 
     router.push(`${pathname}?${params.toString()}`);
   };
 
   const handleReset = () => {
+    dispatch(resetFilters());
+
     router.push(pathname);
   };
 
@@ -119,6 +173,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
         isLoading={isLoading}
         sxFormControl={sx.filterInput}
         sxSearchInput={sx.filterSearchInput}
+        searchValue={filters.search ?? ''}
       />
       <Stack direction="row" sx={sx.filtersWrapper}>
         <FormControl disabled={isLoading} sx={sx.filterInput}>
@@ -192,13 +247,21 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
         <FormControl sx={sx.filterInput}>
           <Autocomplete
             options={reviewerOptions}
-            value={autocompleteValue}
+            value={selectedReviewer}
             renderInput={(params) => <TextField {...params} label="Ревьюер" />}
             onChange={(_, option) => handleReviewerFilter(option?.id)}
             disabled={isLoading}
           />
         </FormControl>
 
+        <Button
+          mode="button"
+          variant="contained"
+          size="small"
+          onClick={handleApply}
+        >
+          Применить фильтры
+        </Button>
         <Button
           mode="button"
           variant="contained"

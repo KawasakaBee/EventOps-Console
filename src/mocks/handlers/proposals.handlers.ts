@@ -36,7 +36,6 @@ import { createComment } from '../db/comments';
 import {
   applyProposalSearch,
   paginateProposals,
-  parseProposalsListQuery,
   proposalsToProposalListItem,
   getAvailableProposalActions,
 } from '../utils/helpers';
@@ -57,6 +56,7 @@ import {
   userError,
 } from '../db/errors';
 import { applyProposalSort } from '../utils/sort';
+import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {

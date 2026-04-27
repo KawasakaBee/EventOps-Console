@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 const Root = () => {
   redirect('/login');
-  return <>Hello world!</>;
+  return <>Root page</>;
 };
 
 export default Root;
