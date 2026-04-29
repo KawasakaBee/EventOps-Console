@@ -40,14 +40,16 @@ import {
   FiltersState,
   hydrateFilters,
   patchFilters,
-  resetFilters,
-} from '@/features/ProposalsFilters/model/proposalsFiltersSlice';
+} from '@/features/ProposalsList/model/proposalsFiltersSlice';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
   tracks,
+  tracksStatus,
   reviewers,
+  reviewersStatus,
   searchParams,
-  isLoading,
+  isDisabled,
+  handleResetFilters,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -161,22 +163,16 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const handleReset = () => {
-    dispatch(resetFilters());
-
-    router.push(pathname);
-  };
-
   return (
     <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
       <ProposalSearchInput
-        isLoading={isLoading}
+        isLoading={isDisabled}
         sxFormControl={sx.filterInput}
         sxSearchInput={sx.filterSearchInput}
         searchValue={filters.search ?? ''}
       />
       <Stack direction="row" sx={sx.filtersWrapper}>
-        <FormControl disabled={isLoading} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.filterInput}>
           <InputLabel id="proposal-status-select">Статус заявки</InputLabel>
           <Select
             value={statusesList}
@@ -193,7 +189,10 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
           </Select>
         </FormControl>
 
-        <FormControl disabled={isLoading} sx={sx.filterInput}>
+        <FormControl
+          disabled={isDisabled || tracksStatus !== 'success'}
+          sx={sx.filterInput}
+        >
           <InputLabel id="proposal-trackId-select">Отслеживаемый ID</InputLabel>
           <Select
             value={trackIdsList}
@@ -210,7 +209,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
           </Select>
         </FormControl>
 
-        <FormControl disabled={isLoading} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.filterInput}>
           <InputLabel id="proposal-level-select">Уровень заявки</InputLabel>
           <Select
             value={levelsList}
@@ -227,7 +226,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
           </Select>
         </FormControl>
 
-        <FormControl disabled={isLoading} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.filterInput}>
           <InputLabel id="proposal-format-select">Формат заявки</InputLabel>
           <Select
             value={formatsList}
@@ -250,23 +249,25 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
             value={selectedReviewer}
             renderInput={(params) => <TextField {...params} label="Ревьюер" />}
             onChange={(_, option) => handleReviewerFilter(option?.id)}
-            disabled={isLoading}
+            disabled={isDisabled || reviewersStatus !== 'success'}
           />
         </FormControl>
 
         <Button
           mode="button"
           variant="contained"
-          size="small"
+          size="medium"
           onClick={handleApply}
+          isDisabled={isDisabled}
         >
           Применить фильтры
         </Button>
         <Button
           mode="button"
           variant="contained"
-          size="small"
-          onClick={handleReset}
+          size="medium"
+          onClick={handleResetFilters}
+          isDisabled={isDisabled}
         >
           Сбросить фильтры
         </Button>

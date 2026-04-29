@@ -2,11 +2,11 @@
 
 import { Proposal } from '@/entities/proposal/model/types';
 import {
-  GetProposalResponse,
+  // GetProposalResponse,
   PatchProposalRequest,
-  PatchProposalResponse,
+  // PatchProposalResponse,
   PatchProposalStatusRequest,
-  PatchProposalStatusResponse,
+  // PatchProposalStatusResponse,
 } from '@/shared/api/contracts/proposal.contract';
 import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
 import Button from '@/shared/ui/Button/Button';
@@ -27,7 +27,7 @@ const changedBody: PatchProposalStatusRequest = {
 
 const ProposalItem = () => {
   const id = useParams<{ id: string }>().id;
-  const [proposal, setProposal] = useState<Proposal | null>(null);
+  const [proposal] = useState<Proposal | null>(null);
 
   const updateProposal = async () => {
     try {
@@ -38,8 +38,8 @@ const ProposalItem = () => {
 
       if (!response.ok) return;
 
-      const parsedResponse: PatchProposalResponse = await response.json();
-      setProposal(parsedResponse.proposal);
+      // const parsedResponse: PatchProposalResponse = await response.json();
+      // setProposal(parsedResponse.proposal);
     } catch (err) {
       console.error(err);
     }
@@ -54,8 +54,8 @@ const ProposalItem = () => {
 
       if (!response.ok) return;
 
-      const parsedResponse: PatchProposalStatusResponse = await response.json();
-      setProposal(parsedResponse.proposal);
+      // const parsedResponse: PatchProposalStatusResponse = await response.json();
+      // setProposal(parsedResponse.proposal);
     } catch (err) {
       console.error(err);
     }
@@ -70,8 +70,8 @@ const ProposalItem = () => {
 
       if (!response.ok) return;
 
-      const parsedResponse = await response.json();
-      return parsedResponse;
+      // const parsedResponse = await response.json();
+      // return parsedResponse;
     } catch (err) {
       console.error(err);
     }
@@ -84,8 +84,8 @@ const ProposalItem = () => {
 
         if (!response.ok) return;
 
-        const parsedResponse: GetProposalResponse = await response.json();
-        setProposal(parsedResponse.proposal);
+        // const parsedResponse: GetProposalResponse = await response.json();
+        // setProposal(parsedResponse.proposal);
       } catch (err) {
         console.error(err);
       }

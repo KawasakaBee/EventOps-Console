@@ -11,6 +11,7 @@ import {
   ProposalListItem,
   ProposalStatus,
 } from '@/entities/proposal/model/types';
+import { ErrorEnvelope } from '../types/api.types';
 
 export const routesByRole: Record<Role, Route[]> = {
   admin: [
@@ -191,3 +192,46 @@ export const proposalActionsDictionary: Map<ProposalListRowActions, string> =
     ['createReview', 'Создать ревью'],
     ['editDraft', 'Редактировать черновик'],
   ]);
+
+export const proposalTableWidthDictionary: Record<
+  keyof ProposalListItem | 'actions',
+  { width: number; skeletonWidth: number }
+> = {
+  id: {
+    width: 90,
+    skeletonWidth: 70,
+  },
+  title: {
+    width: 460,
+    skeletonWidth: 420,
+  },
+  status: {
+    width: 210,
+    skeletonWidth: 190,
+  },
+  format: {
+    width: 120,
+    skeletonWidth: 100,
+  },
+  level: {
+    width: 120,
+    skeletonWidth: 100,
+  },
+  trackId: {
+    width: 180,
+    skeletonWidth: 160,
+  },
+  updatedAt: {
+    width: 180,
+    skeletonWidth: 160,
+  },
+  actions: {
+    width: 260,
+    skeletonWidth: 240,
+  },
+};
+
+export const fallbackError: ErrorEnvelope['error'] = {
+  code: 'NETWORK_ERROR',
+  message: 'Не удалось выполнить запрос',
+};

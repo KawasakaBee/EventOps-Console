@@ -7,16 +7,36 @@ import { Dashboard as DashboardType } from '@/entities/dashboard/model/types';
 import { GetDashboardResponse } from '@/shared/api/contracts/dashboard.contract';
 import getCurrentUser from '@/shared/utils/getCurrentUser';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
+import getDashboardErrorState from '@/features/Dashboard/model/getDashboardErrorState';
+import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
   const [dashboard, setDashboard] = useState<DashboardType | null>(null);
+  const [, setErrorProps] = useState<ErrorStateProps | null>(null);
 
   useEffect(() => {
-    (async () => {
-      const user = await getCurrentUser();
-      if (user) setUser(user);
-    })();
+    const getErrorActions = () => ({
+      onClose: () => setErrorProps(null),
+    });
+
+    const getUser = async () => {
+      setUser(null);
+
+      const response = await getCurrentUser();
+
+      if (!response.ok) {
+        setUser(null);
+        setErrorProps(
+          getDashboardErrorState(response.error, getErrorActions()),
+        );
+        return;
+      }
+
+      setUser(response.data);
+    };
+
+    getUser();
   }, []);
 
   useEffect(() => {

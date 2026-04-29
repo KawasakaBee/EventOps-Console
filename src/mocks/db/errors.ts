@@ -1,11 +1,11 @@
 import { ErrorEnvelope } from '@/shared/types/api.types';
 import { HttpResponse } from 'msw';
 
-export const rangeError = HttpResponse.json(
+export const queryError = HttpResponse.json(
   {
     error: {
       code: 'INVALID_QUERY',
-      message: 'Неверный querry range',
+      message: 'Неверные querry параметры',
     },
   } satisfies ErrorEnvelope,
   { status: 400 },
@@ -49,4 +49,24 @@ export const reviewerError = HttpResponse.json(
     },
   } satisfies ErrorEnvelope,
   { status: 404 },
+);
+
+export const responseError = HttpResponse.json(
+  {
+    error: {
+      code: 'INVALID_RESPONSE',
+      message: 'Ошибка ответа',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 501 },
+);
+
+export const unknownError = HttpResponse.json(
+  {
+    error: {
+      code: 'UNKNOWN_ERROR',
+      message: 'Неизвестная ошибка',
+    },
+  } satisfies ErrorEnvelope,
+  { status: 500 },
 );

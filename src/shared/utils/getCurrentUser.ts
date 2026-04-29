@@ -1,17 +1,19 @@
 import { User } from '@/entities/user/model/types';
-import { GetCurrentUserResponse } from '../api/contracts/auth.contract';
+import normalizeResponse from '../api/normalizeResponse';
+import { ApiResult } from '../types/api.types';
+import { fallbackError } from '../data';
 
-const getCurrentUser = async (): Promise<User | null> => {
+const getCurrentUser = async (): Promise<ApiResult<User>> => {
   try {
     const response = await fetch('/api/me');
 
-    if (!response.ok) return null;
-
-    const parsedResponse: GetCurrentUserResponse = await response.json();
-    return parsedResponse;
-  } catch (err) {
-    console.error(err);
-    return null;
+    return normalizeResponse<User>(response);
+  } catch {
+    return {
+      ok: false,
+      status: 0,
+      error: fallbackError,
+    };
   }
 };
 

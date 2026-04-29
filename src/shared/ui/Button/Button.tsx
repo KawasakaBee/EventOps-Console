@@ -4,10 +4,9 @@ import {
   Link as MuiLink,
 } from '@mui/material';
 import { IButton, sizeConfig, variantConfig } from './Button.types';
-import { FC } from 'react';
 import Link from 'next/link';
 
-const Button: FC<IButton> = (props) => {
+const Button: React.FC<IButton> = (props) => {
   const { mode, variant, size, ariaLabel, isDisableElevation, sx, onClick } =
     props;
 

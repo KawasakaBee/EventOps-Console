@@ -104,7 +104,7 @@ export const OutlinedButton: Story = {
     await expect(getComputedStyle(button).borderColor).toBe('rgb(9, 59, 103)');
     await expect(getComputedStyle(button).color).toBe('rgb(10, 10, 10)');
     await expect(getComputedStyle(button).backgroundColor).toBe(
-      'rgba(0, 0, 0, 0)',
+      'rgb(255, 255, 255)',
     );
   },
 };

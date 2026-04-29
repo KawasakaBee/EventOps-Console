@@ -54,6 +54,9 @@ export const errorCodes = [
   'HISTORY_NOT_FOUND',
   'FORBIDDEN',
   'INVALID_QUERY',
+  'NETWORK_ERROR',
+  'INVALID_RESPONSE',
+  'UNKNOWN_ERROR',
 ] as const;
 
 export type ErrorCode = (typeof errorCodes)[number];
@@ -83,3 +86,7 @@ export type SortBy = (typeof sortBy)[number];
 export const sortOrder = ['asc', 'desc'] as const;
 
 export type SortOrder = (typeof sortOrder)[number];
+
+export const pageStatuses = ['idle', 'loading', 'success', 'error'] as const;
+
+export type PageStatus = (typeof pageStatuses)[number];

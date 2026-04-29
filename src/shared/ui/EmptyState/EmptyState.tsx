@@ -1,11 +1,34 @@
-import { Box, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { IEmptyStateProps } from './EmptyState.types';
+import Button from '../Button/Button';
+import { styles } from './styles';
 
-const EmptyState = () => {
+const EmptyState: React.FC<IEmptyStateProps> = ({
+  title,
+  subtitle,
+  action,
+}) => {
+  const sx = styles();
+
   return (
-    <Box>
-      <Typography variant="h2">Enrollment not found</Typography>
-      <Typography variant="h3">Create a new enrollment!</Typography>
-    </Box>
+    <Stack spacing={2} sx={sx.emptyStateContainer}>
+      <Typography variant="h2" data-testid="empty-state-title">
+        {title}
+      </Typography>
+      <Typography variant="body1" data-testid="empty-state-subtitle">
+        {subtitle}
+      </Typography>
+      {action && (
+        <Button
+          mode="button"
+          variant="contained"
+          size="large"
+          onClick={action.handler}
+        >
+          {action.buttonName}
+        </Button>
+      )}
+    </Stack>
   );
 };
 

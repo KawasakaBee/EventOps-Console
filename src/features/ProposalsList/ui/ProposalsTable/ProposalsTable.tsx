@@ -8,21 +8,23 @@ import {
   TableRow,
   TableSortLabel,
 } from '@mui/material';
-import { IProposalsTableProps, ITableRowProps } from './ProposalsTable.types';
+
 import {
   formatDictionary,
   levelDictionary,
   proposalListItemDictionary,
   proposalListItemKeys,
+  proposalTableWidthDictionary,
 } from '@/shared/data';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import isoToLocalDate from '@/shared/utils/isoToLocalDate';
-import { styles } from './styles';
-import RowActions from '../RowActions/RowActions';
+import RowActions from '../../../../components/RowActions/RowActions';
 import getProposalListRowActions from '@/shared/utils/getProposalListRowActions';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { isSortBy, isSortOrder } from '@/shared/utils/typeGuards';
 import { SortBy } from '@/shared/types/primitives.types';
+import { styles } from './styles';
+import { IProposalsTableProps, ITableRowProps } from './ProposalsTable.types';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
@@ -94,6 +96,12 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
+        <colgroup>
+          {Object.entries(proposalTableWidthDictionary).map(([key, value]) => (
+            <col key={key} style={{ width: value.width }} />
+          ))}
+        </colgroup>
+
         <TableHead>
           <TableRow>
             {proposalListItemKeys.map((key) => (

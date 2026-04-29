@@ -1,10 +1,14 @@
 import { ReviewerListItem } from '@/entities/review/model/types';
 import { Track } from '@/entities/track/model/types';
+import { PageStatus } from '@/shared/types/primitives.types';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
 export interface IProposalsFilterBarPropos {
   tracks: Track[];
+  tracksStatus: PageStatus;
   reviewers: ReviewerListItem[];
+  reviewersStatus: PageStatus;
   searchParams: ReadonlyURLSearchParams;
-  isLoading: boolean;
+  isDisabled: boolean;
+  handleResetFilters: () => void;
 }

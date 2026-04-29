@@ -2,7 +2,7 @@ import { FormControl, TextField } from '@mui/material';
 import { IProposalSearchInputProps } from './ProposalSearchInput.types';
 import { useRef } from 'react';
 import { useAppDispatch } from '@/shared/store/hooks';
-import { patchFilters } from '@/features/ProposalsFilters/model/proposalsFiltersSlice';
+import { patchFilters } from '@/features/ProposalsList/model/proposalsFiltersSlice';
 
 const ProposalSearchInput: React.FC<IProposalSearchInputProps> = ({
   isLoading,

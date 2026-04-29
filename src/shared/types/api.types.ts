@@ -34,3 +34,7 @@ export interface QueryParams {
   sortOrder: SortOrder;
   owner: string | null;
 }
+
+export type ApiResult<T> =
+  | { ok: true; data: T }
+  | { ok: false; error: ErrorEnvelope['error']; status: number };

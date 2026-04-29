@@ -11,4 +11,7 @@ export const theme = createTheme({
     borderRadius: 8,
   },
   spacing: 8,
+  zIndex: {
+    appBar: 1200,
+  },
 });

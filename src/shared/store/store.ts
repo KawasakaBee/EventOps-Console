@@ -1,4 +1,4 @@
-import { proposalsFiltersReducer } from '@/features/ProposalsFilters/model/proposalsFiltersSlice';
+import { proposalsFiltersReducer } from '@/features/ProposalsList/model/proposalsFiltersSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({

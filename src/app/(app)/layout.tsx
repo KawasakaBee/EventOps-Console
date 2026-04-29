@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { styles } from './styles';
 import { APPBAR_HEIGHT, SIDEBAR_WIDTH } from '@/shared/config/layout';
-import AppBar from '@/components/AppBar/AppBar';
+import AppBar from '@/features/AppBar/ui/AppBar';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import Sidebar from '@/components/Sidebar/Sidebar';
