@@ -2,7 +2,7 @@
 
 import Button from '@/shared/ui/Button/Button';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import { MenuItem, Pagination, Select, Stack } from '@mui/material';
+import { MenuItem, Pagination, Select, Skeleton, Snackbar, Stack } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GetProposalsListResponse } from '@/shared/api/contracts/proposal.contract';
 import { ProposalListItem } from '@/entities/proposal/model/types';
@@ -27,33 +27,30 @@ import ProposalsInfo from '@/features/ProposalsList/ui/ProposalsInfo/ProposalsIn
 import ProposalsInfoSkeleton from '@/features/ProposalsList/ui/ProposalsInfo/ProposalsInfoSkeleton';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import { useDispatch } from 'react-redux';
-import { resetFilters } from '@/features/ProposalsList/model/proposalsFiltersSlice';
+import { resetFilters, resetSelectedIds } from '@/features/ProposalsList/model/proposalsFiltersSlice';
 import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import normalizeResponse from '@/shared/api/normalizeResponse';
-import getProposalErrorState from '@/features/ProposalsList/model/getProposalErrorState';
+import getProposalsErrorState from '@/features/ProposalsList/model/getProposalsErrorState';
+import ProposalActions from '@/features/ProposalsList/ui/ProposalsActions/ProposalsActions';
 
 const Proposals = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
 
   const [tracksStatus, setTracksStatus] = useState<PageStatus>('idle');
   const [reviewersStatus, setReviewersStatus] = useState<PageStatus>('idle');
   const [userStatus, setUserStatus] = useState<PageStatus>('idle');
   const [pageStatus, setPageStatus] = useState<PageStatus>('idle');
-  const [pageErrorProps, setPageErrorProps] = useState<ErrorStateProps | null>(
-    null,
-  );
-  const [userErrorProps, setUserErrorProps] = useState<ErrorStateProps | null>(
-    null,
-  );
-  const [pagination, setPagination] =
-    useState<PaginationEnvelope<ProposalListItem> | null>(null);
+  const [pageErrorProps, setPageErrorProps] = useState<ErrorStateProps | null>(null);
+  const [userErrorProps, setUserErrorProps] = useState<ErrorStateProps | null>(null);
+  const [pagination, setPagination] = useState<PaginationEnvelope<ProposalListItem> | null>(null);
   const [tracksList, setTracksList] = useState<Track[]>([]);
   const [reviewersList, setReviewersList] = useState<ReviewerListItem[]>([]);
   const [user, setUser] = useState<User | null>(null);
+  const [isExportSnackbarOpen, setIsExportSnackbarOpen] = useState<boolean>(false)
 
   const isPageAndUserLoaded =
     pageStatus === 'success' && userStatus === 'success';
@@ -171,7 +168,7 @@ const Proposals = () => {
         setUser(null);
         setUserStatus('error');
         setUserErrorProps(
-          getProposalErrorState(response.error, getErrorActions()),
+          getProposalsErrorState(response.error, getErrorActions()),
         );
         return;
       }
@@ -205,7 +202,7 @@ const Proposals = () => {
         setPagination(null);
         setPageStatus('error');
         setPageErrorProps(
-          getProposalErrorState(response.error, getErrorActions()),
+          getProposalsErrorState(response.error, getErrorActions()),
         );
         return;
       }
@@ -218,7 +215,7 @@ const Proposals = () => {
         setPagination(null);
         setPageStatus('error');
         setPageErrorProps(
-          getProposalErrorState(result.error, getErrorActions()),
+          getProposalsErrorState(result.error, getErrorActions()),
         );
         return;
       }
@@ -228,7 +225,8 @@ const Proposals = () => {
     };
 
     getPagination();
-  }, [searchParamsString, handleResetFilters]);
+    dispatch(resetSelectedIds())
+  }, [searchParamsString, handleResetFilters, dispatch]);
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -247,6 +245,16 @@ const Proposals = () => {
     router.push(`${pathname}?${params.toString()}`);
   };
 
+
+
+  const handleOpenExportSnackbar = () => {
+    setIsExportSnackbarOpen(true)
+  }
+
+  const handleCloseExportSnackbar = () => {
+    setIsExportSnackbarOpen(false)
+  }
+
   return (
     <>
       <PageHeader
@@ -254,19 +262,13 @@ const Proposals = () => {
         subtitle="Управление докладами, ревью и статусами программы "
       >
         <Stack direction="row" spacing={2}>
-          <Button
-            mode="button"
-            variant="contained"
-            size="small"
-            isDisabled={isPageOrUserNotLoaded}
-          >
-            Bulk actions
-          </Button>
+          {(user && proposalList && isPageAndUserLoaded) ? <ProposalActions user={user} proposals={proposalList} isDisabled={isPageOrUserNotLoaded} /> : <Skeleton variant='text' width={300} />}
           <Button
             mode="button"
             variant="outlined"
             size="small"
             isDisabled={isPageOrUserNotLoaded}
+            onClick={handleOpenExportSnackbar}
           >
             Экспорт
           </Button>
@@ -349,6 +351,7 @@ const Proposals = () => {
             </Select>
           </Stack>
         )}
+      <Snackbar open={isExportSnackbarOpen} message='Функция появится в ближайшее время!' onClose={handleCloseExportSnackbar} autoHideDuration={6000} sx={sx.exportSnackbar} />
     </>
   );
 };

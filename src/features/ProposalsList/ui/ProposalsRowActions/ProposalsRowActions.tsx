@@ -1,19 +1,18 @@
 import { Box, Menu, MenuItem, Stack } from '@mui/material';
-import { IRowActionProps } from './RowActions.types';
+import { IProposalsRowActionProps } from './ProposalsRowActions.types';
 import Button from '@/shared/ui/Button/Button';
 import { useMemo, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { proposalActionsDictionary } from '@/shared/data';
 import { styles } from './styles';
 
-const RowActions: React.FC<IRowActionProps> = ({ actions, proposalId }) => {
+const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({ actions, proposalId }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isMenuOpened = !!anchorEl;
 
   const actionsWithoutDetails = useMemo(() => {
     return actions.filter((action) => action !== 'viewDetails');
   }, [actions]);
-
   const sx = styles();
 
   const handleOpenMenu = (
@@ -71,4 +70,4 @@ const RowActions: React.FC<IRowActionProps> = ({ actions, proposalId }) => {
   );
 };
 
-export default RowActions;
+export default ProposalsRowActions;

@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   Paper,
   Table,
   TableBody,
@@ -10,21 +11,20 @@ import {
 } from '@mui/material';
 
 import {
-  formatDictionary,
-  levelDictionary,
   proposalListItemDictionary,
   proposalListItemKeys,
   proposalTableWidthDictionary,
 } from '@/shared/data';
-import StatusChip from '@/shared/ui/StatusChip/StatusChip';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
-import RowActions from '../../../../components/RowActions/RowActions';
-import getProposalListRowActions from '@/shared/utils/getProposalListRowActions';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { isSortBy, isSortOrder } from '@/shared/utils/typeGuards';
 import { SortBy } from '@/shared/types/primitives.types';
 import { styles } from './styles';
-import { IProposalsTableProps, ITableRowProps } from './ProposalsTable.types';
+import { IProposalsTableProps } from './ProposalsTable.types';
+import { useAppSelector } from '@/shared/store/hooks';
+import { useDispatch } from 'react-redux';
+import { setSelectedIds } from '../../model/proposalsFiltersSlice';
+import { useMemo } from 'react';
+import ProposalsTableRow from '../ProposalsTableRow/ProposalsTableRow';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
@@ -34,6 +34,8 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const dispatch = useDispatch()
+  const selectedIds = useAppSelector(store => store.proposalsFilters.selectedIds)
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');
@@ -44,35 +46,13 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
       ? untypedSortOrder
       : 'asc';
 
-  const sx = styles();
+  const selectedProposals = useMemo(() =>
+    new Set(selectedIds), [selectedIds])
 
-  const renderCell = ({ rowName, data, tracksList }: ITableRowProps) => {
-    switch (rowName) {
-      case 'status':
-        return (
-          <StatusChip
-            status={data[rowName]}
-            shape="rounded"
-            size="small"
-            type="contained"
-          />
-        );
-      case 'format':
-        return formatDictionary.get(data.format);
-      case 'level':
-        return levelDictionary.get(data.level);
-      case 'trackId': {
-        const trackName = tracksList.find((track) => track.id === data.trackId);
-        return trackName ? trackName.title : 'ID отсутствует';
-      }
-      case 'updatedAt':
-        return isoToLocalDate(data.updatedAt);
-      case 'actions':
-        return;
-      default:
-        return data[rowName];
-    }
-  };
+  const allVisibleSelected = useMemo(() => proposals.every((proposal) => selectedProposals.has(proposal.id)), [proposals, selectedProposals])
+  const someVisibleSelected = useMemo(() => proposals.some((proposal) => selectedProposals.has(proposal.id)), [proposals, selectedProposals])
+
+  const sx = useMemo(() => styles(), []);
 
   const handleSort = (by: SortBy | 'actions') => {
     if (by === 'actions') return;
@@ -93,6 +73,12 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const handleToggleSelectAllProposals = (event: React.ChangeEvent<HTMLInputElement, Element>) => {
+    const checked = event.target.checked
+
+    dispatch(setSelectedIds(checked ? proposals.map(proposal => proposal.id) : []))
+  }
+
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
@@ -109,46 +95,22 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
                 sortDirection={sortBy === key ? sortOrder : false}
                 key={`Table-head-cell-${key}`}
               >
-                <TableSortLabel
+                {key === 'checkbox' && <Checkbox sx={sx.tableCheckbox} checked={allVisibleSelected} indeterminate={someVisibleSelected && !allVisibleSelected} onChange={(event) => handleToggleSelectAllProposals(event)} />}
+                {key === 'actions' || key === 'checkbox' ? proposalListItemDictionary.get(key) : <TableSortLabel
                   active={sortBy === key}
                   direction={sortBy === key ? sortOrder : 'asc'}
                   sx={sx.tableSortLabel}
                   onClick={() => handleSort(key)}
                 >
                   {proposalListItemDictionary.get(key)}
-                </TableSortLabel>
+                </TableSortLabel>}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {proposals.map((proposal) => {
-            return (
-              <TableRow key={`Table-body-row-${proposal.id}`}>
-                {proposalListItemKeys.map((key) =>
-                  key === 'actions' ? (
-                    <TableCell key="Table-body-cell-actions">
-                      <RowActions
-                        actions={getProposalListRowActions(
-                          role,
-                          proposal.status,
-                        )}
-                        proposalId={proposal.id}
-                      />
-                    </TableCell>
-                  ) : (
-                    <TableCell key={`Table-body-cell-${key}`}>
-                      {renderCell({
-                        rowName: key,
-                        data: proposal,
-                        tracksList: tracks,
-                      })}
-                    </TableCell>
-                  ),
-                )}
-              </TableRow>
-            );
-          })}
+          {proposals.map((proposal) =>
+            <ProposalsTableRow key={`Table-body-row-${proposal.id}`} proposal={proposal} sx={sx.tableCheckbox} isSelected={selectedProposals.has(proposal.id)} role={role} tracks={tracks} />)}
         </TableBody>
       </Table>
     </TableContainer>

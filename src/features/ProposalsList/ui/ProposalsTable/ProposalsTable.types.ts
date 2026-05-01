@@ -9,7 +9,7 @@ export interface IProposalsTableProps {
 }
 
 export interface ITableRowProps {
-  rowName: keyof ProposalListItem | 'actions';
+  rowName: keyof ProposalListItem | 'actions' | 'checkbox';
   data: ProposalListItem;
   tracksList: Track[];
 }

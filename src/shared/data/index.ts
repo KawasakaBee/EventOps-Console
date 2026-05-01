@@ -1,6 +1,7 @@
 import { User } from '@/entities/user/model/types';
 import {
   Permission,
+  ProposalListActions,
   ProposalListRowActions,
   Role,
   Route,
@@ -73,6 +74,26 @@ export const permissionsByRole: Record<Role, Permission[]> = {
     'review:comment',
   ],
   speaker: ['proposals:view', 'proposals:create', 'proposals:update'],
+};
+
+export const proposalListActionsByRole: Record<Role, ProposalListActions[]> = {
+  admin: ['assignReviewer', 'changeStatus'],
+  manager: ['assignReviewer', 'changeStatus'],
+  reviewer: [],
+  speaker: [],
+};
+
+export const proposalListActionsByStatus: Record<
+  ProposalStatus,
+  ProposalListActions[]
+> = {
+  draft: [],
+  submitted: ['assignReviewer', 'changeStatus'],
+  rejected: ['changeStatus'],
+  accepted: ['changeStatus'],
+  changes_requested: ['changeStatus'],
+  in_review: ['assignReviewer', 'changeStatus'],
+  scheduled: ['changeStatus'],
 };
 
 export const proposalListRowActionsByRole: Record<
@@ -160,9 +181,10 @@ export const formatDictionary: Map<ProposalFormat, string> = new Map([
 ]);
 
 export const proposalListItemDictionary: Map<
-  keyof ProposalListItem | 'actions',
+  keyof ProposalListItem | 'actions' | 'checkbox',
   string
 > = new Map([
+  ['checkbox', ''],
   ['id', 'ID'],
   ['title', 'Название'],
   ['status', 'Статус'],
@@ -173,7 +195,12 @@ export const proposalListItemDictionary: Map<
   ['actions', 'Доступные действия'],
 ]);
 
-export const proposalListItemKeys: (keyof ProposalListItem | 'actions')[] = [
+export const proposalListItemKeys: (
+  | keyof ProposalListItem
+  | 'actions'
+  | 'checkbox'
+)[] = [
+  'checkbox',
   'id',
   'title',
   'status',
@@ -194,9 +221,13 @@ export const proposalActionsDictionary: Map<ProposalListRowActions, string> =
   ]);
 
 export const proposalTableWidthDictionary: Record<
-  keyof ProposalListItem | 'actions',
+  keyof ProposalListItem | 'actions' | 'checkbox',
   { width: number; skeletonWidth: number }
 > = {
+  checkbox: {
+    width: 40,
+    skeletonWidth: 20,
+  },
   id: {
     width: 90,
     skeletonWidth: 70,

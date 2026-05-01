@@ -32,7 +32,7 @@ import {
 } from '@/shared/data';
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
-import ProposalSearchInput from '../ProposalSearchInput/ProposalSearchInput';
+import ProposalSearchInput from '../ProposalsSearchInput/ProposalsSearchInput';
 import { useEffect } from 'react';
 import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
@@ -77,15 +77,13 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
     const { search, status, trackId, level, format, reviewerId } =
       parseProposalsListQuery(`${pathname}?${queryString}`);
 
-    const filtersStoreBody: FiltersState = {
-      filters: {
-        search,
-        status,
-        trackId,
-        level,
-        format,
-        reviewerId,
-      },
+    const filtersStoreBody: FiltersState['filters'] = {
+      search,
+      status,
+      trackId,
+      level,
+      format,
+      reviewerId,
     };
 
     dispatch(hydrateFilters(filtersStoreBody));

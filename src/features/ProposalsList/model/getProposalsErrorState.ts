@@ -1,7 +1,7 @@
 import { ErrorEnvelope } from '../../../shared/types/api.types';
 import { ErrorStateProps } from '../../../shared/ui/ErrorState/ErrorState.types';
 
-const getProposalErrorState = (
+const getProposalsErrorState = (
   error: ErrorEnvelope['error'],
   actions: {
     retry: () => void;
@@ -94,4 +94,4 @@ const getProposalErrorState = (
   }
 };
 
-export default getProposalErrorState;
+export default getProposalsErrorState;

@@ -61,6 +61,10 @@ export const errorCodes = [
 
 export type ErrorCode = (typeof errorCodes)[number];
 
+export const proposalListActions = ['assignReviewer', 'changeStatus'] as const;
+
+export type ProposalListActions = (typeof proposalListActions)[number];
+
 export const proposalListRowActions = [
   'viewDetails',
   'assignReviewer',

@@ -15,6 +15,7 @@ export type FiltersState = {
     format: ProposalFormat[];
     reviewerId: ID | null;
   };
+  selectedIds: ID[];
 };
 
 const initialState: FiltersState = {
@@ -26,14 +27,15 @@ const initialState: FiltersState = {
     format: [],
     reviewerId: null,
   },
+  selectedIds: [],
 };
 
 const proposalsFiltersSlice = createSlice({
   name: 'proposalsFilters',
   initialState,
   reducers: {
-    hydrateFilters: (state, action: PayloadAction<FiltersState>) => {
-      state.filters = action.payload.filters;
+    hydrateFilters: (state, action: PayloadAction<FiltersState['filters']>) => {
+      state.filters = action.payload;
     },
 
     patchFilters: (
@@ -46,10 +48,36 @@ const proposalsFiltersSlice = createSlice({
     resetFilters: (state) => {
       state.filters = initialState.filters;
     },
+
+    setSelectedIds: (state, action: PayloadAction<ID[]>) => {
+      state.selectedIds = action.payload;
+    },
+
+    toggleSelectedId: (state, action: PayloadAction<ID>) => {
+      const prev: Set<ID> = new Set(state.selectedIds);
+
+      if (prev.has(action.payload)) {
+        prev.delete(action.payload);
+      } else {
+        prev.add(action.payload);
+      }
+
+      state.selectedIds = [...prev];
+    },
+
+    resetSelectedIds: (state) => {
+      state.selectedIds = initialState.selectedIds;
+    },
   },
 });
 
-export const { hydrateFilters, patchFilters, resetFilters } =
-  proposalsFiltersSlice.actions;
+export const {
+  hydrateFilters,
+  patchFilters,
+  resetFilters,
+  setSelectedIds,
+  toggleSelectedId,
+  resetSelectedIds,
+} = proposalsFiltersSlice.actions;
 
 export const proposalsFiltersReducer = proposalsFiltersSlice.reducer;

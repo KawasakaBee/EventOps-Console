@@ -1,10 +1,10 @@
 import { FormControl, TextField } from '@mui/material';
-import { IProposalSearchInputProps } from './ProposalSearchInput.types';
+import { IProposalsSearchInputProps } from './ProposalsSearchInput.types';
 import { useRef } from 'react';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { patchFilters } from '@/features/ProposalsList/model/proposalsFiltersSlice';
 
-const ProposalSearchInput: React.FC<IProposalSearchInputProps> = ({
+const ProposalsSearchInput: React.FC<IProposalsSearchInputProps> = ({
   isLoading,
   sxFormControl,
   sxSearchInput,
@@ -34,4 +34,4 @@ const ProposalSearchInput: React.FC<IProposalSearchInputProps> = ({
   );
 };
 
-export default ProposalSearchInput;
+export default ProposalsSearchInput;
