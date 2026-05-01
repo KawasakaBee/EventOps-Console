@@ -7,9 +7,3 @@ export interface IProposalsTableProps {
   tracks: Track[];
   role: Role;
 }
-
-export interface ITableRowProps {
-  rowName: keyof ProposalListItem | 'actions' | 'checkbox';
-  data: ProposalListItem;
-  tracksList: Track[];
-}

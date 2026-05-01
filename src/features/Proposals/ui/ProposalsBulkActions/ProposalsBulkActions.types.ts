@@ -1,7 +1,7 @@
 import { ProposalListItem } from '@/entities/proposal/model/types';
 import { User } from '@/entities/user/model/types';
 
-export interface IProposalsActionsProps {
+export interface IProposalsBulkActionsProps {
   user: User;
   proposals: ProposalListItem[];
   isDisabled: boolean;

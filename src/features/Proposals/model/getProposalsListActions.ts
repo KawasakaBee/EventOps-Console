@@ -1,11 +1,14 @@
 import { ProposalStatus } from '@/entities/proposal/model/types';
-import { ProposalListActions, Role } from '../types/primitives.types';
+import {
+  ProposalListActions,
+  Role,
+} from '../../../shared/types/primitives.types';
 import {
   proposalListActionsByRole,
   proposalListActionsByStatus,
-} from '../data';
+} from '../../../shared/data';
 
-const getProposalListActions = (
+const getProposalsListActions = (
   role: Role,
   status: ProposalStatus,
 ): ProposalListActions[] => {
@@ -15,4 +18,4 @@ const getProposalListActions = (
   return actionsByRole.filter((item) => actionsByStatus.has(item));
 };
 
-export default getProposalListActions;
+export default getProposalsListActions;

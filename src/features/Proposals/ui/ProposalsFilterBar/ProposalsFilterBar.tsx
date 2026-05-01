@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import { IProposalsFilterBarPropos } from './ProposalsFilterBar.types';
+import { IProposalsFilterBarProps } from './ProposalsFilterBar.types';
 import {
   ProposalFormat,
   proposalFormats,
@@ -40,9 +40,9 @@ import {
   FiltersState,
   hydrateFilters,
   patchFilters,
-} from '@/features/ProposalsList/model/proposalsFiltersSlice';
+} from '@/features/Proposals/model/proposalsFiltersSlice';
 
-const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
+const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   tracks,
   tracksStatus,
   reviewers,
@@ -191,11 +191,11 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarPropos> = ({
           disabled={isDisabled || tracksStatus !== 'success'}
           sx={sx.filterInput}
         >
-          <InputLabel id="proposal-trackId-select">Отслеживаемый ID</InputLabel>
+          <InputLabel id="proposal-trackId-select">Трек</InputLabel>
           <Select
             value={trackIdsList}
             labelId="proposal-trackId-select"
-            label="Отслеживаемый ID"
+            label="Трек"
             multiple
             onChange={(event) => handleTrackIdFilter(event.target.value)}
           >

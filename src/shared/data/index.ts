@@ -190,7 +190,7 @@ export const proposalListItemDictionary: Map<
   ['status', 'Статус'],
   ['format', 'Формат'],
   ['level', 'Уровень'],
-  ['trackId', 'Отслеживаемый\u00a0ID'],
+  ['trackId', 'Трек'],
   ['updatedAt', 'Последнее обновление'],
   ['actions', 'Доступные действия'],
 ]);

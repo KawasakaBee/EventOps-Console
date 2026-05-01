@@ -1,12 +1,12 @@
 'use client';
 
 import { Drawer, Link } from '@mui/material';
-import { ISidebarPropos } from './Sidebar.types';
+import { ISidebarProps } from './Sidebar.types';
 import { routesByRole, routesDictionary } from '@/shared/data';
 import NextLink from 'next/link';
 import { styles } from '../../features/AppBar/ui/styles';
 
-const Sidebar: React.FC<ISidebarPropos> = ({ role, sidebarSx }) => {
+const Sidebar: React.FC<ISidebarProps> = ({ role, sidebarSx }) => {
   const sx = styles();
 
   return (

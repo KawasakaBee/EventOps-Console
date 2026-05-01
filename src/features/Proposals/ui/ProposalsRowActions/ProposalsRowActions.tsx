@@ -6,7 +6,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { proposalActionsDictionary } from '@/shared/data';
 import { styles } from './styles';
 
-const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({ actions, proposalId }) => {
+const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
+  actions,
+  proposalId,
+}) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isMenuOpened = !!anchorEl;
 
@@ -58,6 +61,7 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({ actions, prop
                 <MenuItem
                   key={`Actions-menu-item-${action}`}
                   onClick={handleCloseMenu}
+                  disabled //Удалить, когда будут реализованы actions
                 >
                   {proposalActionsDictionary.get(action)}
                 </MenuItem>

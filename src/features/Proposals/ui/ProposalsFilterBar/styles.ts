@@ -4,8 +4,7 @@ type Key =
   | 'filtersContainer'
   | 'filtersWrapper'
   | 'filterSearchInput'
-  | 'filterInput'
-  | 'skseletonFilterInput';
+  | 'filterInput';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -25,9 +24,6 @@ export const styles: Style = () => {
       mb: 2,
     },
     filterInput: {
-      minWidth: 220,
-    },
-    skseletonFilterInput: {
       minWidth: 220,
     },
   };
