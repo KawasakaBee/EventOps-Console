@@ -25,6 +25,44 @@ export const routes = [
 
 export type Route = (typeof routes)[number];
 
+export const navigationRoutes = routes.filter(
+  (route) => route !== '/login' && route !== '/proposals/[id]',
+);
+
+export type NavigationRoute = (typeof navigationRoutes)[number];
+
+export const breadcrumbsRoutes = routes.filter((route) => route !== '/login');
+
+export type BreadcrumbsRoute = (typeof breadcrumbsRoutes)[number];
+
+export const routesNames = [
+  'Авторизация',
+  'Панель управления',
+  'Заявки',
+  'Заявка',
+  'Создать заявку',
+  'Мои заявки',
+  'Спикеры',
+  'Расписание',
+  'Аналитика',
+  'Настройки',
+  'Аудит',
+] as const;
+
+export type RouteName = (typeof routesNames)[number];
+
+export const navigationRoutesNames = routesNames.filter(
+  (name) => name !== 'Авторизация' && name !== 'Заявка',
+);
+
+export type NavigationRouteName = (typeof navigationRoutesNames)[number];
+
+export const breadcrumbsRoutesNames = routesNames.filter(
+  (name) => name !== 'Авторизация',
+);
+
+export type BreadcrumbsRouteName = (typeof breadcrumbsRoutesNames)[number];
+
 export const permissions = [
   'dashboard:view',
   'proposals:list',
@@ -94,3 +132,25 @@ export type SortOrder = (typeof sortOrder)[number];
 export const pageStatuses = ['idle', 'loading', 'success', 'error'] as const;
 
 export type PageStatus = (typeof pageStatuses)[number];
+
+export const roleNames = [
+  'Администратор',
+  'Менеджер',
+  'Ревьюер',
+  'Спикер',
+] as const;
+
+export type RoleName = (typeof roleNames)[number];
+
+export const historyActionNames = [
+  'Создано',
+  'Обновлено',
+  'Изменён статус',
+  'Назначен ревьюер',
+  'Добавлен комментарий',
+  'Добавлено ревью',
+  'Добавлено в расписание',
+  'Удалено из расписания',
+] as const;
+
+export type HistoryActionName = (typeof historyActionNames)[number];

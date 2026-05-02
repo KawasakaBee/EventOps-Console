@@ -1,18 +1,40 @@
 import { Box, Typography } from '@mui/material';
 import { styles } from './styles';
-import { IPageHeaderProps } from './PageHeader.types';
+import { IPageHeader } from './PageHeader.types';
+import Button from '../Button/Button';
+import { isNavigationRoute } from '@/shared/utils/typeGuards';
+import { navigationDicrionary } from '@/shared/data';
 
-const PageHeader = ({
-  children,
-  title,
-  subtitle,
-  actions,
-}: IPageHeaderProps) => {
+const PageHeader: React.FC<IPageHeader> = (props) => {
+  const { pageName, title, children, mode } = props;
+
+  const sx = styles();
+
+  const breacdrumbs = () => {
+    if (mode !== 'inner') return null;
+
+    const { to } = props;
+    if (!isNavigationRoute(to)) return null;
+
+    return (
+      <Button
+        mode="link"
+        variant="outlined"
+        size="small"
+        to={to}
+        isRelativeLink
+        sx={sx.backButton}
+      >
+        Назад в {navigationDicrionary.get(to)}
+      </Button>
+    );
+  };
+
   return (
-    <Box sx={styles().pageHeader}>
-      <Typography variant="h1">{title}</Typography>
-      {!!subtitle && <Typography variant="h2">{subtitle}</Typography>}
-      {!!actions && <Typography variant="h2">{actions}</Typography>}
+    <Box sx={sx.pageHeader}>
+      {breacdrumbs()}
+      {pageName && <Typography variant="h1">{pageName}</Typography>}
+      {title}
       {children}
     </Box>
   );

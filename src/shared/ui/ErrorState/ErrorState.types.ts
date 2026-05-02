@@ -2,6 +2,7 @@ import { SvgIconComponent } from '@mui/icons-material';
 
 interface IBaseErrorStateProps {
   title: string;
+  fullHeight?: boolean;
 }
 
 interface IErrorStateProps extends IBaseErrorStateProps {

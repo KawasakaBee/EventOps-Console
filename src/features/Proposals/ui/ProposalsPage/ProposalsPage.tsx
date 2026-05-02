@@ -9,6 +9,7 @@ import {
   Skeleton,
   Snackbar,
   Stack,
+  Typography,
 } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GetProposalsListResponse } from '@/shared/api/contracts/proposal.contract';
@@ -43,10 +44,13 @@ import getProposalsErrorState from '@/features/Proposals/model/getProposalsError
 import ProposalsBulkActions from '@/features/Proposals/ui/ProposalsBulkActions/ProposalsBulkActions';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { styles } from './styles';
+import { breadcrumbsDicrionary } from '@/shared/data';
+import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
 
 const ProposalsPage = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
 
@@ -283,8 +287,15 @@ const ProposalsPage = () => {
   return (
     <>
       <PageHeader
-        title="Заявки"
-        subtitle="Управление докладами, ревью и статусами программы "
+        mode="outer"
+        pageName={
+          breadcrumbsRoute ? breadcrumbsDicrionary[breadcrumbsRoute] : null
+        }
+        title={
+          <Typography variant="h3">
+            Управление докладами, ревью и статусами программы
+          </Typography>
+        }
       >
         <Stack direction="row" spacing={2}>
           {user && proposalList && isDataReady ? (

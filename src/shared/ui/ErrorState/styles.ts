@@ -8,13 +8,21 @@ type Key =
   | 'dialogActions'
   | 'dialogButtons';
 
-type Style = () => {
+interface IStyleOptions {
+  fullHeight: boolean;
+}
+
+type Style = (options: IStyleOptions) => {
   readonly [key in Key]: SxProps<Theme>;
 };
 
-export const styles: Style = () => {
+export const styles: Style = (options) => {
+  const { fullHeight } = options;
+
   return {
     errorStateContainer: {
+      height: fullHeight ? 1 : 'auto',
+      justifyContent: 'center',
       alignItems: 'center',
     },
     snackbar: {

@@ -1,33 +1,56 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import PageHeader from './PageHeader';
+import { expect, within } from 'storybook/test';
+import { breadcrumbsDicrionary } from '@/shared/data';
 
 const meta = {
-  title: 'SharedUI/PageHeader',
+  title: 'Shared UI/PageHeader',
+  args: {
+    mode: 'outer',
+    pageName: 'Мои заявки',
+    title: 'Тестовый заголовок Page Header',
+    children: 'Описание заголовка',
+  },
+  argTypes: {
+    mode: { control: false },
+  },
   component: PageHeader,
 } satisfies Meta<typeof PageHeader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TitleOnly: Story = {
+export const OuterPageHeader: Story = {
   args: {
-    children: 'This is PageHeader title only',
-    title: 'This is title',
+    mode: 'outer',
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const pageName = canvas.getByText(`${args.pageName}`);
+    const title = canvas.getByText(`${args.title}`);
+    const children = canvas.getByText(`${args.children}`);
+
+    await expect(canvasElement).toBeVisible();
+    await expect(pageName).toBeInTheDocument();
+    await expect(title).toBeInTheDocument();
+    await expect(children).toBeInTheDocument();
   },
 };
 
-export const TitleWithSubtitle: Story = {
+export const InnerPageHeader: Story = {
   args: {
-    children: 'This is PageHeader title only',
-    title: 'This is title',
-    subtitle: 'This is subtitle',
+    mode: 'inner',
+    to: '/analytics',
   },
-};
+  play: async ({ args, canvasElement }) => {
+    if (args.mode !== 'inner') return;
 
-export const TitleWithActions: Story = {
-  args: {
-    children: 'This is PageHeader title only',
-    title: 'This is title',
-    actions: 'This is actions',
+    const canvas = within(canvasElement);
+    const backButton = canvas.getByRole('link', {
+      name: `Назад в ${breadcrumbsDicrionary[args.to]}`,
+    });
+
+    await expect(backButton).toBeInTheDocument();
+    await expect(backButton).toHaveAttribute('href', args.to);
   },
 };

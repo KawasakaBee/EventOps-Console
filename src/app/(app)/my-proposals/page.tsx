@@ -1,5 +1,5 @@
 import Button from '@/shared/ui/Button/Button';
-import PageHeader from '@/shared/ui/PageHeader/PageHeader';
+// import PageHeader from '@/shared/ui/PageHeader/PageHeader';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { List, ListItem, Typography } from '@mui/material';
@@ -8,12 +8,12 @@ import HomeIcon from '@mui/icons-material/Home';
 const MyProposals = () => {
   return (
     <>
-      <PageHeader
+      {/* <PageHeader
         title="This is PageHeader title"
         subtitle="This is PageHeader Subtitle"
       >
         This is custom text inside PageHeader
-      </PageHeader>
+      </PageHeader> */}
       <Typography variant="h1">This is Dashboard</Typography>
       <Button
         mode="button"

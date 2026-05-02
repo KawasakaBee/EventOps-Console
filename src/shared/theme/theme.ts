@@ -14,4 +14,13 @@ export const theme = createTheme({
   zIndex: {
     appBar: 1200,
   },
+  components: {
+    MuiTab: {
+      defaultProps: {
+        style: {
+          color: palette.primary.main,
+        },
+      },
+    },
+  },
 });

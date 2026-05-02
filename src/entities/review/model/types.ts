@@ -8,6 +8,13 @@ export const recommendations = [
 
 export type Recommendation = (typeof recommendations)[number];
 
+export const recommendationsNames = [
+  'Принять',
+  'Отклонить',
+  'Нужны изменения',
+] as const;
+
+export type RecommendationName = (typeof recommendationsNames)[number];
 export interface Review {
   id: ID;
   proposalId: ID;

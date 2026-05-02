@@ -3,10 +3,12 @@ import { proposalHandlers } from './handlers/proposals.handlers';
 import { dashboardHandlers } from './handlers/dashboard.handlers';
 import { trackHandlers } from './handlers/track.handler';
 import { reviewersHandlers } from './handlers/reviewers.handlers';
+import { usersHandlers } from './handlers/users.handlers';
 
 export const worker = setupWorker(
   ...dashboardHandlers,
   ...proposalHandlers,
   ...trackHandlers,
   ...reviewersHandlers,
+  ...usersHandlers,
 );

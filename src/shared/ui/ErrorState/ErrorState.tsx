@@ -15,9 +15,9 @@ import Button from '../Button/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
 const ErrorState: React.FC<ErrorStateProps> = (props) => {
-  const { type, title } = props;
+  const { type, title, fullHeight } = props;
 
-  const sx = styles();
+  const sx = styles({ fullHeight: fullHeight ? fullHeight : false });
 
   if (type === 'state') {
     const { subtitle, action, link } = props;

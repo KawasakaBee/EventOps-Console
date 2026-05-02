@@ -1,9 +1,15 @@
 import { User } from '@/entities/user/model/types';
 import {
+  BreadcrumbsRoute,
+  BreadcrumbsRouteName,
+  HistoryActionName,
+  NavigationRoute,
+  NavigationRouteName,
   Permission,
   ProposalListActions,
   ProposalListRowActions,
   Role,
+  RoleName,
   Route,
 } from '../types/primitives.types';
 import {
@@ -13,8 +19,13 @@ import {
   ProposalStatus,
 } from '@/entities/proposal/model/types';
 import { ErrorEnvelope } from '../types/api.types';
+import {
+  Recommendation,
+  RecommendationName,
+} from '@/entities/review/model/types';
+import { HistoryAction } from '@/entities/history/model/types';
 
-export const routesByRole: Record<Role, Route[]> = {
+export const routesByRole: Record<Role, Exclude<Route, '/login'>[]> = {
   admin: [
     '/dashboard',
     '/proposals',
@@ -36,7 +47,7 @@ export const routesByRole: Record<Role, Route[]> = {
     '/audit',
   ],
   reviewer: ['/proposals', '/proposals/[id]'],
-  speaker: ['/proposals/[id]', '/submit', '/my-proposals'],
+  speaker: ['/submit', '/proposals/[id]', '/my-proposals'],
 };
 
 export const permissionsByRole: Record<Role, Permission[]> = {
@@ -146,17 +157,34 @@ export const speaker: User = {
   permissions: permissionsByRole.speaker,
 };
 
-export const routesDictionary: Map<Route, string> = new Map([
-  ['/dashboard', 'Панель управления'],
-  ['/proposals', 'Заявки'],
-  ['/submit', 'Создать заявку'],
-  ['/my-proposals', 'Мои заявки'],
-  ['/speakers', 'Спикеры'],
-  ['/schedule', 'Расписание'],
-  ['/analytics', 'Аналитика'],
-  ['/settings', 'Настройки'],
-  ['/audit', 'Аудит'],
-]);
+export const navigationDicrionary: Map<NavigationRoute, NavigationRouteName> =
+  new Map([
+    ['/dashboard', 'Панель управления'],
+    ['/proposals', 'Заявки'],
+    ['/submit', 'Создать заявку'],
+    ['/my-proposals', 'Мои заявки'],
+    ['/speakers', 'Спикеры'],
+    ['/schedule', 'Расписание'],
+    ['/analytics', 'Аналитика'],
+    ['/settings', 'Настройки'],
+    ['/audit', 'Аудит'],
+  ]);
+
+export const breadcrumbsDicrionary: Record<
+  BreadcrumbsRoute,
+  BreadcrumbsRouteName
+> = {
+  '/dashboard': 'Панель управления',
+  '/proposals': 'Заявки',
+  '/proposals/[id]': 'Заявка',
+  '/submit': 'Создать заявку',
+  '/my-proposals': 'Мои заявки',
+  '/speakers': 'Спикеры',
+  '/schedule': 'Расписание',
+  '/analytics': 'Аналитика',
+  '/settings': 'Настройки',
+  '/audit': 'Аудит',
+};
 
 export const statusDictionary: Map<ProposalStatus, string> = new Map([
   ['draft', 'Черновик'],
@@ -265,4 +293,41 @@ export const proposalTableWidthDictionary: Record<
 export const fallbackError: ErrorEnvelope['error'] = {
   code: 'NETWORK_ERROR',
   message: 'Не удалось выполнить запрос',
+};
+
+export const recommendationDicrionary: Record<
+  Recommendation,
+  RecommendationName
+> = {
+  approve: 'Принять',
+  reject: 'Отклонить',
+  request_changes: 'Нужны изменения',
+};
+
+export const tabsDictionary: Record<number, string> = {
+  0: 'Информация',
+  1: 'Ревью',
+  2: 'Комментарии',
+  3: 'История',
+};
+
+export const rolesDictionary: Record<Role, RoleName> = {
+  admin: 'Администратор',
+  manager: 'Менеджер',
+  reviewer: 'Ревьюер',
+  speaker: 'Спикер',
+};
+
+export const historyActionsDictionary: Record<
+  HistoryAction,
+  HistoryActionName
+> = {
+  created: 'Создано',
+  updated: 'Обновлено',
+  status_changed: 'Изменён статус',
+  reviewer_assigned: 'Назначен ревьюер',
+  comment_added: 'Добавлен комментарий',
+  review_added: 'Добавлено ревью',
+  scheduled: 'Добавлено в расписание',
+  unscheduled: 'Удалено из расписания',
 };

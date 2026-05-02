@@ -4,12 +4,19 @@ import {
 } from '@/entities/dashboard/model/types';
 import { PostDemoLoginRequest } from '../api/contracts/auth.contract';
 import {
+  BreadcrumbsRoute,
+  breadcrumbsRoutes,
   ErrorCode,
   errorCodes,
   ID,
+  ISODateString,
+  NavigationRoute,
+  navigationRoutes,
   PageSize,
   Role,
   roles,
+  Route,
+  routes,
   sortBy,
   SortBy,
   sortOrder,
@@ -25,6 +32,7 @@ import {
 } from '@/entities/proposal/model/types';
 import { PAGE_SIZE_OPTIONS } from '../config/layout';
 import { ErrorEnvelope } from '../types/api.types';
+import { Recommendation, recommendations } from '@/entities/review/model/types';
 
 export const isRole = (value: unknown): value is Role =>
   typeof value === 'string' && roles.some((role) => role === value);
@@ -83,3 +91,24 @@ export const isErrorEnvelope = (value: unknown): value is ErrorEnvelope => {
     (fields === undefined || isStringRecord(fields))
   );
 };
+
+export const isRoute = (value: unknown): value is Route =>
+  typeof value === 'string' && routes.some((route) => route === value);
+
+export const isNavigationRoute = (value: unknown): value is NavigationRoute =>
+  typeof value === 'string' &&
+  navigationRoutes.some((route) => route === value);
+
+export const isBreadcrumbsRoute = (value: unknown): value is BreadcrumbsRoute =>
+  typeof value === 'string' &&
+  breadcrumbsRoutes.some((route) => route === value);
+
+export const isIsoTime = (value: unknown): value is ISODateString => {
+  if (typeof value !== 'string') return false;
+  const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/;
+
+  return isoDateTimeRegex.test(value) && !Number.isNaN(Date.parse(value));
+};
+
+export const isRecommendation = (value: unknown): value is Recommendation =>
+  typeof value === 'string' && recommendations.some((item) => item === value);

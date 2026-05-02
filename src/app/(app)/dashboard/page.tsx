@@ -1,5 +1,5 @@
 'use client';
-import PageHeader from '@/shared/ui/PageHeader/PageHeader';
+// import PageHeader from '@/shared/ui/PageHeader/PageHeader';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { User } from '@/entities/user/model/types';
@@ -68,12 +68,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageHeader
+      {/* <PageHeader
         title="This is PageHeader title"
         subtitle="This is PageHeader Subtitle"
       >
         This is custom text inside PageHeader
-      </PageHeader>
+      </PageHeader> */}
       <Typography variant="h1">This is Dashboard</Typography>
       {dashboard && (
         <Box>

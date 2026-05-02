@@ -8,3 +8,5 @@ export interface User {
   eventIds: ID[];
   permissions: Permission[];
 }
+
+export type UserListItem = Pick<User, 'name' | 'id'>;
