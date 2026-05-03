@@ -13,6 +13,8 @@ import {
   NavigationRoute,
   navigationRoutes,
   PageSize,
+  ProposalDetailsTab,
+  proposalDetailsTabs,
   Role,
   roles,
   Route,
@@ -112,3 +114,8 @@ export const isIsoTime = (value: unknown): value is ISODateString => {
 
 export const isRecommendation = (value: unknown): value is Recommendation =>
   typeof value === 'string' && recommendations.some((item) => item === value);
+
+export const isProposalDetailsTab = (
+  value: unknown,
+): value is ProposalDetailsTab =>
+  typeof value === 'string' && proposalDetailsTabs.some((tab) => tab === value);

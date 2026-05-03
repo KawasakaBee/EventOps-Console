@@ -5,31 +5,31 @@ import { Comment } from '@/entities/comment/model/types';
 
 const normalizeHistoryPayload = (
   payload: Record<string, unknown>,
-  reviewers: ReviewerListItem[],
+  reviewers: ReviewerListItem[] | null,
   comments: Comment[],
-): string | null => {
-  let result = '';
+): string[] | null => {
+  const result = [];
 
   if (Object.hasOwn(payload, 'reason')) {
-    result = result + 'Причина: ' + '"' + payload.reason + '"' + '\n';
+    result.push(`Причина: "${payload.reason}"`);
   }
 
   if (Object.hasOwn(payload, 'reviewId')) {
-    result = result + 'ID Ревью: ' + '"' + payload.reviewId + '"' + '\n';
+    result.push(`ID Ревью: "${payload.reviewId}"`);
   }
 
   if (Object.hasOwn(payload, 'recommendation')) {
     const recommendation = isRecommendation(payload.recommendation)
       ? recommendationDicrionary[payload.recommendation]
       : payload.recommendation;
-    result = result + 'Рекомендация: ' + '"' + recommendation + '"' + '\n';
+    result.push(`Рекомендация: "${recommendation}"`);
   }
 
-  if (Object.hasOwn(payload, 'reviewerId')) {
+  if (Object.hasOwn(payload, 'reviewerId') && reviewers) {
     if (typeof payload.reviewerId === 'string') {
       const reviewer = reviewers.find((item) => item.id === payload.reviewerId);
       if (reviewer) {
-        result = result + 'Ревьюер: ' + '"' + reviewer.name + '"' + '\n';
+        result.push(`Ревьюер: "${reviewer.name}"`);
       }
     }
   }
@@ -38,12 +38,12 @@ const normalizeHistoryPayload = (
     if (typeof payload.commentId === 'string') {
       const comment = comments.find((item) => item.id === payload.commentId);
       if (comment) {
-        result = result + 'Комментарий: ' + '"' + comment.message + '"' + '\n';
+        result.push(`Комментарий: "${comment.message}"`);
       }
     }
   }
 
-  return result === '' ? null : result;
+  return result.length > 0 ? result : null;
 };
 
 export default normalizeHistoryPayload;

@@ -1,22 +1,54 @@
-import { Grid } from '@mui/material';
+import { Chip, Divider, Grid, Stack, Typography } from '@mui/material';
 import { IReviewCardProps } from './ReviewCard.types';
 import { recommendationDicrionary } from '@/shared/data';
+import { styles } from './styles';
 
 const ReviewCard: React.FC<IReviewCardProps> = ({ review, reviewerName }) => {
+  const sx = styles();
+
   return (
-    <Grid container columnSpacing={4} rowSpacing={1}>
-      <Grid size={2}>Ревьюер:</Grid>
-      <Grid size={10}>{reviewerName ? reviewerName : '—'}</Grid>
-      <Grid size={2}>Оценка за контент:</Grid>
-      <Grid size={10}>{review.scoreContent}</Grid>
-      <Grid size={2}>Оценка за подачу материала:</Grid>
-      <Grid size={10}>{review.scoreDelivery}</Grid>
-      <Grid size={2}>Оценка за релевантность:</Grid>
-      <Grid size={10}>{review.scoreRelevance}</Grid>
-      <Grid size={2}>Рекомендации:</Grid>
-      <Grid size={10}>{recommendationDicrionary[review.recommendation]}</Grid>
-      <Grid size={2}>Комментарий:</Grid>
-      <Grid size={10}>{review.comment}</Grid>
+    <Grid
+      container
+      columnSpacing={1}
+      rowSpacing={2}
+      sx={sx.reviewCardContainer}
+    >
+      <Grid
+        size={12}
+        container
+        columnSpacing={2}
+        sx={sx.reviewCardReviewerWrapper}
+      >
+        <Grid size="auto">
+          <Typography variant="subtitle2">
+            <b>{reviewerName ?? '—'}</b>
+          </Typography>
+        </Grid>
+        <Grid size="auto">
+          <Chip
+            label={<b>{recommendationDicrionary[review.recommendation]}</b>}
+          />
+        </Grid>
+      </Grid>
+      <Grid size={12} sx={sx.reviewerCardScoreWrapper}>
+        <Stack
+          direction="row"
+          spacing={2}
+          divider={<Divider orientation="vertical" flexItem />}
+        >
+          <Typography variant="body2">
+            Контент: <b>{review.scoreContent} / 10</b>
+          </Typography>
+          <Typography variant="body2">
+            Подача: <b>{review.scoreDelivery} / 10</b>
+          </Typography>
+          <Typography variant="body2">
+            Релевантность: <b>{review.scoreRelevance} / 10</b>
+          </Typography>
+        </Stack>
+      </Grid>
+      <Grid size="auto">Комментарий:</Grid>
+      <Grid size="grow">{review.comment}</Grid>
     </Grid>
   );
 };

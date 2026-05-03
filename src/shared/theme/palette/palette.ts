@@ -3,12 +3,20 @@ declare module '@mui/material/styles' {
     neutral: Palette['primary'];
     orange: Palette['primary'];
     purple: Palette['primary'];
+    admin: Palette['primary'];
+    manager: Palette['primary'];
+    reviewer: Palette['primary'];
+    speaker: Palette['primary'];
   }
 
   interface PaletteOptions {
     neutral?: PaletteOptions['primary'];
     orange?: PaletteOptions['primary'];
     purple?: PaletteOptions['primary'];
+    admin?: PaletteOptions['primary'];
+    manager?: PaletteOptions['primary'];
+    reviewer?: PaletteOptions['primary'];
+    speaker?: PaletteOptions['primary'];
   }
 }
 
@@ -47,5 +55,17 @@ export const palette = {
   },
   purple: {
     main: '#dd44eb',
+  },
+  admin: {
+    main: '#ee1d7e',
+  },
+  manager: {
+    main: '#135e19',
+  },
+  reviewer: {
+    main: '#171beb',
+  },
+  speaker: {
+    main: '#eee7ea',
   },
 };

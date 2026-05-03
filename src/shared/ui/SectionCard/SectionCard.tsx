@@ -17,7 +17,7 @@ const SectionCard: React.FC<ISectionCardProps> = ({
         ...(Array.isArray(restSx) ? restSx : restSx ? [restSx] : []),
       ]}
     >
-      <Typography variant="h3">{title}</Typography>
+      {title && <Typography variant="h3">{title}</Typography>}
       {actions}
       {children}
     </Card>

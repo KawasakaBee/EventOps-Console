@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'itemTime' | 'itemChangesWrapper' | 'itemChanges';
+type Key = 'proposalTab' | 'tabCard';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,14 +9,14 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    itemTime: {
-      opacity: 0.5,
+    proposalTab: {
+      textTransform: 'initial',
     },
-    itemChangesWrapper: {
-      alignItems: 'center',
-    },
-    itemChanges: {
-      alignItems: 'center',
+    tabCard: {
+      p: 2,
+      '& > h3': {
+        mb: 3,
+      },
     },
   };
 };

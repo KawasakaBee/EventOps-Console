@@ -1,7 +1,11 @@
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'itemTime' | 'itemChangesWrapper' | 'itemChanges';
+type Key =
+  | 'overviewHead'
+  | 'overviewList'
+  | 'overviewTitle'
+  | 'abstractWrapper';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,14 +13,17 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    itemTime: {
-      opacity: 0.5,
+    overviewHead: {
+      mb: 4,
     },
-    itemChangesWrapper: {
+    overviewList: {
       alignItems: 'center',
     },
-    itemChanges: {
-      alignItems: 'center',
+    overviewTitle: {
+      mb: 3,
+    },
+    abstractWrapper: {
+      mb: 4,
     },
   };
 };

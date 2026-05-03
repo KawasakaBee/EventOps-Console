@@ -1,11 +1,11 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import { IProposalReviewsTabProps } from './ProposalReviewsTab.types';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import getAverageReviewsScore from '@/shared/utils/getAverageReviewsScore';
 import getFinalReviewReccomendation from '@/shared/utils/getFinalReviewRecommendation';
-import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import { useMemo } from 'react';
 import ReviewCard from '../ReviewCard/ReviewCard';
+import { styles } from './styles';
 
 const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
   reviews,
@@ -22,49 +22,42 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
     );
   }, [reviewers, reviews]);
 
+  const sx = styles();
+
   return (
     <Box>
       {reviews.length !== 0 ? (
-        <Stack spacing={6}>
-          <Box>
-            <Typography variant="h3">Суммарно:</Typography>
-            <Typography variant="body2">
-              Средняя оценка: {getAverageReviewsScore(reviews)} / 10
+        <Stack>
+          <Typography variant="h2">Суммарно:</Typography>
+          <Stack
+            direction="row"
+            spacing={2}
+            divider={<Divider orientation="vertical" flexItem />}
+            sx={sx.reviewsSummary}
+          >
+            <Typography variant="body2" sx={sx.reviewsSummaryItem}>
+              Средняя оценка: <b>{getAverageReviewsScore(reviews)} / 10</b>
             </Typography>
-            <Typography variant="body2">
-              Рекомендация: {getFinalReviewReccomendation(reviews)}
+            <Typography variant="body2" sx={sx.reviewsSummaryItem}>
+              Рекомендация: <b>{getFinalReviewReccomendation(reviews)}</b>
             </Typography>
-            <Typography variant="body2">
-              Количество ревью: {reviews.length}
+            <Typography variant="body2" sx={sx.reviewsSummaryItem}>
+              Количество ревью: <b>{reviews.length}</b>
             </Typography>
-          </Box>
-          {reviewers ? (
-            reviewers.length !== 0 ? (
-              <Stack spacing={3}>
-                {reviews.map((review) => {
-                  const name = reviewersNamesByReviewId?.get(review.id);
-                  return (
-                    <ReviewCard
-                      key={review.id}
-                      review={review}
-                      reviewerName={name ? name : null}
-                    />
-                  );
-                })}
-              </Stack>
-            ) : (
-              <EmptyState
-                title="У этой заявки нет ревьюеров"
-                subtitle="Пожалуйста, подождите, пока для этой заявки будут назначены ревьюеры."
-              />
-            )
-          ) : (
-            <ErrorState
-              type="state"
-              title="Ревьюеры не найдены"
-              subtitle="Попробуйте перезагрузить страницу."
-            />
-          )}
+          </Stack>
+          <Typography variant="h2">Ревью:</Typography>
+          <Stack spacing={2}>
+            {reviews.map((review) => {
+              const name = reviewersNamesByReviewId?.get(review.id);
+              return (
+                <ReviewCard
+                  key={review.id}
+                  review={review}
+                  reviewerName={name ?? null}
+                />
+              );
+            })}
+          </Stack>
         </Stack>
       ) : (
         <EmptyState

@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'itemTime' | 'itemChangesWrapper' | 'itemChanges';
+type Key = 'reviewsSummary' | 'reviewsSummaryItem';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,14 +9,15 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    itemTime: {
-      opacity: 0.5,
-    },
-    itemChangesWrapper: {
+    reviewsSummary: {
       alignItems: 'center',
+      mb: 6,
     },
-    itemChanges: {
-      alignItems: 'center',
+    reviewsSummaryItem: {
+      p: 2,
+      border: '1px solid black',
+      borderRadius: 1.5,
+      bgcolor: 'background.default',
     },
   };
 };

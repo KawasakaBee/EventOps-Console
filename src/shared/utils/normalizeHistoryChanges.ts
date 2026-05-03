@@ -9,9 +9,9 @@ import {
 import formatDuration from './formatDuration';
 import { formatDictionary, levelDictionary, statusDictionary } from '../data';
 
-const normalizeHistoryChanges = (changes: ProposalFieldChange) => {
+const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
   const resultParse = (prev: string, next: string) => {
-    return `: ${prev} -> ${next}`;
+    return [prev, next];
   };
 
   if (changes.field === 'createdAt' || changes.field === 'updatedAt') {

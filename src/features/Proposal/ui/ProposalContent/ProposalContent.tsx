@@ -1,12 +1,16 @@
 import { Box, Stack, Tab, Tabs } from '@mui/material';
 import { IProposalContentProps } from './ProposalContent.types';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import ProposalOverviewTab from '../ProposalOverviewTab/ProposalOverviewTab';
 import ProposalReviewsTab from '../ProposalReviewsTab/ProposalReviewsTab';
-import { tabsDictionary } from '@/shared/data';
 import ProposalCommentsTab from '../ProposalCommentsTab/ProposalCommentsTab';
 import ProposalHistoryTab from '../ProposalHistoryTab/ProposalHistoryTab';
+import { ProposalDetailsTab } from '@/shared/types/primitives.types';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { isProposalDetailsTab } from '@/shared/utils/typeGuards';
+import { tabsDictionary } from '../../model/tabs';
+import { styles } from './styles';
 
 const ProposalContent: React.FC<IProposalContentProps> = ({
   data,
@@ -14,7 +18,21 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
   reviewersList,
   usersList,
 }) => {
-  const [currentTab, setCurrentTab] = useState<number>(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchParamsString = searchParams.toString();
+
+  const currentTab = useMemo(() => {
+    const defaultTab: ProposalDetailsTab = 'overview';
+
+    if (!searchParams.has('tab')) return defaultTab;
+
+    const tab = searchParams.get('tab');
+    if (!isProposalDetailsTab(tab)) return defaultTab;
+
+    return tab;
+  }, [searchParams]);
 
   const canAssignReviewer = useMemo(
     () => data.availableActions.includes('assignReviewer'),
@@ -26,49 +44,79 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
     [data.availableActions],
   );
 
+  const sx = styles();
+
   const handleChangeCurrentTab = (
     _: React.SyntheticEvent,
-    newValue: number,
+    newValue: string | number,
   ) => {
-    setCurrentTab(newValue);
+    if (!isProposalDetailsTab(newValue)) return;
+
+    const params = new URLSearchParams(searchParamsString);
+    params.set('tab', newValue);
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
     <Stack spacing={2}>
-      <SectionCard title="Вкладки">
+      <SectionCard title={null}>
         <Tabs value={currentTab} onChange={handleChangeCurrentTab}>
-          <Tab label="Информация" />
-          <Tab label="Ревью" />
-          <Tab label="Комментарии" />
-          <Tab label="История" />
+          <Tab
+            label={tabsDictionary['overview']}
+            value={'overview'}
+            sx={sx.proposalTab}
+          />
+          <Tab
+            label={tabsDictionary['reviews']}
+            value={'reviews'}
+            sx={sx.proposalTab}
+          />
+          <Tab
+            label={tabsDictionary['comments']}
+            value={'comments'}
+            sx={sx.proposalTab}
+          />
+          <Tab
+            label={tabsDictionary['history']}
+            value={'history'}
+            sx={sx.proposalTab}
+          />
         </Tabs>
       </SectionCard>
-      <SectionCard title={tabsDictionary[currentTab]}>
-        <Box hidden={currentTab !== 0}>
-          <ProposalOverviewTab proposal={data.proposal} track={trackName} />
-        </Box>
-        <Box hidden={currentTab !== 1}>
-          <ProposalReviewsTab
-            reviews={data.reviews}
-            canAssignReview={canAssignReviewer}
-            reviewers={reviewersList}
-          />
-        </Box>
-        <Box hidden={currentTab !== 2}>
-          <ProposalCommentsTab
-            comments={data.comments}
-            canAddComment={canAddComment}
-            users={usersList}
-          />
-        </Box>
-        <Box hidden={currentTab !== 3}>
-          <ProposalHistoryTab
-            history={data.history}
-            users={usersList}
-            comments={data.comments}
-            reviewers={reviewersList}
-          />
-        </Box>
+      <SectionCard title={null} restSx={sx.tabCard}>
+        {currentTab === 'overview' && (
+          <Box>
+            <ProposalOverviewTab proposal={data.proposal} track={trackName} />
+          </Box>
+        )}
+        {currentTab === 'reviews' && (
+          <Box>
+            <ProposalReviewsTab
+              reviews={data.reviews}
+              canAssignReview={canAssignReviewer}
+              reviewers={reviewersList}
+            />
+          </Box>
+        )}
+        {currentTab === 'comments' && (
+          <Box>
+            <ProposalCommentsTab
+              comments={data.comments}
+              canAddComment={canAddComment}
+              users={usersList}
+            />
+          </Box>
+        )}
+        {currentTab === 'history' && (
+          <Box>
+            <ProposalHistoryTab
+              history={data.history}
+              users={usersList}
+              comments={data.comments}
+              reviewers={reviewersList}
+            />
+          </Box>
+        )}
       </SectionCard>
       <SectionCard title="Информация о спикере">Speaker info</SectionCard>
     </Stack>

@@ -154,3 +154,12 @@ export const historyActionNames = [
 ] as const;
 
 export type HistoryActionName = (typeof historyActionNames)[number];
+
+export const proposalDetailsTabs = [
+  'overview',
+  'reviews',
+  'comments',
+  'history',
+] as const;
+
+export type ProposalDetailsTab = (typeof proposalDetailsTabs)[number];

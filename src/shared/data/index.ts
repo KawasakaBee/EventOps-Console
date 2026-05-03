@@ -304,13 +304,6 @@ export const recommendationDicrionary: Record<
   request_changes: 'Нужны изменения',
 };
 
-export const tabsDictionary: Record<number, string> = {
-  0: 'Информация',
-  1: 'Ревью',
-  2: 'Комментарии',
-  3: 'История',
-};
-
 export const rolesDictionary: Record<Role, RoleName> = {
   admin: 'Администратор',
   manager: 'Менеджер',

@@ -3,6 +3,7 @@ import { IProposalHistoryTabProps } from './ProposalHistoryTab.types';
 import HistoryItem from '../HistoryItem/HistoryItem';
 import { useMemo } from 'react';
 import { styles } from './styles';
+import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 
 const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
   history,
@@ -22,7 +23,7 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
     );
   }, [history, users]);
 
-  return (
+  return history.length !== 0 ? (
     <Timeline sx={sx.timeline}>
       {history.map((item, idx) => {
         const user = usersMapByHistoryId?.get(item.id);
@@ -30,7 +31,7 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
           <HistoryItem
             key={item.id}
             item={item}
-            user={user ? user : null}
+            user={user ?? null}
             isLastItem={idx === history.length - 1}
             comments={comments}
             reviewers={reviewers}
@@ -38,6 +39,11 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
         );
       })}
     </Timeline>
+  ) : (
+    <EmptyState
+      title="Истории пока что нет"
+      subtitle="Для этой заявки пока что нет истории изменений"
+    />
   );
 };
 

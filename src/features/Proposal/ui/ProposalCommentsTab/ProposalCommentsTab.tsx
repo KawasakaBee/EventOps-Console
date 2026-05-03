@@ -22,14 +22,14 @@ const ProposalCommentsTab: React.FC<IProposalCommentsTabProps> = ({
   return (
     <Box>
       {comments.length !== 0 ? (
-        <Stack spacing={4}>
+        <Stack spacing={10}>
           {comments.map((comment) => {
             const user = usersMapByCommentId?.get(comment.id);
             return (
               <CommentCard
                 key={comment.id}
                 comment={comment}
-                user={user ? user : null}
+                user={user ?? null}
               />
             );
           })}
