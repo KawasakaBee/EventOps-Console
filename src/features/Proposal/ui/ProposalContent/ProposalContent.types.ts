@@ -7,4 +7,5 @@ export interface IProposalContentProps {
   trackName: string | null | undefined;
   reviewersList: ReviewerListItem[] | null;
   usersList: UserListItem[] | null;
+  isPageUnavailable: boolean;
 }

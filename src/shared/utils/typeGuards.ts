@@ -35,6 +35,12 @@ import {
 import { PAGE_SIZE_OPTIONS } from '../config/layout';
 import { ErrorEnvelope } from '../types/api.types';
 import { Recommendation, recommendations } from '@/entities/review/model/types';
+import {
+  AdditionalAction,
+  additionalActions,
+  CriticalAction,
+  criticalActions,
+} from '@/features/Proposal/model/actions';
 
 export const isRole = (value: unknown): value is Role =>
   typeof value === 'string' && roles.some((role) => role === value);
@@ -119,3 +125,15 @@ export const isProposalDetailsTab = (
   value: unknown,
 ): value is ProposalDetailsTab =>
   typeof value === 'string' && proposalDetailsTabs.some((tab) => tab === value);
+
+export const isCriticalAvailableAction = (
+  value: unknown,
+): value is CriticalAction =>
+  typeof value === 'string' &&
+  criticalActions.some((action) => action === value);
+
+export const isAdditionalAvailableAction = (
+  value: unknown,
+): value is AdditionalAction =>
+  typeof value === 'string' &&
+  additionalActions.some((action) => action === value);

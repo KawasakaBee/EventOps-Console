@@ -13,6 +13,8 @@ import {
   Route,
 } from '../types/primitives.types';
 import {
+  ProposalAction,
+  ProposalActionName,
   ProposalFormat,
   ProposalLevel,
   ProposalListItem,
@@ -323,4 +325,19 @@ export const historyActionsDictionary: Record<
   review_added: 'Добавлено ревью',
   scheduled: 'Добавлено в расписание',
   unscheduled: 'Удалено из расписания',
+};
+
+export const availableActionsDictionary: Record<
+  ProposalAction,
+  ProposalActionName
+> = {
+  edit: 'Редактировать',
+  submit: 'Отправить',
+  assignReviewer: 'Назначить ревьюера',
+  addReview: 'Добавить ревью',
+  addComment: 'Прокомментировать',
+  requestChanges: 'Запросить изменения',
+  accept: 'Принять',
+  reject: 'Отклонить',
+  schedule: 'Добавить в расписание',
 };

@@ -22,18 +22,32 @@ export const proposalLevels = ['junior', 'middle', 'senior'] as const;
 export type ProposalLevel = (typeof proposalLevels)[number];
 
 export const proposalActions = [
-  'edit',
+  'accept',
+  'reject',
   'submit',
+  'edit',
+  'schedule',
   'assignReviewer',
   'addReview',
   'addComment',
   'requestChanges',
-  'accept',
-  'reject',
-  'schedule',
 ] as const;
 
 export type ProposalAction = (typeof proposalActions)[number];
+
+export const proposalActionsNames = [
+  'Редактировать',
+  'Отправить',
+  'Назначить ревьюера',
+  'Добавить ревью',
+  'Прокомментировать',
+  'Запросить изменения',
+  'Принять',
+  'Отклонить',
+  'Добавить в расписание',
+] as const;
+
+export type ProposalActionName = (typeof proposalActionsNames)[number];
 
 export interface Proposal {
   id: ID;

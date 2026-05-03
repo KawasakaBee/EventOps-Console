@@ -59,7 +59,12 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
     const { open, onClose } = props;
 
     return (
-      <Snackbar open={open} sx={sx.snackbar}>
+      <Snackbar
+        open={open}
+        sx={sx.snackbar}
+        autoHideDuration={6000}
+        onClose={onClose}
+      >
         <SnackbarContent
           message={title}
           action={

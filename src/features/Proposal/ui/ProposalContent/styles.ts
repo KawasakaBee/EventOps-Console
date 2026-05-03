@@ -11,6 +11,10 @@ export const styles: Style = () => {
   return {
     proposalTab: {
       textTransform: 'initial',
+      color: 'primary.main',
+      '& .Mui-disabled': {
+        color: 'text.disabled',
+      },
     },
     tabCard: {
       p: 2,

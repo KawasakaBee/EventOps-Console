@@ -17,6 +17,7 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
   trackName,
   reviewersList,
   usersList,
+  isPageUnavailable,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -65,21 +66,25 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
             label={tabsDictionary['overview']}
             value={'overview'}
             sx={sx.proposalTab}
+            disabled={isPageUnavailable}
           />
           <Tab
             label={tabsDictionary['reviews']}
             value={'reviews'}
             sx={sx.proposalTab}
+            disabled={isPageUnavailable}
           />
           <Tab
             label={tabsDictionary['comments']}
             value={'comments'}
             sx={sx.proposalTab}
+            disabled={isPageUnavailable}
           />
           <Tab
             label={tabsDictionary['history']}
             value={'history'}
             sx={sx.proposalTab}
+            disabled={isPageUnavailable}
           />
         </Tabs>
       </SectionCard>

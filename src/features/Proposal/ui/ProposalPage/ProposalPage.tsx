@@ -10,18 +10,12 @@ import { useEffect, useMemo, useState } from 'react';
 import getProposalErrorState from '../../model/getProposalErrorState';
 import normalizeResponse from '@/shared/api/normalizeResponse';
 import { GetProposalResponse } from '@/shared/api/contracts/proposal.contract';
-import {
-  breadcrumbsDicrionary,
-  formatDictionary,
-  levelDictionary,
-} from '@/shared/data';
+import { breadcrumbsDicrionary } from '@/shared/data';
 import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { styles } from './styles';
 import { Track } from '@/entities/track/model/types';
 import { GetTracksResponse } from '@/shared/api/contracts/track.contract';
-import formatDuration from '@/shared/utils/formatDuration';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ProposalStickyPanel from '../ProposalStickyPanel/ProposalStickyPanel';
@@ -56,6 +50,7 @@ const ProposalPage = () => {
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const isDataReady = pageStatus === 'success';
   const isInitialLoading = pageStatus === 'idle' || pageStatus === 'loading';
+  const isPageUnavailable = pageStatus !== 'success';
 
   const sx = styles();
 
@@ -212,47 +207,26 @@ const ProposalPage = () => {
             title={proposalTitle}
             to="/proposals"
           >
-            {
-              <Stack direction="row" spacing={6}>
-                {tracksStatus === 'success' && trackName && (
-                  <Typography variant="h3"> Track: {trackName}</Typography>
-                )}
-
-                <Typography variant="h3">
-                  {' '}
-                  Уровень: {levelDictionary.get(pageData.proposal.level)}
-                </Typography>
-
-                <Typography variant="h3">
-                  {' '}
-                  Формат: {formatDictionary.get(pageData.proposal.format)}
-                </Typography>
-                <Typography variant="h3">
-                  {' '}
-                  Продолжительность:{' '}
-                  {formatDuration(pageData.proposal.duration)}
-                </Typography>
-                <Typography variant="h3">
-                  {' '}
-                  Последнее обновление:{' '}
-                  {isoToLocalDate(pageData.proposal.updatedAt)}
-                </Typography>
-              </Stack>
-            }
+            {null}
           </PageHeader>
           <Grid container spacing={2}>
             <Grid size="grow">
               <ProposalContent
                 data={pageData}
-                trackName={trackName}
+                trackName={tracksStatus === 'success' ? trackName : null}
                 reviewersList={
                   reviewersStatus === 'success' ? reviewersList : null
                 }
                 usersList={usersStatus === 'success' ? usersList : null}
+                isPageUnavailable={isPageUnavailable}
               />
             </Grid>
-            <Grid size={2}>
-              <ProposalStickyPanel />
+            <Grid size={2} sx={sx.proposalStickyPanel}>
+              <ProposalStickyPanel
+                data={pageData}
+                trackName={trackName}
+                isPageUnavailable={isPageUnavailable}
+              />
             </Grid>
           </Grid>
         </>
