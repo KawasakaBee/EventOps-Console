@@ -22,7 +22,6 @@ import formatDuration from '@/shared/utils/formatDuration';
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   data,
   trackName,
-  isPageUnavailable,
 }) => {
   const { proposal, availableActions } = data;
 
@@ -65,7 +64,6 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                 mode="button"
                 variant="contained"
                 size="small"
-                isDisabled={isPageUnavailable}
                 sx={styles({ action }).criticalButton}
               >
                 {availableActionsDictionary[action]}
@@ -81,14 +79,13 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                 mode="button"
                 variant="outlined"
                 size="small"
-                isDisabled={isPageUnavailable}
               >
                 {availableActionsDictionary[action]}
               </Button>
             ))}
           </Stack>
         )}
-        <SecondaryStickyButtons isDisabled={isPageUnavailable} />
+        <SecondaryStickyButtons />
         <Stack spacing={1}>
           <Typography variant="subtitle2">
             Трек: <b>{trackName ?? '—'}</b>

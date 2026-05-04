@@ -12,11 +12,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 import getProposalErrorState from '../../model/getProposalErrorState';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
-import { ISecondaryStickyButtonsProps } from './SecondaryStickyButtons.types';
 
-const SecondaryStickyButtons: React.FC<ISecondaryStickyButtonsProps> = ({
-  isDisabled,
-}) => {
+const SecondaryStickyButtons = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -82,7 +79,6 @@ const SecondaryStickyButtons: React.FC<ISecondaryStickyButtonsProps> = ({
             ariaLabel={`Кнопка ${description}`}
             icon={icon}
             onClick={action}
-            isDisabled={isDisabled}
           />
         </Box>
       </Tooltip>

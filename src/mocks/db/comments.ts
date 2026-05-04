@@ -287,14 +287,6 @@ export const initialComments = [
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
     createdAt: '2026-03-03T14:00:00+03:00',
   },
-  {
-    id: 'comment-033',
-    proposalId: 'proposal-100',
-    actorId: 'reviewer-010',
-    actorRole: 'reviewer',
-    message: 'Прошу посмотреть ревью и принять решение.',
-    createdAt: '2026-04-26T10:00:00+03:00',
-  },
 ] satisfies Comment[];
 
 export const comments: Comment[] = [...initialComments];

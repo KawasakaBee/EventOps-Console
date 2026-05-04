@@ -50,7 +50,6 @@ const ProposalPage = () => {
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const isDataReady = pageStatus === 'success';
   const isInitialLoading = pageStatus === 'idle' || pageStatus === 'loading';
-  const isPageUnavailable = pageStatus !== 'success';
 
   const sx = styles();
 
@@ -218,15 +217,11 @@ const ProposalPage = () => {
                   reviewersStatus === 'success' ? reviewersList : null
                 }
                 usersList={usersStatus === 'success' ? usersList : null}
-                isPageUnavailable={isPageUnavailable}
+                speakers={pageData.speakers}
               />
             </Grid>
             <Grid size={2} sx={sx.proposalStickyPanel}>
-              <ProposalStickyPanel
-                data={pageData}
-                trackName={trackName}
-                isPageUnavailable={isPageUnavailable}
-              />
+              <ProposalStickyPanel data={pageData} trackName={trackName} />
             </Grid>
           </Grid>
         </>

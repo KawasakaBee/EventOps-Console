@@ -11,13 +11,14 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { isProposalDetailsTab } from '@/shared/utils/typeGuards';
 import { tabsDictionary } from '../../model/tabs';
 import { styles } from './styles';
+import SpeakerCard from '../SpeakerCard/SpeakerCard';
 
 const ProposalContent: React.FC<IProposalContentProps> = ({
   data,
   trackName,
   reviewersList,
   usersList,
-  isPageUnavailable,
+  speakers,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -66,25 +67,21 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
             label={tabsDictionary['overview']}
             value={'overview'}
             sx={sx.proposalTab}
-            disabled={isPageUnavailable}
           />
           <Tab
             label={tabsDictionary['reviews']}
             value={'reviews'}
             sx={sx.proposalTab}
-            disabled={isPageUnavailable}
           />
           <Tab
             label={tabsDictionary['comments']}
             value={'comments'}
             sx={sx.proposalTab}
-            disabled={isPageUnavailable}
           />
           <Tab
             label={tabsDictionary['history']}
             value={'history'}
             sx={sx.proposalTab}
-            disabled={isPageUnavailable}
           />
         </Tabs>
       </SectionCard>
@@ -123,7 +120,17 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
           </Box>
         )}
       </SectionCard>
-      <SectionCard title="Информация о спикере">Speaker info</SectionCard>
+      {speakers.length !== 0 && (
+        <SectionCard
+          title={`Информация о спикер${speakers.length > 1 ? 'ах' : 'е'}`}
+        >
+          <Stack spacing={4}>
+            {speakers.map((speaker) => (
+              <SpeakerCard key={speaker.id} speaker={speaker} />
+            ))}
+          </Stack>
+        </SectionCard>
+      )}
     </Stack>
   );
 };
