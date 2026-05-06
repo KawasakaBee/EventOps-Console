@@ -1,6 +1,6 @@
-import { GetProposalResponse } from '@/shared/api/contracts/proposal.contract';
+import { DetailsState } from '../../model/proposalDetailsSlice';
 
 export interface IProposalStickyPanelProps {
-  data: GetProposalResponse;
+  data: DetailsState;
   trackName: string | null | undefined;
 }

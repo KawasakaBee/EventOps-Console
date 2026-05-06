@@ -3,18 +3,27 @@ import ShareIcon from '@mui/icons-material/Share';
 import HomeIcon from '@mui/icons-material/Home';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { ErrorEnvelope } from '@/shared/types/api.types';
+import { proposalActions } from '@/entities/proposal/model/types';
 
-export const criticalActions = ['edit', 'submit', 'accept', 'reject'] as const;
+export const criticalActions = proposalActions.filter(
+  (action) =>
+    action === 'edit' ||
+    action === 'submit' ||
+    action === 'accept' ||
+    action === 'reject',
+);
 
 export type CriticalAction = (typeof criticalActions)[number];
 
-export const additionalActions = [
-  'addComment',
-  'assignReviewer',
-  'addReview',
-  'requestChanges',
-  'schedule',
-] as const;
+export const additionalActions = proposalActions.filter(
+  (action) =>
+    action === 'addComment' ||
+    action === 'assignReviewer' ||
+    action === 'addReview' ||
+    action === 'requestChanges' ||
+    action === 'schedule' ||
+    action === 'changeStatus',
+);
 
 export type AdditionalAction = (typeof additionalActions)[number];
 

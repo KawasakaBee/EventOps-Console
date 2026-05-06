@@ -1,19 +1,23 @@
 import Button from '@/shared/ui/Button/Button';
-import { Menu, MenuItem, Stack, Typography } from '@mui/material';
+import { Box, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import { styles } from './styles';
-import { ID, ProposalListActions } from '@/shared/types/primitives.types';
+import { ID, ProposalListAction } from '@/shared/types/primitives.types';
 import { useMemo, useState } from 'react';
-import { useAppSelector } from '@/shared/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { IProposalsBulkActionsProps } from './ProposalsBulkActions.types';
 import { ProposalStatus } from '@/entities/proposal/model/types';
 import getProposalsListActions from '@/features/Proposals/model/getProposalsListActions';
-import { proposalActionsDictionary } from '@/shared/data';
+import { proposalActionsDictionary, statusDictionary } from '@/shared/data';
+import getAvailableStatusesToChange from '@/shared/utils/getAvailableStatusesToChange';
+import { addPendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
 
 const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   user,
   proposals,
   isDisabled,
+  selectedStatuses,
 }) => {
+  const dispatch = useAppDispatch();
   const selectedProposalsIds = useAppSelector(
     (store) => store.proposalsFilters.selectedIds,
   );
@@ -21,9 +25,11 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   const [actionsAnchorEl, setActionsAnchorEl] = useState<HTMLElement | null>(
     null,
   );
-  const isActionsMenuOpened = !!actionsAnchorEl;
+  const [statusesAnchorEl, setStatusesAnchorEl] = useState<HTMLElement | null>(
+    null,
+  );
 
-  const availableActions: ProposalListActions[] = useMemo(() => {
+  const availableActions: ProposalListAction[] = useMemo(() => {
     if (
       !user ||
       !proposals ||
@@ -36,7 +42,7 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
       proposals.map((proposal) => [proposal.id, proposal.status]),
     );
 
-    const actions: ProposalListActions[][] = selectedProposalsIds.map((id) => {
+    const actions: ProposalListAction[][] = selectedProposalsIds.map((id) => {
       const value = proposalsMap.get(id);
       if (!value) return [];
 
@@ -48,16 +54,50 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
     );
   }, [user, proposals, selectedProposalsIds]);
 
+  const availableStatuses = useMemo(
+    () =>
+      selectedStatuses.size === 1
+        ? getAvailableStatusesToChange([...selectedStatuses][0])
+        : [],
+    [selectedStatuses],
+  );
+
+  const isActionsMenuOpened = !!actionsAnchorEl;
+  const isStatusMenuOpened = !!statusesAnchorEl;
+  const showMenu =
+    availableActions.length > 1 ||
+    (availableActions.length === 1 &&
+      !availableActions.includes('changeStatus')) ||
+    (availableActions.length === 1 &&
+      availableActions.includes('changeStatus') &&
+      availableStatuses.length !== 0);
+
   const sx = styles();
 
-  const handleOpenActionsMenu = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
+  const handleActionsMenuOpen = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     setActionsAnchorEl(event.currentTarget);
   };
 
-  const handleCloseActionsMenu = () => {
+  const handleStatusesMenuOpen = (
+    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+  ) => {
+    setStatusesAnchorEl(event.currentTarget);
+  };
+
+  const handleActionsMenuClose = () => {
     setActionsAnchorEl(null);
+  };
+
+  const handleStatusesMenuClose = () => {
+    setStatusesAnchorEl(null);
+  };
+
+  const handleStatusChange = (status: ProposalStatus) => {
+    dispatch(addPendingStatus(status));
+    handleStatusesMenuClose();
+    handleActionsMenuClose();
   };
 
   return (
@@ -67,7 +107,7 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
         variant="contained"
         size="small"
         isDisabled={isDisabled || selectedProposalsIds.length === 0}
-        onClick={handleOpenActionsMenu}
+        onClick={handleActionsMenuOpen}
       >
         Действия с выбранными заявками
       </Button>
@@ -77,18 +117,41 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
       <Menu
         open={isActionsMenuOpened}
         anchorEl={actionsAnchorEl}
-        onClose={handleCloseActionsMenu}
+        onClose={handleActionsMenuClose}
       >
-        {availableActions.length !== 0 ? (
-          availableActions.map((action) => (
-            <MenuItem
-              key={`Actions-menu-item-${action}`}
-              onClick={handleCloseActionsMenu}
-              disabled //Временный disabled, пока actions не будут реализованы
-            >
-              {proposalActionsDictionary.get(action)}
-            </MenuItem>
-          ))
+        {showMenu ? (
+          availableActions.map((action) =>
+            action === 'changeStatus' ? (
+              availableStatuses.length !== 0 && (
+                <Box key={`Actions-menu-item-${action}`}>
+                  <MenuItem onClick={(event) => handleStatusesMenuOpen(event)}>
+                    {proposalActionsDictionary[action]}
+                  </MenuItem>
+                  <Menu
+                    open={isStatusMenuOpened}
+                    anchorEl={statusesAnchorEl}
+                    onClose={handleStatusesMenuClose}
+                  >
+                    {availableStatuses.map((status) => (
+                      <MenuItem
+                        key={`Statuses-menu-item-${status}`}
+                        onClick={() => handleStatusChange(status)}
+                      >
+                        {statusDictionary[status]}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              )
+            ) : (
+              <MenuItem
+                key={`Actions-menu-item-${action}`}
+                disabled //Удалить, когда будут реализованы actions
+              >
+                {proposalActionsDictionary[action]}
+              </MenuItem>
+            ),
+          )
         ) : (
           <MenuItem key="actions-menu-item-empty}" disabled>
             Нет доступных действий

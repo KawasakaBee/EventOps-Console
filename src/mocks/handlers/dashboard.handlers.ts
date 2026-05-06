@@ -9,7 +9,7 @@ export const dashboardHandlers = [
     const url = new URL(request.url);
     const range = url.searchParams.get('range') ?? '30d';
 
-    if (!isRange(range)) return queryError;
+    if (!isRange(range)) return queryError();
 
     const dashboard = getDashboard(range);
     const response: GetDashboardResponse = dashboard;

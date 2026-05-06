@@ -1,4 +1,7 @@
-import { ProposalListItem } from '@/entities/proposal/model/types';
+import {
+  ProposalListItem,
+  ProposalStatus,
+} from '@/entities/proposal/model/types';
 import { ID, Role } from '@/shared/types/primitives.types';
 import { SxProps, Theme } from '@mui/material';
 
@@ -8,6 +11,12 @@ export interface IProposalTableRowProps {
   isSelected: boolean;
   role: Role;
   tracks: Map<ID, string>;
+  setProposal: React.Dispatch<
+    React.SetStateAction<{
+      status: ProposalStatus;
+      id: ID;
+    } | null>
+  >;
 }
 
 export interface ITableRowProps {

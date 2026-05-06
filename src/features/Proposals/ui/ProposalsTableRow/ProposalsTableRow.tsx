@@ -18,7 +18,14 @@ import {
 import { useAppDispatch } from '@/shared/store/hooks';
 
 const ProposalsTableRow = React.memo(
-  ({ proposal, sx, isSelected, role, tracks }: IProposalTableRowProps) => {
+  ({
+    proposal,
+    sx,
+    isSelected,
+    role,
+    tracks,
+    setProposal,
+  }: IProposalTableRowProps) => {
     const dispatch = useAppDispatch();
 
     const rowActions = useMemo(
@@ -38,9 +45,9 @@ const ProposalsTableRow = React.memo(
             />
           );
         case 'format':
-          return formatDictionary.get(data.format);
+          return formatDictionary[data.format];
         case 'level':
-          return levelDictionary.get(data.level);
+          return levelDictionary[data.level];
         case 'trackId': {
           const trackName = tracksById.get(data.trackId);
           return trackName ? trackName : 'Неизвестный трек';
@@ -74,6 +81,8 @@ const ProposalsTableRow = React.memo(
               <ProposalsRowActions
                 actions={rowActions}
                 proposalId={proposal.id}
+                proposalStatus={proposal.status}
+                setProposal={setProposal}
               />
             ) : (
               renderCell({

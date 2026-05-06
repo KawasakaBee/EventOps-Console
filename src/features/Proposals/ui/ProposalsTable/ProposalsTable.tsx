@@ -29,6 +29,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
   tracks,
   role,
+  setProposal,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -118,7 +119,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
                   />
                 )}
                 {key === 'actions' || key === 'checkbox' ? (
-                  proposalListItemDictionary.get(key)
+                  proposalListItemDictionary[key]
                 ) : (
                   <TableSortLabel
                     active={sortBy === key}
@@ -126,7 +127,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
                     sx={sx.tableSortLabel}
                     onClick={() => handleSort(key)}
                   >
-                    {proposalListItemDictionary.get(key)}
+                    {proposalListItemDictionary[key]}
                   </TableSortLabel>
                 )}
               </TableCell>
@@ -142,6 +143,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
               isSelected={selectedIdsSet.has(proposal.id)}
               role={role}
               tracks={tracksById}
+              setProposal={setProposal}
             />
           ))}
         </TableBody>

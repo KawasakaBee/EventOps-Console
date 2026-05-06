@@ -181,7 +181,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
           >
             {proposalStatuses.map((status) => (
               <MenuItem key={`Select-option-${status}`} value={status}>
-                {statusDictionary.get(status)}
+                {statusDictionary[status]}
               </MenuItem>
             ))}
           </Select>
@@ -218,7 +218,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
           >
             {proposalLevels.map((level) => (
               <MenuItem key={`Select-option-${level}`} value={level}>
-                {levelDictionary.get(level)}
+                {levelDictionary[level]}
               </MenuItem>
             ))}
           </Select>
@@ -235,7 +235,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
           >
             {proposalFormats.map((format) => (
               <MenuItem key={`Select-option-${format}`} value={format}>
-                {formatDictionary.get(format)}
+                {formatDictionary[format]}
               </MenuItem>
             ))}
           </Select>

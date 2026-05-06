@@ -2,7 +2,7 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 import { CriticalAction } from '../../model/actions';
 
-type Key = 'lastUpdateTime' | 'criticalButton';
+type Key = 'lastUpdateTime' | 'criticalButton' | 'statusButton';
 
 interface IStyleOptionProps {
   action: CriticalAction;
@@ -28,6 +28,9 @@ export const styles: Style = (options) => {
     },
     criticalButton: {
       bgcolor: buttonColor,
+    },
+    statusButton: {
+      width: 1,
     },
   };
 };

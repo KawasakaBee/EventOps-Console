@@ -77,14 +77,22 @@ export const getAvailableProposalActions = (
         'accept',
         'reject',
         'addComment',
+        'changeStatus',
       );
     if (status === 'in_review') {
-      availableActions.push('assignReviewer', 'accept', 'reject', 'addComment');
+      availableActions.push(
+        'assignReviewer',
+        'accept',
+        'reject',
+        'addComment',
+        'changeStatus',
+      );
     }
     if (status === 'changes_requested') {
-      availableActions.push('accept', 'reject', 'addComment');
+      availableActions.push('accept', 'reject', 'addComment', 'changeStatus');
     }
-    if (status === 'accepted') availableActions.push('schedule');
+    if (status === 'accepted')
+      availableActions.push('schedule', 'changeStatus');
   }
 
   if (role === 'reviewer') {

@@ -9,7 +9,10 @@ import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import getProposalErrorState from '../../model/getProposalErrorState';
 import normalizeResponse from '@/shared/api/normalizeResponse';
-import { GetProposalResponse } from '@/shared/api/contracts/proposal.contract';
+import {
+  GetProposalResponse,
+  PatchProposalStatusResponse,
+} from '@/shared/api/contracts/proposal.contract';
 import { breadcrumbsDicrionary } from '@/shared/data';
 import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
@@ -24,10 +27,25 @@ import { ReviewerListItem } from '@/entities/review/model/types';
 import { GetReviewersResponse } from '@/shared/api/contracts/reviewer.contract';
 import { GetUsersListResponse } from '@/shared/api/contracts/user.contract';
 import { UserListItem } from '@/entities/user/model/types';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
+import {
+  addHistory,
+  hydrateDetails,
+  hydrateProposal,
+  resetDetails,
+  updateAvailableActions,
+} from '../../model/proposalDetailsSlice';
+import ProposalStatusTransitionDialog from '@/features/proposal-status-transition/ui/ProposalStatusTransitionDialog';
+import { removePendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
 
 const ProposalPage = () => {
   const pathname = usePathname();
   const proposalId = useParams<{ id: string }>().id;
+  const dispatch = useAppDispatch();
+  const pageData = useAppSelector((store) => store.proposalDetails);
+  const pendingStatus = useAppSelector(
+    (store) => store.proposalStatus.pendingStatus,
+  );
 
   const [pageStatus, setPageStatus] = useState<PageStatus>('idle');
   const [tracksStatus, setTracksStatus] = useState<PageStatus>('idle');
@@ -36,20 +54,21 @@ const ProposalPage = () => {
   const [pageErrorProps, setPageErrorProps] = useState<ErrorStateProps | null>(
     null,
   );
-  const [pageData, setPageData] = useState<GetProposalResponse | null>(null);
   const [tracksList, setTracksList] = useState<Track[]>([]);
   const [reviewersList, setReviewersList] = useState<ReviewerListItem[]>([]);
   const [usersList, setUsersList] = useState<UserListItem[]>([]);
 
   const trackName = useMemo(() => {
-    if (!pageData) return null;
-    return tracksList.find((track) => track.id === pageData.proposal.trackId)
-      ?.title;
+    const proposal = pageData.proposal;
+    if (!proposal) return null;
+
+    return tracksList.find((track) => track.id === proposal.trackId)?.title;
   }, [pageData, tracksList]);
 
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const isDataReady = pageStatus === 'success';
   const isInitialLoading = pageStatus === 'idle' || pageStatus === 'loading';
+  const isStatusDialogOpened = !!pendingStatus;
 
   const sx = styles();
 
@@ -147,7 +166,7 @@ const ProposalPage = () => {
       const response = await fetchWithDemoAuth(`/api/proposals/${proposalId}`);
 
       if (!response.ok) {
-        setPageData(null);
+        dispatch(resetDetails());
         setPageErrorProps(
           getProposalErrorState(response.error, getErrorActions()),
         );
@@ -160,7 +179,7 @@ const ProposalPage = () => {
       );
 
       if (!result.ok) {
-        setPageData(null);
+        dispatch(resetDetails());
         setPageErrorProps(
           getProposalErrorState(result.error, getErrorActions()),
         );
@@ -168,14 +187,24 @@ const ProposalPage = () => {
         return;
       }
 
-      setPageData(result.data);
+      dispatch(hydrateDetails(result.data));
       setPageStatus('success');
     };
 
     getProposalById();
-  }, [proposalId]);
+  }, [proposalId, dispatch]);
 
-  const proposalTitle = pageData?.proposal.title ? (
+  const handleStatusDialogClose = () => {
+    dispatch(removePendingStatus());
+  };
+
+  const handleStatusChangeSuccess = (result: PatchProposalStatusResponse) => {
+    dispatch(hydrateProposal(result.proposal));
+    dispatch(addHistory(result.historyEntry));
+    dispatch(updateAvailableActions(result.availableActions));
+  };
+
+  const proposalTitle = pageData.proposal?.title ? (
     <Stack direction="row" spacing={2} sx={sx.proposalTitleWrapper}>
       <Typography variant="h2">{pageData.proposal.title}</Typography>
       <StatusChip
@@ -224,6 +253,17 @@ const ProposalPage = () => {
               <ProposalStickyPanel data={pageData} trackName={trackName} />
             </Grid>
           </Grid>
+          {pageData.proposal?.status && pendingStatus && (
+            <ProposalStatusTransitionDialog
+              mode="single"
+              prevStatus={pageData.proposal.status}
+              nextStatus={pendingStatus}
+              id={proposalId}
+              open={isStatusDialogOpened}
+              onClose={handleStatusDialogClose}
+              onSuccess={handleStatusChangeSuccess}
+            />
+          )}
         </>
       ) : (
         <EmptyState

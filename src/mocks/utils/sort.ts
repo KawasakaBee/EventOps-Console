@@ -43,14 +43,8 @@ const sortByStatus = (
   sortOrder: SortOrder,
 ): Proposal[] => {
   return proposals.toSorted((a, b) => {
-    const aValue = statusDictionary.get(a[sortBy]);
-    const bValue = statusDictionary.get(b[sortBy]);
-
-    if (!aValue || !bValue) {
-      return sortOrder === 'asc'
-        ? a[sortBy].localeCompare(b[sortBy], 'ru')
-        : b[sortBy].localeCompare(a[sortBy], 'ru');
-    }
+    const aValue = statusDictionary[a[sortBy]];
+    const bValue = statusDictionary[b[sortBy]];
 
     return sortOrder === 'asc'
       ? aValue.localeCompare(bValue, 'ru')
@@ -64,14 +58,8 @@ const sortByFormat = (
   sortOrder: SortOrder,
 ): Proposal[] => {
   return proposals.toSorted((a, b) => {
-    const aValue = formatDictionary.get(a[sortBy]);
-    const bValue = formatDictionary.get(b[sortBy]);
-
-    if (!aValue || !bValue) {
-      return sortOrder === 'asc'
-        ? a[sortBy].localeCompare(b[sortBy], 'ru')
-        : b[sortBy].localeCompare(a[sortBy], 'ru');
-    }
+    const aValue = formatDictionary[a[sortBy]];
+    const bValue = formatDictionary[b[sortBy]];
 
     return sortOrder === 'asc'
       ? aValue.localeCompare(bValue, 'ru')
@@ -85,14 +73,8 @@ const sortByLevel = (
   sortOrder: SortOrder,
 ): Proposal[] => {
   return proposals.toSorted((a, b) => {
-    const aValue = levelDictionary.get(a[sortBy]);
-    const bValue = levelDictionary.get(b[sortBy]);
-
-    if (!aValue || !bValue) {
-      return sortOrder === 'asc'
-        ? a[sortBy].localeCompare(b[sortBy], 'ru')
-        : b[sortBy].localeCompare(a[sortBy], 'ru');
-    }
+    const aValue = levelDictionary[a[sortBy]];
+    const bValue = levelDictionary[b[sortBy]];
 
     return sortOrder === 'asc'
       ? aValue.localeCompare(bValue, 'ru')

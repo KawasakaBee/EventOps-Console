@@ -12,15 +12,21 @@ import {
   Typography,
 } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { GetProposalsListResponse } from '@/shared/api/contracts/proposal.contract';
-import { ProposalListItem } from '@/entities/proposal/model/types';
+import {
+  GetProposalsListResponse,
+  PatchProposalStatusResponse,
+} from '@/shared/api/contracts/proposal.contract';
+import {
+  ProposalListItem,
+  ProposalStatus,
+} from '@/entities/proposal/model/types';
 import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
 import { PaginationEnvelope } from '@/shared/types/api.types';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import parsePositiveInt from '@/shared/utils/parsePositiveInt';
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@/shared/config/layout';
 import { isPageSize } from '@/shared/utils/typeGuards';
-import { PageSize, PageStatus } from '@/shared/types/primitives.types';
+import { ID, PageSize, PageStatus } from '@/shared/types/primitives.types';
 import ProposalsFilterBar from '@/features/Proposals/ui/ProposalsFilterBar/ProposalsFilterBar';
 import { Track } from '@/entities/track/model/types';
 import { GetTracksResponse } from '@/shared/api/contracts/track.contract';
@@ -42,10 +48,12 @@ import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import normalizeResponse from '@/shared/api/normalizeResponse';
 import getProposalsErrorState from '@/features/Proposals/model/getProposalsErrorState';
 import ProposalsBulkActions from '@/features/Proposals/ui/ProposalsBulkActions/ProposalsBulkActions';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { styles } from './styles';
 import { breadcrumbsDicrionary } from '@/shared/data';
 import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
+import ProposalStatusTransitionDialog from '@/features/proposal-status-transition/ui/ProposalStatusTransitionDialog';
+import { removePendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
 
 const ProposalsPage = () => {
   const router = useRouter();
@@ -71,6 +79,12 @@ const ProposalsPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isExportSnackbarOpen, setIsExportSnackbarOpen] =
     useState<boolean>(false);
+  const [bulkErrorSnackbarCount, setBulkErrorSnackbarCount] =
+    useState<number>(0);
+  const [selectedProposal, setSelectedProposal] = useState<{
+    status: ProposalStatus;
+    id: ID;
+  } | null>(null);
 
   const isDataReady = pageStatus === 'success' && userStatus === 'success';
   const isPageUnavailable =
@@ -111,8 +125,31 @@ const ProposalsPage = () => {
     return filters.size;
   }, [searchParams]);
 
-  const searchParamsString = searchParams.toString();
+  const pendingStatus = useAppSelector(
+    (store) => store.proposalStatus.pendingStatus,
+  );
   const proposalList = pagination?.items;
+  const selectedIds = useAppSelector(
+    (store) => store.proposalsFilters.selectedIds,
+  );
+  const isStatusDialogOpened = !!pendingStatus && !!selectedProposal?.status;
+
+  const selectedProposalMultipleStatus = useMemo(
+    () =>
+      new Set(
+        proposalList
+          ?.filter((proposal) => selectedIds.includes(proposal.id))
+          .map((proposal) => proposal.status),
+      ),
+    [proposalList, selectedIds],
+  );
+
+  const isMultipleStatusDialogOpened =
+    !!pendingStatus &&
+    !selectedProposal &&
+    selectedProposalMultipleStatus.size === 1;
+
+  const searchParamsString = searchParams.toString();
   const sx = styles();
 
   const handleResetFilters = useCallback(() => {
@@ -284,6 +321,69 @@ const ProposalsPage = () => {
     setIsExportSnackbarOpen(false);
   };
 
+  const handleCloseBulkErrorSnackbar = () => {
+    setBulkErrorSnackbarCount(0);
+  };
+
+  const handleStatusDialogClose = () => {
+    dispatch(removePendingStatus());
+    setSelectedProposal(null);
+  };
+
+  const handleMultipleStatusDialogClose = () => {
+    dispatch(removePendingStatus());
+  };
+
+  const handleStatusChangeSuccess = (result: PatchProposalStatusResponse) => {
+    setPagination((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        items: prev.items.map((proposal) =>
+          proposal.id === result.proposal.id
+            ? {
+                ...proposal,
+                status: result.proposal.status,
+                updatedAt: result.proposal.updatedAt,
+              }
+            : proposal,
+        ),
+      };
+    });
+  };
+
+  const handleMultipleStatusChangeSuccess = (result: {
+    successful: PatchProposalStatusResponse[];
+    failed: unknown[];
+  }) => {
+    const successfulById = new Map(
+      result.successful.map((item) => [item.proposal.id, item.proposal]),
+    );
+
+    setPagination((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        items: prev.items.map((proposal) => {
+          const updatedProposal = successfulById.get(proposal.id);
+
+          if (!updatedProposal) return proposal;
+
+          return {
+            ...proposal,
+            status: updatedProposal.status,
+            updatedAt: updatedProposal.updatedAt,
+          };
+        }),
+      };
+    });
+    if (result.failed.length > 0) {
+      setBulkErrorSnackbarCount(result.failed.length);
+    }
+  };
+
   return (
     <>
       <PageHeader
@@ -303,6 +403,7 @@ const ProposalsPage = () => {
               user={user}
               proposals={proposalList}
               isDisabled={isPageUnavailable}
+              selectedStatuses={selectedProposalMultipleStatus}
             />
           ) : (
             <Skeleton variant="text" width={300} />
@@ -350,6 +451,7 @@ const ProposalsPage = () => {
           proposals={proposalList}
           tracks={tracksList}
           role={user.role}
+          setProposal={setSelectedProposal}
         />
       ) : isDataReady && activeFiltersCount === 0 ? (
         <EmptyState
@@ -392,10 +494,39 @@ const ProposalsPage = () => {
             </Select>
           </Stack>
         )}
+      {isStatusDialogOpened && (
+        <ProposalStatusTransitionDialog
+          mode="single"
+          prevStatus={selectedProposal.status}
+          nextStatus={pendingStatus}
+          id={selectedProposal.id}
+          open={isStatusDialogOpened}
+          onClose={handleStatusDialogClose}
+          onSuccess={handleStatusChangeSuccess}
+        />
+      )}
+      {isMultipleStatusDialogOpened && (
+        <ProposalStatusTransitionDialog
+          mode="multiple"
+          prevStatus={[...selectedProposalMultipleStatus][0]}
+          nextStatus={pendingStatus}
+          ids={selectedIds}
+          open={isMultipleStatusDialogOpened}
+          onClose={handleMultipleStatusDialogClose}
+          onSuccess={handleMultipleStatusChangeSuccess}
+        />
+      )}
       <Snackbar
         open={isExportSnackbarOpen}
         message="Функция появится в ближайшее время!"
         onClose={handleCloseExportSnackbar}
+        autoHideDuration={6000}
+        sx={sx.exportSnackbar}
+      />
+      <Snackbar
+        open={!!bulkErrorSnackbarCount}
+        message={`У некоторых заявок не удалось изменить статус: ${bulkErrorSnackbarCount}`}
+        onClose={handleCloseBulkErrorSnackbar}
         autoHideDuration={6000}
         sx={sx.exportSnackbar}
       />

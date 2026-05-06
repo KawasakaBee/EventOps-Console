@@ -9,7 +9,7 @@ export const usersHandlers = [
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
 
-    if (!userId || !isRole(userRole)) return userError;
+    if (!userId || !isRole(userRole)) return userError();
 
     const response: GetUsersListResponse = {
       users: users.map((item) => ({ name: item.name, id: item.id })),

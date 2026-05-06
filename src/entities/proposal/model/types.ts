@@ -31,6 +31,8 @@ export const proposalActions = [
   'addReview',
   'addComment',
   'requestChanges',
+  'changeStatus',
+  'viewDetails',
 ] as const;
 
 export type ProposalAction = (typeof proposalActions)[number];
@@ -45,6 +47,8 @@ export const proposalActionsNames = [
   'Принять',
   'Отклонить',
   'Добавить в расписание',
+  'Изменить статус',
+  'Просмотреть детали',
 ] as const;
 
 export type ProposalActionName = (typeof proposalActionsNames)[number];

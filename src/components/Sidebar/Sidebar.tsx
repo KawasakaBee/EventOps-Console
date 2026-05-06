@@ -15,8 +15,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ role, sidebarSx }) => {
       {routesByRole[role].map((route) => {
         if (!isNavigationRoute(route)) return null;
 
-        const path = navigationDicrionary.get(route);
-        if (!path) return null;
+        const path = navigationDicrionary[route];
 
         return (
           <Link

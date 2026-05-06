@@ -25,7 +25,7 @@ const PageHeader: React.FC<IPageHeader> = (props) => {
         isRelativeLink
         sx={sx.backButton}
       >
-        Назад в {navigationDicrionary.get(to)}
+        Назад в {navigationDicrionary[to]}
       </Button>
     );
   };

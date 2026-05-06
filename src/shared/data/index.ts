@@ -6,8 +6,8 @@ import {
   NavigationRoute,
   NavigationRouteName,
   Permission,
-  ProposalListActions,
-  ProposalListRowActions,
+  ProposalListAction,
+  ProposalListRowAction,
   Role,
   RoleName,
   Route,
@@ -89,7 +89,7 @@ export const permissionsByRole: Record<Role, Permission[]> = {
   speaker: ['proposals:view', 'proposals:create', 'proposals:update'],
 };
 
-export const proposalListActionsByRole: Record<Role, ProposalListActions[]> = {
+export const proposalListActionsByRole: Record<Role, ProposalListAction[]> = {
   admin: ['assignReviewer', 'changeStatus'],
   manager: ['assignReviewer', 'changeStatus'],
   reviewer: [],
@@ -98,7 +98,7 @@ export const proposalListActionsByRole: Record<Role, ProposalListActions[]> = {
 
 export const proposalListActionsByStatus: Record<
   ProposalStatus,
-  ProposalListActions[]
+  ProposalListAction[]
 > = {
   draft: [],
   submitted: ['assignReviewer', 'changeStatus'],
@@ -111,24 +111,24 @@ export const proposalListActionsByStatus: Record<
 
 export const proposalListRowActionsByRole: Record<
   Role,
-  ProposalListRowActions[]
+  ProposalListRowAction[]
 > = {
   admin: ['viewDetails', 'assignReviewer', 'changeStatus'],
   manager: ['viewDetails', 'assignReviewer', 'changeStatus'],
-  reviewer: ['viewDetails', 'createReview'],
-  speaker: ['viewDetails', 'editDraft'],
+  reviewer: ['viewDetails', 'addReview'],
+  speaker: ['viewDetails', 'edit'],
 };
 
 export const proposalListRowActionsByStatus: Record<
   ProposalStatus,
-  ProposalListRowActions[]
+  ProposalListRowAction[]
 > = {
-  draft: ['viewDetails', 'editDraft'],
+  draft: ['viewDetails', 'edit'],
   submitted: ['viewDetails', 'assignReviewer', 'changeStatus'],
   rejected: ['viewDetails', 'changeStatus'],
   accepted: ['viewDetails', 'changeStatus'],
   changes_requested: ['viewDetails', 'changeStatus'],
-  in_review: ['viewDetails', 'assignReviewer', 'changeStatus', 'createReview'],
+  in_review: ['viewDetails', 'assignReviewer', 'changeStatus', 'addReview'],
   scheduled: ['viewDetails', 'changeStatus'],
 };
 
@@ -159,18 +159,20 @@ export const speaker: User = {
   permissions: permissionsByRole.speaker,
 };
 
-export const navigationDicrionary: Map<NavigationRoute, NavigationRouteName> =
-  new Map([
-    ['/dashboard', 'Панель управления'],
-    ['/proposals', 'Заявки'],
-    ['/submit', 'Создать заявку'],
-    ['/my-proposals', 'Мои заявки'],
-    ['/speakers', 'Спикеры'],
-    ['/schedule', 'Расписание'],
-    ['/analytics', 'Аналитика'],
-    ['/settings', 'Настройки'],
-    ['/audit', 'Аудит'],
-  ]);
+export const navigationDicrionary: Record<
+  NavigationRoute,
+  NavigationRouteName
+> = {
+  '/dashboard': 'Панель управления',
+  '/proposals': 'Заявки',
+  '/submit': 'Создать заявку',
+  '/my-proposals': 'Мои заявки',
+  '/speakers': 'Спикеры',
+  '/schedule': 'Расписание',
+  '/analytics': 'Аналитика',
+  '/settings': 'Настройки',
+  '/audit': 'Аудит',
+};
 
 export const breadcrumbsDicrionary: Record<
   BreadcrumbsRoute,
@@ -188,42 +190,42 @@ export const breadcrumbsDicrionary: Record<
   '/audit': 'Аудит',
 };
 
-export const statusDictionary: Map<ProposalStatus, string> = new Map([
-  ['draft', 'Черновик'],
-  ['submitted', 'Отправлена'],
-  ['in_review', 'На ревью'],
-  ['changes_requested', 'Запрошены изменения'],
-  ['accepted', 'Принята'],
-  ['rejected', 'Отклонена'],
-  ['scheduled', 'В расписании'],
-]);
+export const statusDictionary: Record<ProposalStatus, string> = {
+  draft: 'Черновик',
+  submitted: 'Отправлена',
+  in_review: 'На ревью',
+  changes_requested: 'Запрошены изменения',
+  accepted: 'Принята',
+  rejected: 'Отклонена',
+  scheduled: 'В расписании',
+};
 
-export const levelDictionary: Map<ProposalLevel, string> = new Map([
-  ['junior', 'Джуниор'],
-  ['middle', 'Миддл'],
-  ['senior', 'Сеньор'],
-]);
+export const levelDictionary: Record<ProposalLevel, string> = {
+  junior: 'Джуниор',
+  middle: 'Миддл',
+  senior: 'Сеньор',
+};
 
-export const formatDictionary: Map<ProposalFormat, string> = new Map([
-  ['lightning', 'Молния'],
-  ['talk', 'Беседа'],
-  ['workshop', 'Воркшоп'],
-]);
+export const formatDictionary: Record<ProposalFormat, string> = {
+  lightning: 'Молния',
+  talk: 'Беседа',
+  workshop: 'Воркшоп',
+};
 
-export const proposalListItemDictionary: Map<
+export const proposalListItemDictionary: Record<
   keyof ProposalListItem | 'actions' | 'checkbox',
   string
-> = new Map([
-  ['checkbox', ''],
-  ['id', 'ID'],
-  ['title', 'Название'],
-  ['status', 'Статус'],
-  ['format', 'Формат'],
-  ['level', 'Уровень'],
-  ['trackId', 'Трек'],
-  ['updatedAt', 'Последнее обновление'],
-  ['actions', 'Доступные действия'],
-]);
+> = {
+  checkbox: '',
+  id: 'ID',
+  title: 'Название',
+  status: 'Статус',
+  format: 'Формат',
+  level: 'Уровень',
+  trackId: 'Трек',
+  updatedAt: 'Последнее обновление',
+  actions: 'Доступные действия',
+};
 
 export const proposalListItemKeys: (
   | keyof ProposalListItem
@@ -241,14 +243,16 @@ export const proposalListItemKeys: (
   'actions',
 ];
 
-export const proposalActionsDictionary: Map<ProposalListRowActions, string> =
-  new Map([
-    ['viewDetails', 'Просмотреть детали'],
-    ['assignReviewer', 'Назначить ревьюера'],
-    ['changeStatus', 'Изменить статус'],
-    ['createReview', 'Создать ревью'],
-    ['editDraft', 'Редактировать черновик'],
-  ]);
+export const proposalActionsDictionary: Record<
+  ProposalListRowAction,
+  ProposalActionName
+> = {
+  viewDetails: 'Просмотреть детали',
+  assignReviewer: 'Назначить ревьюера',
+  changeStatus: 'Изменить статус',
+  addReview: 'Добавить ревью',
+  edit: 'Редактировать',
+};
 
 export const proposalTableWidthDictionary: Record<
   keyof ProposalListItem | 'actions' | 'checkbox',
@@ -340,4 +344,6 @@ export const availableActionsDictionary: Record<
   accept: 'Принять',
   reject: 'Отклонить',
   schedule: 'Добавить в расписание',
+  changeStatus: 'Изменить статус',
+  viewDetails: 'Просмотреть детали',
 };

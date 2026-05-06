@@ -1,6 +1,6 @@
 import { ProposalStatus } from '@/entities/proposal/model/types';
 import {
-  ProposalListRowActions,
+  ProposalListRowAction,
   Role,
 } from '../../../shared/types/primitives.types';
 import {
@@ -11,7 +11,7 @@ import {
 const getProposalsListRowActions = (
   role: Role,
   status: ProposalStatus,
-): ProposalListRowActions[] => {
+): ProposalListRowAction[] => {
   const actionsByRole = proposalListRowActionsByRole[role];
   const actionsByStatus = new Set(proposalListRowActionsByStatus[status]);
 

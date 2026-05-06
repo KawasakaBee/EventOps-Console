@@ -5,6 +5,7 @@ import formatDuration from '@/shared/utils/formatDuration';
 import isoToLocalDate from '@/shared/utils/isoToLocalDate';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { styles } from './styles';
+import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 
 const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
   proposal,
@@ -12,7 +13,7 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
 }) => {
   const sx = styles();
 
-  return (
+  return proposal ? (
     <Stack spacing={6}>
       <Grid container columnSpacing={4} rowSpacing={2}>
         <Grid size={12}>
@@ -44,9 +45,9 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
           <Typography variant="body2">{proposal.abstract}</Typography>
         </Grid>
         <Grid size={2}>Формат</Grid>
-        <Grid size={10}>{formatDictionary.get(proposal.format)}</Grid>
+        <Grid size={10}>{formatDictionary[proposal.format]}</Grid>
         <Grid size={2}>Уровень</Grid>
-        <Grid size={10}>{levelDictionary.get(proposal.level)}</Grid>
+        <Grid size={10}>{levelDictionary[proposal.level]}</Grid>
         <Grid size={2}>Теги</Grid>
         {proposal.tags.length !== 0 ? (
           <Grid container size={10} spacing={1}>
@@ -65,6 +66,11 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
         <Grid size={10}>{isoToLocalDate(proposal.updatedAt)}</Grid>
       </Grid>
     </Stack>
+  ) : (
+    <EmptyState
+      title="Заявка не найдена"
+      subtitle="Попробуйте перезагрузить страницу или использовать правильный ID заявки."
+    />
   );
 };
 

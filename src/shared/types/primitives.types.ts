@@ -1,3 +1,4 @@
+import { proposalActions } from '@/entities/proposal/model/types';
 import { PAGE_SIZE_OPTIONS } from '../config/layout';
 
 export type ID = string;
@@ -100,19 +101,22 @@ export const errorCodes = [
 
 export type ErrorCode = (typeof errorCodes)[number];
 
-export const proposalListActions = ['assignReviewer', 'changeStatus'] as const;
+export const proposalListActions = proposalActions.filter(
+  (action) => action === 'assignReviewer' || action === 'changeStatus',
+);
 
-export type ProposalListActions = (typeof proposalListActions)[number];
+export type ProposalListAction = (typeof proposalListActions)[number];
 
-export const proposalListRowActions = [
-  'viewDetails',
-  'assignReviewer',
-  'changeStatus',
-  'createReview',
-  'editDraft',
-] as const;
+export const proposalListRowActions = proposalActions.filter(
+  (action) =>
+    action === 'assignReviewer' ||
+    action === 'changeStatus' ||
+    action === 'viewDetails' ||
+    action === 'addReview' ||
+    action === 'edit',
+);
 
-export type ProposalListRowActions = (typeof proposalListRowActions)[number];
+export type ProposalListRowAction = (typeof proposalListRowActions)[number];
 
 export const sortBy = [
   'id',

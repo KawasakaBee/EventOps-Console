@@ -70,6 +70,7 @@ export interface PatchProposalStatusRequest {
 export interface PatchProposalStatusResponse {
   proposal: Proposal;
   historyEntry: HistoryEntry;
+  availableActions: ProposalAction[];
 }
 
 export interface PostAssignReviewerRequest {

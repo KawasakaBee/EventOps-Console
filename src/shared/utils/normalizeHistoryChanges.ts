@@ -51,8 +51,8 @@ const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
         String(changes.nextValue),
       );
     return resultParse(
-      String(formatDictionary.get(changes.previousValue)),
-      String(formatDictionary.get(changes.nextValue)),
+      String(formatDictionary[changes.previousValue]),
+      String(formatDictionary[changes.nextValue]),
     );
   }
 
@@ -66,8 +66,8 @@ const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
         String(changes.nextValue),
       );
     return resultParse(
-      String(statusDictionary.get(changes.previousValue)),
-      String(statusDictionary.get(changes.nextValue)),
+      String(statusDictionary[changes.previousValue]),
+      String(statusDictionary[changes.nextValue]),
     );
   }
 
@@ -81,8 +81,8 @@ const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
         String(changes.nextValue),
       );
     return resultParse(
-      String(levelDictionary.get(changes.previousValue)),
-      String(levelDictionary.get(changes.nextValue)),
+      String(levelDictionary[changes.previousValue]),
+      String(levelDictionary[changes.nextValue]),
     );
   }
 

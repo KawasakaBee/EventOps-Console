@@ -48,7 +48,7 @@ import {
   getProposalsListAccess,
   isManagerLike,
 } from '../utils/proposal-access';
-import { isId, isRole } from '@/shared/utils/typeGuards';
+import { isId, isProposalStatus, isRole } from '@/shared/utils/typeGuards';
 import {
   forbiddenError,
   proposalError,
@@ -57,6 +57,7 @@ import {
 } from '../db/errors';
 import { applyProposalSort } from '../utils/sort';
 import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
+import getAvailableStatusesToChange from '@/shared/utils/getAvailableStatusesToChange';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {
@@ -65,12 +66,12 @@ export const proposalHandlers = [
 
     let result = proposals;
 
-    if (!userId || !isRole(userRole)) return userError;
+    if (!userId || !isRole(userRole)) return userError();
 
     const queryParams = parseProposalsListQuery(request.url);
     const access = getProposalsListAccess(userRole, queryParams);
 
-    if (access === 'forbidden') return forbiddenError;
+    if (access === 'forbidden') return forbiddenError();
 
     result = filterProposalListByAccess(userId, result, access);
     result = applyProposalSearch(queryParams, result);
@@ -98,15 +99,15 @@ export const proposalHandlers = [
     const userRole = request.headers.get('x-demo-user-role');
     const id = params.id;
 
-    if (!userId || !isRole(userRole)) return userError;
-    if (!isId(id)) return proposalError;
+    if (!userId || !isRole(userRole)) return userError();
+    if (!isId(id)) return proposalError();
 
     const proposal = getProposalById(id);
-    if (!proposal) return proposalError;
+    if (!proposal) return proposalError();
 
     const isUserHaveAccess = canReadProposal(proposal, userId, userRole);
 
-    if (!isUserHaveAccess) return forbiddenError;
+    if (!isUserHaveAccess) return forbiddenError();
 
     const speakers = getSpeakersById(proposal.speakerIds);
     const reviews = getReviewsByProposalId(proposal.id);
@@ -118,7 +119,7 @@ export const proposalHandlers = [
       proposal,
       userId,
     );
-    if (!availableActions) return forbiddenError;
+    if (!availableActions) return forbiddenError();
 
     const response: GetProposalResponse = {
       proposal: proposal,
@@ -137,10 +138,10 @@ export const proposalHandlers = [
     const userRole = request.headers.get('x-demo-user-role');
     const body = (await request.json()) as PostProposalRequest; //Провалидировать
 
-    if (!userId || !isRole(userRole)) return userError;
+    if (!userId || !isRole(userRole)) return userError();
 
     const isUserCanCreateProposal = canCreateProposal(userRole);
-    if (!isUserCanCreateProposal) return forbiddenError;
+    if (!isUserCanCreateProposal) return forbiddenError();
 
     const response: PostProposalResponse = {
       proposal: createProposal(body, userId),
@@ -155,17 +156,17 @@ export const proposalHandlers = [
     const id = params.id;
     const body = (await request.json()) as PatchProposalRequest; //Провалидировать
 
-    if (!userId || !isRole(userRole)) return userError;
-    if (!isId(id)) return proposalError;
+    if (!userId || !isRole(userRole)) return userError();
+    if (!isId(id)) return proposalError();
 
     const isUserCanChangeProposal = canChangeProposal(userRole, id, userId);
-    if (!isUserCanChangeProposal) return forbiddenError;
+    if (!isUserCanChangeProposal) return forbiddenError();
 
     const history = appendProposalHistory(id, userId, body, 'updated');
-    if (!history) return proposalError;
+    if (!history) return proposalError();
 
     const proposal = updateProposal(id, body);
-    if (!proposal) return proposalError;
+    if (!proposal) return proposalError();
 
     const response: PatchProposalResponse = {
       proposal: proposal,
@@ -181,11 +182,26 @@ export const proposalHandlers = [
     const { status, reason } =
       (await request.json()) as PatchProposalStatusRequest; //Провалидировать
 
-    if (!userId || !isRole(userRole)) return userError;
-    if (!isId(id)) return proposalError;
+    if (!userId || !isRole(userRole)) return userError();
+    if (!isId(id)) return proposalError();
+
+    if (!isProposalStatus(status)) return forbiddenError();
+
+    const prevProposal = proposals.find((proposal) => proposal.id === id);
+    if (!prevProposal) return proposalError();
 
     const canUserChangeProposalStatus = isManagerLike(userRole);
-    if (!canUserChangeProposalStatus) return forbiddenError;
+    if (!canUserChangeProposalStatus) return forbiddenError();
+
+    const availableStatuses = getAvailableStatusesToChange(prevProposal.status);
+
+    if (!availableStatuses.includes(status)) return forbiddenError();
+
+    if (
+      (status === 'rejected' || status === 'changes_requested') &&
+      !reason?.trim()
+    )
+      return forbiddenError();
 
     const history = appendProposalHistory(
       id,
@@ -194,14 +210,22 @@ export const proposalHandlers = [
       'status_changed',
       { reason },
     );
-    if (!history) return proposalError;
+    if (!history) return proposalError();
 
     const proposal = updateProposalStatus(id, status);
-    if (!proposal) return proposalError;
+    if (!proposal) return proposalError();
+
+    const availableActions = getAvailableProposalActions(
+      userRole,
+      proposal,
+      userId,
+    );
+    if (!availableActions) return forbiddenError();
 
     const response: PatchProposalStatusResponse = {
       proposal: proposal,
       historyEntry: history,
+      availableActions,
     };
 
     return HttpResponse.json(response);
@@ -216,17 +240,17 @@ export const proposalHandlers = [
       const { reviewerId } =
         (await request.json()) as PostAssignReviewerRequest; //Провалидировать
 
-      if (!userId || !isRole(userRole)) return userError;
-      if (!isId(id)) return proposalError;
+      if (!userId || !isRole(userRole)) return userError();
+      if (!isId(id)) return proposalError();
 
       const reviewer = reviewers.find((item) => item.id === reviewerId);
-      if (!reviewer) return reviewerError;
+      if (!reviewer) return reviewerError();
 
       const proposal = proposals.find((proposal) => proposal.id === id);
-      if (!proposal) return proposalError;
+      if (!proposal) return proposalError();
 
       const canUserChangeProposalStatus = isManagerLike(userRole);
-      if (!canUserChangeProposalStatus) return forbiddenError;
+      if (!canUserChangeProposalStatus) return forbiddenError();
 
       assignReviewer(id, reviewerId);
 
@@ -245,11 +269,11 @@ export const proposalHandlers = [
     const id = params.id;
     const body = (await request.json()) as PostCreateReviewRequest; //Провалидировать
 
-    if (!userId || !isRole(userRole)) return userError;
-    if (!isId(id)) return proposalError;
+    if (!userId || !isRole(userRole)) return userError();
+    if (!isId(id)) return proposalError();
 
     const isUserCanCreateReview = canCreateReview(userRole, id, userId);
-    if (!isUserCanCreateReview) return forbiddenError;
+    if (!isUserCanCreateReview) return forbiddenError();
 
     const review = createReview(id, userId, body);
 
@@ -268,11 +292,11 @@ export const proposalHandlers = [
     const id = params.id;
     const { message } = (await request.json()) as PostCreateCommentRequest; //Провалидировать
 
-    if (!userId || !isRole(userRole)) return userError;
-    if (!isId(id)) return proposalError;
+    if (!userId || !isRole(userRole)) return userError();
+    if (!isId(id)) return proposalError();
 
     const isUserCanCreateComment = canUserCreateComment(userRole, id, userId);
-    if (!isUserCanCreateComment) return forbiddenError;
+    if (!isUserCanCreateComment) return forbiddenError();
 
     const comment = createComment(id, userId, userRole, message);
 

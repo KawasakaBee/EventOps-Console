@@ -39,7 +39,7 @@ const ProposalsTableSkeleton = () => {
                   sx={sx.tableSortLabel}
                   disabled={true}
                 >
-                  {proposalListItemDictionary.get(key)}
+                  {proposalListItemDictionary[key]}
                 </TableSortLabel>
               </TableCell>
             ))}
