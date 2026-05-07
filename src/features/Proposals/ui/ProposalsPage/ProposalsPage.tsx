@@ -144,6 +144,12 @@ const ProposalsPage = () => {
     [proposalList, selectedIds],
   );
 
+  const availableProposalMultipleStatuses =
+    selectedProposalMultipleStatus.size === 1
+      ? proposalList?.find((proposal) => selectedIds.includes(proposal.id))
+          ?.availableStatuses
+      : [];
+
   const isMultipleStatusDialogOpened =
     !!pendingStatus &&
     !selectedProposal &&
@@ -346,6 +352,7 @@ const ProposalsPage = () => {
                 ...proposal,
                 status: result.proposal.status,
                 updatedAt: result.proposal.updatedAt,
+                availableStatuses: result.availableStatuses,
               }
             : proposal,
         ),
@@ -361,6 +368,13 @@ const ProposalsPage = () => {
       result.successful.map((item) => [item.proposal.id, item.proposal]),
     );
 
+    const successfulStatuses = new Map(
+      result.successful.map((item) => [
+        item.proposal.id,
+        item.availableStatuses,
+      ]),
+    );
+
     setPagination((prev) => {
       if (!prev) return prev;
 
@@ -368,13 +382,15 @@ const ProposalsPage = () => {
         ...prev,
         items: prev.items.map((proposal) => {
           const updatedProposal = successfulById.get(proposal.id);
+          const updatedStatuses = successfulStatuses.get(proposal.id);
 
-          if (!updatedProposal) return proposal;
+          if (!updatedProposal || !updatedStatuses) return proposal;
 
           return {
             ...proposal,
             status: updatedProposal.status,
             updatedAt: updatedProposal.updatedAt,
+            availableStatuses: updatedStatuses,
           };
         }),
       };
@@ -403,7 +419,7 @@ const ProposalsPage = () => {
               user={user}
               proposals={proposalList}
               isDisabled={isPageUnavailable}
-              selectedStatuses={selectedProposalMultipleStatus}
+              availableStatuses={availableProposalMultipleStatuses ?? []}
             />
           ) : (
             <Skeleton variant="text" width={300} />

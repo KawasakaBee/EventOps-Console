@@ -1,7 +1,15 @@
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import { styles } from './styles';
 import { IProposalStickyPanelProps } from './ProposalStickyPanel.types';
-import { Box, Menu, MenuItem, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Menu,
+  MenuItem,
+  Skeleton,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import isoToLocalDate from '@/shared/utils/isoToLocalDate';
 import { useMemo, useState } from 'react';
@@ -19,25 +27,24 @@ import {
 } from '@/shared/data';
 import SecondaryStickyButtons from '../SecondaryStickyButtons/SecondaryStickyButtons';
 import formatDuration from '@/shared/utils/formatDuration';
-import getAvailableStatusesToChange from '@/shared/utils/getAvailableStatusesToChange';
-import { useAppDispatch } from '@/shared/store/hooks';
-import { ProposalStatus } from '@/entities/proposal/model/types';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
+import { Proposal, ProposalStatus } from '@/entities/proposal/model/types';
 import { addPendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
+import { Track } from '@/entities/track/model/types';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   data,
-  trackName,
+  tracks,
 }) => {
   const { proposal, availableActions } = data;
   const dispatch = useAppDispatch();
+  const availableStatuses = useAppSelector(
+    (store) => store.proposalStatus.availableStatuses,
+  );
 
   const [statusMenuAnchorEl, setStatusMenuAnchorEl] =
     useState<HTMLElement | null>(null);
 
-  const availableStatuses = useMemo(
-    () => (proposal ? getAvailableStatusesToChange(proposal.status) : []),
-    [proposal],
-  );
   const criticalActions: CriticalAction[] = useMemo(
     () => availableActions.filter(isCriticalAvailableAction),
     [availableActions],
@@ -47,9 +54,18 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     [availableActions],
   );
 
+  const isDataLoaded = tracks.status === 'success' || tracks.status === 'error';
+  const isError = tracks.status === 'error';
+
+  const isAcceptAndRejectButtonDisable = data.reviews.length === 0;
   const isStatusMenuOpened = !!statusMenuAnchorEl;
 
   const sx = styles({ action: 'edit' });
+
+  const track = (proposal: Proposal, tracks: Track[]) => {
+    const findedTrack = tracks.find((track) => track.id === proposal.trackId);
+    return findedTrack ?? { id: '', title: '', description: '', order: 0 };
+  };
 
   const handleStatusMenuOpen = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -70,7 +86,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     <SectionCard title={null}>
       <Stack spacing={4}>
         <Stack spacing={2}>
-          <Box>
+          <Stack sx={sx.statusWrapper}>
             <Typography variant="subtitle2">Статус:</Typography>
             {proposal ? (
               <StatusChip
@@ -82,7 +98,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
             ) : (
               '—'
             )}
-          </Box>
+          </Stack>
           <Box>
             <Typography variant="subtitle2">Последнее обновление:</Typography>
             {proposal ? (
@@ -98,20 +114,28 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
           <Stack spacing={1}>
             {criticalActions.map((action) =>
               action === 'accept' || action === 'reject' ? (
-                <Button
+                <Tooltip
                   key={action}
-                  mode="button"
-                  variant="outlined"
-                  size="small"
-                  onClick={() =>
-                    handlePendingStatusChange(
-                      action === 'accept' ? 'accepted' : 'rejected',
-                    )
-                  }
-                  sx={styles({ action }).criticalButton}
+                  title="У заявки должно быть ревью, чтобы продолжить"
+                  placement="top"
                 >
-                  {availableActionsDictionary[action]}
-                </Button>
+                  <Box>
+                    <Button
+                      mode="button"
+                      variant="outlined"
+                      size="small"
+                      onClick={() =>
+                        handlePendingStatusChange(
+                          action === 'accept' ? 'accepted' : 'rejected',
+                        )
+                      }
+                      isDisabled={isAcceptAndRejectButtonDisable}
+                      sx={styles({ action }).criticalButton}
+                    >
+                      {availableActionsDictionary[action]}
+                    </Button>
+                  </Box>
+                </Tooltip>
               ) : (
                 <Button
                   key={action}
@@ -131,7 +155,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
           <Stack spacing={1}>
             {additionalActions.map((action) =>
               action === 'changeStatus' ? (
-                availableStatuses.length !== 0 && (
+                availableStatuses.statuses.length !== 0 && (
                   <Box key={action}>
                     <Button
                       mode="button"
@@ -147,8 +171,8 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                       anchorEl={statusMenuAnchorEl}
                       onClose={handleStatusMenuClose}
                     >
-                      {availableStatuses.length !== 0 ? (
-                        availableStatuses.map((status) => (
+                      {availableStatuses.statuses.length !== 0 ? (
+                        availableStatuses.statuses.map((status) => (
                           <MenuItem
                             key={`Statuses-menu-item-${status}`}
                             onClick={() => handlePendingStatusChange(status)}
@@ -180,18 +204,41 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
         )}
         <SecondaryStickyButtons />
         <Stack spacing={1}>
+          {isDataLoaded && data.proposal ? (
+            <Typography variant="subtitle2">
+              Трек:{' '}
+              <b>
+                {isError
+                  ? tracks.message
+                  : track(data.proposal, tracks.data).title}
+              </b>
+            </Typography>
+          ) : (
+            <Skeleton variant="text" width={200} />
+          )}
           <Typography variant="subtitle2">
-            Трек: <b>{trackName ?? '—'}</b>
+            Формат:{' '}
+            <b>
+              {proposal
+                ? formatDictionary[proposal.format]
+                : 'Формат не удалось загрузить'}
+            </b>
           </Typography>
           <Typography variant="subtitle2">
-            Формат: <b>{proposal ? formatDictionary[proposal.format] : '—'}</b>
-          </Typography>
-          <Typography variant="subtitle2">
-            Уровень: <b>{proposal ? levelDictionary[proposal.level] : '—'}</b>
+            Уровень:{' '}
+            <b>
+              {proposal
+                ? levelDictionary[proposal.level]
+                : 'Уровень не удалось загрузить'}
+            </b>
           </Typography>
           <Typography variant="subtitle2">
             Продолжительность:{' '}
-            <b>{proposal ? formatDuration(proposal.duration) : '—'}</b>
+            <b>
+              {proposal
+                ? formatDuration(proposal.duration)
+                : 'Продолжительность не удалось загрузить'}
+            </b>
           </Typography>
         </Stack>
       </Stack>

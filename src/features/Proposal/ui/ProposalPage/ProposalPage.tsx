@@ -4,9 +4,9 @@ import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
 import { PageStatus } from '@/shared/types/primitives.types';
 import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import { Grid, Skeleton, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 import { useParams, usePathname } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import getProposalErrorState from '../../model/getProposalErrorState';
 import normalizeResponse from '@/shared/api/normalizeResponse';
 import {
@@ -20,7 +20,6 @@ import { styles } from './styles';
 import { Track } from '@/entities/track/model/types';
 import { GetTracksResponse } from '@/shared/api/contracts/track.contract';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
-import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ProposalStickyPanel from '../ProposalStickyPanel/ProposalStickyPanel';
 import ProposalContent from '../ProposalContent/ProposalContent';
 import { ReviewerListItem } from '@/entities/review/model/types';
@@ -36,7 +35,13 @@ import {
   updateAvailableActions,
 } from '../../model/proposalDetailsSlice';
 import ProposalStatusTransitionDialog from '@/features/proposal-status-transition/ui/ProposalStatusTransitionDialog';
-import { removePendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
+import {
+  hydrateAvailableStatuses,
+  removePendingStatus,
+  StatusState,
+} from '@/features/proposal-status-transition/model/statusTransitionSlice';
+import ProposalPageSkeleton from './ProposalPageSkeleton';
+import toResource from '@/shared/utils/toResource';
 
 const ProposalPage = () => {
   const pathname = usePathname();
@@ -57,13 +62,6 @@ const ProposalPage = () => {
   const [tracksList, setTracksList] = useState<Track[]>([]);
   const [reviewersList, setReviewersList] = useState<ReviewerListItem[]>([]);
   const [usersList, setUsersList] = useState<UserListItem[]>([]);
-
-  const trackName = useMemo(() => {
-    const proposal = pageData.proposal;
-    if (!proposal) return null;
-
-    return tracksList.find((track) => track.id === proposal.trackId)?.title;
-  }, [pageData, tracksList]);
 
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const isDataReady = pageStatus === 'success';
@@ -188,6 +186,13 @@ const ProposalPage = () => {
       }
 
       dispatch(hydrateDetails(result.data));
+
+      const availableActions: StatusState['availableStatuses'] = {
+        id: result.data.proposal.id,
+        statuses: result.data.availableStatuses,
+      };
+
+      dispatch(hydrateAvailableStatuses(availableActions));
       setPageStatus('success');
     };
 
@@ -221,55 +226,70 @@ const ProposalPage = () => {
   return (
     <>
       {isInitialLoading ? (
-        <Skeleton variant="text" />
+        <ProposalPageSkeleton />
       ) : pageStatus === 'error' && pageErrorProps ? (
         <ErrorState {...pageErrorProps} />
-      ) : pageData && isDataReady ? (
-        <>
-          {' '}
-          <PageHeader
-            mode="inner"
-            pageName={
-              breadcrumbsRoute ? breadcrumbsDicrionary[breadcrumbsRoute] : null
-            }
-            title={proposalTitle}
-            to="/proposals"
-          >
-            {null}
-          </PageHeader>
-          <Grid container spacing={2}>
-            <Grid size="grow">
-              <ProposalContent
-                data={pageData}
-                trackName={tracksStatus === 'success' ? trackName : null}
-                reviewersList={
-                  reviewersStatus === 'success' ? reviewersList : null
-                }
-                usersList={usersStatus === 'success' ? usersList : null}
-                speakers={pageData.speakers}
-              />
-            </Grid>
-            <Grid size={2} sx={sx.proposalStickyPanel}>
-              <ProposalStickyPanel data={pageData} trackName={trackName} />
-            </Grid>
-          </Grid>
-          {pageData.proposal?.status && pendingStatus && (
-            <ProposalStatusTransitionDialog
-              mode="single"
-              prevStatus={pageData.proposal.status}
-              nextStatus={pendingStatus}
-              id={proposalId}
-              open={isStatusDialogOpened}
-              onClose={handleStatusDialogClose}
-              onSuccess={handleStatusChangeSuccess}
-            />
-          )}
-        </>
       ) : (
-        <EmptyState
-          title="Заявка не найдена"
-          subtitle="Попробуйте обратиться в службу поддержки"
-        />
+        isDataReady && (
+          <>
+            <PageHeader
+              mode="inner"
+              pageName={
+                breadcrumbsRoute
+                  ? breadcrumbsDicrionary[breadcrumbsRoute]
+                  : null
+              }
+              title={proposalTitle}
+              to="/proposals"
+            >
+              {null}
+            </PageHeader>
+            <Grid container spacing={2}>
+              <Grid size="grow">
+                <ProposalContent
+                  data={pageData}
+                  tracks={toResource(
+                    tracksStatus,
+                    tracksList,
+                    'Трек не удалось загрузить',
+                  )}
+                  reviewersList={toResource(
+                    reviewersStatus,
+                    reviewersList,
+                    'Данные ревьюера недоступны',
+                  )}
+                  users={toResource(
+                    usersStatus,
+                    usersList,
+                    'Данные автора недоступны',
+                  )}
+                  speakers={pageData.speakers}
+                />
+              </Grid>
+              <Grid size={2} sx={sx.proposalStickyPanel}>
+                <ProposalStickyPanel
+                  data={pageData}
+                  tracks={toResource(
+                    tracksStatus,
+                    tracksList,
+                    'Трек не удалось загрузить',
+                  )}
+                />
+              </Grid>
+            </Grid>
+            {pageData.proposal?.status && pendingStatus && (
+              <ProposalStatusTransitionDialog
+                mode="single"
+                prevStatus={pageData.proposal.status}
+                nextStatus={pendingStatus}
+                id={proposalId}
+                open={isStatusDialogOpened}
+                onClose={handleStatusDialogClose}
+                onSuccess={handleStatusChangeSuccess}
+              />
+            )}
+          </>
+        )
       )}
     </>
   );

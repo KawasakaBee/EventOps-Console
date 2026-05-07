@@ -1,11 +1,10 @@
 'use client';
 
 import { PostDemoLoginRequest } from '@/shared/api/contracts/auth.contract';
+import { demoRoles } from '@/shared/types/primitives.types';
 import Button from '@/shared/ui/Button/Button';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-
-const roles = ['manager', 'reviewer', 'speaker'] as const;
 
 const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
   manager: '/dashboard',
@@ -37,8 +36,9 @@ const Login = () => {
 
   return (
     <>
+      <Typography variant="h1">Авторизация с помощью Демо-роли</Typography>
       <Stack direction="row" spacing={2}>
-        {roles.map((role) => (
+        {demoRoles.map((role) => (
           <Button
             key={role}
             mode="button"

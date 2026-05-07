@@ -71,7 +71,9 @@ export interface Proposal {
 export type ProposalListItem = Pick<
   Proposal,
   'id' | 'title' | 'status' | 'format' | 'level' | 'trackId' | 'updatedAt'
->;
+> & {
+  availableStatuses: ProposalStatus[];
+};
 
 export type ProposalEditPayload = Pick<
   Proposal,

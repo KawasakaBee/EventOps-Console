@@ -2,35 +2,47 @@ import { Box, Stack } from '@mui/material';
 import { IProposalCommentsTabProps } from './ProposalCommentsTab.types';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import CommentCard from '../CommentCard/CommentCard';
-import { useMemo } from 'react';
+import CommentCardSkeleton from '../CommentCard/CommentCardSkeleton';
+import { Comment } from '@/entities/comment/model/types';
+import { UserListItem } from '@/entities/user/model/types';
 
 const ProposalCommentsTab: React.FC<IProposalCommentsTabProps> = ({
   comments,
   canAddComment,
   users,
 }) => {
-  const usersMapByCommentId = useMemo(() => {
-    if (!users) return;
-    return new Map(
-      comments.map((comment) => [
-        comment.id,
-        users.find((user) => user.id === comment.actorId),
-      ]),
-    );
-  }, [users, comments]);
+  const isDataLoaded = users.status === 'success' || users.status === 'error';
+  const isError = users.status === 'error';
+
+  const user = (comment: Comment, users: UserListItem[]) => {
+    const foundUser = users.find((u) => u.id === comment.actorId);
+    return foundUser ?? { id: '', name: 'Данные автора недоступны' };
+  };
 
   return (
     <Box>
       {comments.length !== 0 ? (
         <Stack spacing={10}>
           {comments.map((comment) => {
-            const user = usersMapByCommentId?.get(comment.id);
-            return (
-              <CommentCard
-                key={comment.id}
-                comment={comment}
-                user={user ?? null}
-              />
+            return isDataLoaded ? (
+              isError ? (
+                <CommentCard
+                  key={comment.id}
+                  comment={comment}
+                  user={{ status: users.status, message: users.message }}
+                />
+              ) : (
+                <CommentCard
+                  key={comment.id}
+                  comment={comment}
+                  user={{
+                    status: users.status,
+                    data: user(comment, users.data),
+                  }}
+                />
+              )
+            ) : (
+              <CommentCardSkeleton key={comment.id} />
             );
           })}
         </Stack>
@@ -38,14 +50,6 @@ const ProposalCommentsTab: React.FC<IProposalCommentsTabProps> = ({
         <EmptyState
           title="Комментариев пока что нет"
           subtitle={`Пока что никто не оставлял комментарий для этой заявки.${canAddComment ? ' Добавьте комментарий.' : ''}`}
-          action={
-            canAddComment
-              ? {
-                  handler: () => {},
-                  buttonName: 'Добавить комментарий',
-                }
-              : undefined
-          }
         />
       )}
     </Box>

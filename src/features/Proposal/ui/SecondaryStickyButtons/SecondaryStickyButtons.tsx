@@ -64,7 +64,6 @@ const SecondaryStickyButtons = () => {
   };
 
   const customAction = (
-    type: SecondaryAction,
     icon: SvgIconComponent,
     description: string,
     action: () => void,
@@ -93,7 +92,6 @@ const SecondaryStickyButtons = () => {
           return (
             <Box key={item.type}>
               {customAction(
-                item.type,
                 item.icon,
                 item.description,
                 customActionHandlers[item.type],

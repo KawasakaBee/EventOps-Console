@@ -83,6 +83,7 @@ const ProposalsTableRow = React.memo(
                 proposalId={proposal.id}
                 proposalStatus={proposal.status}
                 setProposal={setProposal}
+                availableStatuses={proposal.availableStatuses}
               />
             ) : (
               renderCell({

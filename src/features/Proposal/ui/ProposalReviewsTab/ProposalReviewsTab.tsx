@@ -3,24 +3,24 @@ import { IProposalReviewsTabProps } from './ProposalReviewsTab.types';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import getAverageReviewsScore from '@/shared/utils/getAverageReviewsScore';
 import getFinalReviewReccomendation from '@/shared/utils/getFinalReviewRecommendation';
-import { useMemo } from 'react';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { styles } from './styles';
+import ReviewCardSkeleton from '../ReviewCard/ReviewCardSkeleton';
+import { Review, ReviewerListItem } from '@/entities/review/model/types';
 
 const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
   reviews,
-  canAssignReview,
+  canAssignReviewer,
   reviewers,
 }) => {
-  const reviewersNamesByReviewId = useMemo(() => {
-    if (!reviewers) return;
-    return new Map(
-      reviews.map((review) => [
-        review.id,
-        reviewers.find((item) => item.id === review.reviewerId)?.name,
-      ]),
-    );
-  }, [reviewers, reviews]);
+  const isDataLoaded =
+    reviewers.status === 'success' || reviewers.status === 'error';
+  const isError = reviewers.status === 'error';
+
+  const reviewer = (review: Review, reviewers: ReviewerListItem[]) => {
+    const foundReviewer = reviewers.find((r) => r.id === review.reviewerId);
+    return foundReviewer ?? { id: '', name: 'Данные ревьюера недоступны' };
+  };
 
   const sx = styles();
 
@@ -48,13 +48,28 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
           <Typography variant="h2">Ревью:</Typography>
           <Stack spacing={2}>
             {reviews.map((review) => {
-              const name = reviewersNamesByReviewId?.get(review.id);
-              return (
-                <ReviewCard
-                  key={review.id}
-                  review={review}
-                  reviewerName={name ?? null}
-                />
+              return isDataLoaded ? (
+                isError ? (
+                  <ReviewCard
+                    key={review.id}
+                    review={review}
+                    reviewer={{
+                      status: reviewers.status,
+                      message: reviewers.message,
+                    }}
+                  />
+                ) : (
+                  <ReviewCard
+                    key={review.id}
+                    review={review}
+                    reviewer={{
+                      status: reviewers.status,
+                      data: reviewer(review, reviewers.data),
+                    }}
+                  />
+                )
+              ) : (
+                <ReviewCardSkeleton key={review.id} />
               );
             })}
           </Stack>
@@ -62,15 +77,7 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
       ) : (
         <EmptyState
           title="Ревью пока что нет"
-          subtitle={`Для этой заявки ещё нет ревью. ${canAssignReview ? 'Назначьте ревьюера или ждите,' : 'Ждите,'} пока появится ревью.`}
-          action={
-            canAssignReview
-              ? {
-                  handler: () => {},
-                  buttonName: 'Назначить ревьюера',
-                }
-              : undefined
-          }
+          subtitle={`Для этой заявки ещё нет ревью. ${canAssignReviewer ? 'Назначьте ревьюера или ждите,' : 'Ждите,'} пока появится ревью.`}
         />
       )}
     </Box>

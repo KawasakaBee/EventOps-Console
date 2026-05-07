@@ -41,6 +41,18 @@ const getProposalsErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'INVALID_ROLE':
+      return {
+        type: 'state',
+        title: 'Ошибка авторизации',
+        subtitle:
+          'Сервис не может определить Вашу роль, попробуйте авторизоваться заново.',
+        fullHeight: true,
+        link: {
+          to: '/login',
+          buttonName: 'Перейти на страницу авторизации',
+        },
+      };
     case 'INVALID_QUERY':
       return {
         type: 'state',

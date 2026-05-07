@@ -49,9 +49,11 @@ export const palette = {
   },
   success: {
     main: '#4caf50',
+    darken: '#277029',
   },
   error: {
     main: '#f44336',
+    darken: '#b42f26',
   },
   purple: {
     main: '#dd44eb',

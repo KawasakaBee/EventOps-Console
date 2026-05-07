@@ -2,10 +2,11 @@ import { Comment } from '@/entities/comment/model/types';
 import { HistoryEntry } from '@/entities/history/model/types';
 import { ReviewerListItem } from '@/entities/review/model/types';
 import { UserListItem } from '@/entities/user/model/types';
+import { Resource } from '@/shared/types/primitives.types';
 
 export interface IProposalHistoryTabProps {
   history: HistoryEntry[];
-  users: UserListItem[] | null;
+  users: Resource<UserListItem[]>;
   comments: Comment[];
-  reviewers: ReviewerListItem[] | null;
+  reviewers: Resource<ReviewerListItem[]>;
 }

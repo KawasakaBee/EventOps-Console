@@ -1,9 +1,11 @@
 import { Timeline } from '@mui/lab';
 import { IProposalHistoryTabProps } from './ProposalHistoryTab.types';
 import HistoryItem from '../HistoryItem/HistoryItem';
-import { useMemo } from 'react';
 import { styles } from './styles';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
+import HistoryItemSkeleton from '../HistoryItem/HistoryItemSkeleton';
+import { HistoryEntry } from '@/entities/history/model/types';
+import { UserListItem } from '@/entities/user/model/types';
 
 const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
   history,
@@ -13,29 +15,40 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
 }) => {
   const sx = styles();
 
-  const usersMapByHistoryId = useMemo(() => {
-    if (!users) return;
-    return new Map(
-      history.map((item) => [
-        item.id,
-        users.find((user) => user.id === item.actorId),
-      ]),
-    );
-  }, [history, users]);
+  const isUsersDataLoaded =
+    users.status === 'success' || users.status === 'error';
+  const isUsersError = users.status === 'error';
+
+  const user = (history: HistoryEntry, users: UserListItem[]) => {
+    const foundUser = users.find((u) => u.id === history.actorId);
+    return foundUser ?? { id: '', name: 'Данные автора недоступны' };
+  };
 
   return history.length !== 0 ? (
     <Timeline sx={sx.timeline}>
       {history.map((item, idx) => {
-        const user = usersMapByHistoryId?.get(item.id);
-        return (
-          <HistoryItem
-            key={item.id}
-            item={item}
-            user={user ?? null}
-            isLastItem={idx === history.length - 1}
-            comments={comments}
-            reviewers={reviewers}
-          />
+        return isUsersDataLoaded ? (
+          isUsersError ? (
+            <HistoryItem
+              key={item.id}
+              item={item}
+              user={{ status: users.status, message: users.message }}
+              isLastItem={idx === history.length - 1}
+              comments={comments}
+              reviewers={reviewers}
+            />
+          ) : (
+            <HistoryItem
+              key={item.id}
+              item={item}
+              user={{ status: users.status, data: user(item, users.data) }}
+              isLastItem={idx === history.length - 1}
+              comments={comments}
+              reviewers={reviewers}
+            />
+          )
+        ) : (
+          <HistoryItemSkeleton key={item.id} />
         );
       })}
     </Timeline>

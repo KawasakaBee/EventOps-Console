@@ -45,10 +45,22 @@ export const styles: Style = () => {
       justifyContent: 'center',
     },
     acceptButton: {
+      borderColor: 'success.main',
+      color: 'text.secondary',
       bgcolor: 'success.main',
+      '&:hover': {
+        borderColor: 'success.darken',
+        bgcolor: 'success.darken',
+      },
     },
     rejectButton: {
+      borderColor: 'error.main',
+      color: 'text.secondary',
       bgcolor: 'error.main',
+      '&:hover': {
+        borderColor: 'error.darken',
+        bgcolor: 'error.darken',
+      },
     },
   };
 };

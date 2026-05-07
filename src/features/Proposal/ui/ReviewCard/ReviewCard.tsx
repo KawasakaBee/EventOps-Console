@@ -1,10 +1,21 @@
-import { Chip, Divider, Grid, Stack, Typography } from '@mui/material';
+import {
+  Chip,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { IReviewCardProps } from './ReviewCard.types';
 import { recommendationDicrionary } from '@/shared/data';
 import { styles } from './styles';
 
-const ReviewCard: React.FC<IReviewCardProps> = ({ review, reviewerName }) => {
+const ReviewCard: React.FC<IReviewCardProps> = ({ review, reviewer }) => {
   const sx = styles();
+
+  const isDataLoaded =
+    reviewer.status === 'success' || reviewer.status === 'error';
+  const isError = reviewer.status === 'error';
 
   return (
     <Grid
@@ -20,9 +31,13 @@ const ReviewCard: React.FC<IReviewCardProps> = ({ review, reviewerName }) => {
         sx={sx.reviewCardReviewerWrapper}
       >
         <Grid size="auto">
-          <Typography variant="subtitle2">
-            <b>{reviewerName ?? '—'}</b>
-          </Typography>
+          {isDataLoaded ? (
+            <Typography variant="subtitle2">
+              <b>{isError ? reviewer.message : reviewer.data.name}</b>
+            </Typography>
+          ) : (
+            <Skeleton variant="text" width={200} />
+          )}
         </Grid>
         <Grid size="auto">
           <Chip

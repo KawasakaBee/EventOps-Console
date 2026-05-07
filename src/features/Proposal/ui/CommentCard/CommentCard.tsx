@@ -1,29 +1,45 @@
-import { Avatar, Box, Chip, Grid, Stack, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Chip,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { ICommentCardProps } from './CommentCard.types';
 import isoToLocalDate from '@/shared/utils/isoToLocalDate';
 import { rolesDictionary } from '@/shared/data';
 import { styles } from './styles';
 import getAvatarInitials from '../../model/getAvatarInitials';
-import { useMemo } from 'react';
 
 const CommentCard: React.FC<ICommentCardProps> = ({ comment, user }) => {
   const sx = styles({ role: comment.actorRole });
 
-  const avatarInitials = useMemo(
-    () => (user?.name ? getAvatarInitials(user.name) : 'U'),
-    [user],
-  );
+  const isDataLoaded = user.status === 'success' || user.status === 'error';
+  const isError = user.status === 'error';
 
   return (
     <Grid container columnSpacing={2}>
       <Grid size="auto">
-        <Avatar sx={sx.avatar}>{avatarInitials}</Avatar>
+        {isDataLoaded ? (
+          <Avatar sx={sx.avatar}>
+            {isError ? 'U' : getAvatarInitials(user.data.name)}
+          </Avatar>
+        ) : (
+          <Skeleton variant="circular" width={40} height={40} />
+        )}
       </Grid>
       <Grid size="grow">
         <Stack direction="row" spacing={1} sx={sx.bioWrapper}>
-          <Typography variant="body2" sx={sx.userName}>
-            {user ? user.name : 'Пользователь'}
-          </Typography>
+          {isDataLoaded ? (
+            <Typography variant="body2" sx={sx.userName}>
+              {isError ? user.message : user.data.name}
+            </Typography>
+          ) : (
+            <Skeleton variant="text" width={200} />
+          )}
+
           <Chip label={rolesDictionary[comment.actorRole]} sx={sx.userRole} />
         </Stack>
         <Box sx={sx.timeWrapper}>

@@ -4,6 +4,7 @@ import { dashboardHandlers } from './handlers/dashboard.handlers';
 import { trackHandlers } from './handlers/track.handler';
 import { reviewersHandlers } from './handlers/reviewers.handlers';
 import { usersHandlers } from './handlers/users.handlers';
+import { authHandlers } from './handlers/auth.handlers';
 
 export const worker = setupWorker(
   ...dashboardHandlers,
@@ -11,4 +12,5 @@ export const worker = setupWorker(
   ...trackHandlers,
   ...reviewersHandlers,
   ...usersHandlers,
+  ...authHandlers,
 );

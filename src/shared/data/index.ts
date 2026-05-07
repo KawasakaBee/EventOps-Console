@@ -213,7 +213,7 @@ export const formatDictionary: Record<ProposalFormat, string> = {
 };
 
 export const proposalListItemDictionary: Record<
-  keyof ProposalListItem | 'actions' | 'checkbox',
+  Exclude<keyof ProposalListItem, 'availableStatuses'> | 'actions' | 'checkbox',
   string
 > = {
   checkbox: '',
@@ -255,7 +255,7 @@ export const proposalActionsDictionary: Record<
 };
 
 export const proposalTableWidthDictionary: Record<
-  keyof ProposalListItem | 'actions' | 'checkbox',
+  Exclude<keyof ProposalListItem, 'availableStatuses'> | 'actions' | 'checkbox',
   { width: number; skeletonWidth: number }
 > = {
   checkbox: {

@@ -6,7 +6,7 @@ import {
   TimelineSeparator,
 } from '@mui/lab';
 import { IHistoryItemProps } from './HistoryItem.types';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Skeleton, Stack, Typography } from '@mui/material';
 import isoToLocalDate from '@/shared/utils/isoToLocalDate';
 import { historyActionsDictionary } from '@/shared/data';
 import normalizeHistoryChanges from '@/shared/utils/normalizeHistoryChanges';
@@ -23,12 +23,18 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
 }) => {
   const sx = styles();
 
+  const isUserDataLoaded = user.status === 'success' || user.status === 'error';
+  const isUserError = user.status === 'error';
+  const isReviwersDataLoaded =
+    reviewers.status === 'success' || reviewers.status === 'error';
+  const isReviwersError = reviewers.status === 'error';
+
   const normalizedHistoryPayload = () => {
-    if (!item.payload) return null;
+    if (!item.payload || !isReviwersDataLoaded) return null;
 
     const normalizePayload = normalizeHistoryPayload(
       item.payload,
-      reviewers,
+      isReviwersError ? null : reviewers.data,
       comments,
     );
     if (!normalizePayload) return null;
@@ -77,10 +83,12 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
               })}
           </Stack>
           {normalizedHistoryPayload()}
-          {user && (
+          {isUserDataLoaded ? (
             <Typography variant="body1">
-              by <i>{user.name}</i>
+              by <i>{isUserError ? user.message : user.data.name}</i>
             </Typography>
+          ) : (
+            <Skeleton variant="text" width={150} />
           )}
         </Stack>
       </TimelineContent>

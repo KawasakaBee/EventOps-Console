@@ -8,6 +8,7 @@ import { reviewers } from '../db/reviews';
 import { ID, Role } from '@/shared/types/primitives.types';
 import { speakers } from '../db/speakers';
 import { proposals } from '../db/proposals';
+import getAvailableStatusesToChange from './getAvailableStatusesToChange';
 
 export const proposalsToProposalListItem = (
   proposals: Proposal[],
@@ -20,6 +21,7 @@ export const proposalsToProposalListItem = (
     level: p.level,
     trackId: p.trackId,
     updatedAt: p.updatedAt,
+    availableStatuses: getAvailableStatusesToChange(p.status),
   }));
 
 export const applyProposalSearch = (

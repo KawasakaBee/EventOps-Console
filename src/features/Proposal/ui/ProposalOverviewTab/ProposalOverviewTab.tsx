@@ -1,4 +1,11 @@
-import { Chip, Divider, Grid, Stack, Typography } from '@mui/material';
+import {
+  Chip,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { IProposalOverviewTabProps } from './ProposalOverviewTab.types';
 import { formatDictionary, levelDictionary } from '@/shared/data';
 import formatDuration from '@/shared/utils/formatDuration';
@@ -11,6 +18,9 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
   proposal,
   track,
 }) => {
+  const isDataLoaded = track.status === 'success' || track.status === 'error';
+  const isError = track.status === 'error';
+
   const sx = styles();
 
   return proposal ? (
@@ -34,7 +44,13 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
               shape="rounded"
               size="small"
             />
-            <Typography>Трек: {track ? track : '—'}</Typography>
+            {isDataLoaded ? (
+              <Typography>
+                Трек: {isError ? track.message : track.data.title}
+              </Typography>
+            ) : (
+              <Skeleton variant="text" width={200} />
+            )}
             <Typography>
               Продолжительность: {formatDuration(proposal.duration)}
             </Typography>

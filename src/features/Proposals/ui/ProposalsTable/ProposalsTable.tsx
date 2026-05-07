@@ -65,8 +65,8 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
 
   const sx = useMemo(() => styles(), []);
 
-  const handleSort = (by: SortBy | 'actions') => {
-    if (by === 'actions') return;
+  const handleSort = (by: SortBy | 'actions' | 'availableStatuses') => {
+    if (by === 'actions' || by === 'availableStatuses') return;
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -105,33 +105,39 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
 
         <TableHead>
           <TableRow>
-            {proposalListItemKeys.map((key) => (
-              <TableCell
-                sortDirection={sortBy === key ? sortOrder : false}
-                key={`Table-head-cell-${key}`}
-              >
-                {key === 'checkbox' && (
-                  <Checkbox
-                    sx={sx.tableCheckbox}
-                    checked={allVisibleSelected}
-                    indeterminate={someVisibleSelected && !allVisibleSelected}
-                    onChange={(event) => handleToggleSelectAllProposals(event)}
-                  />
-                )}
-                {key === 'actions' || key === 'checkbox' ? (
-                  proposalListItemDictionary[key]
-                ) : (
-                  <TableSortLabel
-                    active={sortBy === key}
-                    direction={sortBy === key ? sortOrder : 'asc'}
-                    sx={sx.tableSortLabel}
-                    onClick={() => handleSort(key)}
-                  >
-                    {proposalListItemDictionary[key]}
-                  </TableSortLabel>
-                )}
-              </TableCell>
-            ))}
+            {proposalListItemKeys.map((key) => {
+              if (key === 'availableStatuses') return null;
+
+              return (
+                <TableCell
+                  sortDirection={sortBy === key ? sortOrder : false}
+                  key={`Table-head-cell-${key}`}
+                >
+                  {key === 'checkbox' && (
+                    <Checkbox
+                      sx={sx.tableCheckbox}
+                      checked={allVisibleSelected}
+                      indeterminate={someVisibleSelected && !allVisibleSelected}
+                      onChange={(event) =>
+                        handleToggleSelectAllProposals(event)
+                      }
+                    />
+                  )}
+                  {key === 'actions' || key === 'checkbox' ? (
+                    proposalListItemDictionary[key]
+                  ) : (
+                    <TableSortLabel
+                      active={sortBy === key}
+                      direction={sortBy === key ? sortOrder : 'asc'}
+                      sx={sx.tableSortLabel}
+                      onClick={() => handleSort(key)}
+                    >
+                      {proposalListItemDictionary[key]}
+                    </TableSortLabel>
+                  )}
+                </TableCell>
+              );
+            })}
           </TableRow>
         </TableHead>
         <TableBody>

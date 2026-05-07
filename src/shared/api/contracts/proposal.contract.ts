@@ -37,6 +37,7 @@ export interface GetProposalResponse {
   comments: Comment[];
   history: HistoryEntry[];
   availableActions: ProposalAction[];
+  availableStatuses: ProposalStatus[];
 }
 
 export interface PostProposalRequest {
@@ -71,6 +72,7 @@ export interface PatchProposalStatusResponse {
   proposal: Proposal;
   historyEntry: HistoryEntry;
   availableActions: ProposalAction[];
+  availableStatuses: ProposalStatus[];
 }
 
 export interface PostAssignReviewerRequest {

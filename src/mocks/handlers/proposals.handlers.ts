@@ -57,7 +57,7 @@ import {
 } from '../db/errors';
 import { applyProposalSort } from '../utils/sort';
 import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
-import getAvailableStatusesToChange from '@/shared/utils/getAvailableStatusesToChange';
+import getAvailableStatusesToChange from '@/mocks/utils/getAvailableStatusesToChange';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {
@@ -121,6 +121,8 @@ export const proposalHandlers = [
     );
     if (!availableActions) return forbiddenError();
 
+    const availableStatuses = getAvailableStatusesToChange(proposal.status);
+
     const response: GetProposalResponse = {
       proposal: proposal,
       speakers: speakers,
@@ -128,6 +130,7 @@ export const proposalHandlers = [
       comments: comments,
       history: history,
       availableActions,
+      availableStatuses,
     };
 
     return HttpResponse.json(response);
@@ -193,9 +196,11 @@ export const proposalHandlers = [
     const canUserChangeProposalStatus = isManagerLike(userRole);
     if (!canUserChangeProposalStatus) return forbiddenError();
 
-    const availableStatuses = getAvailableStatusesToChange(prevProposal.status);
+    const prevAvailableStatuses = getAvailableStatusesToChange(
+      prevProposal.status,
+    );
 
-    if (!availableStatuses.includes(status)) return forbiddenError();
+    if (!prevAvailableStatuses.includes(status)) return forbiddenError();
 
     if (
       (status === 'rejected' || status === 'changes_requested') &&
@@ -222,10 +227,13 @@ export const proposalHandlers = [
     );
     if (!availableActions) return forbiddenError();
 
+    const availableStatuses = getAvailableStatusesToChange(proposal.status);
+
     const response: PatchProposalStatusResponse = {
       proposal: proposal,
       historyEntry: history,
       availableActions,
+      availableStatuses,
     };
 
     return HttpResponse.json(response);

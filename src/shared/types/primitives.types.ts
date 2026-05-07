@@ -8,6 +8,10 @@ export const roles = ['admin', 'manager', 'reviewer', 'speaker'] as const;
 
 export type Role = (typeof roles)[number];
 
+export const demoRoles = roles.filter((role) => role !== 'admin');
+
+export type DemoRole = (typeof demoRoles)[number];
+
 export type PageSize = (typeof PAGE_SIZE_OPTIONS)[number];
 
 export const routes = [
@@ -168,3 +172,8 @@ export const proposalDetailsTabs = [
 ] as const;
 
 export type ProposalDetailsTab = (typeof proposalDetailsTabs)[number];
+
+export type Resource<T> =
+  | { status: 'loading' | 'idle' }
+  | { status: 'error'; message: string }
+  | { status: 'success'; data: T };

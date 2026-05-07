@@ -2,11 +2,12 @@ import { Comment } from '@/entities/comment/model/types';
 import { HistoryEntry } from '@/entities/history/model/types';
 import { ReviewerListItem } from '@/entities/review/model/types';
 import { UserListItem } from '@/entities/user/model/types';
+import { Resource } from '@/shared/types/primitives.types';
 
 export interface IHistoryItemProps {
   item: HistoryEntry;
-  user: UserListItem | null;
+  user: Resource<UserListItem>;
   isLastItem: boolean;
   comments: Comment[];
-  reviewers: ReviewerListItem[] | null;
+  reviewers: Resource<ReviewerListItem[]>;
 }

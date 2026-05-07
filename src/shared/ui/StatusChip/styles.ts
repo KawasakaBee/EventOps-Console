@@ -22,7 +22,7 @@ export const styles: Styles = (options: IStyledProps) => {
       justifyContent: 'flex-start',
       alignItems: 'center',
       gap: 0.5,
-      width: size === 'small' ? 170 : size === 'medium' ? 220 : 250,
+      minWidth: size === 'small' ? 100 : size === 'medium' ? 150 : 200,
       border: `1px solid ${color}`,
       borderRadius: shape === 'rounded' ? 1.5 : 0,
       paddingInline: size === 'small' ? 0.5 : size === 'medium' ? 1 : 2,

@@ -8,14 +8,14 @@ import { IProposalsBulkActionsProps } from './ProposalsBulkActions.types';
 import { ProposalStatus } from '@/entities/proposal/model/types';
 import getProposalsListActions from '@/features/Proposals/model/getProposalsListActions';
 import { proposalActionsDictionary, statusDictionary } from '@/shared/data';
-import getAvailableStatusesToChange from '@/shared/utils/getAvailableStatusesToChange';
+// import getAvailableStatusesToChange from '@/mocks/utils/getAvailableStatusesToChange';
 import { addPendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
 
 const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   user,
   proposals,
   isDisabled,
-  selectedStatuses,
+  availableStatuses,
 }) => {
   const dispatch = useAppDispatch();
   const selectedProposalsIds = useAppSelector(
@@ -54,13 +54,13 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
     );
   }, [user, proposals, selectedProposalsIds]);
 
-  const availableStatuses = useMemo(
-    () =>
-      selectedStatuses.size === 1
-        ? getAvailableStatusesToChange([...selectedStatuses][0])
-        : [],
-    [selectedStatuses],
-  );
+  // const availableStatuses = useMemo(
+  //   () =>
+  //     selectedStatuses.size === 1
+  //       ? getAvailableStatusesToChange([...selectedStatuses][0])
+  //       : [],
+  //   [selectedStatuses],
+  // );
 
   const isActionsMenuOpened = !!actionsAnchorEl;
   const isStatusMenuOpened = !!statusesAnchorEl;

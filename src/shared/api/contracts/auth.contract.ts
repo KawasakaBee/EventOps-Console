@@ -1,8 +1,16 @@
 import { User } from '@/entities/user/model/types';
-import { Role } from '@/shared/types/primitives.types';
+import { DemoRole } from '@/shared/types/primitives.types';
 
 export type GetCurrentUserResponse = User;
 
 export interface PostDemoLoginRequest {
-  role: Exclude<Role, 'admin'>;
+  role: DemoRole;
+}
+
+export interface PostDemoLoginResponse {
+  ok: boolean;
+}
+
+export interface PostLogoutResponse {
+  ok: boolean;
 }

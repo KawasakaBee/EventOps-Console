@@ -8,5 +8,5 @@ export interface IProposalsBulkActionsProps {
   user: User;
   proposals: ProposalListItem[];
   isDisabled: boolean;
-  selectedStatuses: Set<ProposalStatus>;
+  availableStatuses: ProposalStatus[];
 }

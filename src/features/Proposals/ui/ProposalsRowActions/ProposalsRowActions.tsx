@@ -5,7 +5,6 @@ import { useMemo, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { proposalActionsDictionary, statusDictionary } from '@/shared/data';
 import { styles } from './styles';
-import getAvailableStatusesToChange from '@/shared/utils/getAvailableStatusesToChange';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { ProposalStatus } from '@/entities/proposal/model/types';
 import { addPendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
@@ -15,6 +14,7 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
   proposalId,
   proposalStatus,
   setProposal,
+  availableStatuses,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -26,10 +26,6 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
   const actionsWithoutDetails = useMemo(() => {
     return actions.filter((action) => action !== 'viewDetails');
   }, [actions]);
-  const availableStatuses = useMemo(
-    () => getAvailableStatusesToChange(proposalStatus),
-    [proposalStatus],
-  );
 
   const isMenuOpened = !!anchorEl;
   const isStatusMenuOpened = !!statusesAnchorEl;

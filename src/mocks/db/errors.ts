@@ -77,3 +77,14 @@ export const unknownError = () =>
     } satisfies ErrorEnvelope,
     { status: 500 },
   );
+
+export const roleError = () =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'INVALID_ROLE',
+        message: 'Недопустимая demo-роль',
+      },
+    } satisfies ErrorEnvelope,
+    { status: 403 },
+  );

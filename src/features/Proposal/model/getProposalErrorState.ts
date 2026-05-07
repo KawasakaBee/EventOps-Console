@@ -16,8 +16,8 @@ const getProposalErrorState = (
         subtitle: 'Вы попали на страницу, к которой у Вас нет доступа.',
         fullHeight: true,
         link: {
-          to: '/login',
-          buttonName: 'Перейти на страницу авторизации',
+          to: '/proposals',
+          buttonName: 'Вернуться к списку заявок',
         },
       };
     case 'USER_NOT_FOUND':
@@ -33,6 +33,18 @@ const getProposalErrorState = (
         },
       };
     case 'ROLE_NOT_FOUND':
+      return {
+        type: 'state',
+        title: 'Ошибка авторизации',
+        subtitle:
+          'Сервис не может определить Вашу роль, попробуйте авторизоваться заново.',
+        fullHeight: true,
+        link: {
+          to: '/login',
+          buttonName: 'Перейти на страницу авторизации',
+        },
+      };
+    case 'INVALID_ROLE':
       return {
         type: 'state',
         title: 'Ошибка авторизации',

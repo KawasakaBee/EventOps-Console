@@ -2,7 +2,12 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 import { CriticalAction } from '../../model/actions';
 
-type Key = 'lastUpdateTime' | 'criticalButton' | 'statusButton';
+type Key =
+  | 'statusWrapper'
+  | 'lastUpdateTime'
+  | 'criticalButton'
+  | 'statusButton'
+  | 'skeletonButton';
 
 interface IStyleOptionProps {
   action: CriticalAction;
@@ -22,15 +27,35 @@ export const styles: Style = (options) => {
         ? 'error.main'
         : 'primary.main';
 
+  const hoverColor =
+    action === 'accept'
+      ? 'success.darken'
+      : action === 'reject'
+        ? 'error.darken'
+        : 'primary.main';
+
   return {
+    statusWrapper: {
+      alignItems: 'flex-start',
+    },
     lastUpdateTime: {
       opacity: 0.5,
     },
     criticalButton: {
+      width: 1,
+      borderColor: buttonColor,
+      color: 'text.secondary',
       bgcolor: buttonColor,
+      '&:hover': {
+        borderColor: hoverColor,
+        bgcolor: hoverColor,
+      },
     },
     statusButton: {
       width: 1,
+    },
+    skeletonButton: {
+      height: 60,
     },
   };
 };

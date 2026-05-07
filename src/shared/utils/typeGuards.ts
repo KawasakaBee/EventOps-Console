@@ -2,10 +2,11 @@ import {
   DashboardRange,
   dashboardRanges,
 } from '@/entities/dashboard/model/types';
-import { PostDemoLoginRequest } from '../api/contracts/auth.contract';
 import {
   BreadcrumbsRoute,
   breadcrumbsRoutes,
+  DemoRole,
+  demoRoles,
   ErrorCode,
   errorCodes,
   ID,
@@ -45,11 +46,8 @@ import {
 export const isRole = (value: unknown): value is Role =>
   typeof value === 'string' && roles.some((role) => role === value);
 
-export const isDemoRole = (
-  value: unknown,
-): value is PostDemoLoginRequest['role'] =>
-  typeof value === 'string' &&
-  roles.some((role) => role === value && role !== 'admin');
+export const isDemoRole = (value: unknown): value is DemoRole =>
+  typeof value === 'string' && demoRoles.some((role) => role === value);
 
 export const isRange = (value: unknown): value is DashboardRange =>
   typeof value === 'string' && dashboardRanges.some((range) => range === value);

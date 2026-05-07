@@ -27,10 +27,7 @@ const detailsSlice = createSlice({
   name: 'detailsSlice',
   initialState,
   reducers: {
-    hydrateDetails: (
-      state,
-      action: PayloadAction<Omit<DetailsState, 'pendingStatus'>>,
-    ) => {
+    hydrateDetails: (state, action: PayloadAction<DetailsState>) => {
       state.proposal = action.payload.proposal;
       state.speakers = action.payload.speakers;
       state.reviews = action.payload.reviews;

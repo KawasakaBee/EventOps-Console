@@ -12,18 +12,25 @@ import { isProposalDetailsTab } from '@/shared/utils/typeGuards';
 import { tabsDictionary } from '../../model/tabs';
 import { styles } from './styles';
 import SpeakerCard from '../SpeakerCard/SpeakerCard';
+import EmptyState from '@/shared/ui/EmptyState/EmptyState';
+import { Proposal } from '@/entities/proposal/model/types';
+import { Track } from '@/entities/track/model/types';
+import ProposalOverviewTabSkeleton from '../ProposalOverviewTab/ProposalOverviewTabSkeleton';
 
 const ProposalContent: React.FC<IProposalContentProps> = ({
   data,
-  trackName,
+  tracks,
   reviewersList,
-  usersList,
+  users,
   speakers,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchParamsString = searchParams.toString();
+
+  const isDataLoaded = tracks.status === 'success' || tracks.status === 'error';
+  const isError = tracks.status === 'error';
 
   const currentTab = useMemo(() => {
     const defaultTab: ProposalDetailsTab = 'overview';
@@ -47,6 +54,18 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
   );
 
   const sx = styles();
+
+  const track = (proposal: Proposal, tracks: Track[]) => {
+    const foundTrack = tracks.find((track) => track.id === proposal.trackId);
+    return (
+      foundTrack ?? {
+        id: proposal.trackId,
+        title: 'Трек не найден',
+        description: '',
+        order: 0,
+      }
+    );
+  };
 
   const handleChangeCurrentTab = (
     _: React.SyntheticEvent,
@@ -88,14 +107,31 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
       <SectionCard title={null} restSx={sx.tabCard}>
         {currentTab === 'overview' && (
           <Box>
-            <ProposalOverviewTab proposal={data.proposal} track={trackName} />
+            {isDataLoaded && data.proposal ? (
+              isError ? (
+                <ProposalOverviewTab
+                  proposal={data.proposal}
+                  track={{ status: tracks.status, message: tracks.message }}
+                />
+              ) : (
+                <ProposalOverviewTab
+                  proposal={data.proposal}
+                  track={{
+                    status: tracks.status,
+                    data: track(data.proposal, tracks.data),
+                  }}
+                />
+              )
+            ) : (
+              <ProposalOverviewTabSkeleton />
+            )}
           </Box>
         )}
         {currentTab === 'reviews' && (
           <Box>
             <ProposalReviewsTab
               reviews={data.reviews}
-              canAssignReview={canAssignReviewer}
+              canAssignReviewer={canAssignReviewer}
               reviewers={reviewersList}
             />
           </Box>
@@ -105,7 +141,7 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
             <ProposalCommentsTab
               comments={data.comments}
               canAddComment={canAddComment}
-              users={usersList}
+              users={users}
             />
           </Box>
         )}
@@ -113,24 +149,29 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
           <Box>
             <ProposalHistoryTab
               history={data.history}
-              users={usersList}
+              users={users}
               comments={data.comments}
               reviewers={reviewersList}
             />
           </Box>
         )}
       </SectionCard>
-      {speakers.length !== 0 && (
-        <SectionCard
-          title={`Информация о спикер${speakers.length > 1 ? 'ах' : 'е'}`}
-        >
+      <SectionCard
+        title={`Информация о спикер${speakers.length > 1 ? 'ах' : 'е'}`}
+      >
+        {speakers.length > 0 ? (
           <Stack spacing={4}>
             {speakers.map((speaker) => (
               <SpeakerCard key={speaker.id} speaker={speaker} />
             ))}
           </Stack>
-        </SectionCard>
-      )}
+        ) : (
+          <EmptyState
+            title="Не удалось загрузить список спикеров!"
+            subtitle="Попробуйте перезагрузить страницу."
+          />
+        )}
+      </SectionCard>
     </Stack>
   );
 };

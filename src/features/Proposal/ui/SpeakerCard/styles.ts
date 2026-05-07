@@ -10,7 +10,8 @@ type Key =
   | 'cardInfoEmail'
   | 'cardContactsWrapper'
   | 'contactsIcon'
-  | 'pastTalks';
+  | 'pastTalks'
+  | 'avatarSkeleton';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -54,6 +55,10 @@ export const styles: Style = () => {
     },
     pastTalks: {
       opacity: 0.5,
+    },
+    avatarSkeleton: {
+      height: 80,
+      borderRadius: '50%',
     },
   };
 };

@@ -11,4 +11,5 @@ export interface IProposalsRowActionProps {
       id: ID;
     } | null>
   >;
+  availableStatuses: ProposalStatus[];
 }

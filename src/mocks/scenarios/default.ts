@@ -26,3 +26,13 @@ export const buildEmptyProposals = (): MockScenario => ({
   history: [],
   tracks: [],
 });
+
+export const buildEmptyWithProposals = (): MockScenario => ({
+  users: users,
+  speakers: speakers,
+  proposals: proposals,
+  reviews: [],
+  comments: [],
+  history: [],
+  tracks: tracks,
+});
