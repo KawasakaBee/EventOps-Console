@@ -31,7 +31,12 @@ import {
   getSpeakersById,
 } from '../utils/filters';
 import { appendProposalHistory } from '../db/history';
-import { assignReviewer, createReview, reviewers } from '../db/reviews';
+import {
+  assignReviewer,
+  createReview,
+  reviewers,
+  reviews,
+} from '../db/reviews';
 import { createComment } from '../db/comments';
 import {
   applyProposalSearch,
@@ -118,10 +123,14 @@ export const proposalHandlers = [
       userRole,
       proposal,
       userId,
+      reviews.length,
     );
     if (!availableActions) return forbiddenError();
 
-    const availableStatuses = getAvailableStatusesToChange(proposal.status);
+    const availableStatuses = getAvailableStatusesToChange(
+      proposal.status,
+      reviews.length,
+    );
 
     const response: GetProposalResponse = {
       proposal: proposal,
@@ -196,8 +205,13 @@ export const proposalHandlers = [
     const canUserChangeProposalStatus = isManagerLike(userRole);
     if (!canUserChangeProposalStatus) return forbiddenError();
 
+    const foundPrevReviewsCount = reviews.filter(
+      (review) => review.proposalId === prevProposal.id,
+    ).length;
+
     const prevAvailableStatuses = getAvailableStatusesToChange(
       prevProposal.status,
+      foundPrevReviewsCount,
     );
 
     if (!prevAvailableStatuses.includes(status)) return forbiddenError();
@@ -220,14 +234,22 @@ export const proposalHandlers = [
     const proposal = updateProposalStatus(id, status);
     if (!proposal) return proposalError();
 
+    const foundNextReviewsCount = reviews.filter(
+      (review) => review.proposalId === proposal.id,
+    ).length;
+
     const availableActions = getAvailableProposalActions(
       userRole,
       proposal,
       userId,
+      foundNextReviewsCount,
     );
     if (!availableActions) return forbiddenError();
 
-    const availableStatuses = getAvailableStatusesToChange(proposal.status);
+    const availableStatuses = getAvailableStatusesToChange(
+      proposal.status,
+      foundNextReviewsCount,
+    );
 
     const response: PatchProposalStatusResponse = {
       proposal: proposal,

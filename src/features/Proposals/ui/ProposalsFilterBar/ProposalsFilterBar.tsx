@@ -5,6 +5,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Skeleton,
   Stack,
   TextField,
 } from '@mui/material';
@@ -44,9 +45,7 @@ import {
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   tracks,
-  tracksStatus,
   reviewers,
-  reviewersStatus,
   searchParams,
   isDisabled,
   handleResetFilters,
@@ -61,15 +60,23 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   const levelsList = filters.level;
   const formatsList = filters.format;
 
-  const reviewerOptions = reviewers.map((item) => ({
-    label: item.name,
-    id: item.id,
-  }));
+  const queryString = searchParams.toString();
+
+  const isTracksDataLoaded =
+    tracks.status === 'success' || tracks.status === 'error';
+  const isTracksError = tracks.status === 'error';
+  const isTrackSuccess = tracks.status === 'success';
+  const isReviewersSuccess = reviewers.status === 'success';
+
+  const reviewerOptions = isReviewersSuccess
+    ? reviewers.data.map((item) => ({
+        label: item.name,
+        id: item.id,
+      }))
+    : [];
 
   const selectedReviewer =
     reviewerOptions.find((item) => item.id === filters.reviewerId) ?? null;
-
-  const queryString = searchParams.toString();
 
   const sx = styles();
 
@@ -188,23 +195,36 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
         </FormControl>
 
         <FormControl
-          disabled={isDisabled || tracksStatus !== 'success'}
+          disabled={isDisabled || !isTrackSuccess!}
           sx={sx.filterInput}
         >
-          <InputLabel id="proposal-trackId-select">Трек</InputLabel>
-          <Select
-            value={trackIdsList}
-            labelId="proposal-trackId-select"
-            label="Трек"
-            multiple
-            onChange={(event) => handleTrackIdFilter(event.target.value)}
-          >
-            {tracks.map((track) => (
-              <MenuItem key={`Select-option-${track.id}`} value={track.id}>
-                {track.title}
-              </MenuItem>
-            ))}
-          </Select>
+          {isTracksDataLoaded ? (
+            <>
+              <InputLabel id="proposal-trackId-select">Трек</InputLabel>
+              <Select
+                value={trackIdsList}
+                labelId="proposal-trackId-select"
+                label="Трек"
+                multiple
+                onChange={(event) => handleTrackIdFilter(event.target.value)}
+              >
+                {isTracksError ? (
+                  <MenuItem>{tracks.message}</MenuItem>
+                ) : (
+                  tracks.data.map((track) => (
+                    <MenuItem
+                      key={`Select-option-${track.id}`}
+                      value={track.id}
+                    >
+                      {track.title}
+                    </MenuItem>
+                  ))
+                )}
+              </Select>
+            </>
+          ) : (
+            <Skeleton variant="text" />
+          )}
         </FormControl>
 
         <FormControl disabled={isDisabled} sx={sx.filterInput}>
@@ -247,7 +267,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
             value={selectedReviewer}
             renderInput={(params) => <TextField {...params} label="Ревьюер" />}
             onChange={(_, option) => handleReviewerFilter(option?.id)}
-            disabled={isDisabled || reviewersStatus !== 'success'}
+            disabled={isDisabled || !isReviewersSuccess}
           />
         </FormControl>
 

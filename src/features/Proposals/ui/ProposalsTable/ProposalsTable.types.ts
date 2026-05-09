@@ -3,11 +3,11 @@ import {
   ProposalStatus,
 } from '@/entities/proposal/model/types';
 import { Track } from '@/entities/track/model/types';
-import { ID, Role } from '@/shared/types/primitives.types';
+import { ID, Resource, Role } from '@/shared/types/primitives.types';
 
 export interface IProposalsTableProps {
   proposals: ProposalListItem[];
-  tracks: Track[];
+  tracks: Resource<Track[]>;
   role: Role;
   setProposal: React.Dispatch<
     React.SetStateAction<{

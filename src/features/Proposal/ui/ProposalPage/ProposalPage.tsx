@@ -187,12 +187,12 @@ const ProposalPage = () => {
 
       dispatch(hydrateDetails(result.data));
 
-      const availableActions: StatusState['availableStatuses'] = {
+      const availableStatuses: StatusState['availableStatuses'] = {
         id: result.data.proposal.id,
         statuses: result.data.availableStatuses,
       };
 
-      dispatch(hydrateAvailableStatuses(availableActions));
+      dispatch(hydrateAvailableStatuses(availableStatuses));
       setPageStatus('success');
     };
 
@@ -207,6 +207,13 @@ const ProposalPage = () => {
     dispatch(hydrateProposal(result.proposal));
     dispatch(addHistory(result.historyEntry));
     dispatch(updateAvailableActions(result.availableActions));
+
+    const availableStatuses: StatusState['availableStatuses'] = {
+      id: result.proposal.id,
+      statuses: result.availableStatuses,
+    };
+
+    dispatch(hydrateAvailableStatuses(availableStatuses));
   };
 
   const proposalTitle = pageData.proposal?.title ? (

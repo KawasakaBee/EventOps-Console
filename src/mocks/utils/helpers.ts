@@ -4,7 +4,7 @@ import {
   ProposalListItem,
 } from '@/entities/proposal/model/types';
 import { QueryParams } from '@/shared/types/api.types';
-import { reviewers } from '../db/reviews';
+import { reviewers, reviews } from '../db/reviews';
 import { ID, Role } from '@/shared/types/primitives.types';
 import { speakers } from '../db/speakers';
 import { proposals } from '../db/proposals';
@@ -12,8 +12,11 @@ import getAvailableStatusesToChange from './getAvailableStatusesToChange';
 
 export const proposalsToProposalListItem = (
   proposals: Proposal[],
-): ProposalListItem[] =>
-  proposals.map((p) => ({
+): ProposalListItem[] => {
+  const foundReviewsCount = (id: ID) =>
+    reviews.filter((review) => review.proposalId === id).length;
+
+  return proposals.map((p) => ({
     id: p.id,
     title: p.title,
     status: p.status,
@@ -21,8 +24,12 @@ export const proposalsToProposalListItem = (
     level: p.level,
     trackId: p.trackId,
     updatedAt: p.updatedAt,
-    availableStatuses: getAvailableStatusesToChange(p.status),
+    availableStatuses: getAvailableStatusesToChange(
+      p.status,
+      foundReviewsCount(p.id),
+    ),
   }));
+};
 
 export const applyProposalSearch = (
   queryParams: QueryParams,
@@ -66,35 +73,33 @@ export const getAvailableProposalActions = (
   role: Role,
   proposal: Proposal,
   userId: ID,
+  reviewerCount: number,
 ): ProposalAction[] => {
   const status = proposal.status;
   const availableActions: ProposalAction[] = [];
 
   if (role === 'admin' || role === 'manager') {
-    if (status === 'submitted')
+    if (status === 'submitted') {
       availableActions.push(
         'assignReviewer',
-        'requestChanges',
         'edit',
-        'accept',
-        'reject',
         'addComment',
         'changeStatus',
       );
+    }
     if (status === 'in_review') {
-      availableActions.push(
-        'assignReviewer',
-        'accept',
-        'reject',
-        'addComment',
-        'changeStatus',
-      );
+      availableActions.push('assignReviewer', 'addComment', 'changeStatus');
+      if (reviewerCount !== 0) {
+        availableActions.push('accept', 'reject');
+      }
     }
     if (status === 'changes_requested') {
-      availableActions.push('accept', 'reject', 'addComment', 'changeStatus');
+      availableActions.push('addComment', 'changeStatus');
+      if (reviewerCount !== 0) {
+        availableActions.push('accept', 'reject');
+      }
     }
-    if (status === 'accepted')
-      availableActions.push('schedule', 'changeStatus');
+    if (status === 'accepted') availableActions.push('schedule');
   }
 
   if (role === 'reviewer') {

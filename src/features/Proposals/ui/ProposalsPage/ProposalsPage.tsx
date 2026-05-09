@@ -54,6 +54,7 @@ import { breadcrumbsDicrionary } from '@/shared/data';
 import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
 import ProposalStatusTransitionDialog from '@/features/proposal-status-transition/ui/ProposalStatusTransitionDialog';
 import { removePendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
+import toResource from '@/shared/utils/toResource';
 
 const ProposalsPage = () => {
   const router = useRouter();
@@ -134,26 +135,48 @@ const ProposalsPage = () => {
   );
   const isStatusDialogOpened = !!pendingStatus && !!selectedProposal?.status;
 
-  const selectedProposalMultipleStatus = useMemo(
+  const selectedProposals = useMemo(
     () =>
-      new Set(
-        proposalList
-          ?.filter((proposal) => selectedIds.includes(proposal.id))
-          .map((proposal) => proposal.status),
-      ),
+      proposalList
+        ? proposalList.filter((proposal) => selectedIds.includes(proposal.id))
+        : [],
     [proposalList, selectedIds],
   );
 
-  const availableProposalMultipleStatuses =
-    selectedProposalMultipleStatus.size === 1
-      ? proposalList?.find((proposal) => selectedIds.includes(proposal.id))
-          ?.availableStatuses
-      : [];
+  const selectedProposalsMultipleStatuses = useMemo(
+    () => new Set(selectedProposals.map((proposal) => proposal.status)),
+    [selectedProposals],
+  );
+
+  const isSelectedStatusesIdentical =
+    selectedProposalsMultipleStatuses.size === 1;
+
+  const availableProposalsMiltipleStatuses: ProposalStatus[] = useMemo(() => {
+    if (selectedProposals.length === 0) return [];
+    if (!isSelectedStatusesIdentical) return [];
+
+    const [firstItem, ...restItems] = selectedProposals;
+
+    const restStatusSets = restItems.map(
+      (item) => new Set(item.availableStatuses),
+    );
+
+    return firstItem.availableStatuses.filter((status) =>
+      restStatusSets.every((statusSet) => statusSet.has(status)),
+    );
+  }, [selectedProposals, isSelectedStatusesIdentical]);
 
   const isMultipleStatusDialogOpened =
     !!pendingStatus &&
     !selectedProposal &&
-    selectedProposalMultipleStatus.size === 1;
+    isSelectedStatusesIdentical &&
+    availableProposalsMiltipleStatuses.includes(pendingStatus);
+
+  const tracksToResource = toResource(
+    tracksStatus,
+    tracksList,
+    'Трек не удалось загрузить',
+  );
 
   const searchParamsString = searchParams.toString();
   const sx = styles();
@@ -419,7 +442,7 @@ const ProposalsPage = () => {
               user={user}
               proposals={proposalList}
               isDisabled={isPageUnavailable}
-              availableStatuses={availableProposalMultipleStatuses ?? []}
+              availableStatuses={availableProposalsMiltipleStatuses}
             />
           ) : (
             <Skeleton variant="text" width={300} />
@@ -451,10 +474,12 @@ const ProposalsPage = () => {
       <ProposalsFilterBar
         searchParams={searchParams}
         isDisabled={isPageUnavailable}
-        tracks={tracksList}
-        tracksStatus={tracksStatus}
-        reviewers={reviewersList}
-        reviewersStatus={reviewersStatus}
+        tracks={tracksToResource}
+        reviewers={toResource(
+          reviewersStatus,
+          reviewersList,
+          'Данные ревьюера недоступны',
+        )}
         handleResetFilters={handleResetFilters}
       />
       {isInitialLoading ? (
@@ -465,7 +490,7 @@ const ProposalsPage = () => {
       ) : isDataReady && proposalList && proposalList.length !== 0 && user ? (
         <ProposalsTable
           proposals={proposalList}
-          tracks={tracksList}
+          tracks={tracksToResource}
           role={user.role}
           setProposal={setSelectedProposal}
         />
@@ -524,7 +549,7 @@ const ProposalsPage = () => {
       {isMultipleStatusDialogOpened && (
         <ProposalStatusTransitionDialog
           mode="multiple"
-          prevStatus={[...selectedProposalMultipleStatus][0]}
+          prevStatus={[...selectedProposalsMultipleStatuses][0]}
           nextStatus={pendingStatus}
           ids={selectedIds}
           open={isMultipleStatusDialogOpened}

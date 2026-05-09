@@ -17,7 +17,7 @@ import {
 } from '@/shared/data';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { isSortBy, isSortOrder } from '@/shared/utils/typeGuards';
-import { ID, SortBy } from '@/shared/types/primitives.types';
+import { SortBy } from '@/shared/types/primitives.types';
 import { styles } from './styles';
 import { IProposalsTableProps } from './ProposalsTable.types';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
@@ -49,10 +49,6 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
       : 'asc';
 
   const selectedIdsSet = useMemo(() => new Set(selectedIds), [selectedIds]);
-  const tracksById: Map<ID, string> = useMemo(
-    () => new Map(tracks.map((track) => [track.id, track.title])),
-    [tracks],
-  );
 
   const allVisibleSelected = useMemo(
     () => proposals.every((proposal) => selectedIdsSet.has(proposal.id)),
@@ -148,7 +144,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
               sx={sx.tableCheckbox}
               isSelected={selectedIdsSet.has(proposal.id)}
               role={role}
-              tracks={tracksById}
+              tracks={tracks}
               setProposal={setProposal}
             />
           ))}

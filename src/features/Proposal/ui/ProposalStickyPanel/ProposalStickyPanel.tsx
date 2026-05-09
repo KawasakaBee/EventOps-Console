@@ -64,7 +64,14 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
 
   const track = (proposal: Proposal, tracks: Track[]) => {
     const findedTrack = tracks.find((track) => track.id === proposal.trackId);
-    return findedTrack ?? { id: '', title: '', description: '', order: 0 };
+    return (
+      findedTrack ?? {
+        id: '',
+        title: 'Трек не удалось загрузить',
+        description: '',
+        order: 0,
+      }
+    );
   };
 
   const handleStatusMenuOpen = (
@@ -78,6 +85,11 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   };
 
   const handlePendingStatusChange = (status: ProposalStatus) => {
+    if (
+      (status === 'accepted' || status === 'rejected') &&
+      isAcceptAndRejectButtonDisable
+    )
+      return;
     setStatusMenuAnchorEl(null);
     dispatch(addPendingStatus(status));
   };
@@ -188,6 +200,16 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                     </Menu>
                   </Box>
                 )
+              ) : action === 'requestChanges' ? (
+                <Button
+                  key={action}
+                  mode="button"
+                  variant="outlined"
+                  size="small"
+                  onClick={() => handlePendingStatusChange('changes_requested')}
+                >
+                  {availableActionsDictionary[action]}
+                </Button>
               ) : (
                 <Button
                   key={action}

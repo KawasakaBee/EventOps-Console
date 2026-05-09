@@ -2,8 +2,9 @@ import {
   formatDictionary,
   levelDictionary,
   proposalListItemKeys,
+  proposalTableWidthDictionary,
 } from '@/shared/data';
-import { Checkbox, TableCell, TableRow } from '@mui/material';
+import { Checkbox, Skeleton, TableCell, TableRow } from '@mui/material';
 import React, { useMemo } from 'react';
 import ProposalsRowActions from '../ProposalsRowActions/ProposalsRowActions';
 import getProposalsListRowActions from '@/features/Proposals/model/getProposalsListRowActions';
@@ -16,6 +17,8 @@ import {
   ITableRowProps,
 } from './ProposalsTableRow.types';
 import { useAppDispatch } from '@/shared/store/hooks';
+import { ProposalListItem } from '@/entities/proposal/model/types';
+import { Track } from '@/entities/track/model/types';
 
 const ProposalsTableRow = React.memo(
   ({
@@ -33,7 +36,23 @@ const ProposalsTableRow = React.memo(
       [role, proposal.status],
     );
 
-    const renderCell = ({ rowName, data, tracksById }: ITableRowProps) => {
+    const isDataLoaded =
+      tracks.status === 'success' || tracks.status === 'error';
+    const isError = tracks.status === 'error';
+
+    const track = (proposal: ProposalListItem, tracks: Track[]) => {
+      const findedTrack = tracks.find((track) => track.id === proposal.trackId);
+      return (
+        findedTrack ?? {
+          id: '',
+          title: 'Трек не удалось загрузить',
+          description: '',
+          order: 0,
+        }
+      );
+    };
+
+    const renderCell = ({ rowName, data }: ITableRowProps) => {
       switch (rowName) {
         case 'status':
           return (
@@ -49,8 +68,14 @@ const ProposalsTableRow = React.memo(
         case 'level':
           return levelDictionary[data.level];
         case 'trackId': {
-          const trackName = tracksById.get(data.trackId);
-          return trackName ? trackName : 'Неизвестный трек';
+          if (!isDataLoaded)
+            return (
+              <Skeleton
+                variant="text"
+                width={proposalTableWidthDictionary[rowName].skeletonWidth}
+              />
+            );
+          return isError ? tracks.message : track(proposal, tracks.data).title;
         }
         case 'updatedAt':
           return isoToLocalDate(data.updatedAt);
@@ -89,7 +114,6 @@ const ProposalsTableRow = React.memo(
               renderCell({
                 rowName: key,
                 data: proposal,
-                tracksById: tracks,
               })
             )}
           </TableCell>

@@ -8,7 +8,6 @@ import { IProposalsBulkActionsProps } from './ProposalsBulkActions.types';
 import { ProposalStatus } from '@/entities/proposal/model/types';
 import getProposalsListActions from '@/features/Proposals/model/getProposalsListActions';
 import { proposalActionsDictionary, statusDictionary } from '@/shared/data';
-// import getAvailableStatusesToChange from '@/mocks/utils/getAvailableStatusesToChange';
 import { addPendingStatus } from '@/features/proposal-status-transition/model/statusTransitionSlice';
 
 const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
@@ -53,14 +52,6 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
       actions.every((arr) => arr.includes(action)),
     );
   }, [user, proposals, selectedProposalsIds]);
-
-  // const availableStatuses = useMemo(
-  //   () =>
-  //     selectedStatuses.size === 1
-  //       ? getAvailableStatusesToChange([...selectedStatuses][0])
-  //       : [],
-  //   [selectedStatuses],
-  // );
 
   const isActionsMenuOpened = !!actionsAnchorEl;
   const isStatusMenuOpened = !!statusesAnchorEl;
