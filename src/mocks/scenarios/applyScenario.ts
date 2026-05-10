@@ -3,7 +3,7 @@ import { history } from '../db/history';
 import { proposals } from '../db/proposals';
 import { reviews } from '../db/reviews';
 import { speakers } from '../db/speakers';
-import { tracks } from '../db/track';
+import { tracks } from '../db/tracks';
 import { users } from '../db/users';
 import { MockScenario } from './types';
 

@@ -3,29 +3,22 @@ import {
   dashboardRanges,
 } from '@/entities/dashboard/model/types';
 import {
-  BreadcrumbsRoute,
-  breadcrumbsRoutes,
-  DemoRole,
-  demoRoles,
-  ErrorCode,
-  errorCodes,
   ID,
   ISODateString,
-  NavigationRoute,
-  navigationRoutes,
   PageSize,
-  ProposalDetailsTab,
-  proposalDetailsTabs,
-  Role,
-  roles,
-  Route,
-  routes,
   sortBy,
   SortBy,
   sortOrder,
   SortOrder,
 } from '../types/primitives.types';
+import { PAGE_SIZE_OPTIONS } from '../config/layout';
+import { ErrorCode, errorCodes, ErrorEnvelope } from '../types/api.types';
+import { Recommendation, recommendations } from '@/entities/review/model/types';
 import {
+  AdditionalAction,
+  additionalActions,
+  CriticalAction,
+  criticalActions,
   ProposalFormat,
   proposalFormats,
   ProposalLevel,
@@ -33,15 +26,19 @@ import {
   ProposalStatus,
   proposalStatuses,
 } from '@/entities/proposal/model/types';
-import { PAGE_SIZE_OPTIONS } from '../config/layout';
-import { ErrorEnvelope } from '../types/api.types';
-import { Recommendation, recommendations } from '@/entities/review/model/types';
+import { DemoRole, demoRoles, Role, roles } from '@/entities/user/model/types';
+import { Route } from 'next';
 import {
-  AdditionalAction,
-  additionalActions,
-  CriticalAction,
-  criticalActions,
-} from '@/features/Proposal/model/actions';
+  BreadcrumbsRoute,
+  breadcrumbsRoutes,
+  NavigationRoute,
+  navigationRoutes,
+  routes,
+} from '../config/routes';
+import {
+  ProposalDetailsTab,
+  proposalDetailsTabs,
+} from '@/features/ProposalDetails/model/types';
 
 export const isRole = (value: unknown): value is Role =>
   typeof value === 'string' && roles.some((role) => role === value);

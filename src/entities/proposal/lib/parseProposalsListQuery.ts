@@ -1,4 +1,3 @@
-import { QueryParams } from '@/shared/types/api.types';
 import parsePositiveInt from '@/shared/utils/parsePositiveInt';
 import {
   isPageSize,
@@ -8,8 +7,11 @@ import {
   isSortBy,
   isSortOrder,
 } from '@/shared/utils/typeGuards';
+import { ProposalListQuery } from '../model/query';
 
-export const parseProposalsListQuery = (requestUrl: string): QueryParams => {
+export const parseProposalsListQuery = (
+  requestUrl: string,
+): ProposalListQuery => {
   const url = new URL(requestUrl, 'http://localhost');
   const pageSize = parsePositiveInt(url.searchParams.get('pageSize'), 20);
 

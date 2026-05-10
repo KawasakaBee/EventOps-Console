@@ -3,7 +3,7 @@ import { styles } from './styles';
 import { IPageHeader } from './PageHeader.types';
 import Button from '../Button/Button';
 import { isNavigationRoute } from '@/shared/utils/typeGuards';
-import { navigationDicrionary } from '@/shared/data';
+import { navigationDictionary } from '@/shared/config/routes';
 
 const PageHeader: React.FC<IPageHeader> = (props) => {
   const { pageName, title, children, mode } = props;
@@ -25,7 +25,7 @@ const PageHeader: React.FC<IPageHeader> = (props) => {
         isRelativeLink
         sx={sx.backButton}
       >
-        Назад в {navigationDicrionary[to]}
+        Назад в {navigationDictionary[to]}
       </Button>
     );
   };

@@ -37,6 +37,28 @@ export const proposalActions = [
 
 export type ProposalAction = (typeof proposalActions)[number];
 
+export const criticalActions = proposalActions.filter(
+  (action) =>
+    action === 'edit' ||
+    action === 'submit' ||
+    action === 'accept' ||
+    action === 'reject',
+);
+
+export type CriticalAction = (typeof criticalActions)[number];
+
+export const additionalActions = proposalActions.filter(
+  (action) =>
+    action === 'addComment' ||
+    action === 'assignReviewer' ||
+    action === 'addReview' ||
+    action === 'requestChanges' ||
+    action === 'schedule' ||
+    action === 'changeStatus',
+);
+
+export type AdditionalAction = (typeof additionalActions)[number];
+
 export const proposalActionsNames = [
   'Редактировать',
   'Отправить',
@@ -79,3 +101,20 @@ export type ProposalEditPayload = Pick<
   Proposal,
   'title' | 'abstract' | 'format' | 'level' | 'duration' | 'trackId' | 'tags'
 >;
+
+export const proposalListActions = proposalActions.filter(
+  (action) => action === 'assignReviewer' || action === 'changeStatus',
+);
+
+export type ProposalListAction = (typeof proposalListActions)[number];
+
+export const proposalListRowActions = proposalActions.filter(
+  (action) =>
+    action === 'assignReviewer' ||
+    action === 'changeStatus' ||
+    action === 'viewDetails' ||
+    action === 'addReview' ||
+    action === 'edit',
+);
+
+export type ProposalListRowAction = (typeof proposalListRowActions)[number];

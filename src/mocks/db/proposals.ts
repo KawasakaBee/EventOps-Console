@@ -1,11 +1,10 @@
-import { Proposal, ProposalStatus } from '@/entities/proposal/model/types';
 import {
   PatchProposalRequest,
   PostProposalRequest,
-} from '@/shared/api/contracts/proposal.contract';
+} from '@/entities/proposal/api/contracts';
 import { ID } from '@/shared/types/primitives.types';
-import { createHistory } from './history';
 import { createSpeaker } from './speakers';
+import { Proposal, ProposalStatus } from '@/entities/proposal/model/types';
 
 export const initialProposals = [
   {
@@ -1673,10 +1672,7 @@ export const initialProposals = [
 
 export const proposals: Proposal[] = [...initialProposals];
 
-export const createProposal = (
-  input: PostProposalRequest,
-  actorId: ID,
-): Proposal => {
+export const createProposal = (input: PostProposalRequest): Proposal => {
   const {
     abstract,
     duration,
@@ -1711,7 +1707,6 @@ export const createProposal = (
     updatedAt: new Date().toISOString(),
   };
 
-  createHistory(id, actorId, 'created');
   proposals.push(proposal);
 
   return proposal;

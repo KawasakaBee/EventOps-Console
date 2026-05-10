@@ -1,8 +1,8 @@
 import { isRole } from '@/shared/utils/typeGuards';
 import { http, HttpResponse } from 'msw';
-import { userError } from '../db/errors';
-import { GetReviewersResponse } from '@/shared/api/contracts/reviewer.contract';
+import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
 import { reviewers } from '../db/reviews';
+import { userError } from '../utils/httpErrors';
 
 export const reviewersHandlers = [
   http.get('/api/reviewers', ({ request }) => {

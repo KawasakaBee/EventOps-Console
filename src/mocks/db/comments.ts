@@ -1,5 +1,6 @@
 import { Comment } from '@/entities/comment/model/types';
-import { ID, Role } from '@/shared/types/primitives.types';
+import { Role } from '@/entities/user/model/types';
+import { ID } from '@/shared/types/primitives.types';
 
 export const initialComments = [
   {

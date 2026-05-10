@@ -1,5 +1,5 @@
-import { Settings } from '@/entities/audit-log/model/types';
 import { HistoryEntry } from '@/entities/history/model/types';
+import { Settings } from '@/entities/settings/model/types';
 
 export interface GetAuditResponse {
   history: HistoryEntry;

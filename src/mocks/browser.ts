@@ -1,7 +1,7 @@
 import { setupWorker } from 'msw/browser';
 import { proposalHandlers } from './handlers/proposals.handlers';
 import { dashboardHandlers } from './handlers/dashboard.handlers';
-import { trackHandlers } from './handlers/track.handler';
+import { trackHandlers } from './handlers/tracks.handler';
 import { reviewersHandlers } from './handlers/reviewers.handlers';
 import { usersHandlers } from './handlers/users.handlers';
 import { authHandlers } from './handlers/auth.handlers';

@@ -1,4 +1,4 @@
-import { BreadcrumbsRoute } from '../types/primitives.types';
+import { BreadcrumbsRoute } from '../config/routes';
 import { isBreadcrumbsRoute } from './typeGuards';
 
 const getBreadcrumbsRoute = (pathname: string): BreadcrumbsRoute | null => {

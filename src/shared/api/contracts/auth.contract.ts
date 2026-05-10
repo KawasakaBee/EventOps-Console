@@ -1,5 +1,4 @@
-import { User } from '@/entities/user/model/types';
-import { DemoRole } from '@/shared/types/primitives.types';
+import { DemoRole, User } from '@/entities/user/model/types';
 
 export type GetCurrentUserResponse = User;
 

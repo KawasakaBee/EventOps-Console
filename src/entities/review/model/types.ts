@@ -25,13 +25,3 @@ export interface Review {
   comment: string;
   recommendation: Recommendation;
 }
-
-export interface Reviewer {
-  id: ID;
-  name: string;
-  email: string;
-  proposalIds: ID[];
-  reviews: Review[];
-}
-
-export type ReviewerListItem = Pick<Reviewer, 'id' | 'name'>;

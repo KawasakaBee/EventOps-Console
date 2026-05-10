@@ -20,17 +20,8 @@ import {
   PostCreateReviewResponse,
   PostProposalRequest,
   PostProposalResponse,
-} from '@/shared/api/contracts/proposal.contract';
-import {
-  applyProposalFilters,
-  filterProposalListByAccess,
-  getCommentsByProposalId,
-  getHistoryByProposalId,
-  getProposalById,
-  getReviewsByProposalId,
-  getSpeakersById,
-} from '../utils/filters';
-import { appendProposalHistory } from '../db/history';
+} from '@/entities/proposal/api/contracts';
+import { appendProposalHistory, createHistory } from '../db/history';
 import {
   assignReviewer,
   createReview,
@@ -38,12 +29,33 @@ import {
   reviews,
 } from '../db/reviews';
 import { createComment } from '../db/comments';
+import { isId, isProposalStatus, isRole } from '@/shared/utils/typeGuards';
+import { applyProposalSort } from '../utils/proposalSort';
+import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
 import {
-  applyProposalSearch,
+  forbiddenError,
+  proposalError,
+  queryError,
+  reviewerError,
+  userError,
+} from '../utils/httpErrors';
+import {
   paginateProposals,
-  proposalsToProposalListItem,
-  getAvailableProposalActions,
-} from '../utils/helpers';
+  mapProposalsToListItems,
+} from '../utils/proposalList';
+import {
+  applyProposalAccessFilter,
+  applyProposalFilters,
+  applyProposalSearch,
+} from '../utils/proposalFilters';
+import {
+  getCommentsByProposalId,
+  getHistoryByProposalId,
+  getProposalById,
+  getReviewsByProposalId,
+  getSpeakersByIds,
+} from '../utils/proposalSelectors';
+import { getAvailableProposalActions } from '../utils/proposalActions';
 import {
   canChangeProposal,
   canCreateProposal,
@@ -52,17 +64,8 @@ import {
   canUserCreateComment,
   getProposalsListAccess,
   isManagerLike,
-} from '../utils/proposal-access';
-import { isId, isProposalStatus, isRole } from '@/shared/utils/typeGuards';
-import {
-  forbiddenError,
-  proposalError,
-  reviewerError,
-  userError,
-} from '../db/errors';
-import { applyProposalSort } from '../utils/sort';
-import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
-import getAvailableStatusesToChange from '@/mocks/utils/getAvailableStatusesToChange';
+} from '../utils/proposalAccess';
+import getAvailableProposalStatuses from '../utils/proposalStatusTransitions';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {
@@ -78,7 +81,7 @@ export const proposalHandlers = [
 
     if (access === 'forbidden') return forbiddenError();
 
-    result = filterProposalListByAccess(userId, result, access);
+    result = applyProposalAccessFilter(userId, result, access);
     result = applyProposalSearch(queryParams, result);
     result = applyProposalFilters(queryParams, result);
     result = applyProposalSort(queryParams, result);
@@ -86,7 +89,7 @@ export const proposalHandlers = [
     const total = result.length;
 
     result = paginateProposals(queryParams, result);
-    const proposalsListItem = proposalsToProposalListItem(result);
+    const proposalsListItem = mapProposalsToListItems(result);
 
     const response: GetProposalsListResponse = {
       items: proposalsListItem,
@@ -114,7 +117,7 @@ export const proposalHandlers = [
 
     if (!isUserHaveAccess) return forbiddenError();
 
-    const speakers = getSpeakersById(proposal.speakerIds);
+    const speakers = getSpeakersByIds(proposal.speakerIds);
     const reviews = getReviewsByProposalId(proposal.id);
     const comments = getCommentsByProposalId(proposal.id);
     const history = getHistoryByProposalId(proposal.id);
@@ -127,7 +130,7 @@ export const proposalHandlers = [
     );
     if (!availableActions) return forbiddenError();
 
-    const availableStatuses = getAvailableStatusesToChange(
+    const availableStatuses = getAvailableProposalStatuses(
       proposal.status,
       reviews.length,
     );
@@ -155,9 +158,10 @@ export const proposalHandlers = [
     const isUserCanCreateProposal = canCreateProposal(userRole);
     if (!isUserCanCreateProposal) return forbiddenError();
 
-    const response: PostProposalResponse = {
-      proposal: createProposal(body, userId),
-    };
+    const proposal = createProposal(body);
+
+    const response: PostProposalResponse = { proposal };
+    createHistory(proposal.id, userId, 'created');
 
     return HttpResponse.json(response, { status: 201 });
   }),
@@ -197,7 +201,7 @@ export const proposalHandlers = [
     if (!userId || !isRole(userRole)) return userError();
     if (!isId(id)) return proposalError();
 
-    if (!isProposalStatus(status)) return forbiddenError();
+    if (!isProposalStatus(status)) return queryError();
 
     const prevProposal = proposals.find((proposal) => proposal.id === id);
     if (!prevProposal) return proposalError();
@@ -209,7 +213,7 @@ export const proposalHandlers = [
       (review) => review.proposalId === prevProposal.id,
     ).length;
 
-    const prevAvailableStatuses = getAvailableStatusesToChange(
+    const prevAvailableStatuses = getAvailableProposalStatuses(
       prevProposal.status,
       foundPrevReviewsCount,
     );
@@ -246,7 +250,7 @@ export const proposalHandlers = [
     );
     if (!availableActions) return forbiddenError();
 
-    const availableStatuses = getAvailableStatusesToChange(
+    const availableStatuses = getAvailableProposalStatuses(
       proposal.status,
       foundNextReviewsCount,
     );

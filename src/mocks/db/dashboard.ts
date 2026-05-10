@@ -7,13 +7,13 @@ import {
   SubmissionsByStatusItem,
 } from '@/entities/dashboard/model/types';
 import { proposals as dbProposals } from './proposals';
+import { reviewers } from './reviews';
 import {
   Proposal,
   ProposalListItem,
   proposalStatuses,
 } from '@/entities/proposal/model/types';
-import { reviewers } from './reviews';
-import { proposalsToProposalListItem } from '../utils/helpers';
+import { mapProposalsToListItems } from '../utils/proposalList';
 
 const getKpis = (proposals: Proposal[]): DashboardKpis => {
   return {
@@ -81,7 +81,7 @@ const getRecentSubmissions = (proposals: Proposal[]): ProposalListItem[] => {
 
   result = result.slice(0, 5);
 
-  return proposalsToProposalListItem(result);
+  return mapProposalsToListItems(result);
 };
 
 const getMissingReviewers = (proposals: Proposal[]): AttentionItem => {

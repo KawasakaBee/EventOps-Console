@@ -1,6 +1,7 @@
-import { Review, Reviewer } from '@/entities/review/model/types';
-import { PostCreateReviewRequest } from '@/shared/api/contracts/proposal.contract';
+import { Review } from '@/entities/review/model/types';
+import { PostCreateReviewRequest } from '@/entities/proposal/api/contracts';
 import { ID } from '@/shared/types/primitives.types';
+import { Reviewer } from '@/entities/reviewer/model/types';
 
 export const initialReviews = [
   {

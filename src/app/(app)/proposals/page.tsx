@@ -1,7 +1,7 @@
-import ProposalsPage from '@/features/Proposals/ui/ProposalsPage/ProposalsPage';
+import ProposalsPage from '@/features/ProposalsList/ui/ProposalsPage/ProposalsPage';
 
-const Proposals = () => {
+const ProposalsRoute = () => {
   return <ProposalsPage />;
 };
 
-export default Proposals;
+export default ProposalsRoute;

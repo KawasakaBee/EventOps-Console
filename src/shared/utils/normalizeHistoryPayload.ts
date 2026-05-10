@@ -1,7 +1,7 @@
-import { ReviewerListItem } from '@/entities/review/model/types';
-import { recommendationDicrionary } from '../data';
 import { isRecommendation } from './typeGuards';
 import { Comment } from '@/entities/comment/model/types';
+import { recommendationDictionary } from '@/entities/review/model/dictionaries';
+import { ReviewerListItem } from '@/entities/reviewer/model/types';
 
 const normalizeHistoryPayload = (
   payload: Record<string, unknown>,
@@ -20,7 +20,7 @@ const normalizeHistoryPayload = (
 
   if (Object.hasOwn(payload, 'recommendation')) {
     const recommendation = isRecommendation(payload.recommendation)
-      ? recommendationDicrionary[payload.recommendation]
+      ? recommendationDictionary[payload.recommendation]
       : payload.recommendation;
     result.push(`Рекомендация: "${recommendation}"`);
   }

@@ -1,8 +1,8 @@
-import { GetDashboardResponse } from '@/shared/api/contracts/dashboard.contract';
+import { GetDashboardResponse } from '@/entities/dashboard/api/contracts';
 import { http, HttpResponse } from 'msw';
 import { getDashboard } from '../db/dashboard';
 import { isRange } from '@/shared/utils/typeGuards';
-import { queryError } from '../db/errors';
+import { queryError } from '../utils/httpErrors';
 
 export const dashboardHandlers = [
   http.get('/api/events/:eventId/dashboard', async ({ request }) => {

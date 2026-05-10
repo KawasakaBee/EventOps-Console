@@ -1,7 +1,4 @@
-import {
-  BreadcrumbsRouteName,
-  NavigationRoute,
-} from '@/shared/types/primitives.types';
+import { BreadcrumbsRouteName, NavigationRoute } from '@/shared/config/routes';
 
 interface IPageHeaderBaseProps {
   children: React.ReactNode;

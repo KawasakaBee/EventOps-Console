@@ -1,7 +1,7 @@
 import { User } from '@/entities/user/model/types';
 import normalizeResponse from '../api/normalizeResponse';
 import { ApiResult } from '../types/api.types';
-import { fallbackError } from '../data';
+import { fallbackError } from '../config/errors';
 
 const getCurrentUser = async (): Promise<ApiResult<User>> => {
   try {

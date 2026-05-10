@@ -5,9 +5,9 @@ import {
 } from '@/shared/api/contracts/auth.contract';
 import { isDemoRole } from '@/shared/utils/typeGuards';
 import { http, HttpResponse } from 'msw';
-import { roleError } from '../db/errors';
 import { User } from '@/entities/user/model/types';
-import { manager, reviewer, speaker } from '@/shared/data';
+import { manager, reviewer, speaker } from '../db/demoUsers';
+import { roleError } from '../utils/httpErrors';
 
 export const authHandlers = [
   http.post('/api/demo-login', async ({ request }) => {

@@ -1,7 +1,7 @@
 'use client';
 
+import { demoRoles } from '@/entities/user/model/types';
 import { PostDemoLoginRequest } from '@/shared/api/contracts/auth.contract';
-import { demoRoles } from '@/shared/types/primitives.types';
 import Button from '@/shared/ui/Button/Button';
 import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';

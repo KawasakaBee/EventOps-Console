@@ -1,4 +1,5 @@
-import { Role, Route } from '../types/primitives.types';
+import { Role } from '@/entities/user/model/types';
+import { Route } from 'next';
 
 const homePages = {
   admin: '/dashboard',

@@ -1,7 +1,7 @@
-import ProposalPage from '@/features/Proposal/ui/ProposalPage/ProposalPage';
+import ProposalPage from '@/features/ProposalDetails/ui/ProposalPage/ProposalPage';
 
-const ProposalItem = () => {
+const ProposalDetailsRoute = () => {
   return <ProposalPage />;
 };
 
-export default ProposalItem;
+export default ProposalDetailsRoute;

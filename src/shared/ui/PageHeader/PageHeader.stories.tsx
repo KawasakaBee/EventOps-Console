@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import PageHeader from './PageHeader';
 import { expect, within } from 'storybook/test';
-import { breadcrumbsDicrionary } from '@/shared/data';
+import { breadcrumbsDictionary } from '@/shared/config/routes';
 
 const meta = {
   title: 'Shared UI/PageHeader',
@@ -47,7 +47,7 @@ export const InnerPageHeader: Story = {
 
     const canvas = within(canvasElement);
     const backButton = canvas.getByRole('link', {
-      name: `Назад в ${breadcrumbsDicrionary[args.to]}`,
+      name: `Назад в ${breadcrumbsDictionary[args.to]}`,
     });
 
     await expect(backButton).toBeInTheDocument();

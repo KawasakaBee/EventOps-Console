@@ -1,4 +1,4 @@
-import checkUniqueIds from '@/shared/utils/checkUniqueIds';
+import checkUniqueIds from '@/mocks/scenarios/checkUniqueIds';
 import { MockScenario } from './types';
 
 export const assertIntegrity = (data: MockScenario) => {

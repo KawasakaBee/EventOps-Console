@@ -1,13 +1,13 @@
-import { statusReducer } from '@/features/proposal-status-transition/model/statusTransitionSlice';
-import { detailsReducer } from '@/features/Proposal/model/proposalDetailsSlice';
-import { proposalsFiltersReducer } from '@/features/Proposals/model/proposalsFiltersSlice';
+import { detailsReducer } from '@/features/ProposalDetails/model/proposalDetailsSlice';
+import { proposalsFiltersReducer } from '@/features/ProposalsList/model/proposalsListSlice';
+import { statusTransitionReducer } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
   reducer: {
     proposalsFilters: proposalsFiltersReducer,
     proposalDetails: detailsReducer,
-    proposalStatus: statusReducer,
+    statusTransition: statusTransitionReducer,
   },
 });
 

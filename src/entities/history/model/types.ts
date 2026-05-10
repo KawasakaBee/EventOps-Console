@@ -29,3 +29,16 @@ export interface HistoryEntry {
   changes?: ProposalFieldChange[];
   payload?: Record<string, unknown>;
 }
+
+export const historyActionNames = [
+  'Создано',
+  'Обновлено',
+  'Изменён статус',
+  'Назначен ревьюер',
+  'Добавлен комментарий',
+  'Добавлено ревью',
+  'Добавлено в расписание',
+  'Удалено из расписания',
+] as const;
+
+export type HistoryActionName = (typeof historyActionNames)[number];

@@ -1,5 +1,5 @@
 import { User } from '@/entities/user/model/types';
-import { permissionsByRole } from '@/shared/data';
+import { permissionsByRole } from '@/shared/config/permissions';
 
 export const initialUsers = [
   {

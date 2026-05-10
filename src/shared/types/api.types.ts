@@ -1,10 +1,3 @@
-import {
-  ProposalFormat,
-  ProposalLevel,
-  ProposalStatus,
-} from '@/entities/proposal/model/types';
-import { ErrorCode, ID, PageSize, SortBy, SortOrder } from './primitives.types';
-
 export interface PaginationEnvelope<T> {
   items: T[];
   page: number;
@@ -21,20 +14,23 @@ export interface ErrorEnvelope {
   };
 }
 
-export interface QueryParams {
-  page: number;
-  pageSize: PageSize;
-  search: string | null;
-  status: ProposalStatus[];
-  trackId: ID[];
-  level: ProposalLevel[];
-  format: ProposalFormat[];
-  reviewerId: string | null;
-  sortBy: SortBy | null;
-  sortOrder: SortOrder;
-  owner: string | null;
-}
-
 export type ApiResult<T> =
   | { ok: true; data: T }
   | { ok: false; error: ErrorEnvelope['error']; status: number };
+
+export const errorCodes = [
+  'INVALID_ROLE',
+  'ROLE_NOT_FOUND',
+  'USER_NOT_FOUND',
+  'PROPOSAL_NOT_FOUND',
+  'REVIEWER_NOT_FOUND',
+  'HISTORY_NOT_FOUND',
+  'FORBIDDEN',
+  'INVALID_QUERY',
+  'NETWORK_ERROR',
+  'INVALID_RESPONSE',
+  'UNKNOWN_ERROR',
+  'CLIPBOARD_ERROR',
+] as const;
+
+export type ErrorCode = (typeof errorCodes)[number];

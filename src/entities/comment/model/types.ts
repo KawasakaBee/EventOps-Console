@@ -1,4 +1,5 @@
-import { ID, ISODateString, Role } from '@/shared/types/primitives.types';
+import { Role } from '@/entities/user/model/types';
+import { ID, ISODateString } from '@/shared/types/primitives.types';
 
 export interface Comment {
   id: ID;

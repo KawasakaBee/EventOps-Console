@@ -1,4 +1,5 @@
-import { ID, Permission, Role } from '@/shared/types/primitives.types';
+import { Permission } from '@/entities/user/model/permissions';
+import { ID } from '@/shared/types/primitives.types';
 
 export interface User {
   id: ID;
@@ -10,3 +11,20 @@ export interface User {
 }
 
 export type UserListItem = Pick<User, 'name' | 'id'>;
+
+export const roles = ['admin', 'manager', 'reviewer', 'speaker'] as const;
+
+export type Role = (typeof roles)[number];
+
+export const demoRoles = roles.filter((role) => role !== 'admin');
+
+export type DemoRole = (typeof demoRoles)[number];
+
+export const roleNames = [
+  'Администратор',
+  'Менеджер',
+  'Ревьюер',
+  'Спикер',
+] as const;
+
+export type RoleName = (typeof roleNames)[number];

@@ -7,7 +7,11 @@ import {
   isProposalStatus,
 } from './typeGuards';
 import formatDuration from './formatDuration';
-import { formatDictionary, levelDictionary, statusDictionary } from '../data';
+import {
+  formatDictionary,
+  levelDictionary,
+  statusDictionary,
+} from '@/entities/proposal/model/dictionaries';
 
 const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
   const resultParse = (prev: string, next: string) => {

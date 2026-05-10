@@ -1,5 +1,5 @@
 import { Event } from '@/entities/event/model/types';
-import { tracks } from './track';
+import { tracks } from './tracks';
 
 const initialEvents = [
   {

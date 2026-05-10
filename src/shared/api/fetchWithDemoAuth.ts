@@ -1,4 +1,4 @@
-import { fallbackError } from '../data';
+import { fallbackError } from '../config/errors';
 import { ApiResult } from '../types/api.types';
 import getCurrentUser from '../utils/getCurrentUser';
 

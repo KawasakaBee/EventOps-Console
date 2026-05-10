@@ -1,4 +1,4 @@
-import { Route } from '../types/primitives.types';
+import { Route } from '../config/routes';
 
 const normalizeRoute = (pathname: string): Route | null => {
   if (pathname === '/login') return '/login';
