@@ -11,12 +11,7 @@ import {
 } from '@mui/material';
 import { IProposalsFilterBarProps } from './ProposalsFilterBar.types';
 import { usePathname, useRouter } from 'next/navigation';
-import {
-  isId,
-  isProposalFormat,
-  isProposalLevel,
-  isProposalStatus,
-} from '@/shared/utils/typeGuards';
+import { isId } from '@/shared/utils/typeGuards';
 import { ID } from '@/shared/types/primitives.types';
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
@@ -42,6 +37,11 @@ import {
   levelDictionary,
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
+import {
+  isProposalFormat,
+  isProposalLevel,
+  isProposalStatus,
+} from '@/entities/proposal/model/typeGuards';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   tracks,

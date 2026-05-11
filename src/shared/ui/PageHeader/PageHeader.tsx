@@ -2,8 +2,8 @@ import { Box, Typography } from '@mui/material';
 import { styles } from './styles';
 import { IPageHeader } from './PageHeader.types';
 import Button from '../Button/Button';
-import { isNavigationRoute } from '@/shared/utils/typeGuards';
-import { navigationDictionary } from '@/shared/config/routes';
+import { isNavigationRoute } from '@/shared/lib/routes/typeGuards';
+import { navigationDictionary } from '@/shared/lib/routes/dictionary';
 
 const PageHeader: React.FC<IPageHeader> = (props) => {
   const { pageName, title, children, mode } = props;

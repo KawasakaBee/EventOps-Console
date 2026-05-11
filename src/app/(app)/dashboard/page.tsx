@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { User } from '@/entities/user/model/types';
 import { Dashboard as DashboardType } from '@/entities/dashboard/model/types';
 import { GetDashboardResponse } from '@/entities/dashboard/api/contracts';
-import getCurrentUser from '@/shared/utils/getCurrentUser';
+import getCurrentUser from '@/entities/user/api/userApi';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import getDashboardErrorState from '@/features/Dashboard/model/getDashboardErrorState';
 import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';

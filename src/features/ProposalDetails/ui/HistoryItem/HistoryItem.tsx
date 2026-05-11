@@ -7,10 +7,10 @@ import {
 } from '@mui/lab';
 import { IHistoryItemProps } from './HistoryItem.types';
 import { Box, Skeleton, Stack, Typography } from '@mui/material';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
-import normalizeHistoryChanges from '@/shared/utils/normalizeHistoryChanges';
+import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import formatHistoryChangeValues from '@/entities/history/lib/formatHistoryChangeValues';
 import { styles } from './styles';
-import normalizeHistoryPayload from '@/shared/utils/normalizeHistoryPayload';
+import formatHistoryPayloadLines from '@/entities/history/lib/formatHistoryPayloadLines';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { historyActionsDictionary } from '@/entities/history/model/dictionaries';
 
@@ -33,7 +33,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
   const normalizedHistoryPayload = () => {
     if (!item.payload || !isReviwersDataLoaded) return null;
 
-    const normalizePayload = normalizeHistoryPayload(
+    const normalizePayload = formatHistoryPayloadLines(
       item.payload,
       isReviwersError ? null : reviewers.data,
       comments,
@@ -60,7 +60,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
       <TimelineContent>
         <Stack>
           <Typography variant="caption" sx={sx.itemTime}>
-            {isoToLocalDate(item.createdAt)}
+            {formatIsoDateTime(item.createdAt)}
           </Typography>
           <Stack direction="row" spacing={2} sx={sx.itemChangesWrapper}>
             <Typography variant="subtitle1">
@@ -68,7 +68,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
             </Typography>
             {item.changes &&
               item.changes.map((act) => {
-                const [prev, next] = normalizeHistoryChanges(act);
+                const [prev, next] = formatHistoryChangeValues(act);
                 return (
                   <Stack
                     key={act.field}

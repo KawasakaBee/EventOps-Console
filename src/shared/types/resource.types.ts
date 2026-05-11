@@ -1,45 +1,8 @@
-import { Track } from '@/entities/track/model/types';
-import { User } from '@/entities/user/model/types';
-import { PaginationEnvelope } from '@/shared/types/api.types';
-import { PageStatus } from '@/shared/types/primitives.types';
-import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
-import { UserListItem } from '@/entities/user/model/types';
-import { ProposalListItem } from '@/entities/proposal/model/types';
-import { ReviewerListItem } from '@/entities/reviewer/model/types';
+export const pageStatuses = ['idle', 'loading', 'success', 'error'] as const;
 
-export interface UserResource {
-  status: PageStatus;
-  data: User | null;
-  errorProps: ErrorStateProps | null;
-}
+export type PageStatus = (typeof pageStatuses)[number];
 
-export interface TracksResource {
-  status: PageStatus;
-  data: Track[];
-}
-
-export interface ReviewersResource {
-  status: PageStatus;
-  data: ReviewerListItem[];
-}
-
-export interface PaginationResource {
-  status: PageStatus;
-  data: PaginationEnvelope<ProposalListItem> | null;
-  errorProps: ErrorStateProps | null;
-}
-
-export interface UsersResource {
-  status: PageStatus;
-  data: UserListItem[];
-}
-
-export interface ProposalResource {
-  status: PageStatus;
-  errorProps: ErrorStateProps | null;
-}
-
-export interface DialogResource {
-  status: PageStatus;
-  errorProps: ErrorStateProps | null;
-}
+export type Resource<T> =
+  | { status: 'loading' | 'idle' }
+  | { status: 'error'; message: string }
+  | { status: 'success'; data: T };

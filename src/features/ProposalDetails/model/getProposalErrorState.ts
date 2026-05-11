@@ -101,16 +101,6 @@ const getProposalErrorState = (
           buttonName: 'Повторить',
         },
       };
-    case 'CLIPBOARD_ERROR':
-      if (actions.onClose) {
-        return {
-          type: 'snackbar',
-          title: error.message,
-          open: true,
-          onClose: actions.onClose,
-        };
-      }
-    //fallthrough
     default:
       return {
         type: 'state',

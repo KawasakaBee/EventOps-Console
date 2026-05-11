@@ -3,7 +3,6 @@
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
 import { Grid, Stack, Typography } from '@mui/material';
 import { useParams, usePathname } from 'next/navigation';
-import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { styles } from './styles';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
@@ -11,11 +10,12 @@ import ProposalStickyPanel from '../ProposalStickyPanel/ProposalStickyPanel';
 import ProposalContent from '../ProposalContent/ProposalContent';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import ProposalPageSkeleton from './ProposalPageSkeleton';
-import toResource from '@/shared/utils/toResource';
+import toLoadableResource from '@/shared/utils/toLoadableResource';
 import useDetailsPageData from '../../model/useProposalDetailsData';
-import { breadcrumbsDictionary } from '@/shared/config/routes';
 import { closeStatusTransition } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
 import ProposalStatusTransitionDialog from '@/features/ProposalStatusTransition/ui/ProposalStatusTransitionDialog';
+import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
+import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 
 const ProposalPage = () => {
   const pathname = usePathname();
@@ -34,17 +34,17 @@ const ProposalPage = () => {
   const isInitialLoading =
     proposal.status === 'idle' || proposal.status === 'loading';
 
-  const tracksToResource = toResource(
+  const tracksToResource = toLoadableResource(
     tracks.status,
     tracks.data,
     'Трек не удалось загрузить',
   );
-  const reviewersToResource = toResource(
+  const reviewersToResource = toLoadableResource(
     reviewers.status,
     reviewers.data,
     'Данные ревьюера не удалось загрузить',
   );
-  const usersToResource = toResource(
+  const usersToResource = toLoadableResource(
     users.status,
     users.data,
     'Данные пользователя не удалось загрузить',

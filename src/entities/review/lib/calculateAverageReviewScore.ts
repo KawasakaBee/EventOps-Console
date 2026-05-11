@@ -1,6 +1,7 @@
 import { Review } from '@/entities/review/model/types';
 
-const getAverageReviewsScore = (reviews: Review[]): number => {
+const calculateAverageReviewScore = (reviews: Review[]): number | null => {
+  if (reviews.length === 0) return null;
   return Number(
     (
       reviews.reduce(
@@ -14,4 +15,4 @@ const getAverageReviewsScore = (reviews: Review[]): number => {
   );
 };
 
-export default getAverageReviewsScore;
+export default calculateAverageReviewScore;

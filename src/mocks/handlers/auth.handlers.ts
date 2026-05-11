@@ -1,13 +1,13 @@
-import {
-  PostDemoLoginRequest,
-  PostDemoLoginResponse,
-  PostLogoutResponse,
-} from '@/shared/api/contracts/auth.contract';
-import { isDemoRole } from '@/shared/utils/typeGuards';
 import { http, HttpResponse } from 'msw';
 import { User } from '@/entities/user/model/types';
 import { manager, reviewer, speaker } from '../db/demoUsers';
 import { roleError } from '../utils/httpErrors';
+import { isDemoRole } from '@/entities/user/model/typeGuards';
+import {
+  PostDemoLoginRequest,
+  PostDemoLoginResponse,
+  PostLogoutResponse,
+} from '@/entities/user/api/contracts';
 
 export const authHandlers = [
   http.post('/api/demo-login', async ({ request }) => {

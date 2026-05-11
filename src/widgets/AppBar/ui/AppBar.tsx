@@ -3,9 +3,9 @@
 import Button from '@/shared/ui/Button/Button';
 import { AppBar as MuiAppBar, Skeleton, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import { useEffect, useState } from 'react';
-import getCurrentUser from '@/shared/utils/getCurrentUser';
+import getCurrentUser from '@/entities/user/api/userApi';
 import { User } from '@/entities/user/model/types';
 import { IAppBarProps } from './AppBar.types';
 import getAppBarErrorState from '../model/getAppBarErrorState';

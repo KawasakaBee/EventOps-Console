@@ -7,7 +7,6 @@ import ProposalReviewsTab from '../ProposalReviewsTab/ProposalReviewsTab';
 import ProposalCommentsTab from '../ProposalCommentsTab/ProposalCommentsTab';
 import ProposalHistoryTab from '../ProposalHistoryTab/ProposalHistoryTab';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { isProposalDetailsTab } from '@/shared/utils/typeGuards';
 import { styles } from './styles';
 import SpeakerCard from '../SpeakerCard/SpeakerCard';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
@@ -19,6 +18,7 @@ import {
   proposalDetailsTabs,
   tabsDictionary,
 } from '../../model/types';
+import { isProposalDetailsTab } from '../../model/typeGuards';
 
 const ProposalContent: React.FC<IProposalContentProps> = ({
   data,

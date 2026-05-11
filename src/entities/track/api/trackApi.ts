@@ -1,7 +1,7 @@
 import { GetTracksResponse } from '@/entities/track/api/contracts';
-import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import normalizeResponse from '@/shared/api/normalizeResponse';
-import { TracksResource } from '@/shared/types/resource.types';
+import { TracksResource } from './types';
 
 export const fetchTracks = async (): Promise<TracksResource> => {
   const tracks: TracksResource = {

@@ -1,5 +1,5 @@
-import { Permission } from '@/entities/user/model/permissions';
 import { ID } from '@/shared/types/primitives.types';
+import type { Permission } from './permissions';
 
 export interface User {
   id: ID;

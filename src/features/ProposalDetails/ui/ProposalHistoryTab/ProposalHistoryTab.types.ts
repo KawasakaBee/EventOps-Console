@@ -2,7 +2,7 @@ import { Comment } from '@/entities/comment/model/types';
 import { HistoryEntry } from '@/entities/history/model/types';
 import { ReviewerListItem } from '@/entities/reviewer/model/types';
 import { UserListItem } from '@/entities/user/model/types';
-import { Resource } from '@/shared/types/primitives.types';
+import { Resource } from '@/shared/types/resource.types';
 
 export interface IProposalHistoryTabProps {
   history: HistoryEntry[];

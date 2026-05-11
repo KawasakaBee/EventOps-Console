@@ -1,8 +1,8 @@
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { IProposalReviewsTabProps } from './ProposalReviewsTab.types';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
-import getAverageReviewsScore from '@/shared/utils/getAverageReviewsScore';
-import getFinalReviewRecommendation from '@/shared/utils/getFinalReviewRecommendation';
+import calculateAverageReviewScore from '@/entities/review/lib/calculateAverageReviewScore';
+import getFinalReviewRecommendation from '@/entities/review/lib/getFinalReviewRecommendation';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { styles } from './styles';
 import ReviewCardSkeleton from '../ReviewCard/ReviewCardSkeleton';
@@ -37,7 +37,12 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
             sx={sx.reviewsSummary}
           >
             <Typography variant="body2" sx={sx.reviewsSummaryItem}>
-              Средняя оценка: <b>{getAverageReviewsScore(reviews)} / 10</b>
+              Средняя оценка:{' '}
+              <b>
+                {calculateAverageReviewScore(reviews) ??
+                  'Не удалось подсчитать'}{' '}
+                / 10
+              </b>
             </Typography>
             <Typography variant="body2" sx={sx.reviewsSummaryItem}>
               Рекомендация: <b>{getFinalReviewRecommendation(reviews)}</b>

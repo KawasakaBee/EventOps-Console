@@ -1,12 +1,11 @@
-import getProposalErrorState from '@/features/ProposalDetails/model/getProposalErrorState';
 import {
   PatchProposalStatusRequest,
   PatchProposalStatusResponse,
 } from '@/entities/proposal/api/contracts';
-import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import normalizeResponse from '@/shared/api/normalizeResponse';
-import { StatusTransitionSubmitProps } from '../model/types';
-import { DialogResource } from '@/shared/types/resource.types';
+import { DialogResource, StatusTransitionSubmitProps } from '../model/types';
+import getStatusTransitionErrorState from '../model/getStatusTransitionErrorState';
 
 export const patchProposalStatusChange = async (
   props: StatusTransitionSubmitProps,
@@ -36,7 +35,7 @@ export const patchProposalStatusChange = async (
     });
 
     if (!response.ok) {
-      dialog.errorProps = getProposalErrorState(response.error, {
+      dialog.errorProps = getStatusTransitionErrorState(response.error, {
         retry: () => null,
       });
       dialog.status = 'error';
@@ -48,7 +47,7 @@ export const patchProposalStatusChange = async (
     );
 
     if (!result.ok) {
-      dialog.errorProps = getProposalErrorState(result.error, {
+      dialog.errorProps = getStatusTransitionErrorState(result.error, {
         retry: () => null,
       });
       dialog.status = 'error';
@@ -113,7 +112,7 @@ export const patchProposalStatusChange = async (
       dialog.status = 'error';
 
       if (firstError) {
-        dialog.errorProps = getProposalErrorState(firstError, {
+        dialog.errorProps = getStatusTransitionErrorState(firstError, {
           retry: () => null,
         });
       }

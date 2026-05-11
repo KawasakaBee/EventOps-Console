@@ -1,9 +1,9 @@
 import { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import canAccessRoute from './shared/utils/canAccessRoute';
-import getHomeRouteByRole from './shared/utils/getHomeRouteByRole';
-import normalizeRoute from './shared/utils/normalizeRoute';
-import { isDemoRole } from './shared/utils/typeGuards';
+import { isDemoRole } from './entities/user/model/typeGuards';
+import { normalizeRoute } from './shared/lib/routes/utils';
+import canAccessRoute from './entities/user/lib/canAccessRoute';
+import getHomeRouteByRole from './entities/user/lib/getHomeRouteByRole';
 
 const proxy = (request: NextRequest) => {
   const role = request.cookies.get('demo-role')?.value;

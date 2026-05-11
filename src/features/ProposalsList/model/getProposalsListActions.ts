@@ -1,12 +1,12 @@
 import {
+  proposalListActionsByRole,
+  proposalListActionsByStatus,
+} from '@/entities/proposal/model/actionPolicies';
+import {
   ProposalListAction,
   ProposalStatus,
 } from '@/entities/proposal/model/types';
 import { Role } from '@/entities/user/model/types';
-import {
-  proposalListActionsByRole,
-  proposalListActionsByStatus,
-} from '@/shared/config/permissions';
 
 const getProposalsListActions = (
   role: Role,

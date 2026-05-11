@@ -1,9 +1,3 @@
-import {
-  PaginationResource,
-  ReviewersResource,
-  TracksResource,
-  UserResource,
-} from '@/shared/types/resource.types';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { resetFilters, resetSelectedIds } from './proposalsListSlice';
@@ -12,6 +6,9 @@ import { PatchProposalStatusResponse } from '@/entities/proposal/api/contracts';
 import { fetchPagination, fetchUser } from '../api/proposalsListApi';
 import { fetchTracks } from '@/entities/track/api/trackApi';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
+import { PaginationResource, UserResource } from './types';
+import { TracksResource } from '@/entities/track/api/types';
+import { ReviewersResource } from '@/entities/reviewer/api/types';
 
 const useProposalsListData = (searchParams: string) => {
   // State

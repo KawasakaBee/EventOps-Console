@@ -2,7 +2,7 @@ import { Checkbox, Skeleton, TableCell, TableRow } from '@mui/material';
 import React, { useMemo } from 'react';
 import ProposalsRowActions from '../ProposalsRowActions/ProposalsRowActions';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
+import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import { toggleSelectedId } from '../../model/proposalsListSlice';
 import { ID } from '@/shared/types/primitives.types';
 import {
@@ -73,7 +73,7 @@ const ProposalsTableRow = React.memo(
           return isError ? tracks.message : track(proposal, tracks.data).title;
         }
         case 'updatedAt':
-          return isoToLocalDate(data.updatedAt);
+          return formatIsoDateTime(data.updatedAt);
         case 'actions':
           return null;
         case 'checkbox':

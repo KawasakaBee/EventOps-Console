@@ -1,9 +1,9 @@
-import { isRecommendation } from './typeGuards';
 import { Comment } from '@/entities/comment/model/types';
 import { recommendationDictionary } from '@/entities/review/model/dictionaries';
+import { isRecommendation } from '@/entities/review/model/typeGuards';
 import { ReviewerListItem } from '@/entities/reviewer/model/types';
 
-const normalizeHistoryPayload = (
+const formatHistoryPayloadLines = (
   payload: Record<string, unknown>,
   reviewers: ReviewerListItem[] | null,
   comments: Comment[],
@@ -46,4 +46,4 @@ const normalizeHistoryPayload = (
   return result.length > 0 ? result : null;
 };
 
-export default normalizeHistoryPayload;
+export default formatHistoryPayloadLines;

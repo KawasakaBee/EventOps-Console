@@ -1,7 +1,7 @@
 import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
-import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import normalizeResponse from '@/shared/api/normalizeResponse';
-import { ReviewersResource } from '@/shared/types/resource.types';
+import { ReviewersResource } from './types';
 
 export const fetchReviewers = async (): Promise<ReviewersResource> => {
   const reviewers: ReviewersResource = {

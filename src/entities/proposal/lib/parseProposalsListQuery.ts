@@ -1,13 +1,11 @@
 import parsePositiveInt from '@/shared/utils/parsePositiveInt';
+import { isPageSize, isSortBy, isSortOrder } from '@/shared/utils/typeGuards';
+import { ProposalListQuery } from '../model/query';
 import {
-  isPageSize,
   isProposalFormat,
   isProposalLevel,
   isProposalStatus,
-  isSortBy,
-  isSortOrder,
-} from '@/shared/utils/typeGuards';
-import { ProposalListQuery } from '../model/query';
+} from '../model/typeGuards';
 
 export const parseProposalsListQuery = (
   requestUrl: string,

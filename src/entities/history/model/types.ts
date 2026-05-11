@@ -42,3 +42,5 @@ export const historyActionNames = [
 ] as const;
 
 export type HistoryActionName = (typeof historyActionNames)[number];
+
+export type FormattedChangeValues = [prev: string, next: string];

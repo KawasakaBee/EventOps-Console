@@ -29,7 +29,7 @@ import {
   reviews,
 } from '../db/reviews';
 import { createComment } from '../db/comments';
-import { isId, isProposalStatus, isRole } from '@/shared/utils/typeGuards';
+import { isId } from '@/shared/utils/typeGuards';
 import { applyProposalSort } from '../utils/proposalSort';
 import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
 import {
@@ -66,6 +66,8 @@ import {
   isManagerLike,
 } from '../utils/proposalAccess';
 import getAvailableProposalStatuses from '../utils/proposalStatusTransitions';
+import { isRole } from '@/entities/user/model/typeGuards';
+import { isProposalStatus } from '@/entities/proposal/model/typeGuards';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {

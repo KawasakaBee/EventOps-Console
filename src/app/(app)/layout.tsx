@@ -4,8 +4,8 @@ import { APPBAR_HEIGHT, SIDEBAR_WIDTH } from '@/shared/config/layout';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import Sidebar from '@/widgets/SideBar/ui/Sidebar';
-import { isRole } from '@/shared/utils/typeGuards';
 import AppBar from '@/widgets/AppBar/ui/AppBar';
+import { isRole } from '@/entities/user/model/typeGuards';
 
 const AppLayout = async ({
   children,

@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
-import { StatusTransitionSubmitProps } from './types';
-import { DialogResource } from '@/shared/types/resource.types';
+import { DialogResource, StatusTransitionSubmitProps } from './types';
 import { patchProposalStatusChange } from '../api/proposalStatusTransitionApi';
 
 const useStatusTransitionSubmit = (props: StatusTransitionSubmitProps) => {

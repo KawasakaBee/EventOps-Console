@@ -1,4 +1,5 @@
 import {
+  ProposalAction,
   ProposalActionName,
   ProposalFormat,
   ProposalLevel,
@@ -37,4 +38,21 @@ export const proposalActionsDictionary: Record<
   changeStatus: 'Изменить статус',
   addReview: 'Добавить ревью',
   edit: 'Редактировать',
+};
+
+export const availableActionsDictionary: Record<
+  ProposalAction,
+  ProposalActionName
+> = {
+  edit: 'Редактировать',
+  submit: 'Отправить',
+  assignReviewer: 'Назначить ревьюера',
+  addReview: 'Добавить ревью',
+  addComment: 'Прокомментировать',
+  requestChanges: 'Запросить изменения',
+  accept: 'Принять',
+  reject: 'Отклонить',
+  schedule: 'Добавить в расписание',
+  changeStatus: 'Изменить статус',
+  viewDetails: 'Просмотреть детали',
 };

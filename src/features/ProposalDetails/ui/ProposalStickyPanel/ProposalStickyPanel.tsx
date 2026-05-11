@@ -11,15 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
+import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import { useMemo, useState } from 'react';
-import {
-  isAdditionalAvailableAction,
-  isCriticalAvailableAction,
-} from '@/shared/utils/typeGuards';
 import Button from '@/shared/ui/Button/Button';
 import SecondaryStickyButtons from '../SecondaryStickyButtons/SecondaryStickyButtons';
-import formatDuration from '@/shared/utils/formatDuration';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { Track } from '@/entities/track/model/types';
 import {
@@ -30,11 +25,16 @@ import {
 } from '@/entities/proposal/model/types';
 import { openSingleStatusTransition } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
 import {
+  availableActionsDictionary,
   formatDictionary,
   levelDictionary,
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
-import { availableActionsDictionary } from '@/shared/config/permissions';
+import {
+  isAdditionalAvailableAction,
+  isCriticalAvailableAction,
+} from '@/entities/proposal/model/typeGuards';
+import formatMinutesDuration from '@/shared/utils/formatMinutesDuration';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   data,
@@ -126,7 +126,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
             <Typography variant="subtitle2">Последнее обновление:</Typography>
             {proposal ? (
               <Typography variant="caption" sx={sx.lastUpdateTime}>
-                {isoToLocalDate(proposal.updatedAt)}
+                {formatIsoDateTime(proposal.updatedAt)}
               </Typography>
             ) : (
               '—'
@@ -269,7 +269,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
             Продолжительность:{' '}
             <b>
               {proposal
-                ? formatDuration(proposal.duration)
+                ? formatMinutesDuration(proposal.duration)
                 : 'Продолжительность не удалось загрузить'}
             </b>
           </Typography>

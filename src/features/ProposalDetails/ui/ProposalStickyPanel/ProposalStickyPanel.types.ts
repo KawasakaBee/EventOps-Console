@@ -1,4 +1,4 @@
-import { Resource } from '@/shared/types/primitives.types';
+import { Resource } from '@/shared/types/resource.types';
 import { DetailsState } from '../../model/proposalDetailsSlice';
 import { Track } from '@/entities/track/model/types';
 

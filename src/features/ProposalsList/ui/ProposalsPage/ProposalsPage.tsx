@@ -21,10 +21,8 @@ import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { styles } from './styles';
-import getBreadcrumbsRoute from '@/shared/utils/getBreadcrumbsRoute';
-import toResource from '@/shared/utils/toResource';
+import toLoadableResource from '@/shared/utils/toLoadableResource';
 import useProposalsPageData from '../../model/useProposalsListData';
-import { breadcrumbsDictionary } from '@/shared/config/routes';
 import { closeStatusTransition } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
 import ProposalsBulkActions from '../ProposalsBulkActions/ProposalsBulkActions';
 import ProposalsFilterBar from '../ProposalsFilterBar/ProposalsFilterBar';
@@ -34,6 +32,8 @@ import ProposalsTableSkeleton from '../ProposalsTable/ProposalsTableSkeleton';
 import ProposalsTable from '../ProposalsTable/ProposalsTable';
 import ProposalStatusTransitionDialog from '@/features/ProposalStatusTransition/ui/ProposalStatusTransitionDialog';
 import getCommonAvailableStatuses from '../../model/getCommonAvailableStatuses';
+import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
+import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 
 const ProposalsPage = () => {
   const router = useRouter();
@@ -111,12 +111,12 @@ const ProposalsPage = () => {
     availableProposalsMultipleStatuses,
   } = getCommonAvailableStatuses(proposalList, selectedIds);
 
-  const tracksToResource = toResource(
+  const tracksToResource = toLoadableResource(
     tracks.status,
     tracks.data,
     'Трек не удалось загрузить',
   );
-  const reviewersToResource = toResource(
+  const reviewersToResource = toLoadableResource(
     reviewers.status,
     reviewers.data,
     'Данные ревьюера не удалось загрузить',

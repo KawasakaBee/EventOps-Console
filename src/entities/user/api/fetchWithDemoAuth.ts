@@ -1,6 +1,6 @@
-import { fallbackError } from '../config/errors';
-import { ApiResult } from '../types/api.types';
-import getCurrentUser from '../utils/getCurrentUser';
+import { fallbackError } from '../../../shared/config/errors';
+import { ApiResult } from '../../../shared/types/api.types';
+import getCurrentUser from './userApi';
 
 type FetchWithDemoAutoUserInit = RequestInit & {
   headers?: HeadersInit;

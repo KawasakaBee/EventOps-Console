@@ -1,9 +1,3 @@
-import {
-  ProposalResource,
-  ReviewersResource,
-  TracksResource,
-  UsersResource,
-} from '@/shared/types/resource.types';
 import { useEffect, useState } from 'react';
 import { fetchProposal, fetchUsers } from '../api/proposalDetailsApi';
 import { useAppDispatch } from '@/shared/store/hooks';
@@ -19,6 +13,9 @@ import { ID } from '@/shared/types/primitives.types';
 import { PatchProposalStatusResponse } from '@/entities/proposal/api/contracts';
 import { fetchTracks } from '@/entities/track/api/trackApi';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
+import { ProposalResource, UsersResource } from './types';
+import { TracksResource } from '@/entities/track/api/types';
+import { ReviewersResource } from '@/entities/reviewer/api/types';
 
 const useProposalDetailsData = (id: ID) => {
   //state

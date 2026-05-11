@@ -3,9 +3,10 @@
 import { Drawer, Link } from '@mui/material';
 import { ISidebarProps } from './Sidebar.types';
 import NextLink from 'next/link';
-import { isNavigationRoute } from '@/shared/utils/typeGuards';
-import { navigationDictionary, routesByRole } from '@/shared/config/routes';
-import { styles } from '@/widgets/AppBar/ui/styles';
+import { isNavigationRoute } from '@/shared/lib/routes/typeGuards';
+import { navigationDictionary } from '@/shared/lib/routes/dictionary';
+import { routesByRole } from '@/entities/user/model/routeAccess';
+import { styles } from './styles';
 
 const Sidebar: React.FC<ISidebarProps> = ({ role, sidebarSx }) => {
   const sx = styles();

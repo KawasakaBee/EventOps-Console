@@ -1,5 +1,5 @@
+import { permissionsByRole } from '@/entities/user/model/permissions';
 import { User } from '@/entities/user/model/types';
-import { permissionsByRole } from '@/shared/config/permissions';
 
 export const manager: User = {
   id: '2',

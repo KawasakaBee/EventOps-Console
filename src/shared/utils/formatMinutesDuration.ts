@@ -1,4 +1,4 @@
-const formatDuration = (duration: number): string => {
+const formatMinutesDuration = (duration: number): string => {
   const hours = Math.floor(duration / 60);
   const minutes = duration % 60;
 
@@ -9,4 +9,4 @@ const formatDuration = (duration: number): string => {
   return `${hours} ч ${minutes} мин`;
 };
 
-export default formatDuration;
+export default formatMinutesDuration;

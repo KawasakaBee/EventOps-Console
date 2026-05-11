@@ -1,5 +1,5 @@
 import type { ApiResult } from '../types/api.types';
-import { isErrorEnvelope } from '../utils/typeGuards';
+import { isErrorEnvelope } from './isErrorEnvelope';
 
 const normalizeResponse = async <T>(
   response: Response,

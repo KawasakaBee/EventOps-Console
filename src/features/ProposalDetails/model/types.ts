@@ -3,6 +3,9 @@ import ShareIcon from '@mui/icons-material/Share';
 import HomeIcon from '@mui/icons-material/Home';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { ErrorEnvelope } from '@/shared/types/api.types';
+import { PageStatus } from '@/shared/types/resource.types';
+import { UserListItem } from '@/entities/user/model/types';
+import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 
 export const secondaryActions = ['copyLink', 'toHome', 'openHistory'] as const;
 
@@ -52,3 +55,12 @@ export const proposalDetailsTabs = [
 ] as const;
 
 export type ProposalDetailsTab = (typeof proposalDetailsTabs)[number];
+
+export interface UsersResource {
+  status: PageStatus;
+  data: UserListItem[];
+}
+export interface ProposalResource {
+  status: PageStatus;
+  errorProps: ErrorStateProps | null;
+}

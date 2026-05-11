@@ -1,10 +1,10 @@
-import { ProposalResource, UsersResource } from '@/shared/types/resource.types';
 import { GetUsersListResponse } from '@/entities/user/api/contracts';
-import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import normalizeResponse from '@/shared/api/normalizeResponse';
 import { ID } from '@/shared/types/primitives.types';
 import getProposalErrorState from '../model/getProposalErrorState';
 import { GetProposalResponse } from '@/entities/proposal/api/contracts';
+import { ProposalResource, UsersResource } from '../model/types';
 
 export const fetchUsers = async (): Promise<UsersResource> => {
   const users: UsersResource = {

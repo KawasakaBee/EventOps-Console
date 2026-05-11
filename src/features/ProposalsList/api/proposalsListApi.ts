@@ -1,12 +1,9 @@
-import getCurrentUser from '@/shared/utils/getCurrentUser';
+import getCurrentUser from '@/entities/user/api/userApi';
 import getProposalsErrorState from '../model/getProposalsErrorState';
-import { fetchWithDemoAuth } from '@/shared/api/fetchWithDemoAuth';
+import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import normalizeResponse from '@/shared/api/normalizeResponse';
 import { GetProposalsListResponse } from '@/entities/proposal/api/contracts';
-import {
-  PaginationResource,
-  UserResource,
-} from '@/shared/types/resource.types';
+import { PaginationResource, UserResource } from '../model/types';
 
 export const fetchUser = async (
   retry: () => void,

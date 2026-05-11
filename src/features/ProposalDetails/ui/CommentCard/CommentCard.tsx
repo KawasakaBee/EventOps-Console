@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ICommentCardProps } from './CommentCard.types';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
+import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import { styles } from './styles';
 import getAvatarInitials from '../../model/getAvatarInitials';
 import { rolesDictionary } from '@/entities/user/model/dictionaries';
@@ -44,7 +44,7 @@ const CommentCard: React.FC<ICommentCardProps> = ({ comment, user }) => {
         </Stack>
         <Box sx={sx.timeWrapper}>
           <Typography variant="caption" sx={sx.commentTime}>
-            {isoToLocalDate(comment.createdAt)}
+            {formatIsoDateTime(comment.createdAt)}
           </Typography>
         </Box>
         <Box>

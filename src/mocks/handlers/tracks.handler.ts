@@ -1,9 +1,9 @@
-import { isRole } from '@/shared/utils/typeGuards';
 import { http, HttpResponse } from 'msw';
 import { tracks } from '../db/tracks';
 import { GetTracksResponse } from '@/entities/track/api/contracts';
 import { Track } from '@/entities/track/model/types';
 import { userError } from '../utils/httpErrors';
+import { isRole } from '@/entities/user/model/typeGuards';
 
 export const trackHandlers = [
   http.get('/api/tracks', ({ request }) => {

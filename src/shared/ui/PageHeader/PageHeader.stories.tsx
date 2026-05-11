@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import PageHeader from './PageHeader';
 import { expect, within } from 'storybook/test';
-import { breadcrumbsDictionary } from '@/shared/config/routes';
+import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 
 const meta = {
   title: 'Shared UI/PageHeader',

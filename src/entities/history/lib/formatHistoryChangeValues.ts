@@ -1,32 +1,40 @@
-import { ProposalFieldChange } from '@/entities/history/model/types';
-import isoToLocalDate from './isoToLocalDate';
 import {
-  isIsoTime,
-  isProposalFormat,
-  isProposalLevel,
-  isProposalStatus,
-} from './typeGuards';
-import formatDuration from './formatDuration';
+  FormattedChangeValues,
+  ProposalFieldChange,
+} from '@/entities/history/model/types';
+import formatIsoDateTime from '../../../shared/utils/formatIsoDateTime';
+import formatMinutesDuration from '../../../shared/utils/formatMinutesDuration';
 import {
   formatDictionary,
   levelDictionary,
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
+import { isIsoDateTime } from '../../../shared/utils/typeGuards';
+import {
+  isProposalFormat,
+  isProposalLevel,
+  isProposalStatus,
+} from '@/entities/proposal/model/typeGuards';
 
-const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
-  const resultParse = (prev: string, next: string) => {
+const formatHistoryChangeValues = (
+  changes: ProposalFieldChange,
+): FormattedChangeValues => {
+  const resultParse = (prev: string, next: string): FormattedChangeValues => {
     return [prev, next];
   };
 
   if (changes.field === 'createdAt' || changes.field === 'updatedAt') {
-    if (!isIsoTime(changes.previousValue) || !isIsoTime(changes.nextValue))
+    if (
+      !isIsoDateTime(changes.previousValue) ||
+      !isIsoDateTime(changes.nextValue)
+    )
       return resultParse(
         String(changes.previousValue),
         String(changes.nextValue),
       );
     return resultParse(
-      isoToLocalDate(changes.previousValue),
-      isoToLocalDate(changes.nextValue),
+      formatIsoDateTime(changes.previousValue),
+      formatIsoDateTime(changes.nextValue),
     );
   }
 
@@ -40,8 +48,8 @@ const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
         String(changes.nextValue),
       );
     return resultParse(
-      formatDuration(changes.previousValue),
-      formatDuration(changes.nextValue),
+      formatMinutesDuration(changes.previousValue),
+      formatMinutesDuration(changes.nextValue),
     );
   }
 
@@ -93,4 +101,4 @@ const normalizeHistoryChanges = (changes: ProposalFieldChange): string[] => {
   return resultParse(String(changes.previousValue), String(changes.nextValue));
 };
 
-export default normalizeHistoryChanges;
+export default formatHistoryChangeValues;

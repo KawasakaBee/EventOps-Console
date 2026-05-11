@@ -1,6 +1,6 @@
-import { PageStatus, Resource } from '../types/primitives.types';
+import { PageStatus, Resource } from '../types/resource.types';
 
-const toResource = <T>(
+const toLoadableResource = <T>(
   status: PageStatus,
   data: T,
   errorMessage: string,
@@ -16,4 +16,4 @@ const toResource = <T>(
   return { status };
 };
 
-export default toResource;
+export default toLoadableResource;

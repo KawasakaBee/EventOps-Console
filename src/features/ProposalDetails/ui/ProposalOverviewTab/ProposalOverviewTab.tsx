@@ -7,8 +7,8 @@ import {
   Typography,
 } from '@mui/material';
 import { IProposalOverviewTabProps } from './ProposalOverviewTab.types';
-import formatDuration from '@/shared/utils/formatDuration';
-import isoToLocalDate from '@/shared/utils/isoToLocalDate';
+import formatMinutesDuration from '@/shared/utils/formatMinutesDuration';
+import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { styles } from './styles';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
@@ -55,7 +55,7 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
               <Skeleton variant="text" width={200} />
             )}
             <Typography>
-              Продолжительность: {formatDuration(proposal.duration)}
+              Продолжительность: {formatMinutesDuration(proposal.duration)}
             </Typography>
           </Stack>
         </Grid>
@@ -80,9 +80,9 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
           <Grid size={10}>Тегов нет</Grid>
         )}
         <Grid size={2}>Дата создания</Grid>
-        <Grid size={10}>{isoToLocalDate(proposal.createdAt)}</Grid>
+        <Grid size={10}>{formatIsoDateTime(proposal.createdAt)}</Grid>
         <Grid size={2}>Дата последнего изменения</Grid>
-        <Grid size={10}>{isoToLocalDate(proposal.updatedAt)}</Grid>
+        <Grid size={10}>{formatIsoDateTime(proposal.updatedAt)}</Grid>
       </Grid>
     </Stack>
   ) : (

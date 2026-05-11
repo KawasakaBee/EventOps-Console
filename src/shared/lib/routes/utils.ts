@@ -1,6 +1,17 @@
-import { Route } from '../config/routes';
+import { BreadcrumbsRoute, Route } from './types';
+import { isBreadcrumbsRoute } from './typeGuards';
 
-const normalizeRoute = (pathname: string): Route | null => {
+export const getBreadcrumbsRoute = (
+  pathname: string,
+): BreadcrumbsRoute | null => {
+  if (/^\/proposals\/[^/]+$/.test(pathname)) {
+    return '/proposals/[id]';
+  }
+
+  return isBreadcrumbsRoute(pathname) ? pathname : null;
+};
+
+export const normalizeRoute = (pathname: string): Route | null => {
   if (pathname === '/login') return '/login';
   if (pathname === '/dashboard') return '/dashboard';
   if (pathname === '/proposals') return '/proposals';
@@ -15,5 +26,3 @@ const normalizeRoute = (pathname: string): Route | null => {
 
   return null;
 };
-
-export default normalizeRoute;
