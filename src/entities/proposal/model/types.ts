@@ -79,6 +79,9 @@ export interface Proposal {
   id: ID;
   title: string;
   abstract: string;
+  takeaways: string;
+  targetAudience: string;
+  prerequisites: string;
   format: ProposalFormat;
   level: ProposalLevel;
   duration: number;

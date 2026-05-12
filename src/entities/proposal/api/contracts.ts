@@ -43,6 +43,9 @@ export interface GetProposalResponse {
 export interface PostProposalRequest {
   title: string;
   abstract: string;
+  takeaways: string;
+  targetAudience: string;
+  prerequisites: string;
   format: ProposalFormat;
   duration: number;
   level: ProposalLevel;

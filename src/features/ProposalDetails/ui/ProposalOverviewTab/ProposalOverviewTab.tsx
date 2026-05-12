@@ -1,4 +1,5 @@
 import {
+  Box,
   Chip,
   Divider,
   Grid,
@@ -59,30 +60,92 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
             </Typography>
           </Stack>
         </Grid>
-        <Grid size={12} sx={sx.abstractWrapper}>
-          <Typography variant="h3">Описание</Typography>
-          <Typography variant="body2">{proposal.abstract}</Typography>
-        </Grid>
-        <Grid size={2}>Формат</Grid>
-        <Grid size={10}>{formatDictionary[proposal.format]}</Grid>
-        <Grid size={2}>Уровень</Grid>
-        <Grid size={10}>{levelDictionary[proposal.level]}</Grid>
-        <Grid size={2}>Теги</Grid>
-        {proposal.tags.length !== 0 ? (
-          <Grid container size={10} spacing={1}>
-            {proposal.tags.map((tag) => (
-              <Grid key={tag}>
-                <Chip label={tag} />
-              </Grid>
-            ))}
+        <Grid container columnSpacing={0} sx={sx.contentContainer}>
+          <Grid size={8} sx={sx.abstractWrapper}>
+            <Stack spacing={6}>
+              <Box>
+                <Typography variant="h3">Описание</Typography>
+                <Divider sx={sx.abstractDivider} />
+                <Typography variant="body1">{proposal.abstract}</Typography>
+              </Box>
+              <Box>
+                <Typography variant="h3">Целевая аудитория</Typography>
+                <Divider sx={sx.abstractDivider} />
+                <Typography variant="body1">
+                  {proposal.targetAudience}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="h3">Требования</Typography>
+                <Divider sx={sx.abstractDivider} />
+                <Typography variant="body1">
+                  {proposal.prerequisites}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="h3">Ключевые выводы</Typography>
+                <Divider sx={sx.abstractDivider} />
+                <Typography variant="body1">{proposal.takeaways}</Typography>
+              </Box>
+            </Stack>
           </Grid>
-        ) : (
-          <Grid size={10}>Тегов нет</Grid>
-        )}
-        <Grid size={2}>Дата создания</Grid>
-        <Grid size={10}>{formatIsoDateTime(proposal.createdAt)}</Grid>
-        <Grid size={2}>Дата последнего изменения</Grid>
-        <Grid size={10}>{formatIsoDateTime(proposal.updatedAt)}</Grid>
+          <Grid container size={4} rowSpacing={4} sx={sx.metadataContainer}>
+            <Grid size={12}>
+              <Box>
+                <Typography variant="h3">Метаданные</Typography>
+                <Divider sx={sx.abstractDivider} />
+              </Box>
+              <Stack spacing={1}>
+                <Typography variant="h3">Формат: </Typography>
+                <Typography variant="body2">
+                  {formatDictionary[proposal.format]}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid size={12}>
+              <Stack spacing={1}>
+                <Typography variant="h3">Уровень: </Typography>
+                <Typography variant="body2">
+                  {levelDictionary[proposal.level]}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid size={12}>
+              <Stack spacing={1}>
+                <Typography variant="h3">Теги:</Typography>
+                {proposal.tags.length !== 0 ? (
+                  <Grid container size={12} spacing={1}>
+                    {proposal.tags.map((tag) => (
+                      <Grid key={tag}>
+                        <Chip label={tag} />
+                      </Grid>
+                    ))}
+                  </Grid>
+                ) : (
+                  <Grid size={12}>Тегов нет</Grid>
+                )}
+              </Stack>
+            </Grid>
+            <Grid size={12}>
+              <Stack spacing={1}>
+                <Typography variant="h3">Дата создания: </Typography>
+                <Typography variant="body2">
+                  {formatIsoDateTime(proposal.createdAt)}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid size={12}>
+              <Stack spacing={1}>
+                <Typography variant="h3">
+                  Дата последнего изменения:{' '}
+                </Typography>
+                <Typography variant="body2">
+                  {formatIsoDateTime(proposal.updatedAt)}
+                </Typography>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
     </Stack>
   ) : (

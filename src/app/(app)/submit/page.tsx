@@ -1,5 +1,7 @@
+import SubmitPage from '@/features/ProposalSubmission/ui/SubmitPage/SubmitPage';
+
 const Submit = () => {
-  return <>This is submit page</>;
+  return <SubmitPage />;
 };
 
 export default Submit;
