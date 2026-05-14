@@ -13,7 +13,7 @@ const proposalSubmissionBaseSchema = z.object({
     .min(10, 'Название должно иметь длину минимум в 10 символов')
     .max(120, 'Максимальная длина названия - 120 символов'),
   format: z.enum(proposalFormats, 'Некорректный формат'),
-  duration: z.string(),
+  duration: z.string().min(1, 'Обязательное поле'),
   level: z.enum(proposalLevels, 'Некорректный уровень'),
   trackId: z.string().trim().min(1, 'Обязательное поле'),
 
@@ -27,7 +27,7 @@ const proposalSubmissionBaseSchema = z.object({
   prerequisites: z.string().trim().min(1, 'Обязательное поле'),
 
   name: z.string().trim().min(1, 'Обязательное поле'),
-  email: z.email('Email должен быть валидыным'),
+  email: z.email('Email должен быть валидным'),
   company: z.string().trim().min(1, 'Обязательное поле'),
   position: z.string().trim().min(1, 'Обязательное поле'),
   bio: z

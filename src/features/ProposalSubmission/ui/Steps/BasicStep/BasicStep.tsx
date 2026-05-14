@@ -11,6 +11,7 @@ import { steps } from '@/features/ProposalSubmission/model/steps';
 import Button from '@/shared/ui/Button/Button';
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -31,6 +32,8 @@ const BasicStep = () => {
     register,
     control,
     watch,
+    setValue,
+    getValues,
     formState: { errors },
   } = useFormContext<BasicValues>();
 
@@ -61,9 +64,29 @@ const BasicStep = () => {
                 </InputLabel>
                 <Select
                   {...field}
-                  labelId={`${field}-label`}
+                  labelId={`${type}-label`}
                   id={type}
                   label={submitFieldsDictionary[type]}
+                  onChange={(event) => {
+                    field.onChange(event);
+
+                    const currentDuration = getValues('duration');
+
+                    if (currentDuration === '') return;
+
+                    const isDurationStillAllowed =
+                      formatDurationMap[event.target.value].includes(
+                        currentDuration,
+                      );
+
+                    if (isDurationStillAllowed) return;
+
+                    setValue('duration', '', {
+                      shouldDirty: true,
+                      shouldTouch: false,
+                      shouldValidate: false,
+                    });
+                  }}
                 >
                   {proposalFormats.map((format) => (
                     <MenuItem key={format} value={format}>
@@ -71,6 +94,9 @@ const BasicStep = () => {
                     </MenuItem>
                   ))}
                 </Select>
+                {fieldState.error && (
+                  <FormHelperText>{fieldState.error.message}</FormHelperText>
+                )}
               </FormControl>
             )}
           />
@@ -78,12 +104,31 @@ const BasicStep = () => {
       case 'duration':
         return (
           <Stack key={type} spacing={1}>
-            <TextField
-              required
-              label={submitFieldsDictionary[type]}
-              {...register(type)}
-              error={!!errors[type]}
-              helperText={errors[type]?.message}
+            <Controller
+              name={type}
+              control={control}
+              render={({ field, fieldState }) => (
+                <FormControl fullWidth error={!!fieldState.error} required>
+                  <InputLabel id={`${type}-label`}>
+                    {submitFieldsDictionary[type]}
+                  </InputLabel>
+                  <Select
+                    {...field}
+                    labelId={`${type}-label`}
+                    id={type}
+                    label={submitFieldsDictionary[type]}
+                  >
+                    {formatDurationMap[format].map((duration) => (
+                      <MenuItem key={duration} value={duration}>
+                        {duration} минут
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {fieldState.error && (
+                    <FormHelperText>{fieldState.error.message}</FormHelperText>
+                  )}
+                </FormControl>
+              )}
             />
             <Typography variant="caption" sx={sx.durationCaption}>
               Варианты продолжительности для выбранного формата доклада:{' '}
@@ -108,7 +153,7 @@ const BasicStep = () => {
                 </InputLabel>
                 <Select
                   {...field}
-                  labelId={`${field}-label`}
+                  labelId={`${type}-label`}
                   id={type}
                   label={submitFieldsDictionary[type]}
                 >
@@ -118,6 +163,9 @@ const BasicStep = () => {
                     </MenuItem>
                   ))}
                 </Select>
+                {fieldState.error && (
+                  <FormHelperText>{fieldState.error.message}</FormHelperText>
+                )}
               </FormControl>
             )}
           />
@@ -138,11 +186,11 @@ const BasicStep = () => {
                 >
                   {isTracksResourceLoaded ? (
                     isTracksError ? (
-                      <InputLabel id={`${field}-label`} disabled>
+                      <InputLabel id={`${type}-label`} disabled>
                         {tracks.message}
                       </InputLabel>
                     ) : isTracksEmpty ? (
-                      <InputLabel id={`${field}-label`} disabled>
+                      <InputLabel id={`${type}-label`} disabled>
                         Нет треков для выбора
                       </InputLabel>
                     ) : (
@@ -151,13 +199,13 @@ const BasicStep = () => {
                       </InputLabel>
                     )
                   ) : (
-                    <InputLabel id={`${field}-label`} disabled>
+                    <InputLabel id={`${type}-label`} disabled>
                       Загрузка треков
                     </InputLabel>
                   )}
                   <Select
                     {...field}
-                    labelId={`${field}-label`}
+                    labelId={`${type}-label`}
                     id={type}
                     label={submitFieldsDictionary[type]}
                     disabled={isTracksSelectDisabled}
@@ -178,6 +226,9 @@ const BasicStep = () => {
                       <MenuItem>Загрузка треков</MenuItem>
                     )}
                   </Select>
+                  {fieldState.error && (
+                    <FormHelperText>{fieldState.error.message}</FormHelperText>
+                  )}
                 </FormControl>
                 {(isTracksError || isTracksEmpty) && (
                   <Button

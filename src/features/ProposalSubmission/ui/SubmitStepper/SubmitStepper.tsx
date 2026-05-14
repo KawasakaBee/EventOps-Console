@@ -43,7 +43,7 @@ const SubmitStepper = () => {
     setActiveStep((prev) => changeStep(prev, 'next'));
   };
 
-  const sumbissionStep = () => {
+  const submissionStep = () => {
     switch (activeStep) {
       case 'description':
         return <DescriptionStep />;
@@ -68,7 +68,7 @@ const SubmitStepper = () => {
         ))}
       </Stepper>
       <SectionCard title={submitStepsDictionary[activeStep]}>
-        {sumbissionStep()}
+        {submissionStep()}
       </SectionCard>
       <Stack direction="row" spacing={2}>
         <Button

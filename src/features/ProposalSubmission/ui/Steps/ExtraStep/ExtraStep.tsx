@@ -74,6 +74,8 @@ const ExtraStep = () => {
                           <TextField
                             {...params}
                             label={submitFieldsDictionary[type]}
+                            error={!!fieldState.error}
+                            helperText={fieldState.error?.message}
                           />
                         )
                       ) : (

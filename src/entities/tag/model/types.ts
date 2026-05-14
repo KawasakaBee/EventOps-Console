@@ -67,6 +67,6 @@ export const tags = [
   'Refactoring',
   'Open Source',
   'Case Study',
-];
+] as const;
 
 export type Tag = (typeof tags)[number];

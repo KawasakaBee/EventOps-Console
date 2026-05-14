@@ -12,7 +12,7 @@ export const tagsHandlers = [
     if (!userId || !isRole(userRole)) return userError();
 
     const response: GetTagsResponse = {
-      tags: structuredClone(tags) satisfies Tag[],
+      tags: [...tags] satisfies Tag[],
     };
 
     return HttpResponse.json(response);

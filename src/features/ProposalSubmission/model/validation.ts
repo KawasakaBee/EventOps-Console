@@ -6,6 +6,8 @@ export const validateDurationByFormat = (
   values: Pick<SubmitValues, 'format' | 'duration'>,
   ctx: z.RefinementCtx,
 ) => {
+  if (!values.duration) return;
+
   const allowedDurations = formatDurationMap[values.format];
 
   if (!allowedDurations.includes(values.duration)) {
