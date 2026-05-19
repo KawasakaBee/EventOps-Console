@@ -1,0 +1,54 @@
+export const proposalSumbitFields = [
+  'status',
+  'title',
+  'format',
+  'duration',
+  'level',
+  'trackId',
+  'abstract',
+  'takeaways',
+  'targetAudience',
+  'prerequisites',
+  'speakers',
+  'tags',
+  'notes',
+  'consent',
+];
+
+export type ProposalSubmitField = (typeof proposalSumbitFields)[number];
+
+export type ProposalSubmitFieldsName =
+  | 'Статус'
+  | 'Название'
+  | 'Формат'
+  | 'Продолжительность, мин'
+  | 'Уровень'
+  | 'Трек'
+  | 'Описание доклада'
+  | 'Ключевые выводы'
+  | 'Целевая аудитория'
+  | 'Требования'
+  | 'Спикеры'
+  | 'Тэги'
+  | 'Дополнительно'
+  | 'Согласие';
+
+export const proposalSubmitFieldsDictionary: Record<
+  ProposalSubmitField,
+  ProposalSubmitFieldsName
+> = {
+  status: 'Статус',
+  title: 'Название',
+  format: 'Формат',
+  duration: 'Продолжительность, мин',
+  level: 'Уровень',
+  trackId: 'Трек',
+  abstract: 'Описание доклада',
+  takeaways: 'Ключевые выводы',
+  targetAudience: 'Целевая аудитория',
+  prerequisites: 'Требования',
+  speakers: 'Спикеры',
+  tags: 'Тэги',
+  notes: 'Дополнительно',
+  consent: 'Согласие',
+};

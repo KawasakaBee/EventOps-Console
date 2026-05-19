@@ -1,5 +1,6 @@
 import {
   formatDictionary,
+  formatDurationMap,
   levelDictionary,
 } from '@/entities/proposal/model/dictionaries';
 import {
@@ -16,29 +17,17 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField,
-  Typography,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styles } from './styles';
-import { useTracksResource } from '@/features/ProposalSubmission/model/resources';
-import {
-  formatDurationMap,
-  submitFieldsDictionary,
-} from '@/features/ProposalSubmission/model/dictionary';
+import { IBasicStepProps } from './BasicStep.types';
+import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
+import TitleRow from './TitleRow';
+import DurationRow from './DurationRow';
 
-const BasicStep = () => {
-  const {
-    register,
-    control,
-    watch,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useFormContext<BasicValues>();
-
-  const format = watch('format');
-  const { tracks, reFetchTracks } = useTracksResource();
+const BasicStep: React.FC<IBasicStepProps> = ({ tracks, reFetchTracks }) => {
+  const { register, control, setValue, getValues } =
+    useFormContext<BasicValues>();
 
   const isTracksResourceLoaded =
     tracks.status === 'success' || tracks.status === 'error';
@@ -60,13 +49,13 @@ const BasicStep = () => {
             render={({ field, fieldState }) => (
               <FormControl fullWidth error={!!fieldState.error} required>
                 <InputLabel id={`${type}-label`}>
-                  {submitFieldsDictionary[type]}
+                  {proposalSubmitFieldsDictionary[type]}
                 </InputLabel>
                 <Select
                   {...field}
                   labelId={`${type}-label`}
                   id={type}
-                  label={submitFieldsDictionary[type]}
+                  label={proposalSubmitFieldsDictionary[type]}
                   onChange={(event) => {
                     field.onChange(event);
 
@@ -102,44 +91,7 @@ const BasicStep = () => {
           />
         );
       case 'duration':
-        return (
-          <Stack key={type} spacing={1}>
-            <Controller
-              name={type}
-              control={control}
-              render={({ field, fieldState }) => (
-                <FormControl fullWidth error={!!fieldState.error} required>
-                  <InputLabel id={`${type}-label`}>
-                    {submitFieldsDictionary[type]}
-                  </InputLabel>
-                  <Select
-                    {...field}
-                    labelId={`${type}-label`}
-                    id={type}
-                    label={submitFieldsDictionary[type]}
-                  >
-                    {formatDurationMap[format].map((duration) => (
-                      <MenuItem key={duration} value={duration}>
-                        {duration} минут
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {fieldState.error && (
-                    <FormHelperText>{fieldState.error.message}</FormHelperText>
-                  )}
-                </FormControl>
-              )}
-            />
-            <Typography variant="caption" sx={sx.durationCaption}>
-              Варианты продолжительности для выбранного формата доклада:{' '}
-              <b>
-                {formatDurationMap[format]
-                  .map((time) => time + ' минут')
-                  .join(', ')}
-              </b>
-            </Typography>
-          </Stack>
-        );
+        return <DurationRow key={type} control={control} />;
       case 'level':
         return (
           <Controller
@@ -149,13 +101,13 @@ const BasicStep = () => {
             render={({ field, fieldState }) => (
               <FormControl fullWidth error={!!fieldState.error} required>
                 <InputLabel id={`${type}-label`}>
-                  {submitFieldsDictionary[type]}
+                  {proposalSubmitFieldsDictionary[type]}
                 </InputLabel>
                 <Select
                   {...field}
                   labelId={`${type}-label`}
                   id={type}
-                  label={submitFieldsDictionary[type]}
+                  label={proposalSubmitFieldsDictionary[type]}
                 >
                   {proposalLevels.map((level) => (
                     <MenuItem key={level} value={level}>
@@ -195,7 +147,7 @@ const BasicStep = () => {
                       </InputLabel>
                     ) : (
                       <InputLabel id={`${type}-label`}>
-                        {submitFieldsDictionary[type]}
+                        {proposalSubmitFieldsDictionary[type]}
                       </InputLabel>
                     )
                   ) : (
@@ -207,7 +159,7 @@ const BasicStep = () => {
                     {...field}
                     labelId={`${type}-label`}
                     id={type}
-                    label={submitFieldsDictionary[type]}
+                    label={proposalSubmitFieldsDictionary[type]}
                     disabled={isTracksSelectDisabled}
                   >
                     {isTracksResourceLoaded ? (
@@ -246,17 +198,9 @@ const BasicStep = () => {
           />
         );
 
-      default:
-        return (
-          <TextField
-            key={type}
-            required
-            label={submitFieldsDictionary[type]}
-            {...register(type)}
-            error={!!errors[type]}
-            helperText={errors[type]?.message}
-          />
-        );
+      default: {
+        return <TitleRow key={type} control={control} register={register} />;
+      }
     }
   };
 

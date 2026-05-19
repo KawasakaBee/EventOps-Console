@@ -1,3 +1,4 @@
+import { PostDraftSpeakerRequest } from '@/entities/speaker/api/schema';
 import { Tag } from '@/entities/tag/model/types';
 import { ID, ISODateString } from '@/shared/types/primitives.types';
 
@@ -89,8 +90,10 @@ export interface Proposal {
   trackId: ID;
   speakerIds: ID[];
   tags: Tag[];
+  notes: string;
   createdAt: ISODateString;
   updatedAt: ISODateString;
+  draftSpeakers: PostDraftSpeakerRequest[];
 }
 
 export type ProposalListItem = Pick<
@@ -100,9 +103,37 @@ export type ProposalListItem = Pick<
   availableStatuses: ProposalStatus[];
 };
 
+export const proposalEditableKeys = [
+  'title',
+  'abstract',
+  'takeaways',
+  'targetAudience',
+  'prerequisites',
+  'format',
+  'level',
+  'duration',
+  'trackId',
+  'speakerIds',
+  'tags',
+  'notes',
+  'draftSpeakers',
+] as const satisfies readonly (keyof ProposalEditPayload)[];
+
 export type ProposalEditPayload = Pick<
   Proposal,
-  'title' | 'abstract' | 'format' | 'level' | 'duration' | 'trackId' | 'tags'
+  | 'title'
+  | 'abstract'
+  | 'takeaways'
+  | 'targetAudience'
+  | 'prerequisites'
+  | 'format'
+  | 'level'
+  | 'duration'
+  | 'trackId'
+  | 'speakerIds'
+  | 'tags'
+  | 'notes'
+  | 'draftSpeakers'
 >;
 
 export const proposalListActions = proposalActions.filter(

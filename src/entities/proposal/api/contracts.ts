@@ -10,8 +10,7 @@ import {
   ProposalStatus,
 } from '@/entities/proposal/model/types';
 import { Recommendation, Review } from '@/entities/review/model/types';
-import { Speaker, SpeakerInput } from '@/entities/speaker/model/types';
-import { Tag } from '@/entities/tag/model/types';
+import { Speaker } from '@/entities/speaker/model/types';
 import { PaginationEnvelope } from '@/shared/types/api.types';
 import { ID } from '@/shared/types/primitives.types';
 
@@ -38,22 +37,6 @@ export interface GetProposalResponse {
   history: HistoryEntry[];
   availableActions: ProposalAction[];
   availableStatuses: ProposalStatus[];
-}
-
-export interface PostProposalRequest {
-  title: string;
-  abstract: string;
-  takeaways: string;
-  targetAudience: string;
-  prerequisites: string;
-  format: ProposalFormat;
-  duration: number;
-  level: ProposalLevel;
-  trackId: ID;
-  speakers: SpeakerInput[];
-  tags: Tag[];
-  consent: boolean;
-  status: ProposalStatus;
 }
 
 export interface PostProposalResponse {

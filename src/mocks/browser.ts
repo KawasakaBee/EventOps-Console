@@ -6,6 +6,7 @@ import { usersHandlers } from './handlers/users.handlers';
 import { authHandlers } from './handlers/auth.handlers';
 import { tracksHandlers } from './handlers/tracks.handler';
 import { tagsHandlers } from './handlers/tags.handler';
+import { speakersHandlers } from './handlers/speakers.handlers';
 
 export const worker = setupWorker(
   ...dashboardHandlers,
@@ -14,5 +15,6 @@ export const worker = setupWorker(
   ...tagsHandlers,
   ...reviewersHandlers,
   ...usersHandlers,
+  ...speakersHandlers,
   ...authHandlers,
 );

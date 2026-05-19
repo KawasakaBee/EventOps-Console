@@ -28,6 +28,7 @@ export const breadcrumbsDictionary: Record<
   '/proposals': 'Заявки',
   '/proposals/[id]': 'Заявка',
   '/submit': 'Создать заявку',
+  '/submit/[id]': 'Черновик',
   '/my-proposals': 'Мои заявки',
   '/speakers': 'Спикеры',
   '/schedule': 'Расписание',

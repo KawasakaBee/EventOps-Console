@@ -31,6 +31,7 @@ export const errorCodes = [
   'INVALID_RESPONSE',
   'UNKNOWN_ERROR',
   'CLIPBOARD_ERROR',
+  'VALIDATE_ERROR',
 ] as const;
 
 export type ErrorCode = (typeof errorCodes)[number];

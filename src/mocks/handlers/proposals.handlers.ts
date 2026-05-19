@@ -8,7 +8,6 @@ import {
 import {
   GetProposalResponse,
   GetProposalsListResponse,
-  PatchProposalRequest,
   PatchProposalResponse,
   PatchProposalStatusRequest,
   PatchProposalStatusResponse,
@@ -18,7 +17,6 @@ import {
   PostCreateCommentResponse,
   PostCreateReviewRequest,
   PostCreateReviewResponse,
-  PostProposalRequest,
   PostProposalResponse,
 } from '@/entities/proposal/api/contracts';
 import { appendProposalHistory, createHistory } from '../db/history';
@@ -38,6 +36,7 @@ import {
   queryError,
   reviewerError,
   userError,
+  validationError,
 } from '../utils/httpErrors';
 import {
   paginateProposals,
@@ -68,6 +67,12 @@ import {
 import getAvailableProposalStatuses from '../utils/proposalStatusTransitions';
 import { isRole } from '@/entities/user/model/typeGuards';
 import { isProposalStatus } from '@/entities/proposal/model/typeGuards';
+import {
+  patchProposalRequestSchema,
+  postProposalRequestSchema,
+} from '@/entities/proposal/api/schema';
+import zodErrorParse from '../utils/zodErrorParse';
+import mapProposalRequestToProposalBody from '../utils/mapProposalRequestToProposalBody';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {
@@ -153,12 +158,22 @@ export const proposalHandlers = [
   http.post('/api/proposals', async ({ request }) => {
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
-    const body = (await request.json()) as PostProposalRequest; //Провалидировать
 
     if (!userId || !isRole(userRole)) return userError();
 
     const isUserCanCreateProposal = canCreateProposal(userRole);
     if (!isUserCanCreateProposal) return forbiddenError();
+
+    const rawBody: unknown = await request.json();
+
+    const parsedBody = postProposalRequestSchema.safeParse(rawBody);
+
+    if (!parsedBody.success) {
+      const errorBody = zodErrorParse(parsedBody.error);
+      return validationError(errorBody);
+    }
+
+    const body = parsedBody.data;
 
     const proposal = createProposal(body);
 
@@ -172,7 +187,6 @@ export const proposalHandlers = [
     const userId = request.headers.get('x-demo-user-id');
     const userRole = request.headers.get('x-demo-user-role');
     const id = params.id;
-    const body = (await request.json()) as PatchProposalRequest; //Провалидировать
 
     if (!userId || !isRole(userRole)) return userError();
     if (!isId(id)) return proposalError();
@@ -180,10 +194,23 @@ export const proposalHandlers = [
     const isUserCanChangeProposal = canChangeProposal(userRole, id, userId);
     if (!isUserCanChangeProposal) return forbiddenError();
 
-    const history = appendProposalHistory(id, userId, body, 'updated');
+    const rawBody: unknown = await request.json();
+
+    const parsedBody = patchProposalRequestSchema.safeParse(rawBody);
+
+    if (!parsedBody.success) {
+      const errorBody = zodErrorParse(parsedBody.error);
+      return validationError(errorBody);
+    }
+
+    const body = parsedBody.data;
+
+    const proposalBody = mapProposalRequestToProposalBody(body);
+
+    const history = appendProposalHistory(id, userId, proposalBody, 'updated');
     if (!history) return proposalError();
 
-    const proposal = updateProposal(id, body);
+    const proposal = updateProposal(id, proposalBody);
     if (!proposal) return proposalError();
 
     const response: PatchProposalResponse = {

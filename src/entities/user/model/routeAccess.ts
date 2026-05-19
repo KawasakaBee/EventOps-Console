@@ -23,7 +23,7 @@ export const routesByRole: Record<Role, Exclude<Route, '/login'>[]> = {
     '/audit',
   ],
   reviewer: ['/proposals', '/proposals/[id]'],
-  speaker: ['/submit', '/proposals/[id]', '/my-proposals'],
+  speaker: ['/submit', '/submit/[id]', '/proposals/[id]', '/my-proposals'],
 };
 
 export const homePages = {

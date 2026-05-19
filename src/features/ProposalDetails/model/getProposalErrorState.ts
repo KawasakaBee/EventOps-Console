@@ -5,7 +5,6 @@ const getProposalErrorState = (
   error: ErrorEnvelope['error'],
   actions: {
     retry: () => void;
-    onClose?: () => void;
   },
 ): ErrorStateProps => {
   switch (error.code) {

@@ -4,6 +4,7 @@ export const routes = [
   '/proposals',
   '/proposals/[id]',
   '/submit',
+  '/submit/[id]',
   '/my-proposals',
   '/speakers',
   '/schedule',
@@ -15,7 +16,10 @@ export const routes = [
 export type Route = (typeof routes)[number];
 
 export const navigationRoutes = routes.filter(
-  (route) => route !== '/login' && route !== '/proposals/[id]',
+  (route) =>
+    route !== '/login' &&
+    route !== '/proposals/[id]' &&
+    route !== '/submit/[id]',
 );
 
 export type NavigationRoute = (typeof navigationRoutes)[number];
@@ -30,6 +34,7 @@ export const routesNames = [
   'Заявки',
   'Заявка',
   'Создать заявку',
+  'Черновик',
   'Мои заявки',
   'Спикеры',
   'Расписание',

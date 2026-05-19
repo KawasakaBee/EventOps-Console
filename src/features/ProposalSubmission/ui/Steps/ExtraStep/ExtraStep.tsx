@@ -13,17 +13,12 @@ import {
 import { Controller, useFormContext } from 'react-hook-form';
 import { styles } from './styles';
 import Button from '@/shared/ui/Button/Button';
-import { useTagsResource } from '@/features/ProposalSubmission/model/resources';
-import { submitFieldsDictionary } from '@/features/ProposalSubmission/model/dictionary';
+import { IExtraStepProps } from './ExtraStep.types';
+import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
+import NotesRaw from './NotesRaw';
 
-const ExtraStep = () => {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext<ExtraValues>();
-
-  const { tags, reFetchTags } = useTagsResource();
+const ExtraStep: React.FC<IExtraStepProps> = ({ tags, reFetchTags }) => {
+  const { register, control } = useFormContext<ExtraValues>();
 
   const isTagsResourceLoaded =
     tags.status === 'success' || tags.status === 'error';
@@ -73,7 +68,7 @@ const ExtraStep = () => {
                         ) : (
                           <TextField
                             {...params}
-                            label={submitFieldsDictionary[type]}
+                            label={proposalSubmitFieldsDictionary[type]}
                             error={!!fieldState.error}
                             helperText={fieldState.error?.message}
                           />
@@ -136,15 +131,7 @@ const ExtraStep = () => {
         );
 
       default:
-        return (
-          <TextField
-            key={type}
-            label={submitFieldsDictionary[type]}
-            {...register(type)}
-            error={!!errors[type]}
-            helperText={errors[type]?.message}
-          />
-        );
+        return <NotesRaw key={type} control={control} register={register} />;
     }
   };
 

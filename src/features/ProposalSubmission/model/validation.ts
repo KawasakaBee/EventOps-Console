@@ -1,6 +1,6 @@
 import z from 'zod';
 import type { SubmitValues } from './schema';
-import { formatDurationMap } from './dictionary';
+import { formatDurationMap } from '@/entities/proposal/model/dictionaries';
 
 export const validateDurationByFormat = (
   values: Pick<SubmitValues, 'format' | 'duration'>,

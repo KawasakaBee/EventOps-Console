@@ -24,3 +24,6 @@ export const getCommentsByProposalId = (id: ID): Comment[] =>
 
 export const getHistoryByProposalId = (id: ID): HistoryEntry[] =>
   history.filter((hstr) => hstr.proposalId === id);
+
+export const getSpeakerByEmail = (email: string): Speaker | undefined =>
+  speakers.find((speaker) => speaker.email === email);

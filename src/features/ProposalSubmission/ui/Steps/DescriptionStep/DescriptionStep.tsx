@@ -1,4 +1,4 @@
-import { submitFieldsDictionary } from '@/features/ProposalSubmission/model/dictionary';
+import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
 import { DescriptionValues } from '@/features/ProposalSubmission/model/schema';
 import { steps } from '@/features/ProposalSubmission/model/steps';
 import { Stack, TextField } from '@mui/material';
@@ -16,7 +16,7 @@ const DescriptionStep = () => {
         <TextField
           key={field}
           required
-          label={submitFieldsDictionary[field]}
+          label={proposalSubmitFieldsDictionary[field]}
           {...register(field)}
           error={!!errors[field]}
           helperText={errors[field]?.message}

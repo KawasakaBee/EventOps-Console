@@ -8,6 +8,10 @@ export const getBreadcrumbsRoute = (
     return '/proposals/[id]';
   }
 
+  if (/^\/submit\/[^/]+$/.test(pathname)) {
+    return '/submit/[id]';
+  }
+
   return isBreadcrumbsRoute(pathname) ? pathname : null;
 };
 
@@ -17,6 +21,7 @@ export const normalizeRoute = (pathname: string): Route | null => {
   if (pathname === '/proposals') return '/proposals';
   if (/^\/proposals\/[^/]+$/.test(pathname)) return '/proposals/[id]';
   if (pathname === '/submit') return '/submit';
+  if (/^\/submit\/[^/]+$/.test(pathname)) return '/submit/[id]';
   if (pathname === '/my-proposals') return '/my-proposals';
   if (pathname === '/speakers') return '/speakers';
   if (pathname === '/schedule') return '/schedule';

@@ -8,6 +8,7 @@ interface IBaseErrorStateProps {
 interface IErrorStateProps extends IBaseErrorStateProps {
   type: 'state';
   subtitle: string;
+  fields?: Record<string, string>;
   action?: {
     handler: () => void;
     buttonName: string;

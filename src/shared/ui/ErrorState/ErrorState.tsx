@@ -20,7 +20,7 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
   const sx = styles({ fullHeight: fullHeight ? fullHeight : false });
 
   if (type === 'state') {
-    const { subtitle, action, link } = props;
+    const { subtitle, action, link, fields } = props;
 
     return (
       <Stack spacing={2} sx={sx.errorStateContainer}>
@@ -30,6 +30,15 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
         <Typography variant="body1" data-testid="error-state-subtitle">
           {subtitle}
         </Typography>
+        {fields && (
+          <Stack spacing={1}>
+            {Object.entries(fields).map(([key, value]) => (
+              <Typography key={key} variant="body2">
+                {key} - <b>{value}</b>
+              </Typography>
+            ))}
+          </Stack>
+        )}
         {action && (
           <Button
             mode="button"

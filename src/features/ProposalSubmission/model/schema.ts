@@ -6,6 +6,19 @@ import { z } from 'zod';
 import { validateDurationByFormat } from './validation';
 import { tags } from '@/entities/tag/model/types';
 
+const speakerBaseSchema = z.object({
+  id: z.string().nullable(),
+  name: z.string().trim().min(1, 'Обязательное поле'),
+  email: z.email('Email должен быть валидным'),
+  company: z.string().trim().min(1, 'Обязательное поле'),
+  position: z.string().trim().min(1, 'Обязательное поле'),
+  bio: z
+    .string()
+    .trim()
+    .min(50, 'Поле "О себе" должно содержать минимум 50 символов'),
+  links: z.string(),
+});
+
 const proposalSubmissionBaseSchema = z.object({
   title: z
     .string()
@@ -26,18 +39,12 @@ const proposalSubmissionBaseSchema = z.object({
   targetAudience: z.string().trim().min(1, 'Обязательное поле'),
   prerequisites: z.string().trim().min(1, 'Обязательное поле'),
 
-  name: z.string().trim().min(1, 'Обязательное поле'),
-  email: z.email('Email должен быть валидным'),
-  company: z.string().trim().min(1, 'Обязательное поле'),
-  position: z.string().trim().min(1, 'Обязательное поле'),
-  bio: z
-    .string()
-    .trim()
-    .min(50, 'Поле "О себе" должно содержать минимум 50 символов'),
-  links: z.string(),
+  speakers: z
+    .array(speakerBaseSchema)
+    .min(1, 'У заявки должен быть хотя бы 1 спикер'),
 
   tags: z.array(z.enum(tags)),
-  notes: z.string(),
+  notes: z.string().trim().optional(),
   consent: z
     .boolean()
     .refine((value) => value === true, 'Нужно подтвердить согласие'),
@@ -60,13 +67,8 @@ export const descriptionSchema = proposalSubmissionBaseSchema.pick({
   prerequisites: true,
 });
 
-export const speakerSchema = proposalSubmissionBaseSchema.pick({
-  name: true,
-  email: true,
-  company: true,
-  position: true,
-  bio: true,
-  links: true,
+export const speakersSchema = proposalSubmissionBaseSchema.pick({
+  speakers: true,
 });
 
 export const extraSchema = proposalSubmissionBaseSchema.pick({
@@ -85,6 +87,6 @@ export type BasicValues = z.infer<typeof basicSchema>;
 
 export type DescriptionValues = z.infer<typeof descriptionSchema>;
 
-export type SpeakerValues = z.infer<typeof speakerSchema>;
+export type SpeakerValues = z.infer<typeof speakersSchema>;
 
 export type ExtraValues = z.infer<typeof extraSchema>;

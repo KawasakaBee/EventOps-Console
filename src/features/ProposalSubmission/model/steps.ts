@@ -1,7 +1,7 @@
 export const submitSteps = [
   'basic',
   'description',
-  'speaker',
+  'speakers',
   'extra',
   'summary',
 ] as const;
@@ -11,14 +11,14 @@ export type SubmitStep = (typeof submitSteps)[number];
 export type SubmitStepsName =
   | 'Основное'
   | 'Описание'
-  | 'Спикер'
+  | 'Спикеры'
   | 'Дополнительно'
   | 'Итого';
 
 export const stepsNumbersByName: Record<SubmitStep, number> = {
   basic: 0,
   description: 1,
-  speaker: 2,
+  speakers: 2,
   extra: 3,
   summary: 4,
 };
@@ -32,9 +32,9 @@ export const steps = {
     id: 'description',
     fields: ['abstract', 'takeaways', 'targetAudience', 'prerequisites'],
   },
-  speaker: {
-    id: 'speaker',
-    fields: ['name', 'email', 'company', 'position', 'bio', 'links'],
+  speakers: {
+    id: 'speakers',
+    fields: ['speakers'],
   },
   extra: {
     id: 'extra',

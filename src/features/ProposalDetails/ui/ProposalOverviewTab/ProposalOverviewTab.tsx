@@ -56,7 +56,8 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
               <Skeleton variant="text" width={200} />
             )}
             <Typography>
-              Продолжительность: {formatMinutesDuration(proposal.duration)}
+              Продолжительность:
+              {formatMinutesDuration(proposal.duration)}
             </Typography>
           </Stack>
         </Grid>

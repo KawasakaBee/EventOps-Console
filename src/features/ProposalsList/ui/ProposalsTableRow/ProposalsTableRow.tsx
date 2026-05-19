@@ -1,5 +1,5 @@
 import { Checkbox, Skeleton, TableCell, TableRow } from '@mui/material';
-import React, { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import ProposalsRowActions from '../ProposalsRowActions/ProposalsRowActions';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
@@ -22,7 +22,7 @@ import {
   proposalTableWidthDictionary,
 } from '../../model/tableColumns';
 
-const ProposalsTableRow = React.memo(
+const ProposalsTableRow = memo(
   ({ proposal, sx, isSelected, role, tracks }: IProposalTableRowProps) => {
     const dispatch = useAppDispatch();
 

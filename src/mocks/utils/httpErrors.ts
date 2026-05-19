@@ -1,6 +1,18 @@
 import { ErrorEnvelope } from '@/shared/types/api.types';
 import { HttpResponse } from 'msw';
 
+export const validationError = (fields: Record<string, string>) =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'VALIDATE_ERROR',
+        message: 'Ошибка заполнения полей',
+        fields,
+      },
+    } satisfies ErrorEnvelope,
+    { status: 400 },
+  );
+
 export const queryError = () =>
   HttpResponse.json(
     {

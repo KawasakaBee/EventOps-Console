@@ -1,4 +1,5 @@
 import { ID } from '@/shared/types/primitives.types';
+import { PageStatus } from '@/shared/types/resource.types';
 
 export interface Speaker {
   id: ID;
@@ -15,5 +16,10 @@ export interface Speaker {
 
 export type SpeakerInput = Pick<
   Speaker,
-  'name' | 'email' | 'company' | 'position' | 'bio' | 'contacts'
+  'id' | 'name' | 'email' | 'company' | 'position' | 'bio' | 'contacts'
 >;
+
+export interface SpeakersResource {
+  status: PageStatus;
+  data: SpeakerInput[];
+}

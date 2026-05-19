@@ -1,4 +1,5 @@
-import { Speaker, SpeakerInput } from '@/entities/speaker/model/types';
+import { PostSpeakerRequest } from '@/entities/speaker/api/schema';
+import { Speaker } from '@/entities/speaker/model/types';
 
 export const initialSpeakers = [
   {
@@ -340,18 +341,18 @@ export const initialSpeakers = [
 
 export const speakers: Speaker[] = [...initialSpeakers];
 
-export const createSpeaker = (input: SpeakerInput): Speaker => {
+export const createSpeaker = (input: PostSpeakerRequest): Speaker => {
   const randomId = crypto.randomUUID();
 
   const speaker: Speaker = {
     id: randomId,
     userId: randomId,
-    name: input.name,
-    email: input.email,
-    company: input.company,
-    position: input.position,
-    bio: input.bio,
-    contacts: input.contacts,
+    name: input.name ?? '',
+    email: input.email ?? '',
+    company: input.company ?? '',
+    position: input.position ?? '',
+    bio: input.bio ?? '',
+    contacts: input.links ?? '',
     pastTalks: `${randomId} speaker past talks`,
     avatarUrl: `${randomId} speaker avatarUrl`,
   };

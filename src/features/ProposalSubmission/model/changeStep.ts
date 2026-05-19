@@ -8,10 +8,10 @@ const changeStep = (
     switch (step) {
       case 'description':
         return 'basic';
-      case 'speaker':
+      case 'speakers':
         return 'description';
       case 'extra':
-        return 'speaker';
+        return 'speakers';
       case 'summary':
         return 'extra';
       default:
@@ -23,8 +23,8 @@ const changeStep = (
     case 'basic':
       return 'description';
     case 'description':
-      return 'speaker';
-    case 'speaker':
+      return 'speakers';
+    case 'speakers':
       return 'extra';
     case 'extra':
       return 'summary';
