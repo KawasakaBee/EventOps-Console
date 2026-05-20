@@ -68,9 +68,11 @@ const SpeakerCard: React.FC<ISpeakerCardProps> = ({ speaker }) => {
         </Stack>
       </Stack>
       <Typography variant="body1">{speaker.bio}</Typography>
-      <Typography variant="caption" sx={sx.pastTalks}>
-        {speaker.pastTalks}
-      </Typography>
+      {speaker.pastTalks && (
+        <Typography variant="caption" sx={sx.pastTalks}>
+          {speaker.pastTalks}
+        </Typography>
+      )}
     </Stack>
   );
 };

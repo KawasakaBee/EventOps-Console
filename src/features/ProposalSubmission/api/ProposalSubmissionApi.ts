@@ -106,6 +106,50 @@ export const fetchCreateProposal = async (
   return proposal;
 };
 
+export const fetchChangeProposalStatus = async (
+  id: ID,
+  retry: () => void,
+): Promise<SumbitProposalResource> => {
+  const getErrorActions = () => ({
+    retry,
+  });
+
+  const proposal: SumbitProposalResource = {
+    status: 'loading',
+    data: null,
+    errorProps: null,
+  };
+
+  const response = await fetchWithDemoAuth(`/api/proposals/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status: 'submitted' }),
+  });
+
+  if (!response.ok) {
+    proposal.errorProps = getSubmissionErrorState(
+      response.error,
+      getErrorActions(),
+    );
+    proposal.status = 'error';
+    return proposal;
+  }
+
+  const result = await normalizeResponse<PostProposalResponse>(response.data);
+
+  if (!result.ok) {
+    proposal.errorProps = getSubmissionErrorState(
+      result.error,
+      getErrorActions(),
+    );
+    proposal.status = 'error';
+    return proposal;
+  }
+
+  proposal.status = 'success';
+  proposal.data = result.data.proposal;
+  return proposal;
+};
+
 export const fetchChangeProposal = async (
   formValues: Partial<SubmitValues>,
   status: 'submitted' | 'draft',

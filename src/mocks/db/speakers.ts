@@ -353,7 +353,7 @@ export const createSpeaker = (input: PostSpeakerRequest): Speaker => {
     position: input.position ?? '',
     bio: input.bio ?? '',
     contacts: input.links ?? '',
-    pastTalks: `${randomId} speaker past talks`,
+    pastTalks: '',
     avatarUrl: `${randomId} speaker avatarUrl`,
   };
 

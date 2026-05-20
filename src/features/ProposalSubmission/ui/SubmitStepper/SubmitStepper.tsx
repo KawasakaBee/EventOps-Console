@@ -74,7 +74,7 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
       case 'extra':
         return <ExtraStep tags={tags} reFetchTags={reFetchTags} />;
       case 'summary':
-        return <SummaryStep />;
+        return <SummaryStep tracks={tracks} />;
       default:
         return <BasicStep tracks={tracks} reFetchTracks={reFetchTracks} />;
     }
@@ -104,17 +104,8 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
           >
             Назад
           </Button>
-          {lastStep ? (
-            <Button
-              mode="button"
-              variant="contained"
-              size="medium"
-              type="button"
-              isDisabled
-            >
-              Отправить
-            </Button>
-          ) : (
+
+          {!lastStep && (
             <Button
               mode="button"
               variant="contained"
@@ -136,6 +127,16 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
               isDisabled={draft.status === 'success'}
             >
               Сохранить черновик
+            </Button>
+          )}
+          {lastStep && (
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              type="submit"
+            >
+              Отправить
             </Button>
           )}
         </Stack>

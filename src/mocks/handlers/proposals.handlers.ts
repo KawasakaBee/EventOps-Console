@@ -73,6 +73,7 @@ import {
 } from '@/entities/proposal/api/schema';
 import zodErrorParse from '../utils/zodErrorParse';
 import mapProposalRequestToProposalBody from '../utils/mapProposalRequestToProposalBody';
+import { isProposalOwnedByUser } from '../utils/proposalRelations';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request }) => {
@@ -235,7 +236,8 @@ export const proposalHandlers = [
     const prevProposal = proposals.find((proposal) => proposal.id === id);
     if (!prevProposal) return proposalError();
 
-    const canUserChangeProposalStatus = isManagerLike(userRole);
+    const canUserChangeProposalStatus =
+      isManagerLike(userRole) || isProposalOwnedByUser(prevProposal, userId);
     if (!canUserChangeProposalStatus) return forbiddenError();
 
     const foundPrevReviewsCount = reviews.filter(

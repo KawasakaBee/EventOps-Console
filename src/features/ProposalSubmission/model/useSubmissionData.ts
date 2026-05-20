@@ -3,6 +3,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   fetchChangeProposal,
+  fetchChangeProposalStatus,
+  fetchCreateProposal,
   fetchGetDraft,
 } from '../api/ProposalSubmissionApi';
 import { SumbitProposalResource } from './types';
@@ -16,6 +18,7 @@ import { SubmitValues } from './schema';
 import { UseFormReturn } from 'react-hook-form';
 import { PROPOSAL_DRAFT_STORAGE_KEY } from '@/shared/config/layout';
 import { SubmitDirtyFields } from '../ui/SubmitPage/SubmitPage.types';
+import { ID } from '@/shared/types/primitives.types';
 
 const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
   // state
@@ -25,12 +28,20 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
   const autosaveVersionRef = useRef(0);
   const [isRecoveryDialogOpened, setIsRecoveryDialogOpened] =
     useState<boolean>(false);
+  const [isSubmitDialogOpened, setIsSubmitDialogOpened] =
+    useState<boolean>(false);
   const [recoveryData, setRecoveryData] = useState<SubmitValues | null>(null);
 
   const { reset, getValues, resetField } = methods;
 
   const [draft, setDraft] = useState<SumbitProposalResource>({
     status: 'loading',
+    data: null,
+    errorProps: null,
+  });
+
+  const [submitData, setSubmitData] = useState<SumbitProposalResource>({
+    status: 'idle',
     data: null,
     errorProps: null,
   });
@@ -449,6 +460,73 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
     setIsAutosaveError(false);
   };
 
+  const handleFormSubmit = async () => {
+    if (submitData.status === 'success') return;
+
+    setIsSubmitDialogOpened(false);
+    setSubmitData({
+      status: 'loading',
+      data: null,
+      errorProps: null,
+    });
+
+    const formValues = getValues();
+
+    if (draftId && isId(draftId)) {
+      const response = await fetchChangeProposal(
+        formValues,
+        'submitted',
+        draftId,
+        () => setIsSubmitDialogOpened(false),
+      );
+
+      const statusResponse = await fetchChangeProposalStatus(draftId, () =>
+        setIsSubmitDialogOpened(false),
+      );
+
+      const successStatus =
+        response.status === 'success' && statusResponse.status === 'success';
+
+      setIsSubmitDialogOpened(true);
+
+      if (!successStatus) {
+        setSubmitData({
+          status: 'error',
+          data: null,
+          errorProps: statusResponse.errorProps ?? response.errorProps ?? null,
+        });
+        return;
+      }
+
+      setSubmitData({
+        status: 'success',
+        data: statusResponse.data ?? response.data,
+        errorProps: null,
+      });
+      return;
+    }
+
+    const response = await fetchCreateProposal(
+      formValues,
+      'submitted',
+      handleFormSubmit,
+    );
+
+    deleteFormFromStorage();
+    setSubmitData(response);
+    setIsSubmitDialogOpened(true);
+  };
+
+  const handleSubmitDialogClose = () => {
+    if (submitData.status === 'success') return;
+
+    setIsSubmitDialogOpened(false);
+  };
+
+  const handleRedirectToProposals = (id: ID) => {
+    router.push(`/proposals/${id}`);
+  };
+
   return {
     draft,
     id: isId(draftId) ? draftId : null,
@@ -466,6 +544,11 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
     deleteFormFromStorage,
     isAutosaveError,
     handleAutosaveErrorClose,
+    handleFormSubmit,
+    isSubmitDialogOpened,
+    handleSubmitDialogClose,
+    submitData,
+    handleRedirectToProposals,
   };
 };
 

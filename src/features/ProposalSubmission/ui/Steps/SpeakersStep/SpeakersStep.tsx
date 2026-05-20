@@ -33,7 +33,7 @@ const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
   };
 
   const handleSpeakerRemove = () => {
-    if (fields.length === 1) return;
+    if (fields.length <= 1) return;
 
     remove(fields.length - 1);
   };
@@ -49,7 +49,7 @@ const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
           ariaLabel="Кнопка удалить спикера"
           icon={RemoveIcon}
           onClick={handleSpeakerRemove}
-          isDisabled={fields.length === 1}
+          isDisabled={fields.length <= 1}
         />
         <Button
           mode="iconButton"

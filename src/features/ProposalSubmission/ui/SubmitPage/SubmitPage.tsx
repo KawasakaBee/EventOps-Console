@@ -10,10 +10,13 @@ import SubmitStepperSkeleton from '../SubmitStepper/SubmitStepperSkeleton';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import { useEffect, useRef } from 'react';
 import {
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Stack,
+  Typography,
 } from '@mui/material';
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
@@ -77,11 +80,20 @@ const SubmitPage = () => {
     deleteFormFromStorage,
     isAutosaveError,
     handleAutosaveErrorClose,
+    handleFormSubmit,
+    isSubmitDialogOpened,
+    handleSubmitDialogClose,
+    submitData,
+    handleRedirectToProposals,
   } = useSubmissionData(methods);
 
   const isDraftDataLoaded =
     draft.status === 'success' || draft.status === 'error';
   const isDraftError = draft.status === 'error';
+
+  const iSubmitDataLoaded =
+    submitData.status === 'success' || submitData.status === 'error';
+  const iSubmitError = submitData.status === 'error';
 
   const sx = styles();
 
@@ -101,7 +113,10 @@ const SubmitPage = () => {
         scheduleAutosave={scheduleAutosave}
         scheduleRecoveryAutosave={scheduleRecoveryAutosave}
       />
-      <form onSubmit={handleSubmit(() => null)} style={{ height: '100%' }}>
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        style={{ height: '100%' }}
+      >
         {isDraftDataLoaded ? (
           isDraftError ? (
             draft.errorProps && <ErrorState {...draft.errorProps} />
@@ -155,6 +170,60 @@ const SubmitPage = () => {
             Заполнить новую заявку
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={isSubmitDialogOpened}
+        onClose={handleSubmitDialogClose}
+        slotProps={{
+          paper: {
+            sx: sx.submitDialogPaper,
+          },
+        }}
+      >
+        {iSubmitDataLoaded ? (
+          <>
+            <DialogTitle sx={sx.submitDialogTitle}>
+              {iSubmitError
+                ? 'Не удалось создать заявку...'
+                : 'Заявка успешно создана!'}
+            </DialogTitle>
+            <DialogContent sx={sx.submitDialogContent}>
+              {iSubmitError ? (
+                <Stack>
+                  {!id && (
+                    <Typography>
+                      Сохраните заявку как черновик, чтобы не потерять данные!
+                    </Typography>
+                  )}
+                  {submitData.errorProps && (
+                    <ErrorState {...submitData.errorProps} />
+                  )}
+                </Stack>
+              ) : (
+                'Вы можете продолжить работу с заявкой на её странице'
+              )}
+            </DialogContent>
+            <DialogActions sx={sx.submitDialogActions}>
+              {!iSubmitError && (
+                <Button
+                  mode="button"
+                  variant="contained"
+                  size="medium"
+                  type="button"
+                  onClick={() =>
+                    submitData.data
+                      ? handleRedirectToProposals(submitData.data.id)
+                      : handleSubmitDialogClose()
+                  }
+                >
+                  Продолжить
+                </Button>
+              )}
+            </DialogActions>
+          </>
+        ) : (
+          <CircularProgress sx={sx.submitCircularProgress} />
+        )}
       </Dialog>
       <ErrorState
         type="snackbar"

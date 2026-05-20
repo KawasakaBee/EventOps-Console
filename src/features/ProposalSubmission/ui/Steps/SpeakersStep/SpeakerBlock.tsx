@@ -59,7 +59,7 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
 
         setValue(`speakers.${idx}`, speakerBody, {
           shouldDirty: true,
-          shouldValidate: false,
+          shouldValidate: true,
         });
       },
       [getValues, setValue],
