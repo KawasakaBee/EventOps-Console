@@ -3,13 +3,19 @@ import {
   PatchProposalResponse,
   PostProposalResponse,
 } from '@/entities/proposal/api/contracts';
-import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
 import { ID } from '@/shared/types/primitives.types';
 import getSubmissionErrorState from '../model/getSubmissionErrorState';
-import normalizeResponse from '@/shared/api/normalizeResponse';
-import { DraftResource, SumbitProposalResource } from '../model/types';
+import {
+  DraftResource,
+  SpeakerResource,
+  SumbitProposalResource,
+} from '../model/types';
 import { SubmitValues } from '../model/schema';
-import { GetSpeakerFindResponse } from '@/entities/speaker/api/contracts';
+import {
+  GetSpeakerFindResponse,
+  GetSpeakerItemResponse,
+} from '@/entities/speaker/api/contracts';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 export const fetchGetDraft = async (
   id: ID,
@@ -25,7 +31,9 @@ export const fetchGetDraft = async (
     errorProps: null,
   };
 
-  const response = await fetchWithDemoAuth(`/api/proposals/${id}`);
+  const response = await normalizeFetch<GetProposalResponse>(
+    `/api/proposals/${id}`,
+  );
 
   if (!response.ok) {
     draft.errorProps = getSubmissionErrorState(
@@ -36,16 +44,8 @@ export const fetchGetDraft = async (
     return draft;
   }
 
-  const result = await normalizeResponse<GetProposalResponse>(response.data);
-
-  if (!result.ok) {
-    draft.errorProps = getSubmissionErrorState(result.error, getErrorActions());
-    draft.status = 'error';
-    return draft;
-  }
-
   draft.status = 'success';
-  draft.data = result.data;
+  draft.data = response.data;
   return draft;
 };
 
@@ -76,10 +76,13 @@ export const fetchCreateProposal = async (
       : {}),
   };
 
-  const response = await fetchWithDemoAuth('/api/proposals/', {
-    method: 'POST',
-    body: JSON.stringify(requestBody),
-  });
+  const response = await normalizeFetch<PostProposalResponse>(
+    '/api/proposals',
+    {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+    },
+  );
 
   if (!response.ok) {
     proposal.errorProps = getSubmissionErrorState(
@@ -90,63 +93,8 @@ export const fetchCreateProposal = async (
     return proposal;
   }
 
-  const result = await normalizeResponse<PostProposalResponse>(response.data);
-
-  if (!result.ok) {
-    proposal.errorProps = getSubmissionErrorState(
-      result.error,
-      getErrorActions(),
-    );
-    proposal.status = 'error';
-    return proposal;
-  }
-
   proposal.status = 'success';
-  proposal.data = result.data.proposal;
-  return proposal;
-};
-
-export const fetchChangeProposalStatus = async (
-  id: ID,
-  retry: () => void,
-): Promise<SumbitProposalResource> => {
-  const getErrorActions = () => ({
-    retry,
-  });
-
-  const proposal: SumbitProposalResource = {
-    status: 'loading',
-    data: null,
-    errorProps: null,
-  };
-
-  const response = await fetchWithDemoAuth(`/api/proposals/${id}/status`, {
-    method: 'PATCH',
-    body: JSON.stringify({ status: 'submitted' }),
-  });
-
-  if (!response.ok) {
-    proposal.errorProps = getSubmissionErrorState(
-      response.error,
-      getErrorActions(),
-    );
-    proposal.status = 'error';
-    return proposal;
-  }
-
-  const result = await normalizeResponse<PostProposalResponse>(response.data);
-
-  if (!result.ok) {
-    proposal.errorProps = getSubmissionErrorState(
-      result.error,
-      getErrorActions(),
-    );
-    proposal.status = 'error';
-    return proposal;
-  }
-
-  proposal.status = 'success';
-  proposal.data = result.data.proposal;
+  proposal.data = response.data.proposal;
   return proposal;
 };
 
@@ -181,10 +129,13 @@ export const fetchChangeProposal = async (
       : {}),
   };
 
-  const response = await fetchWithDemoAuth(`/api/proposals/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(requestBody),
-  });
+  const response = await normalizeFetch<PatchProposalResponse>(
+    `/api/proposals/${id}`,
+    {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+    },
+  );
 
   if (!response.ok) {
     proposal.errorProps = getSubmissionErrorState(
@@ -195,19 +146,8 @@ export const fetchChangeProposal = async (
     return proposal;
   }
 
-  const result = await normalizeResponse<PatchProposalResponse>(response.data);
-
-  if (!result.ok) {
-    proposal.errorProps = getSubmissionErrorState(
-      result.error,
-      getErrorActions(),
-    );
-    proposal.status = 'error';
-    return proposal;
-  }
-
   proposal.status = 'success';
-  proposal.data = result.data.proposal;
+  proposal.data = response.data.proposal;
   return proposal;
 };
 
@@ -221,7 +161,7 @@ export const fetchSpeakerFind = async (
 
   const params = new URLSearchParams({ email });
 
-  const response = await fetchWithDemoAuth(
+  const response = await normalizeFetch<GetSpeakerFindResponse>(
     `/api/speakers/find?${params.toString()}`,
   );
 
@@ -229,11 +169,24 @@ export const fetchSpeakerFind = async (
     return defaultData;
   }
 
-  const result = await normalizeResponse<GetSpeakerFindResponse>(response.data);
+  return response.data;
+};
 
-  if (!result.ok) {
-    return defaultData;
+export const fetchGetSpeaker = async (): Promise<SpeakerResource> => {
+  const speaker: SpeakerResource = {
+    status: 'loading',
+    data: null,
+  };
+
+  const response = await normalizeFetch<GetSpeakerItemResponse>('/api/speaker');
+
+  if (!response.ok) {
+    speaker.status = 'error';
+    return speaker;
   }
 
-  return result.data;
+  speaker.status = 'success';
+  speaker.data = response.data.speaker;
+
+  return speaker;
 };

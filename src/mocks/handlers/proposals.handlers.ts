@@ -35,7 +35,7 @@ import {
   proposalError,
   queryError,
   reviewerError,
-  userError,
+  unauthorizedError,
   validationError,
 } from '../utils/httpErrors';
 import {
@@ -65,7 +65,6 @@ import {
   isManagerLike,
 } from '../utils/proposalAccess';
 import getAvailableProposalStatuses from '../utils/proposalStatusTransitions';
-import { isRole } from '@/entities/user/model/typeGuards';
 import { isProposalStatus } from '@/entities/proposal/model/typeGuards';
 import {
   patchProposalRequestSchema,
@@ -73,16 +72,19 @@ import {
 } from '@/entities/proposal/api/schema';
 import zodErrorParse from '../utils/zodErrorParse';
 import mapProposalRequestToProposalBody from '../utils/mapProposalRequestToProposalBody';
-import { isProposalOwnedByUser } from '../utils/proposalRelations';
+import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
+import { getUserById } from '@/entities/user/lib/userSelectors';
 
 export const proposalHandlers = [
-  http.get('/api/proposals', async ({ request }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
+  http.get('/api/proposals', async ({ request, cookies }) => {
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
+
+    if (!user) return unauthorizedError();
+
+    const userRole = user.role;
 
     let result = proposals;
-
-    if (!userId || !isRole(userRole)) return userError();
 
     const queryParams = parseProposalsListQuery(request.url);
     const access = getProposalsListAccess(userRole, queryParams);
@@ -110,12 +112,15 @@ export const proposalHandlers = [
     return HttpResponse.json(response);
   }),
 
-  http.get('/api/proposals/:id', ({ request, params }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
+  http.get('/api/proposals/:id', ({ params, cookies }) => {
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
+
+    if (!user) return unauthorizedError();
+
+    const userRole = user.role;
     const id = params.id;
 
-    if (!userId || !isRole(userRole)) return userError();
     if (!isId(id)) return proposalError();
 
     const proposal = getProposalById(id);
@@ -156,11 +161,13 @@ export const proposalHandlers = [
     return HttpResponse.json(response);
   }),
 
-  http.post('/api/proposals', async ({ request }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
+  http.post('/api/proposals', async ({ request, cookies }) => {
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
 
-    if (!userId || !isRole(userRole)) return userError();
+    if (!user) return unauthorizedError();
+
+    const userRole = user.role;
 
     const isUserCanCreateProposal = canCreateProposal(userRole);
     if (!isUserCanCreateProposal) return forbiddenError();
@@ -176,7 +183,10 @@ export const proposalHandlers = [
 
     const body = parsedBody.data;
 
-    const proposal = createProposal(body);
+    if (user.role !== 'speaker') return forbiddenError();
+    if (!user.speakerId) return forbiddenError();
+
+    const proposal = createProposal(body, user.speakerId);
 
     const response: PostProposalResponse = { proposal };
     createHistory(proposal.id, userId, 'created');
@@ -184,12 +194,15 @@ export const proposalHandlers = [
     return HttpResponse.json(response, { status: 201 });
   }),
 
-  http.patch('/api/proposals/:id', async ({ request, params }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
+  http.patch('/api/proposals/:id', async ({ request, params, cookies }) => {
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
+
+    if (!user) return unauthorizedError();
+
+    const userRole = user.role;
     const id = params.id;
 
-    if (!userId || !isRole(userRole)) return userError();
     if (!isId(id)) return proposalError();
 
     const isUserCanChangeProposal = canChangeProposal(userRole, id, userId);
@@ -206,7 +219,13 @@ export const proposalHandlers = [
 
     const body = parsedBody.data;
 
-    const proposalBody = mapProposalRequestToProposalBody(body);
+    const prevProposal = getProposalById(id);
+    if (!prevProposal) return proposalError();
+
+    const proposalBody = mapProposalRequestToProposalBody(
+      body,
+      prevProposal.ownerId,
+    );
 
     const history = appendProposalHistory(id, userId, proposalBody, 'updated');
     if (!history) return proposalError();
@@ -221,91 +240,99 @@ export const proposalHandlers = [
     return HttpResponse.json(response);
   }),
 
-  http.patch('/api/proposals/:id/status', async ({ request, params }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id;
-    const { status, reason } =
-      (await request.json()) as PatchProposalStatusRequest; //Провалидировать
+  http.patch(
+    '/api/proposals/:id/status',
+    async ({ request, params, cookies }) => {
+      const userId = cookies[AUTH_SESSION_COOKIE];
+      const user = getUserById(userId);
 
-    if (!userId || !isRole(userRole)) return userError();
-    if (!isId(id)) return proposalError();
+      if (!user) return unauthorizedError();
 
-    if (!isProposalStatus(status)) return queryError();
+      const userRole = user.role;
+      const id = params.id;
+      const { status, reason } =
+        (await request.json()) as PatchProposalStatusRequest; //Провалидировать
 
-    const prevProposal = proposals.find((proposal) => proposal.id === id);
-    if (!prevProposal) return proposalError();
+      if (!isId(id)) return proposalError();
 
-    const canUserChangeProposalStatus =
-      isManagerLike(userRole) || isProposalOwnedByUser(prevProposal, userId);
-    if (!canUserChangeProposalStatus) return forbiddenError();
+      if (!isProposalStatus(status)) return queryError();
 
-    const foundPrevReviewsCount = reviews.filter(
-      (review) => review.proposalId === prevProposal.id,
-    ).length;
+      const prevProposal = proposals.find((proposal) => proposal.id === id);
+      if (!prevProposal) return proposalError();
 
-    const prevAvailableStatuses = getAvailableProposalStatuses(
-      prevProposal.status,
-      foundPrevReviewsCount,
-    );
+      const canUserChangeProposalStatus = isManagerLike(userRole);
+      if (!canUserChangeProposalStatus) return forbiddenError();
 
-    if (!prevAvailableStatuses.includes(status)) return forbiddenError();
+      const foundPrevReviewsCount = reviews.filter(
+        (review) => review.proposalId === prevProposal.id,
+      ).length;
 
-    if (
-      (status === 'rejected' || status === 'changes_requested') &&
-      !reason?.trim()
-    )
-      return forbiddenError();
+      const prevAvailableStatuses = getAvailableProposalStatuses(
+        prevProposal.status,
+        foundPrevReviewsCount,
+      );
 
-    const history = appendProposalHistory(
-      id,
-      userId,
-      { status },
-      'status_changed',
-      { reason },
-    );
-    if (!history) return proposalError();
+      if (!prevAvailableStatuses.includes(status)) return forbiddenError();
 
-    const proposal = updateProposalStatus(id, status);
-    if (!proposal) return proposalError();
+      if (
+        (status === 'rejected' || status === 'changes_requested') &&
+        !reason?.trim()
+      )
+        return forbiddenError();
 
-    const foundNextReviewsCount = reviews.filter(
-      (review) => review.proposalId === proposal.id,
-    ).length;
+      const history = appendProposalHistory(
+        id,
+        userId,
+        { status },
+        'status_changed',
+        { reason },
+      );
+      if (!history) return proposalError();
 
-    const availableActions = getAvailableProposalActions(
-      userRole,
-      proposal,
-      userId,
-      foundNextReviewsCount,
-    );
-    if (!availableActions) return forbiddenError();
+      const proposal = updateProposalStatus(id, status);
+      if (!proposal) return proposalError();
 
-    const availableStatuses = getAvailableProposalStatuses(
-      proposal.status,
-      foundNextReviewsCount,
-    );
+      const foundNextReviewsCount = reviews.filter(
+        (review) => review.proposalId === proposal.id,
+      ).length;
 
-    const response: PatchProposalStatusResponse = {
-      proposal: proposal,
-      historyEntry: history,
-      availableActions,
-      availableStatuses,
-    };
+      const availableActions = getAvailableProposalActions(
+        userRole,
+        proposal,
+        userId,
+        foundNextReviewsCount,
+      );
+      if (!availableActions) return forbiddenError();
 
-    return HttpResponse.json(response);
-  }),
+      const availableStatuses = getAvailableProposalStatuses(
+        proposal.status,
+        foundNextReviewsCount,
+      );
+
+      const response: PatchProposalStatusResponse = {
+        proposal: proposal,
+        historyEntry: history,
+        availableActions,
+        availableStatuses,
+      };
+
+      return HttpResponse.json(response);
+    },
+  ),
 
   http.post(
     '/api/proposals/:id/assign-reviewer',
-    async ({ request, params }) => {
-      const userId = request.headers.get('x-demo-user-id');
-      const userRole = request.headers.get('x-demo-user-role');
+    async ({ request, params, cookies }) => {
+      const userId = cookies[AUTH_SESSION_COOKIE];
+      const user = getUserById(userId);
+
+      if (!user) return unauthorizedError();
+
+      const userRole = user.role;
       const id = params.id;
       const { reviewerId } =
         (await request.json()) as PostAssignReviewerRequest; //Провалидировать
 
-      if (!userId || !isRole(userRole)) return userError();
       if (!isId(id)) return proposalError();
 
       const reviewer = reviewers.find((item) => item.id === reviewerId);
@@ -328,47 +355,59 @@ export const proposalHandlers = [
     },
   ),
 
-  http.post('/api/proposals/:id/reviews', async ({ request, params }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id;
-    const body = (await request.json()) as PostCreateReviewRequest; //Провалидировать
+  http.post(
+    '/api/proposals/:id/reviews',
+    async ({ request, params, cookies }) => {
+      const userId = cookies[AUTH_SESSION_COOKIE];
+      const user = getUserById(userId);
 
-    if (!userId || !isRole(userRole)) return userError();
-    if (!isId(id)) return proposalError();
+      if (!user) return unauthorizedError();
 
-    const isUserCanCreateReview = canCreateReview(userRole, id, userId);
-    if (!isUserCanCreateReview) return forbiddenError();
+      const userRole = user.role;
+      const id = params.id;
+      const body = (await request.json()) as PostCreateReviewRequest; //Провалидировать
 
-    const review = createReview(id, userId, body);
+      if (!isId(id)) return proposalError();
 
-    const response: PostCreateReviewResponse = {
-      review,
-      aggregatedScores:
-        review.scoreContent + review.scoreDelivery + review.scoreRelevance,
-    };
+      const isUserCanCreateReview = canCreateReview(userRole, id, userId);
+      if (!isUserCanCreateReview) return forbiddenError();
 
-    return HttpResponse.json(response);
-  }),
+      const review = createReview(id, userId, body);
 
-  http.post('/api/proposals/:id/comments', async ({ request, params }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
-    const id = params.id;
-    const { message } = (await request.json()) as PostCreateCommentRequest; //Провалидировать
+      const response: PostCreateReviewResponse = {
+        review,
+        aggregatedScores:
+          review.scoreContent + review.scoreDelivery + review.scoreRelevance,
+      };
 
-    if (!userId || !isRole(userRole)) return userError();
-    if (!isId(id)) return proposalError();
+      return HttpResponse.json(response);
+    },
+  ),
 
-    const isUserCanCreateComment = canUserCreateComment(userRole, id, userId);
-    if (!isUserCanCreateComment) return forbiddenError();
+  http.post(
+    '/api/proposals/:id/comments',
+    async ({ request, params, cookies }) => {
+      const userId = cookies[AUTH_SESSION_COOKIE];
+      const user = getUserById(userId);
 
-    const comment = createComment(id, userId, userRole, message);
+      if (!user) return unauthorizedError();
 
-    const response: PostCreateCommentResponse = {
-      comment,
-    };
+      const userRole = user.role;
+      const id = params.id;
+      const { message } = (await request.json()) as PostCreateCommentRequest; //Провалидировать
 
-    return HttpResponse.json(response);
-  }),
+      if (!isId(id)) return proposalError();
+
+      const isUserCanCreateComment = canUserCreateComment(userRole, id, userId);
+      if (!isUserCanCreateComment) return forbiddenError();
+
+      const comment = createComment(id, userId, userRole, message);
+
+      const response: PostCreateCommentResponse = {
+        comment,
+      };
+
+      return HttpResponse.json(response);
+    },
+  ),
 ];

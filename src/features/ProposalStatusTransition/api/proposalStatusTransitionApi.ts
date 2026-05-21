@@ -2,10 +2,9 @@ import {
   PatchProposalStatusRequest,
   PatchProposalStatusResponse,
 } from '@/entities/proposal/api/contracts';
-import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
-import normalizeResponse from '@/shared/api/normalizeResponse';
 import { DialogResource, StatusTransitionSubmitProps } from '../model/types';
 import getStatusTransitionErrorState from '../model/getStatusTransitionErrorState';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 export const patchProposalStatusChange = async (
   props: StatusTransitionSubmitProps,
@@ -29,10 +28,13 @@ export const patchProposalStatusChange = async (
       reason: hasReason ? reasonValue : undefined,
     };
 
-    const response = await fetchWithDemoAuth(`/api/proposals/${id}/status`, {
-      method: 'PATCH',
-      body: JSON.stringify(requestBody),
-    });
+    const response = await normalizeFetch<PatchProposalStatusResponse>(
+      `/api/proposals/${id}/status`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(requestBody),
+      },
+    );
 
     if (!response.ok) {
       dialog.errorProps = getStatusTransitionErrorState(response.error, {
@@ -42,20 +44,8 @@ export const patchProposalStatusChange = async (
       return dialog;
     }
 
-    const result = await normalizeResponse<PatchProposalStatusResponse>(
-      response.data,
-    );
-
-    if (!result.ok) {
-      dialog.errorProps = getStatusTransitionErrorState(result.error, {
-        retry: () => null,
-      });
-      dialog.status = 'error';
-      return dialog;
-    }
-
     dialog.status = 'success';
-    onSuccess(result.data);
+    onSuccess(response.data);
   }
 
   if (mode === 'multiple') {
@@ -67,10 +57,13 @@ export const patchProposalStatusChange = async (
     };
 
     const requests = ids.map(async (id) => {
-      const response = await fetchWithDemoAuth(`/api/proposals/${id}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify(requestBody),
-      });
+      const response = await normalizeFetch<PatchProposalStatusResponse>(
+        `/api/proposals/${id}/status`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(requestBody),
+        },
+      );
 
       if (!response.ok) {
         throw {
@@ -79,20 +72,9 @@ export const patchProposalStatusChange = async (
         };
       }
 
-      const result = await normalizeResponse<PatchProposalStatusResponse>(
-        response.data,
-      );
-
-      if (!result.ok) {
-        throw {
-          id,
-          error: result.error,
-        };
-      }
-
       return {
         id,
-        data: result.data,
+        data: response.data,
       };
     });
 

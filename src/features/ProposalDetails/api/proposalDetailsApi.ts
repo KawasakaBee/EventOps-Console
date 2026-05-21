@@ -1,10 +1,9 @@
 import { GetUsersListResponse } from '@/entities/user/api/contracts';
-import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
-import normalizeResponse from '@/shared/api/normalizeResponse';
 import { ID } from '@/shared/types/primitives.types';
 import getProposalErrorState from '../model/getProposalErrorState';
 import { GetProposalResponse } from '@/entities/proposal/api/contracts';
 import { ProposalResource, UsersResource } from '../model/types';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 export const fetchUsers = async (): Promise<UsersResource> => {
   const users: UsersResource = {
@@ -12,21 +11,14 @@ export const fetchUsers = async (): Promise<UsersResource> => {
     data: [],
   };
 
-  const response = await fetchWithDemoAuth('/api/users');
+  const response = await normalizeFetch<GetUsersListResponse>('/api/users');
 
   if (!response.ok) {
     users.status = 'error';
     return users;
   }
 
-  const result = await normalizeResponse<GetUsersListResponse>(response.data);
-
-  if (!result.ok) {
-    users.status = 'error';
-    return users;
-  }
-
-  users.data = result.data.users;
+  users.data = response.data.users;
   users.status = 'success';
   return users;
 };
@@ -47,7 +39,9 @@ export const fetchProposal = async (
     errorProps: null,
   };
 
-  const response = await fetchWithDemoAuth(`/api/proposals/${id}`);
+  const response = await normalizeFetch<GetProposalResponse>(
+    `/api/proposals/${id}`,
+  );
 
   if (!response.ok) {
     proposal.errorProps = getProposalErrorState(
@@ -58,17 +52,6 @@ export const fetchProposal = async (
     return { proposal, data: null };
   }
 
-  const result = await normalizeResponse<GetProposalResponse>(response.data);
-
-  if (!result.ok) {
-    proposal.errorProps = getProposalErrorState(
-      result.error,
-      getErrorActions(),
-    );
-    proposal.status = 'error';
-    return { proposal, data: null };
-  }
-
   proposal.status = 'success';
-  return { proposal, data: result.data };
+  return { proposal, data: response.data };
 };

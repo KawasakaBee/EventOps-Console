@@ -88,6 +88,7 @@ export interface Proposal {
   duration: number;
   status: ProposalStatus;
   trackId: ID;
+  ownerId: ID;
   speakerIds: ID[];
   tags: Tag[];
   notes: string;
@@ -104,6 +105,7 @@ export type ProposalListItem = Pick<
 };
 
 export const proposalEditableKeys = [
+  'status',
   'title',
   'abstract',
   'takeaways',
@@ -121,6 +123,7 @@ export const proposalEditableKeys = [
 
 export type ProposalEditPayload = Pick<
   Proposal,
+  | 'status'
   | 'title'
   | 'abstract'
   | 'takeaways'

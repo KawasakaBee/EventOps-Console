@@ -3,7 +3,6 @@ import { PageStatus } from '@/shared/types/resource.types';
 
 export interface Speaker {
   id: ID;
-  userId: ID;
   name: string;
   email: string;
   company: string;

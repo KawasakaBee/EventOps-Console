@@ -1,7 +1,6 @@
 import { GetTracksResponse } from '@/entities/track/api/contracts';
-import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
-import normalizeResponse from '@/shared/api/normalizeResponse';
 import { TracksResource } from './types';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 export const fetchTracks = async (): Promise<TracksResource> => {
   const tracks: TracksResource = {
@@ -9,21 +8,14 @@ export const fetchTracks = async (): Promise<TracksResource> => {
     data: [],
   };
 
-  const response = await fetchWithDemoAuth('/api/tracks');
+  const response = await normalizeFetch<GetTracksResponse>('/api/tracks');
 
   if (!response.ok) {
     tracks.status = 'error';
     return tracks;
   }
 
-  const result = await normalizeResponse<GetTracksResponse>(response.data);
-
-  if (!result.ok) {
-    tracks.status = 'error';
-    return tracks;
-  }
-
-  tracks.data = result.data.tracks;
+  tracks.data = response.data.tracks;
   tracks.status = 'success';
   return tracks;
 };

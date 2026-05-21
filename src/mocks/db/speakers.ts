@@ -1,23 +1,9 @@
-import { PostSpeakerRequest } from '@/entities/speaker/api/schema';
-import { Speaker } from '@/entities/speaker/model/types';
+import type { PostSpeakerRequest } from '@/entities/speaker/api/schema';
+import type { Speaker } from '@/entities/speaker/model/types';
 
 export const initialSpeakers = [
   {
-    id: '4',
-    userId: '4',
-    name: 'Demo Speaker',
-    email: 'demo.speaker@example.com',
-    company: 'Acme Cloud',
-    position: 'Frontend Engineer',
-    bio: 'Demo Speaker работает в Acme Cloud и регулярно выступает о практической разработке, архитектурных решениях и командных процессах. В докладах делает упор на реальные кейсы, ограничения бизнеса и решения, которые можно применить в продуктовой команде.',
-    contacts: 'https://t.me/demo_speaker',
-    pastTalks:
-      'Demo Speaker: production case studies, internal tooling, engineering practices',
-    avatarUrl: 'https://api.dicebear.com/8.x/initials/svg?seed=Demo%20Speaker',
-  },
-  {
     id: 'speaker-002',
-    userId: 'speaker-user-002',
     name: 'Kira Antonova',
     email: 'kira.antonova@example.com',
     company: 'Pixel Labs',
@@ -30,7 +16,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-003',
-    userId: 'speaker-user-003',
     name: 'Oleg Romanov',
     email: 'oleg.romanov@example.com',
     company: 'DataMind',
@@ -43,7 +28,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-004',
-    userId: 'speaker-user-004',
     name: 'Nina Volkova',
     email: 'nina.volkova@example.com',
     company: 'ScaleOps',
@@ -56,7 +40,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-005',
-    userId: 'speaker-user-005',
     name: 'Timur Galiev',
     email: 'timur.galiev@example.com',
     company: 'ProductHub',
@@ -69,7 +52,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-006',
-    userId: 'speaker-user-006',
     name: 'Alina Safina',
     email: 'alina.safina@example.com',
     company: 'UX Works',
@@ -82,7 +64,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-007',
-    userId: 'speaker-user-007',
     name: 'Sergey Pavlov',
     email: 'sergey.pavlov@example.com',
     company: 'Northwind Tech',
@@ -95,7 +76,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-008',
-    userId: 'speaker-user-008',
     name: 'Daria Mikhailova',
     email: 'daria.mikhailova@example.com',
     company: 'AI Forge',
@@ -109,7 +89,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-009',
-    userId: 'speaker-user-009',
     name: 'Roman Egorov',
     email: 'roman.egorov@example.com',
     company: 'API Factory',
@@ -122,7 +101,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-010',
-    userId: 'speaker-user-010',
     name: 'Ekaterina Zueva',
     email: 'ekaterina.zueva@example.com',
     company: 'Frontend Guild',
@@ -136,7 +114,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-011',
-    userId: 'speaker-user-011',
     name: 'Viktor Denisov',
     email: 'viktor.denisov@example.com',
     company: 'CloudNine',
@@ -150,7 +127,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-012',
-    userId: 'speaker-user-012',
     name: 'Irina Markova',
     email: 'irina.markova@example.com',
     company: 'RetailSoft',
@@ -163,7 +139,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-013',
-    userId: 'speaker-user-013',
     name: 'Maxim Borisov',
     email: 'maxim.borisov@example.com',
     company: 'Open Source Lab',
@@ -176,7 +151,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-014',
-    userId: 'speaker-user-014',
     name: 'Polina Karpova',
     email: 'polina.karpova@example.com',
     company: 'TestCraft',
@@ -190,7 +164,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-015',
-    userId: 'speaker-user-015',
     name: 'Andrey Belyaev',
     email: 'andrey.belyaev@example.com',
     company: 'Legacy Systems',
@@ -204,7 +177,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-016',
-    userId: 'speaker-user-016',
     name: 'Yulia Sidorova',
     email: 'yulia.sidorova@example.com',
     company: 'Analytics Pro',
@@ -218,7 +190,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-017',
-    userId: 'speaker-user-017',
     name: 'Kirill Fomin',
     email: 'kirill.fomin@example.com',
     company: 'SecureStack',
@@ -231,7 +202,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-018',
-    userId: 'speaker-user-018',
     name: 'Natalia Osipova',
     email: 'natalia.osipova@example.com',
     company: 'Mobile First',
@@ -245,7 +215,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-019',
-    userId: 'speaker-user-019',
     name: 'Artem Kuzin',
     email: 'artem.kuzin@example.com',
     company: 'FinTech Core',
@@ -258,7 +227,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-020',
-    userId: 'speaker-user-020',
     name: 'Marina Gromova',
     email: 'marina.gromova@example.com',
     company: 'TeamFlow',
@@ -272,7 +240,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-021',
-    userId: 'speaker-user-021',
     name: 'Gleb Tarasov',
     email: 'gleb.tarasov@example.com',
     company: 'InfraWorks',
@@ -285,7 +252,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-022',
-    userId: 'speaker-user-022',
     name: 'Lena Vinogradova',
     email: 'lena.vinogradova@example.com',
     company: 'LearnTech',
@@ -299,7 +265,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-023',
-    userId: 'speaker-user-023',
     name: 'Stepan Nikitin',
     email: 'stepan.nikitin@example.com',
     company: 'GraphWorks',
@@ -313,7 +278,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-024',
-    userId: 'speaker-user-024',
     name: 'Vera Lobanova',
     email: 'vera.lobanova@example.com',
     company: 'Visual Data',
@@ -326,7 +290,6 @@ export const initialSpeakers = [
   },
   {
     id: 'speaker-025',
-    userId: 'speaker-user-025',
     name: 'Ilya Medvedev',
     email: 'ilya.medvedev@example.com',
     company: 'Enterprise UI',
@@ -337,6 +300,18 @@ export const initialSpeakers = [
       'Ilya Medvedev: production case studies, internal tooling, engineering practices',
     avatarUrl: 'https://api.dicebear.com/8.x/initials/svg?seed=Ilya%20Medvedev',
   },
+  {
+    id: '4',
+    name: 'Demo Speaker',
+    email: 'demo.speaker@example.com',
+    company: 'Acme Cloud',
+    position: 'Frontend Engineer',
+    bio: 'Demo Speaker работает в Acme Cloud и регулярно выступает о практической разработке, архитектурных решениях и командных процессах. В докладах делает упор на реальные кейсы, ограничения бизнеса и решения, которые можно применить в продуктовой команде.',
+    contacts: 'https://t.me/demo_speaker',
+    pastTalks:
+      'Demo Speaker: production case studies, internal tooling, engineering practices',
+    avatarUrl: 'https://api.dicebear.com/8.x/initials/svg?seed=Demo%20Speaker',
+  },
 ] satisfies Speaker[];
 
 export const speakers: Speaker[] = [...initialSpeakers];
@@ -346,7 +321,6 @@ export const createSpeaker = (input: PostSpeakerRequest): Speaker => {
 
   const speaker: Speaker = {
     id: randomId,
-    userId: randomId,
     name: input.name ?? '',
     email: input.email ?? '',
     company: input.company ?? '',

@@ -3,11 +3,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   fetchChangeProposal,
-  fetchChangeProposalStatus,
   fetchCreateProposal,
   fetchGetDraft,
+  fetchGetSpeaker,
 } from '../api/ProposalSubmissionApi';
-import { SumbitProposalResource } from './types';
+import { SpeakerResource, SumbitProposalResource } from './types';
 import { SpeakersResource } from '@/entities/speaker/model/types';
 import toLoadableResource from '@/shared/utils/toLoadableResource';
 import { TracksResource } from '@/entities/track/api/types';
@@ -24,6 +24,7 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
   // state
   const draftId = useParams().id;
   const router = useRouter();
+
   const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autosaveVersionRef = useRef(0);
   const [isRecoveryDialogOpened, setIsRecoveryDialogOpened] =
@@ -32,7 +33,7 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
     useState<boolean>(false);
   const [recoveryData, setRecoveryData] = useState<SubmitValues | null>(null);
 
-  const { reset, getValues, resetField } = methods;
+  const { reset, getValues, resetField, setValue } = methods;
 
   const [draft, setDraft] = useState<SumbitProposalResource>({
     status: 'loading',
@@ -57,9 +58,15 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
     status: 'loading',
     data: [],
   });
+
   const [tags, setTags] = useState<TagsResource>({
     status: 'loading',
     data: [],
+  });
+
+  const [owner, setOwner] = useState<SpeakerResource>({
+    status: 'loading',
+    data: null,
   });
 
   const tagsToResource = toLoadableResource(
@@ -144,6 +151,44 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
 
     getDraft();
   }, [draftId, router]);
+
+  useEffect(() => {
+    let isActual = false;
+
+    const getOwner = async () => {
+      const ownerData = await fetchGetSpeaker();
+      if (!isActual) setOwner(ownerData);
+    };
+
+    getOwner();
+
+    return () => {
+      isActual = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (draftId) return;
+    if (!owner.data || owner.status !== 'success') return;
+
+    const speaker = owner.data;
+
+    setValue(
+      'speakers',
+      [
+        {
+          id: speaker.id,
+          name: speaker.name,
+          email: speaker.email,
+          company: speaker.company,
+          position: speaker.position,
+          bio: speaker.bio,
+          links: speaker.contacts,
+        },
+      ],
+      { shouldDirty: false, shouldTouch: false, shouldValidate: true },
+    );
+  }, [owner, setValue, draftId]);
 
   useEffect(() => {
     let isActual = false;
@@ -480,29 +525,9 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
         () => setIsSubmitDialogOpened(false),
       );
 
-      const statusResponse = await fetchChangeProposalStatus(draftId, () =>
-        setIsSubmitDialogOpened(false),
-      );
-
-      const successStatus =
-        response.status === 'success' && statusResponse.status === 'success';
-
+      setSubmitData(response);
       setIsSubmitDialogOpened(true);
 
-      if (!successStatus) {
-        setSubmitData({
-          status: 'error',
-          data: null,
-          errorProps: statusResponse.errorProps ?? response.errorProps ?? null,
-        });
-        return;
-      }
-
-      setSubmitData({
-        status: 'success',
-        data: statusResponse.data ?? response.data,
-        errorProps: null,
-      });
       return;
     }
 

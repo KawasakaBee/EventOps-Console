@@ -1,20 +1,17 @@
 import { User } from '@/entities/user/model/types';
-import normalizeResponse from '../../../shared/api/normalizeResponse';
 import { ApiResult } from '../../../shared/types/api.types';
-import { fallbackError } from '../../../shared/config/errors';
+import { GetCurrentUserResponse } from './contracts';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 const fetchCurrentUser = async (): Promise<ApiResult<User>> => {
-  try {
-    const response = await fetch('/api/me');
+  const response = await normalizeFetch<GetCurrentUserResponse>('/api/me');
 
-    return normalizeResponse<User>(response);
-  } catch {
-    return {
-      ok: false,
-      status: 0,
-      error: fallbackError,
-    };
-  }
+  if (!response.ok) return response;
+
+  return {
+    ok: true,
+    data: response.data.user,
+  };
 };
 
 export default fetchCurrentUser;

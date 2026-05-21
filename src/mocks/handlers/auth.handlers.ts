@@ -1,62 +1,64 @@
 import { http, HttpResponse } from 'msw';
-import { User } from '@/entities/user/model/types';
-import { manager, reviewer, speaker } from '../db/demoUsers';
-import { roleError } from '../utils/httpErrors';
-import { isDemoRole } from '@/entities/user/model/typeGuards';
 import {
-  PostDemoLoginRequest,
+  unauthorizedError,
+  userError,
+  validationError,
+} from '../utils/httpErrors';
+import {
+  GetCurrentUserResponse,
   PostDemoLoginResponse,
   PostLogoutResponse,
 } from '@/entities/user/api/contracts';
+import { demoRoleSchema } from '@/entities/user/api/schema';
+import zodErrorParse from '../utils/zodErrorParse';
+import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
+import {
+  getDemoUserByRole,
+  getUserById,
+} from '@/entities/user/lib/userSelectors';
 
 export const authHandlers = [
   http.post('/api/demo-login', async ({ request }) => {
-    const body = (await request.json()) as PostDemoLoginRequest; //Провалидировать
-    const role = body.role;
+    const rawBody = await request.json();
 
-    if (!isDemoRole(role)) return roleError();
+    const parsedBody = demoRoleSchema.safeParse(rawBody);
+
+    if (!parsedBody.success) {
+      const errorBody = zodErrorParse(parsedBody.error);
+      return validationError(errorBody);
+    }
+
+    const role = parsedBody.data.role;
+    const demoUser = getDemoUserByRole(role);
+
+    if (!demoUser) return userError();
 
     const response: PostDemoLoginResponse = { ok: true };
 
     return HttpResponse.json(response, {
       status: 200,
       headers: {
-        'Set-Cookie': `demo-role=${role}; Path=/; SameSite=Lax`,
+        'Set-Cookie': `${AUTH_SESSION_COOKIE}=${demoUser.id}; Path=/; SameSite=Lax`,
       },
     });
   }),
-  http.post('/api/logout', ({ cookies }) => {
-    const role = cookies['demo-role'];
-
-    if (!isDemoRole(role)) return roleError();
-
+  http.post('/api/logout', () => {
     const response: PostLogoutResponse = { ok: true };
 
     return HttpResponse.json(response, {
       status: 200,
       headers: {
-        'Set-Cookie': 'demo-role=; Path=/; Max-Age=0; SameSite=Lax',
+        'Set-Cookie': `${AUTH_SESSION_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`,
       },
     });
   }),
   http.get('/api/me', async ({ cookies }) => {
-    const role = cookies['demo-role'];
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
 
-    if (!isDemoRole(role)) return roleError();
+    if (!user) return unauthorizedError();
 
-    let response: User;
-
-    switch (role) {
-      case 'manager':
-        response = manager;
-        break;
-      case 'reviewer':
-        response = reviewer;
-        break;
-      case 'speaker':
-        response = speaker;
-        break;
-    }
+    const response: GetCurrentUserResponse = { user };
 
     return HttpResponse.json(response);
   }),

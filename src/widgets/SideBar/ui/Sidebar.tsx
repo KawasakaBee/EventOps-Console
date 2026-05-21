@@ -7,13 +7,16 @@ import { isNavigationRoute } from '@/shared/lib/routes/typeGuards';
 import { navigationDictionary } from '@/shared/lib/routes/dictionary';
 import { routesByRole } from '@/entities/user/model/routeAccess';
 import { styles } from './styles';
+import { useAuth } from '@/entities/user/model/AuthProvider';
 
-const Sidebar: React.FC<ISidebarProps> = ({ role, sidebarSx }) => {
+const Sidebar: React.FC<ISidebarProps> = ({ sidebarSx }) => {
+  const { user } = useAuth();
+
   const sx = styles();
 
   return (
     <Drawer variant="permanent" sx={sidebarSx}>
-      {routesByRole[role].map((route) => {
+      {routesByRole[user.role].map((route) => {
         if (!isNavigationRoute(route)) return null;
 
         const path = navigationDictionary[route];

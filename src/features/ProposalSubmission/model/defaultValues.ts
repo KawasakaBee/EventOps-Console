@@ -10,7 +10,17 @@ const defaultValues = {
   takeaways: '',
   targetAudience: '',
   prerequisites: '',
-  speakers: [],
+  speakers: [
+    {
+      id: null,
+      name: '',
+      email: '',
+      company: '',
+      position: '',
+      bio: '',
+      links: '',
+    },
+  ],
   tags: [],
   notes: '',
   consent: false,

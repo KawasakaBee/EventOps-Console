@@ -1,9 +1,8 @@
 import getCurrentUser from '@/entities/user/api/userApi';
 import getProposalsErrorState from '../model/getProposalsErrorState';
-import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
-import normalizeResponse from '@/shared/api/normalizeResponse';
 import { GetProposalsListResponse } from '@/entities/proposal/api/contracts';
 import { PaginationResource, UserResource } from '../model/types';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 export const fetchUser = async (
   retry: () => void,
@@ -49,7 +48,7 @@ export const fetchPagination = async (
     errorProps: null,
   };
 
-  const response = await fetchWithDemoAuth(
+  const response = await normalizeFetch<GetProposalsListResponse>(
     searchParams ? `/api/proposals?${searchParams}` : '/api/proposals',
   );
 
@@ -62,20 +61,7 @@ export const fetchPagination = async (
     return pagination;
   }
 
-  const result = await normalizeResponse<GetProposalsListResponse>(
-    response.data,
-  );
-
-  if (!result.ok) {
-    pagination.errorProps = getProposalsErrorState(
-      result.error,
-      getErrorActions(),
-    );
-    pagination.status = 'error';
-    return pagination;
-  }
-
-  pagination.data = result.data;
+  pagination.data = response.data;
   pagination.status = 'success';
   return pagination;
 };

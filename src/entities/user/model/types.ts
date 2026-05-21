@@ -8,6 +8,7 @@ export interface User {
   role: Role;
   eventIds: ID[];
   permissions: Permission[];
+  speakerId?: ID;
 }
 
 export type UserListItem = Pick<User, 'name' | 'id'>;
@@ -16,7 +17,7 @@ export const roles = ['admin', 'manager', 'reviewer', 'speaker'] as const;
 
 export type Role = (typeof roles)[number];
 
-export const demoRoles = roles.filter((role) => role !== 'admin');
+export const demoRoles = ['manager', 'reviewer', 'speaker'] as const;
 
 export type DemoRole = (typeof demoRoles)[number];
 

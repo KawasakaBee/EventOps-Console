@@ -1,28 +1,37 @@
 import { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { isDemoRole } from './entities/user/model/typeGuards';
 import { normalizeRoute } from './shared/lib/routes/utils';
 import canAccessRoute from './entities/user/lib/canAccessRoute';
-import getHomeRouteByRole from './entities/user/lib/getHomeRouteByRole';
+import { AUTH_SESSION_COOKIE } from './shared/config/layout';
+import {
+  getHomeRouteByRole,
+  getUserById,
+} from './entities/user/lib/userSelectors';
 
-const proxy = (request: NextRequest) => {
-  const role = request.cookies.get('demo-role')?.value;
+export const proxy = (request: NextRequest) => {
+  const userId = request.cookies.get(AUTH_SESSION_COOKIE)?.value;
   const path = request.nextUrl.pathname;
   const route = normalizeRoute(path);
 
-  if (isDemoRole(role) && route) {
-    const access = canAccessRoute(role, route);
+  const redirectToLogin = NextResponse.redirect(new URL('/login', request.url));
+
+  if (!userId) return redirectToLogin;
+
+  const user = getUserById(userId);
+
+  if (!user) return redirectToLogin;
+
+  if (route) {
+    const access = canAccessRoute(user.role, route);
 
     if (!access) {
-      const homePage = getHomeRouteByRole(role);
+      const homePage = getHomeRouteByRole(user.role);
       return NextResponse.redirect(new URL(homePage, request.url));
     }
   }
 
   return NextResponse.next();
 };
-
-export default proxy;
 
 export const config = {
   matcher: [

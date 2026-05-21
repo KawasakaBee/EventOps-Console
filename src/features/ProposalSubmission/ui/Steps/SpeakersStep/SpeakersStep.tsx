@@ -1,22 +1,36 @@
 import { SpeakerValues } from '@/features/ProposalSubmission/model/schema';
 import Button from '@/shared/ui/Button/Button';
 import { Stack, Typography } from '@mui/material';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { styles } from './styles';
-import { ISpeakersStepProps } from './SpeakersStep.types';
+import { ISpeakersStepProps, OwnerResource } from './SpeakersStep.types';
 import SpeakerBlock from './SpeakerBlock';
+import { useMemo } from 'react';
+import { useAuth } from '@/entities/user/model/AuthProvider';
 
 const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
+  const { user } = useAuth();
   const { register, getValues, setValue, control } =
     useFormContext<SpeakerValues>();
+  const speakers = useWatch({ control, name: 'speakers' });
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'speakers',
     keyName: 'formKey',
   });
+
+  const ownerInProposal: OwnerResource = useMemo(() => {
+    const ownerIdx = speakers.findIndex((field) => field.id === user.speakerId);
+    const haveOwner = ownerIdx !== -1;
+
+    return {
+      haveOwner,
+      ownerIdx,
+    };
+  }, [speakers, user.speakerId]);
 
   const sx = styles();
 
@@ -33,9 +47,15 @@ const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
   };
 
   const handleSpeakerRemove = () => {
-    if (fields.length <= 1) return;
+    let lastSpeakerIdx = fields.length;
 
-    remove(fields.length - 1);
+    if (lastSpeakerIdx <= 1) return;
+
+    if (ownerInProposal.haveOwner) {
+      if (lastSpeakerIdx - 1 === ownerInProposal.ownerIdx) --lastSpeakerIdx;
+    }
+
+    remove(lastSpeakerIdx - 1);
   };
 
   return (
@@ -60,6 +80,12 @@ const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
           onClick={handleSpeakerAdd}
         />
       </Stack>
+      {!ownerInProposal.haveOwner && (
+        <Typography variant="body2">
+          Не удалось определить создателя заявки, пожалуйста, введите свои
+          данные вручную
+        </Typography>
+      )}
       {errorMessage && <Typography variant="body2">{errorMessage}</Typography>}
       <Stack spacing={4}>
         {fields.map((speaker, idx) => (
@@ -71,6 +97,7 @@ const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
               getValues={getValues}
               setValue={setValue}
               idx={idx}
+              ownerIdx={ownerInProposal.ownerIdx}
             />
           </Stack>
         ))}

@@ -1,12 +1,16 @@
-import { Speaker, SpeakerInput } from '@/entities/speaker/model/types';
+import { SpeakerInput } from '@/entities/speaker/model/types';
 
 export type GetSpeakersListResponse = {
   speakers: SpeakerInput[];
 };
 
+export type GetSpeakerItemResponse = {
+  speaker: SpeakerInput;
+};
+
 export type GetSpeakerFindResponse =
   | {
       found: true;
-      speaker: Speaker;
+      speaker: SpeakerInput;
     }
   | { found: false; speaker: null };

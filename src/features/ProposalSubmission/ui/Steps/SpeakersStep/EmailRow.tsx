@@ -6,12 +6,18 @@ import { styles } from './styles';
 import { memo } from 'react';
 
 const EmailRow: React.FC<IEmailRowProps> = memo(
-  ({ field, register, idx, control, handleSpeakerSearchDebounced }) => {
+  ({
+    field,
+    register,
+    idx,
+    ownerIdx,
+    control,
+    handleSpeakerSearchDebounced,
+  }) => {
     const fieldName = `speakers.${idx}.${field}` as const;
 
     const registered = register(fieldName);
     const value = useWatch({ control, name: fieldName });
-    const watchedId = !!useWatch({ control, name: `speakers.${idx}.id` });
     const { errors } = useFormState({ control, name: fieldName, exact: true });
     const fieldError = errors.speakers?.[idx]?.[field];
 
@@ -37,7 +43,7 @@ const EmailRow: React.FC<IEmailRowProps> = memo(
         slotProps={{
           inputLabel: shouldShrink ? { shrink: true } : {},
           input: {
-            readOnly: field === 'email' ? false : watchedId,
+            readOnly: ownerIdx === idx,
           },
         }}
         sx={sx.speakerTextField}

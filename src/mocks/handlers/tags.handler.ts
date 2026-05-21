@@ -1,15 +1,16 @@
 import { http, HttpResponse } from 'msw';
-import { userError } from '../utils/httpErrors';
-import { isRole } from '@/entities/user/model/typeGuards';
+import { unauthorizedError } from '../utils/httpErrors';
 import { GetTagsResponse } from '@/entities/tag/api/contracts';
 import { Tag, tags } from '@/entities/tag/model/types';
+import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
+import { getUserById } from '@/entities/user/lib/userSelectors';
 
 export const tagsHandlers = [
-  http.get('/api/tags', ({ request }) => {
-    const userId = request.headers.get('x-demo-user-id');
-    const userRole = request.headers.get('x-demo-user-role');
+  http.get('/api/tags', ({ cookies }) => {
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
 
-    if (!userId || !isRole(userRole)) return userError();
+    if (!user) return unauthorizedError();
 
     const response: GetTagsResponse = {
       tags: [...tags] satisfies Tag[],

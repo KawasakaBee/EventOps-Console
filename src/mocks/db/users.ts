@@ -1,5 +1,5 @@
 import { permissionsByRole } from '@/entities/user/model/permissions';
-import { User } from '@/entities/user/model/types';
+import type { User } from '@/entities/user/model/types';
 
 export const initialUsers = [
   {
@@ -121,6 +121,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: '4',
   },
   {
     id: 'speaker-user-002',
@@ -129,6 +130,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-002',
   },
   {
     id: 'speaker-user-003',
@@ -137,6 +139,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-003',
   },
   {
     id: 'speaker-user-004',
@@ -145,6 +148,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-004',
   },
   {
     id: 'speaker-user-005',
@@ -153,6 +157,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-005',
   },
   {
     id: 'speaker-user-006',
@@ -161,6 +166,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-006',
   },
   {
     id: 'speaker-user-007',
@@ -169,6 +175,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-007',
   },
   {
     id: 'speaker-user-008',
@@ -177,6 +184,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-008',
   },
   {
     id: 'speaker-user-009',
@@ -185,6 +193,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-009',
   },
   {
     id: 'speaker-user-010',
@@ -193,6 +202,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-010',
   },
   {
     id: 'speaker-user-011',
@@ -201,6 +211,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-011',
   },
   {
     id: 'speaker-user-012',
@@ -209,6 +220,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-012',
   },
   {
     id: 'speaker-user-013',
@@ -217,6 +229,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-013',
   },
   {
     id: 'speaker-user-014',
@@ -225,6 +238,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-014',
   },
   {
     id: 'speaker-user-015',
@@ -233,6 +247,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-015',
   },
   {
     id: 'speaker-user-016',
@@ -241,6 +256,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-016',
   },
   {
     id: 'speaker-user-017',
@@ -249,6 +265,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-017',
   },
   {
     id: 'speaker-user-018',
@@ -257,6 +274,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-018',
   },
   {
     id: 'speaker-user-019',
@@ -265,6 +283,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-019',
   },
   {
     id: 'speaker-user-020',
@@ -273,6 +292,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-020',
   },
   {
     id: 'speaker-user-021',
@@ -281,6 +301,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-021',
   },
   {
     id: 'speaker-user-022',
@@ -289,6 +310,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-022',
   },
   {
     id: 'speaker-user-023',
@@ -297,6 +319,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-023',
   },
   {
     id: 'speaker-user-024',
@@ -305,6 +328,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-024',
   },
   {
     id: 'speaker-user-025',
@@ -313,6 +337,7 @@ export const initialUsers = [
     role: 'speaker',
     eventIds: ['1'],
     permissions: permissionsByRole.speaker,
+    speakerId: 'speaker-025',
   },
 ] satisfies User[];
 

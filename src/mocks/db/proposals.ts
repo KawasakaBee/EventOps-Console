@@ -25,6 +25,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['Forms', 'Frontend Architecture', 'Accessibility', 'Design Systems'],
     notes:
@@ -50,6 +51,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '2',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['REST API', 'Caching', 'Backend', 'GraphQL', 'Testing'],
     notes:
@@ -75,6 +77,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '3',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['Docker', 'Infrastructure', 'DevOps', 'Testing'],
     notes:
@@ -99,7 +102,8 @@ export const initialProposals = [
     duration: 120,
     status: 'draft',
     trackId: '4',
-    speakerIds: ['4'],
+    speakerIds: ['4', 'speaker-003', 'speaker-008'],
+    ownerId: '4',
     draftSpeakers: [
       {
         id: null,
@@ -144,6 +148,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['AI', 'LLM', 'Security'],
     notes:
@@ -169,6 +174,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '1',
     speakerIds: ['speaker-012'],
+    ownerId: 'speaker-012',
     draftSpeakers: [],
     tags: ['Accessibility', 'Design Systems', 'Scalability'],
     notes:
@@ -194,6 +200,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '2',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [
       {
         id: null,
@@ -228,6 +235,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '3',
     speakerIds: ['speaker-002'],
+    ownerId: 'speaker-002',
     draftSpeakers: [],
     tags: ['Logging', 'Infrastructure', 'Cloud', 'Open Source'],
     notes:
@@ -253,6 +261,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '4',
     speakerIds: ['speaker-009'],
+    ownerId: 'speaker-009',
     draftSpeakers: [],
     tags: [
       'Product',
@@ -284,6 +293,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['speaker-003', 'speaker-008'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: [
       'Data Visualization',
@@ -315,6 +325,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '1',
     speakerIds: ['speaker-011'],
+    ownerId: 'speaker-011',
     draftSpeakers: [],
     tags: ['Storybook', 'Design Systems'],
     notes:
@@ -340,6 +351,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '2',
     speakerIds: ['speaker-012'],
+    ownerId: 'speaker-012',
     draftSpeakers: [],
     tags: ['Node.js', 'PostgreSQL', 'GraphQL'],
     notes:
@@ -365,6 +377,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '3',
     speakerIds: ['speaker-008', 'speaker-009'],
+    ownerId: 'speaker-008',
     draftSpeakers: [],
     tags: ['Monitoring', 'Logging'],
     notes:
@@ -389,6 +402,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '4',
     speakerIds: ['speaker-017'],
+    ownerId: 'speaker-017',
     draftSpeakers: [],
     tags: [
       'Team Processes',
@@ -420,6 +434,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['speaker-007'],
+    ownerId: 'speaker-007',
     draftSpeakers: [],
     tags: ['Analytics', 'Data Engineering', 'LLM', 'Open Source'],
     notes:
@@ -445,6 +460,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['speaker-002'],
+    ownerId: 'speaker-002',
     draftSpeakers: [],
     tags: ['Frontend Architecture', 'State Management', 'Refactoring'],
     notes:
@@ -470,6 +486,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '2',
     speakerIds: ['speaker-018'],
+    ownerId: 'speaker-018',
     draftSpeakers: [],
     tags: ['GraphQL', 'Backend', 'Message Queues', 'Microservices'],
     notes:
@@ -495,6 +512,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '3',
     speakerIds: ['speaker-003', 'speaker-005'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Observability', 'Kubernetes', 'Case Study'],
     notes:
@@ -519,6 +537,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '4',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Hiring', 'A/B Testing', 'Mentoring', 'Performance'],
     notes:
@@ -544,6 +563,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '5',
     speakerIds: ['speaker-003'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Analytics', 'Data Visualization', 'Case Study'],
     notes:
@@ -569,6 +589,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Testing', 'React'],
     notes:
@@ -594,6 +615,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '2',
     speakerIds: ['speaker-021', 'speaker-015'],
+    ownerId: 'speaker-021',
     draftSpeakers: [],
     tags: ['PostgreSQL', 'Node.js', 'Caching', 'Message Queues', 'Performance'],
     notes:
@@ -619,6 +641,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '3',
     speakerIds: ['speaker-015'],
+    ownerId: 'speaker-015',
     draftSpeakers: [],
     tags: ['Security', 'Observability', 'Monitoring', 'Logging', 'Scalability'],
     notes:
@@ -644,6 +667,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '4',
     speakerIds: ['speaker-021'],
+    ownerId: 'speaker-021',
     draftSpeakers: [],
     tags: ['Hiring', 'Mentoring', 'Refactoring'],
     notes:
@@ -669,6 +693,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '5',
     speakerIds: ['speaker-023', 'speaker-006'],
+    ownerId: 'speaker-023',
     draftSpeakers: [],
     tags: ['Machine Learning', 'AI', 'Case Study', 'Security'],
     notes:
@@ -694,6 +719,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '1',
     speakerIds: ['speaker-002'],
+    ownerId: 'speaker-002',
     draftSpeakers: [],
     tags: ['Testing', 'State Management'],
     notes:
@@ -719,6 +745,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '2',
     speakerIds: ['speaker-010', 'speaker-019'],
+    ownerId: 'speaker-010',
     draftSpeakers: [],
     tags: ['Caching', 'Message Queues', 'Microservices', 'REST API'],
     notes:
@@ -744,6 +771,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '3',
     speakerIds: ['speaker-022'],
+    ownerId: 'speaker-022',
     draftSpeakers: [],
     tags: ['Kubernetes', 'Observability'],
     notes:
@@ -769,6 +797,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '4',
     speakerIds: ['speaker-020'],
+    ownerId: 'speaker-020',
     draftSpeakers: [],
     tags: ['Mentoring', 'UX', 'Team Processes', 'Performance'],
     notes:
@@ -794,6 +823,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '5',
     speakerIds: ['speaker-023'],
+    ownerId: 'speaker-023',
     draftSpeakers: [],
     tags: ['LLM', 'Analytics', 'AI'],
     notes:
@@ -819,6 +849,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '1',
     speakerIds: ['speaker-025'],
+    ownerId: 'speaker-025',
     draftSpeakers: [],
     tags: ['Performance', 'Forms', 'Testing'],
     notes:
@@ -844,6 +875,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '2',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['Node.js', 'GraphQL'],
     notes:
@@ -869,6 +901,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '3',
     speakerIds: ['speaker-003'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Security', 'Infrastructure'],
     notes:
@@ -894,6 +927,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '4',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Hiring', 'Product', 'Testing'],
     notes:
@@ -919,6 +953,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['speaker-013', 'speaker-011'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Analytics', 'Data Engineering', 'AI', 'LLM'],
     notes:
@@ -944,6 +979,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['speaker-006'],
+    ownerId: 'speaker-006',
     draftSpeakers: [],
     tags: ['Forms', 'Design Systems', 'TypeScript', 'Performance'],
     notes:
@@ -969,6 +1005,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '2',
     speakerIds: ['speaker-004', 'speaker-008'],
+    ownerId: 'speaker-004',
     draftSpeakers: [],
     tags: ['Databases', 'Message Queues', 'API Design', 'Backend'],
     notes:
@@ -994,6 +1031,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '3',
     speakerIds: ['speaker-012'],
+    ownerId: 'speaker-012',
     draftSpeakers: [],
     tags: ['Docker', 'CI/CD', 'DevOps', 'Testing'],
     notes:
@@ -1019,6 +1057,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '4',
     speakerIds: ['speaker-022'],
+    ownerId: 'speaker-022',
     draftSpeakers: [],
     tags: ['Hiring', 'Product', 'Scalability'],
     notes:
@@ -1044,6 +1083,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '5',
     speakerIds: ['speaker-020', 'speaker-014'],
+    ownerId: 'speaker-020',
     draftSpeakers: [],
     tags: ['Analytics', 'Case Study', 'Machine Learning', 'Data Engineering'],
     notes:
@@ -1069,6 +1109,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['speaker-020'],
+    ownerId: 'speaker-020',
     draftSpeakers: [],
     tags: ['Frontend Architecture', 'Next.js', 'Accessibility', 'Refactoring'],
     notes:
@@ -1094,6 +1135,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '2',
     speakerIds: ['speaker-002'],
+    ownerId: 'speaker-002',
     draftSpeakers: [],
     tags: ['PostgreSQL', 'GraphQL', 'Architecture'],
     notes:
@@ -1119,6 +1161,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '3',
     speakerIds: ['speaker-022', 'speaker-017'],
+    ownerId: 'speaker-022',
     draftSpeakers: [],
     tags: ['Security', 'DevOps'],
     notes:
@@ -1144,6 +1187,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '4',
     speakerIds: ['speaker-021', 'speaker-025'],
+    ownerId: 'speaker-021',
     draftSpeakers: [],
     tags: [
       'Team Processes',
@@ -1175,6 +1219,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '5',
     speakerIds: ['speaker-022'],
+    ownerId: 'speaker-022',
     draftSpeakers: [],
     tags: ['Analytics', 'LLM', 'Machine Learning', 'AI', 'Security'],
     notes:
@@ -1200,6 +1245,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '1',
     speakerIds: ['speaker-004'],
+    ownerId: 'speaker-004',
     draftSpeakers: [],
     tags: [
       'State Management',
@@ -1231,6 +1277,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '2',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['PostgreSQL', 'Node.js', 'REST API'],
     notes:
@@ -1256,6 +1303,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '3',
     speakerIds: ['speaker-015'],
+    ownerId: 'speaker-015',
     draftSpeakers: [],
     tags: ['CI/CD', 'Observability', 'Performance'],
     notes:
@@ -1281,6 +1329,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '4',
     speakerIds: ['speaker-022'],
+    ownerId: 'speaker-022',
     draftSpeakers: [
       {
         id: null,
@@ -1316,6 +1365,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '5',
     speakerIds: ['speaker-019'],
+    ownerId: 'speaker-019',
     draftSpeakers: [],
     tags: ['Data Engineering', 'AI'],
     notes:
@@ -1341,6 +1391,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '1',
     speakerIds: ['speaker-010'],
+    ownerId: 'speaker-010',
     draftSpeakers: [],
     tags: ['Design Systems', 'Testing', 'Scalability'],
     notes:
@@ -1366,6 +1417,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '2',
     speakerIds: ['speaker-021'],
+    ownerId: 'speaker-021',
     draftSpeakers: [],
     tags: ['Message Queues', 'API Design', 'Microservices', 'PostgreSQL'],
     notes:
@@ -1391,6 +1443,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '3',
     speakerIds: ['speaker-024', 'speaker-002'],
+    ownerId: 'speaker-024',
     draftSpeakers: [
       {
         id: null,
@@ -1426,6 +1479,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '4',
     speakerIds: ['speaker-023', 'speaker-003'],
+    ownerId: 'speaker-023',
     draftSpeakers: [],
     tags: ['Analytics', 'Product', 'A/B Testing', 'Mentoring'],
     notes:
@@ -1451,6 +1505,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '5',
     speakerIds: ['speaker-019'],
+    ownerId: 'speaker-019',
     draftSpeakers: [],
     tags: ['LLM', 'Analytics', 'Data Visualization'],
     notes:
@@ -1476,6 +1531,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['speaker-022', 'speaker-023'],
+    ownerId: 'speaker-022',
     draftSpeakers: [],
     tags: [
       'Next.js',
@@ -1507,6 +1563,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '2',
     speakerIds: ['speaker-025', 'speaker-020'],
+    ownerId: 'speaker-025',
     draftSpeakers: [],
     tags: ['API Design', 'Caching', 'Legacy'],
     notes:
@@ -1532,6 +1589,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '3',
     speakerIds: ['speaker-020', 'speaker-005'],
+    ownerId: 'speaker-020',
     draftSpeakers: [],
     tags: ['Observability', 'Logging', 'Infrastructure'],
     notes:
@@ -1557,6 +1615,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '4',
     speakerIds: ['speaker-003'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Hiring', 'Product', 'Case Study'],
     notes:
@@ -1582,6 +1641,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['speaker-023'],
+    ownerId: 'speaker-023',
     draftSpeakers: [],
     tags: ['LLM', 'Data Engineering'],
     notes:
@@ -1607,6 +1667,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '1',
     speakerIds: ['speaker-008'],
+    ownerId: 'speaker-008',
     draftSpeakers: [],
     tags: [
       'Performance',
@@ -1638,6 +1699,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '2',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [
       {
         id: null,
@@ -1673,6 +1735,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '3',
     speakerIds: ['speaker-023'],
+    ownerId: 'speaker-023',
     draftSpeakers: [
       {
         id: null,
@@ -1708,6 +1771,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '4',
     speakerIds: ['speaker-010'],
+    ownerId: 'speaker-010',
     draftSpeakers: [],
     tags: ['A/B Testing', 'Product', 'Hiring', 'Architecture'],
     notes:
@@ -1733,6 +1797,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '5',
     speakerIds: ['speaker-003'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Data Engineering', 'LLM', 'Data Visualization', 'Analytics'],
     notes:
@@ -1758,6 +1823,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '1',
     speakerIds: ['speaker-003'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Performance', 'TypeScript', 'React', 'Testing'],
     notes:
@@ -1783,6 +1849,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '2',
     speakerIds: ['speaker-004'],
+    ownerId: 'speaker-004',
     draftSpeakers: [],
     tags: ['Backend', 'REST API', 'PostgreSQL', 'Open Source'],
     notes:
@@ -1808,6 +1875,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '3',
     speakerIds: ['speaker-011', 'speaker-022'],
+    ownerId: 'speaker-011',
     draftSpeakers: [],
     tags: ['Cloud', 'CI/CD'],
     notes:
@@ -1833,6 +1901,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '4',
     speakerIds: ['speaker-017'],
+    ownerId: 'speaker-017',
     draftSpeakers: [],
     tags: ['Team Processes', 'Hiring'],
     notes:
@@ -1857,6 +1926,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '5',
     speakerIds: ['speaker-003', 'speaker-009'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['LLM', 'Analytics', 'Security'],
     notes:
@@ -1882,6 +1952,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '1',
     speakerIds: ['speaker-019'],
+    ownerId: 'speaker-019',
     draftSpeakers: [
       {
         id: null,
@@ -1926,6 +1997,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '2',
     speakerIds: ['speaker-021'],
+    ownerId: 'speaker-021',
     draftSpeakers: [],
     tags: ['API Design', 'Node.js', 'Message Queues'],
     notes:
@@ -1951,6 +2023,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '3',
     speakerIds: ['speaker-004'],
+    ownerId: 'speaker-004',
     draftSpeakers: [],
     tags: ['Monitoring', 'Infrastructure', 'Case Study'],
     notes:
@@ -1976,6 +2049,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '4',
     speakerIds: ['speaker-020'],
+    ownerId: 'speaker-020',
     draftSpeakers: [],
     tags: ['A/B Testing', 'Code Review', 'Team Processes', 'Architecture'],
     notes:
@@ -2001,6 +2075,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '5',
     speakerIds: ['speaker-011'],
+    ownerId: 'speaker-011',
     draftSpeakers: [],
     tags: [
       'Data Engineering',
@@ -2032,6 +2107,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '1',
     speakerIds: ['speaker-022'],
+    ownerId: 'speaker-022',
     draftSpeakers: [],
     tags: [
       'Performance',
@@ -2063,6 +2139,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '2',
     speakerIds: ['speaker-014'],
+    ownerId: 'speaker-014',
     draftSpeakers: [],
     tags: ['Message Queues', 'PostgreSQL', 'Performance'],
     notes:
@@ -2088,6 +2165,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '3',
     speakerIds: ['speaker-018'],
+    ownerId: 'speaker-018',
     draftSpeakers: [],
     tags: ['Monitoring', 'Cloud', 'Logging', 'Docker'],
     notes:
@@ -2113,6 +2191,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '4',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Engineering Management', 'Team Processes', 'Analytics', 'Security'],
     notes:
@@ -2138,6 +2217,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['speaker-021'],
+    ownerId: 'speaker-021',
     draftSpeakers: [],
     tags: ['Machine Learning', 'AI'],
     notes:
@@ -2163,6 +2243,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '1',
     speakerIds: ['speaker-024'],
+    ownerId: 'speaker-024',
     draftSpeakers: [],
     tags: ['Storybook', 'React', 'Next.js'],
     notes:
@@ -2188,6 +2269,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '2',
     speakerIds: ['speaker-017', 'speaker-011'],
+    ownerId: 'speaker-017',
     draftSpeakers: [],
     tags: ['API Design', 'GraphQL', 'REST API', 'Performance'],
     notes:
@@ -2213,6 +2295,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '3',
     speakerIds: ['speaker-004'],
+    ownerId: 'speaker-004',
     draftSpeakers: [],
     tags: ['Observability', 'Monitoring'],
     notes:
@@ -2238,6 +2321,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '4',
     speakerIds: ['speaker-015'],
+    ownerId: 'speaker-015',
     draftSpeakers: [],
     tags: [
       'A/B Testing',
@@ -2268,6 +2352,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '5',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: [
       'Data Engineering',
@@ -2299,6 +2384,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '1',
     speakerIds: ['speaker-006'],
+    ownerId: 'speaker-006',
     draftSpeakers: [
       {
         id: null,
@@ -2334,6 +2420,7 @@ export const initialProposals = [
     status: 'changes_requested',
     trackId: '2',
     speakerIds: ['speaker-018'],
+    ownerId: 'speaker-018',
     draftSpeakers: [],
     tags: ['Databases', 'Message Queues'],
     notes:
@@ -2359,6 +2446,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '3',
     speakerIds: ['speaker-024'],
+    ownerId: 'speaker-024',
     draftSpeakers: [],
     tags: ['DevOps', 'Docker', 'Open Source'],
     notes:
@@ -2384,6 +2472,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '4',
     speakerIds: ['speaker-014'],
+    ownerId: 'speaker-014',
     draftSpeakers: [],
     tags: ['Engineering Management', 'Hiring'],
     notes:
@@ -2409,6 +2498,7 @@ export const initialProposals = [
     status: 'accepted',
     trackId: '5',
     speakerIds: ['speaker-005'],
+    ownerId: 'speaker-005',
     draftSpeakers: [],
     tags: ['Data Visualization', 'Data Engineering'],
     notes:
@@ -2434,6 +2524,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '1',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['Accessibility', 'Frontend Architecture'],
     notes:
@@ -2459,6 +2550,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '2',
     speakerIds: ['4'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['PostgreSQL', 'Caching', 'Node.js', 'Refactoring'],
     notes:
@@ -2484,6 +2576,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '3',
     speakerIds: ['speaker-024'],
+    ownerId: 'speaker-024',
     draftSpeakers: [],
     tags: ['Cloud', 'Security', 'Infrastructure', 'Case Study'],
     notes:
@@ -2509,6 +2602,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '4',
     speakerIds: ['speaker-005'],
+    ownerId: 'speaker-005',
     draftSpeakers: [],
     tags: ['Product', 'Code Review', 'Refactoring'],
     notes:
@@ -2534,6 +2628,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '5',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Machine Learning', 'Data Visualization', 'Case Study'],
     notes:
@@ -2559,6 +2654,7 @@ export const initialProposals = [
     status: 'in_review',
     trackId: '1',
     speakerIds: ['speaker-003'],
+    ownerId: 'speaker-003',
     draftSpeakers: [],
     tags: ['Design Systems', 'Performance', 'Accessibility', 'Architecture'],
     notes:
@@ -2584,6 +2680,7 @@ export const initialProposals = [
     status: 'scheduled',
     trackId: '2',
     speakerIds: ['speaker-013'],
+    ownerId: 'speaker-013',
     draftSpeakers: [],
     tags: ['Caching', 'Backend', 'Refactoring'],
     notes:
@@ -2609,6 +2706,7 @@ export const initialProposals = [
     status: 'draft',
     trackId: '3',
     speakerIds: ['speaker-020'],
+    ownerId: 'speaker-020',
     draftSpeakers: [
       {
         id: null,
@@ -2643,6 +2741,7 @@ export const initialProposals = [
     status: 'submitted',
     trackId: '4',
     speakerIds: ['speaker-010'],
+    ownerId: 'speaker-010',
     draftSpeakers: [],
     tags: ['Analytics', 'Hiring', 'Code Review', 'Scalability'],
     notes:
@@ -2668,6 +2767,7 @@ export const initialProposals = [
     status: 'rejected',
     trackId: '5',
     speakerIds: ['4', 'speaker-010'],
+    ownerId: '4',
     draftSpeakers: [],
     tags: ['AI', 'LLM', 'Case Study'],
     notes:
@@ -2679,7 +2779,10 @@ export const initialProposals = [
 
 export const proposals: Proposal[] = [...initialProposals];
 
-export const createProposal = (input: PostProposalRequest): Proposal => {
+export const createProposal = (
+  input: PostProposalRequest,
+  ownerId: ID,
+): Proposal => {
   const {
     abstract,
     takeaways,
@@ -2720,6 +2823,8 @@ export const createProposal = (input: PostProposalRequest): Proposal => {
     }
   }
 
+  if (!speakerIds.includes(ownerId)) speakerIds.push(ownerId);
+
   const finalDuration = duration ?? Number(formatDurationMap[format][0]);
 
   const proposal: Proposal = {
@@ -2737,6 +2842,7 @@ export const createProposal = (input: PostProposalRequest): Proposal => {
     tags: tags ?? [],
     notes: notes ?? '',
     speakerIds,
+    ownerId,
     draftSpeakers,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

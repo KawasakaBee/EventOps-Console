@@ -7,6 +7,7 @@ import {
 import { createSpeaker } from '../db/speakers';
 import { PatchProposalRequest } from '@/entities/proposal/api/contracts';
 import { speakerSubmitSchema } from '@/entities/speaker/api/schema';
+import { ID } from '@/shared/types/primitives.types';
 
 const addParameterToProposal = <T extends keyof ProposalEditPayload>(
   proposal: PatchProposalRequest,
@@ -20,6 +21,7 @@ const addParameterToProposal = <T extends keyof ProposalEditPayload>(
 
 const mapProposalRequestToProposalBody = (
   payload: PatchProposalRequestSchema,
+  ownerId: ID,
 ): PatchProposalRequest => {
   const proposal: PatchProposalRequest = {};
   const directPayload: Partial<ProposalEditPayload> = payload;
@@ -45,6 +47,8 @@ const mapProposalRequestToProposalBody = (
       }
     }
   }
+
+  if (!speakerIds.includes(ownerId)) speakerIds.push(ownerId);
 
   proposalEditableKeys.forEach((key) => {
     if (key === 'speakerIds') {

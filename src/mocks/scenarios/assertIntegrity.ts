@@ -88,19 +88,21 @@ export const assertIntegrity = (data: MockScenario) => {
     }
   }
 
-  for (const speaker of data.speakers) {
-    if (!usersById.has(speaker.userId)) {
-      //   Проверка на существование спикеров в списке реальных юзеров
-      errors.push(
-        `Профиль спикера ${speaker.id} ссылается на несуществующего юзера ${speaker.userId}`,
-      );
-    } else {
-      //   Проверка на соответствие ролей
-      const user = usersById.get(speaker.userId);
-      if (user && user.role !== 'speaker') {
+  for (const user of data.users) {
+    if (user.speakerId) {
+      if (!speakersById.has(user.speakerId)) {
+        //   Проверка на существование спикеров в списке реальных юзеров
         errors.push(
-          `Юзер ${speaker.id} указан как спикер, хотя имеет другую роль`,
+          `Профиль юзера ${user.id} ссылается на несуществующего спикера ${user.speakerId}`,
         );
+      } else {
+        //   Проверка на соответствие ролей
+        const speaker = usersById.get(user.speakerId);
+        if (speaker && speaker.role !== 'speaker') {
+          errors.push(
+            `Юзер ${user.id} указан как спикер, хотя имеет другую роль`,
+          );
+        }
       }
     }
   }

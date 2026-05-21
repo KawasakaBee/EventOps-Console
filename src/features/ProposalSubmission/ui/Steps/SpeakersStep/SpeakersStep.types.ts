@@ -17,6 +17,7 @@ export interface ISpeakerBlockProps {
   getValues: UseFormGetValues<SpeakerValues>;
   setValue: UseFormSetValue<SpeakerValues>;
   idx: number;
+  ownerIdx: number;
 }
 
 export interface ISpeakerRowProps {
@@ -32,5 +33,11 @@ export interface IEmailRowProps {
   register: UseFormRegister<SpeakerValues>;
   field: 'email';
   idx: number;
+  ownerIdx: number;
   handleSpeakerSearchDebounced: (value: string, idx: number) => void;
 }
+
+export type OwnerResource = {
+  haveOwner: boolean;
+  ownerIdx: number;
+};

@@ -9,7 +9,7 @@ import { fetchSpeakerFind } from '@/features/ProposalSubmission/api/ProposalSubm
 import { styles } from './styles';
 
 const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
-  ({ control, register, getValues, setValue, idx }) => {
+  ({ control, register, getValues, setValue, idx, ownerIdx }) => {
     const isReadonly = !!useWatch({
       control,
       name: `speakers.${idx}.id`,
@@ -88,6 +88,7 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
                 register={register}
                 idx={idx}
                 control={control}
+                ownerIdx={ownerIdx}
                 handleSpeakerSearchDebounced={handleSpeakerSearchDebounced}
               />
             ) : (

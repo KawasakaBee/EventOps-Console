@@ -1,7 +1,6 @@
 import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
-import { fetchWithDemoAuth } from '@/entities/user/api/fetchWithDemoAuth';
-import normalizeResponse from '@/shared/api/normalizeResponse';
 import { ReviewersResource } from './types';
+import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
 export const fetchReviewers = async (): Promise<ReviewersResource> => {
   const reviewers: ReviewersResource = {
@@ -9,21 +8,14 @@ export const fetchReviewers = async (): Promise<ReviewersResource> => {
     data: [],
   };
 
-  const response = await fetchWithDemoAuth('/api/reviewers');
+  const response = await normalizeFetch<GetReviewersResponse>('/api/reviewers');
 
   if (!response.ok) {
     reviewers.status = 'error';
     return reviewers;
   }
 
-  const result = await normalizeResponse<GetReviewersResponse>(response.data);
-
-  if (!result.ok) {
-    reviewers.status = 'error';
-    return reviewers;
-  }
-
-  reviewers.data = result.data.reviewers;
+  reviewers.data = response.data.reviewers;
   reviewers.status = 'success';
   return reviewers;
 };

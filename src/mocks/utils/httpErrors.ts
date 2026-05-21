@@ -100,3 +100,14 @@ export const roleError = () =>
     } satisfies ErrorEnvelope,
     { status: 403 },
   );
+
+export const unauthorizedError = () =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'AUTH_REQUIRED',
+        message: 'Требуется авторизация',
+      },
+    } satisfies ErrorEnvelope,
+    { status: 401 },
+  );
