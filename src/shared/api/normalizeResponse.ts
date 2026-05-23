@@ -54,7 +54,7 @@ export const normalizeFetch = async <T>(
 
     return { ok: true, data: data as T };
   } catch (err) {
-    if (err instanceof DOMException && err.name === 'AbortController') {
+    if (err instanceof DOMException && err.name === 'AbortError') {
       return {
         ok: false,
         status: 0,

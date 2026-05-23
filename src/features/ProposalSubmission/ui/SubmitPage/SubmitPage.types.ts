@@ -1,7 +1,6 @@
-import { Control, FormState } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 import { SubmitValues } from '../../model/schema';
-
-export type SubmitDirtyFields = FormState<SubmitValues>['dirtyFields'];
+import { SubmitDirtyFields } from '../../model/types';
 
 export interface IAutosaveWatcherProps {
   control: Control<SubmitValues>;
