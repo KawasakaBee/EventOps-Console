@@ -19,6 +19,7 @@ export type ApiResult<T> =
   | { ok: false; error: ErrorEnvelope['error']; status: number };
 
 export const errorCodes = [
+  'REQUEST_ABORTED',
   'AUTH_REQUIRED',
   'INVALID_ROLE',
   'ROLE_NOT_FOUND',

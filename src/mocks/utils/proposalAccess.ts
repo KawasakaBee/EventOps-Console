@@ -49,7 +49,10 @@ export const canChangeProposal = (
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
   if (!proposal) return false;
   if (role === 'manager') return true;
-  if (role === 'speaker') return isProposalOwnedByUser(proposal, userId);
+  if (role === 'speaker')
+    return proposal.status === 'draft'
+      ? isProposalOwnedByUser(proposal, userId)
+      : false;
   return false;
 };
 

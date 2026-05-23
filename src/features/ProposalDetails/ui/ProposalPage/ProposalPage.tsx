@@ -16,8 +16,10 @@ import { closeStatusTransition } from '@/features/ProposalStatusTransition/model
 import ProposalStatusTransitionDialog from '@/features/ProposalStatusTransition/ui/ProposalStatusTransitionDialog';
 import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
 import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
+import { useAuth } from '@/entities/user/model/AuthProvider';
 
 const ProposalPage = () => {
+  const { user } = useAuth();
   const pathname = usePathname();
   const proposalId = useParams<{ id: string }>().id;
   const dispatch = useAppDispatch();
@@ -87,7 +89,7 @@ const ProposalPage = () => {
                   : null
               }
               title={proposalTitle}
-              to="/proposals"
+              to={user.role === 'speaker' ? '/my-proposals' : '/proposals'}
             >
               {null}
             </PageHeader>

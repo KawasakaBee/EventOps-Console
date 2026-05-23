@@ -74,6 +74,7 @@ import zodErrorParse from '../utils/zodErrorParse';
 import mapProposalRequestToProposalBody from '../utils/mapProposalRequestToProposalBody';
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
+import isHistoryValueEqual from '../utils/isHistoryValueEqual';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request, cookies }) => {
@@ -227,8 +228,13 @@ export const proposalHandlers = [
       prevProposal.ownerId,
     );
 
-    const history = appendProposalHistory(id, userId, proposalBody, 'updated');
-    if (!history) return proposalError();
+    const isStatusChanged =
+      body.status !== undefined &&
+      !isHistoryValueEqual(prevProposal.status, body.status);
+
+    const historyAction = isStatusChanged ? 'status_changed' : 'updated';
+
+    appendProposalHistory(id, userId, proposalBody, historyAction);
 
     const proposal = updateProposal(id, proposalBody);
     if (!proposal) return proposalError();

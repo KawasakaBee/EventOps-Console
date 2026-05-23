@@ -14,7 +14,7 @@ export interface DraftResource {
   errorProps: ErrorStateProps | null;
 }
 
-export interface SumbitProposalResource {
+export interface SubmitProposalResource {
   status: PageStatus;
   data: Proposal | null;
   errorProps: ErrorStateProps | null;

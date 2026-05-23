@@ -3,6 +3,18 @@ import type { Speaker } from '@/entities/speaker/model/types';
 
 export const initialSpeakers = [
   {
+    id: '4',
+    name: 'Demo Speaker',
+    email: 'demo.speaker@example.com',
+    company: 'Acme Cloud',
+    position: 'Frontend Engineer',
+    bio: 'Demo Speaker работает в Acme Cloud и регулярно выступает о практической разработке, архитектурных решениях и командных процессах. В докладах делает упор на реальные кейсы, ограничения бизнеса и решения, которые можно применить в продуктовой команде.',
+    contacts: 'https://t.me/demo_speaker',
+    pastTalks:
+      'Demo Speaker: production case studies, internal tooling, engineering practices',
+    avatarUrl: 'https://api.dicebear.com/8.x/initials/svg?seed=Demo%20Speaker',
+  },
+  {
     id: 'speaker-002',
     name: 'Kira Antonova',
     email: 'kira.antonova@example.com',
@@ -299,18 +311,6 @@ export const initialSpeakers = [
     pastTalks:
       'Ilya Medvedev: production case studies, internal tooling, engineering practices',
     avatarUrl: 'https://api.dicebear.com/8.x/initials/svg?seed=Ilya%20Medvedev',
-  },
-  {
-    id: '4',
-    name: 'Demo Speaker',
-    email: 'demo.speaker@example.com',
-    company: 'Acme Cloud',
-    position: 'Frontend Engineer',
-    bio: 'Demo Speaker работает в Acme Cloud и регулярно выступает о практической разработке, архитектурных решениях и командных процессах. В докладах делает упор на реальные кейсы, ограничения бизнеса и решения, которые можно применить в продуктовой команде.',
-    contacts: 'https://t.me/demo_speaker',
-    pastTalks:
-      'Demo Speaker: production case studies, internal tooling, engineering practices',
-    avatarUrl: 'https://api.dicebear.com/8.x/initials/svg?seed=Demo%20Speaker',
   },
 ] satisfies Speaker[];
 

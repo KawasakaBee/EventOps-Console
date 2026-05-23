@@ -38,6 +38,42 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
         if (currentEmail.trim() !== email.trim()) return;
 
         if (!foundedSpeaker.found) {
+          const currentSpeakerId = getValues(`speakers.${idx}.id`);
+
+          if (currentSpeakerId !== null) {
+            setValue(`speakers.${idx}.id`, null, {
+              shouldDirty: true,
+              shouldValidate: false,
+            });
+
+            setValue(`speakers.${idx}.name`, '', {
+              shouldDirty: true,
+              shouldValidate: false,
+            });
+
+            setValue(`speakers.${idx}.company`, '', {
+              shouldDirty: true,
+              shouldValidate: false,
+            });
+
+            setValue(`speakers.${idx}.position`, '', {
+              shouldDirty: true,
+              shouldValidate: false,
+            });
+
+            setValue(`speakers.${idx}.bio`, '', {
+              shouldDirty: true,
+              shouldValidate: false,
+            });
+
+            setValue(`speakers.${idx}.links`, '', {
+              shouldDirty: true,
+              shouldValidate: false,
+            });
+
+            return;
+          }
+
           setValue(`speakers.${idx}.id`, null, {
             shouldDirty: true,
             shouldValidate: false,

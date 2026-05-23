@@ -26,7 +26,9 @@ const SpeakerRow: React.FC<ISpeakerRowProps> = memo(
         error={!!fieldError}
         helperText={fieldError?.message}
         slotProps={{
-          inputLabel: shouldShrink ? { shrink: true } : {},
+          inputLabel: {
+            shrink: shouldShrink,
+          },
           input: {
             readOnly: isReadonly,
           },

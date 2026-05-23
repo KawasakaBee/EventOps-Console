@@ -8,7 +8,7 @@ import getSubmissionErrorState from '../model/getSubmissionErrorState';
 import {
   DraftResource,
   SpeakerResource,
-  SumbitProposalResource,
+  SubmitProposalResource,
 } from '../model/types';
 import { SubmitValues } from '../model/schema';
 import {
@@ -53,12 +53,12 @@ export const fetchCreateProposal = async (
   formValues: SubmitValues,
   status: 'submitted' | 'draft',
   retry: () => void,
-): Promise<SumbitProposalResource> => {
+): Promise<SubmitProposalResource> => {
   const getErrorActions = () => ({
     retry,
   });
 
-  const proposal: SumbitProposalResource = {
+  const proposal: SubmitProposalResource = {
     status: 'loading',
     data: null,
     errorProps: null,
@@ -103,12 +103,13 @@ export const fetchChangeProposal = async (
   status: 'submitted' | 'draft',
   id: ID,
   retry: () => void,
-): Promise<SumbitProposalResource> => {
+  signal?: AbortSignal,
+): Promise<SubmitProposalResource | null> => {
   const getErrorActions = () => ({
     retry,
   });
 
-  const proposal: SumbitProposalResource = {
+  const proposal: SubmitProposalResource = {
     status: 'loading',
     data: null,
     errorProps: null,
@@ -134,8 +135,13 @@ export const fetchChangeProposal = async (
     {
       method: 'PATCH',
       body: JSON.stringify(requestBody),
+      signal,
     },
   );
+
+  if (!response.ok && response.error.code === 'REQUEST_ABORTED') {
+    return null;
+  }
 
   if (!response.ok) {
     proposal.errorProps = getSubmissionErrorState(

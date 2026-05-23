@@ -2,10 +2,13 @@ import {
   HistoryAction,
   HistoryEntry,
   ProposalFieldChange,
+  TechField,
+  techFields,
 } from '@/entities/history/model/types';
 import { ID } from '@/shared/types/primitives.types';
 import { proposals } from './proposals';
 import { Proposal } from '@/entities/proposal/model/types';
+import isHistoryValueEqual from '../utils/isHistoryValueEqual';
 
 export const initialHistory = [
   {
@@ -6212,19 +6215,25 @@ export const appendProposalHistory = (
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
   if (!proposal) return null;
 
-  const historyItem = createHistory(proposalId, userId, action);
-
-  const changedKeys = Object.keys(patch) as (keyof Proposal)[];
-
-  let resultValues: ProposalFieldChange[] = changedKeys.map((value) => ({
-    field: value,
-    previousValue: proposal[value],
-    nextValue: patch[value],
-  }));
-
-  resultValues = resultValues.filter(
-    (item) => item.previousValue !== item.nextValue,
+  const patchKeys = Object.keys(patch) as (keyof Proposal)[];
+  const changedFields = patchKeys.filter(
+    (key) =>
+      !isHistoryValueEqual(proposal[key], patch[key]) &&
+      !techFields.includes(key as TechField),
   );
+
+  if (changedFields.length === 0) return null;
+
+  const historyItem = createHistory(proposalId, userId, action);
+  const resultValues: ProposalFieldChange[] = [];
+
+  changedFields.forEach((field) => {
+    resultValues.push({
+      field: field,
+      previousValue: proposal[field],
+      nextValue: patch[field],
+    });
+  });
 
   historyItem.changes = resultValues;
   if (payload) historyItem.payload = payload;

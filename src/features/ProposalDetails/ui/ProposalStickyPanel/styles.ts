@@ -32,7 +32,7 @@ export const styles: Style = (options) => {
       ? 'success.darken'
       : action === 'reject'
         ? 'error.darken'
-        : 'primary.main';
+        : 'primary.light';
 
   return {
     statusWrapper: {

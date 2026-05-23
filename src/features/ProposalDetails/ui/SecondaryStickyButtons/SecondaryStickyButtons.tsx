@@ -12,8 +12,10 @@ import {
   customButtonsDictionary,
   SecondaryAction,
 } from '../../model/types';
+import { useAuth } from '@/entities/user/model/AuthProvider';
 
 const SecondaryStickyButtons = () => {
+  const { user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -42,7 +44,8 @@ const SecondaryStickyButtons = () => {
   };
 
   const handleBackToProposals = () => {
-    router.push('/proposals');
+    const backHref = user.role === 'speaker' ? '/my-proposals' : '/proposals';
+    router.push(backHref);
   };
 
   const handleHistoryOpen = () => {

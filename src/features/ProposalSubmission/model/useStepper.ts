@@ -5,7 +5,7 @@ import { steps, stepsNumbersByName, SubmitStep } from './steps';
 import changeStep from './changeStep';
 import { fetchCreateProposal } from '../api/ProposalSubmissionApi';
 import { useRouter } from 'next/navigation';
-import { SumbitProposalResource } from './types';
+import { SubmitProposalResource } from './types';
 import { ID } from '@/shared/types/primitives.types';
 
 const useStepper = (id: ID | null, clearStorage: () => void) => {
@@ -13,7 +13,7 @@ const useStepper = (id: ID | null, clearStorage: () => void) => {
   const router = useRouter();
   const { trigger, getValues } = useFormContext<SubmitValues>();
 
-  const [draft, setDraft] = useState<SumbitProposalResource>({
+  const [draft, setDraft] = useState<SubmitProposalResource>({
     status: 'idle',
     data: null,
     errorProps: null,

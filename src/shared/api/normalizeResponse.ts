@@ -53,7 +53,18 @@ export const normalizeFetch = async <T>(
     }
 
     return { ok: true, data: data as T };
-  } catch {
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortController') {
+      return {
+        ok: false,
+        status: 0,
+        error: {
+          code: 'REQUEST_ABORTED',
+          message: 'Запрос отменён',
+        },
+      };
+    }
+
     return {
       ok: false,
       status: 0,

@@ -7,7 +7,7 @@ import {
   fetchGetDraft,
   fetchGetSpeaker,
 } from '../api/ProposalSubmissionApi';
-import { SpeakerResource, SumbitProposalResource } from './types';
+import { SpeakerResource, SubmitProposalResource } from './types';
 import { SpeakersResource } from '@/entities/speaker/model/types';
 import toLoadableResource from '@/shared/utils/toLoadableResource';
 import { TracksResource } from '@/entities/track/api/types';
@@ -27,6 +27,7 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
 
   const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autosaveVersionRef = useRef(0);
+  const autosaveAbortRef = useRef<AbortController | null>(null);
   const [isRecoveryDialogOpened, setIsRecoveryDialogOpened] =
     useState<boolean>(false);
   const [isSubmitDialogOpened, setIsSubmitDialogOpened] =
@@ -35,13 +36,13 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
 
   const { reset, getValues, resetField, setValue } = methods;
 
-  const [draft, setDraft] = useState<SumbitProposalResource>({
+  const [draft, setDraft] = useState<SubmitProposalResource>({
     status: 'loading',
     data: null,
     errorProps: null,
   });
 
-  const [submitData, setSubmitData] = useState<SumbitProposalResource>({
+  const [submitData, setSubmitData] = useState<SubmitProposalResource>({
     status: 'idle',
     data: null,
     errorProps: null,
@@ -87,12 +88,17 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
     'Данные спикера не удалось загрузить, добавьте спикера вручную.',
   );
 
-  const isAdditionalResourceLoaded =
+  const isTrackResourceLoaded =
     tracks.status === 'success' ||
     (tracks.status === 'error' && tags.status === 'success') ||
     tags.status === 'error';
 
   const speakersData = speakers.status === 'success' ? speakers.data : null;
+
+  const abortAutosaveRequest = useCallback(() => {
+    autosaveAbortRef.current?.abort();
+    autosaveAbortRef.current = null;
+  }, []);
 
   const clearAutosaveTimer = useCallback(() => {
     if (!autosaveTimerRef.current) return;
@@ -221,11 +227,7 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
   }, []);
 
   useEffect(() => {
-    if (
-      draft.status !== 'success' ||
-      !draft.data ||
-      !isAdditionalResourceLoaded
-    )
+    if (draft.status !== 'success' || !draft.data || !isTrackResourceLoaded)
       return;
 
     const {
@@ -287,19 +289,14 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
     } satisfies SubmitValues;
 
     reset(draftValues);
-  }, [
-    draft.data,
-    draft.status,
-    speakersData,
-    reset,
-    isAdditionalResourceLoaded,
-  ]);
+  }, [draft.data, draft.status, speakersData, reset, isTrackResourceLoaded]);
 
   useEffect(() => {
     return () => {
       clearAutosaveTimer();
+      abortAutosaveRequest();
     };
-  }, [clearAutosaveTimer]);
+  }, [clearAutosaveTimer, abortAutosaveRequest]);
 
   // handlers
 
@@ -393,6 +390,7 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
       if (!draftId || !isId(draftId)) return;
 
       clearAutosaveTimer();
+      abortAutosaveRequest();
 
       const saveVersion = autosaveVersionRef.current + 1;
       autosaveVersionRef.current = saveVersion;
@@ -412,16 +410,26 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
           },
         );
 
+        const controller = new AbortController();
+        autosaveAbortRef.current = controller;
+
         const result = await fetchChangeProposal(
           requestBody,
           'draft',
           draftId,
           () => null,
+          controller.signal,
         );
+
+        if (autosaveAbortRef.current === controller) {
+          autosaveAbortRef.current = null;
+        }
 
         autosaveTimerRef.current = null;
 
         if (saveVersion !== autosaveVersionRef.current) return;
+
+        if (result === null) return;
 
         if (result.status === 'error') {
           setIsAutosaveError(true);
@@ -433,7 +441,13 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
         setIsAutosaveError((prev) => (prev ? false : prev));
       }, 1000);
     },
-    [draftId, getValues, resetAutosavedFields, clearAutosaveTimer],
+    [
+      draftId,
+      getValues,
+      resetAutosavedFields,
+      clearAutosaveTimer,
+      abortAutosaveRequest,
+    ],
   );
 
   const scheduleRecoveryAutosave = useCallback(() => {
@@ -524,6 +538,8 @@ const useSubmissionData = (methods: UseFormReturn<SubmitValues>) => {
         draftId,
         () => setIsSubmitDialogOpened(false),
       );
+
+      if (response === null) return;
 
       setSubmitData(response);
       setIsSubmitDialogOpened(true);

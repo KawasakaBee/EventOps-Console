@@ -35,11 +35,13 @@ import {
   isCriticalAvailableAction,
 } from '@/entities/proposal/model/typeGuards';
 import formatMinutesDuration from '@/shared/utils/formatMinutesDuration';
+import { useRouter } from 'next/navigation';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   data,
   tracks,
 }) => {
+  const router = useRouter();
   const { proposal, availableActions } = data;
   const dispatch = useAppDispatch();
 
@@ -105,6 +107,11 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     );
   };
 
+  const handleToEditRedirect = () => {
+    if (!proposal || proposal.status !== 'draft') return;
+    router.push(`/submit/${proposal.id}`);
+  };
+
   return (
     <SectionCard title={null}>
       <Stack spacing={4}>
@@ -159,6 +166,17 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                     </Button>
                   </Box>
                 </Tooltip>
+              ) : action === 'edit' ? (
+                <Button
+                  key={action}
+                  mode="button"
+                  variant="contained"
+                  size="small"
+                  sx={styles({ action }).criticalButton}
+                  onClick={handleToEditRedirect}
+                >
+                  {availableActionsDictionary[action]}
+                </Button>
               ) : (
                 <Button
                   key={action}

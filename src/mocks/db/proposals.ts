@@ -102,7 +102,7 @@ export const initialProposals = [
     duration: 120,
     status: 'draft',
     trackId: '4',
-    speakerIds: ['4', 'speaker-003', 'speaker-008'],
+    speakerIds: ['4'],
     ownerId: '4',
     draftSpeakers: [
       {

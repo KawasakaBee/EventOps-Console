@@ -15,12 +15,13 @@ import {
   isProposalLevel,
   isProposalStatus,
 } from '@/entities/proposal/model/typeGuards';
+import { tracks } from '@/mocks/db/tracks';
 
 const formatHistoryChangeValues = (
   changes: ProposalFieldChange,
 ): FormattedChangeValues => {
   const resultParse = (prev: string, next: string): FormattedChangeValues => {
-    return [prev, next];
+    return [prev || 'Начальное значение', next];
   };
 
   if (changes.field === 'createdAt' || changes.field === 'updatedAt') {
@@ -96,6 +97,30 @@ const formatHistoryChangeValues = (
       String(levelDictionary[changes.previousValue]),
       String(levelDictionary[changes.nextValue]),
     );
+  }
+
+  if (changes.field === 'trackId') {
+    if (
+      typeof changes.previousValue !== 'string' ||
+      typeof changes.nextValue !== 'string'
+    ) {
+      return resultParse(
+        String(changes.previousValue),
+        String(changes.nextValue),
+      );
+    }
+
+    const prevTrack = tracks.find((item) => item.id === changes.previousValue);
+    const nextTrack = tracks.find((item) => item.id === changes.nextValue);
+
+    if (!nextTrack) {
+      return resultParse(
+        String(prevTrack?.title || ''),
+        String(changes.nextValue),
+      );
+    }
+
+    return resultParse(String(prevTrack?.title || ''), String(nextTrack.title));
   }
 
   return resultParse(String(changes.previousValue), String(changes.nextValue));

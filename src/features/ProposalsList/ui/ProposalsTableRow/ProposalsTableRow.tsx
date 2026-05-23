@@ -11,7 +11,6 @@ import {
 } from './ProposalsTableRow.types';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { Track } from '@/entities/track/model/types';
-import getProposalsListRowActions from '../../model/getProposalsListRowActions';
 import { ProposalListItem } from '@/entities/proposal/model/types';
 import {
   formatDictionary,
@@ -21,6 +20,7 @@ import {
   proposalListItemKeys,
   proposalTableWidthDictionary,
 } from '../../model/tableColumns';
+import getProposalsListRowActions from '@/entities/proposal/lib/getProposalsListRowActions';
 
 const ProposalsTableRow = memo(
   ({ proposal, sx, isSelected, role, tracks }: IProposalTableRowProps) => {

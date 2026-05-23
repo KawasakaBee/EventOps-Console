@@ -20,6 +20,16 @@ export interface ProposalFieldChange {
   nextValue: unknown;
 }
 
+export const techFields = [
+  'draftSpeakers',
+  'speakerIds',
+  'updatedAt',
+  'createdAt',
+  'ownerId',
+] as const satisfies readonly (keyof Proposal)[];
+
+export type TechField = (typeof techFields)[number];
+
 export interface HistoryEntry {
   id: ID;
   proposalId: ID;
