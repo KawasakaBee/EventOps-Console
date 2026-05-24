@@ -17,12 +17,7 @@ export const getAvailableProposalActions = (
 
   if (role === 'admin' || role === 'manager') {
     if (status === 'submitted') {
-      availableActions.push(
-        'assignReviewer',
-        'edit',
-        'addComment',
-        'changeStatus',
-      );
+      availableActions.push('assignReviewer', 'addComment', 'changeStatus');
     }
     if (status === 'in_review') {
       availableActions.push('assignReviewer', 'addComment', 'changeStatus');

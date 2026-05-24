@@ -1,6 +1,7 @@
 import { detailsReducer } from '@/features/ProposalDetails/model/proposalDetailsSlice';
 import { proposalsFiltersReducer } from '@/features/ProposalsList/model/proposalsListSlice';
 import { statusTransitionReducer } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
+import { assignReviewerReducer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     proposalsFilters: proposalsFiltersReducer,
     proposalDetails: detailsReducer,
     statusTransition: statusTransitionReducer,
+    assignReviewer: assignReviewerReducer,
   },
 });
 

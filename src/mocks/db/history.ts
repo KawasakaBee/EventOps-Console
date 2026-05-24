@@ -6240,3 +6240,18 @@ export const appendProposalHistory = (
 
   return historyItem;
 };
+
+export const appendAssignReviewerHistory = (
+  proposalId: ID,
+  userId: ID,
+  action: HistoryAction,
+  payload?: Record<string, unknown>,
+): HistoryEntry | null => {
+  const proposal = proposals.find((proposal) => proposal.id === proposalId);
+  if (!proposal) return null;
+
+  const historyItem = createHistory(proposalId, userId, action);
+  if (payload) historyItem.payload = payload;
+
+  return historyItem;
+};

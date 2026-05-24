@@ -34,6 +34,8 @@ import ProposalStatusTransitionDialog from '@/features/ProposalStatusTransition/
 import getCommonAvailableStatuses from '../../model/getCommonAvailableStatuses';
 import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
 import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
+import ReviewerAssignDialog from '@/features/ReviewerAssign/ui/ReviewerAssignDialog';
+import { closeAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 
 const ProposalsPage = () => {
   const router = useRouter();
@@ -49,9 +51,13 @@ const ProposalsPage = () => {
     tracks,
     reviewers,
     multipleErrorsCount,
+    multipleAssignErrorsCount,
     handleStatusSuccess,
     handleMultipleStatusSuccess,
+    handleAssignReviewerSuccess,
+    handleMultipleAssignReviewerSuccess,
     closeErrorSnackbar,
+    closeAssignErrorSnackbar,
     handleFiltersReset,
   } = useProposalsPageData(searchParamsString);
 
@@ -100,6 +106,9 @@ const ProposalsPage = () => {
 
   const transition = useAppSelector(
     (store) => store.statusTransition.transition,
+  );
+  const assingReviewer = useAppSelector(
+    (store) => store.assignReviewer.assignReviewer,
   );
   const selectedIds = useAppSelector(
     (store) => store.proposalsFilters.selectedIds,
@@ -155,6 +164,10 @@ const ProposalsPage = () => {
 
   const handleStatusDialogClose = () => {
     dispatch(closeStatusTransition());
+  };
+
+  const handleReviewerAssignDialogClose = () => {
+    dispatch(closeAssignReviewer());
   };
 
   return (
@@ -289,6 +302,22 @@ const ProposalsPage = () => {
           onSuccess={handleMultipleStatusSuccess}
         />
       )}
+      {assingReviewer.type === 'single' && (
+        <ReviewerAssignDialog
+          mode="single"
+          onClose={handleReviewerAssignDialogClose}
+          proposalId={assingReviewer.id}
+          onSuccess={handleAssignReviewerSuccess}
+        />
+      )}
+      {assingReviewer.type === 'multiple' && (
+        <ReviewerAssignDialog
+          mode="multiple"
+          onClose={handleReviewerAssignDialogClose}
+          proposalIds={assingReviewer.ids}
+          onSuccess={handleMultipleAssignReviewerSuccess}
+        />
+      )}
       <Snackbar
         open={isExportSnackbarOpen}
         message="Функция появится в ближайшее время!"
@@ -300,6 +329,13 @@ const ProposalsPage = () => {
         open={!!multipleErrorsCount}
         message={`У некоторых заявок не удалось изменить статус: ${multipleErrorsCount}`}
         onClose={closeErrorSnackbar}
+        autoHideDuration={6000}
+        sx={sx.exportSnackbar}
+      />
+      <Snackbar
+        open={!!multipleAssignErrorsCount}
+        message={`Для некоторых заявок не удалось назначить ревьюера: ${multipleAssignErrorsCount}`}
+        onClose={closeAssignErrorSnackbar}
         autoHideDuration={6000}
         sx={sx.exportSnackbar}
       />

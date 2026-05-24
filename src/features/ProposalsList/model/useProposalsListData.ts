@@ -2,7 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { resetFilters, resetSelectedIds } from './proposalsListSlice';
 import { usePathname, useRouter } from 'next/navigation';
-import { PatchProposalStatusResponse } from '@/entities/proposal/api/contracts';
+import {
+  PatchProposalStatusResponse,
+  PostAssignReviewerResponse,
+} from '@/entities/proposal/api/contracts';
 import { fetchPagination, fetchUser } from '../api/proposalsListApi';
 import { fetchTracks } from '@/entities/track/api/trackApi';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
@@ -39,8 +42,19 @@ const useProposalsListData = (searchParams: string) => {
   });
 
   const [multipleErrorsCount, setMultipleErrorsCount] = useState<number>(0);
+  const [multipleAssignErrorsCount, setMultipleAssignErrorsCount] =
+    useState<number>(0);
 
   //   handlers
+
+  const getPagination = async () => {
+    const paginationResource = await fetchPagination(
+      searchParams,
+      getPagination,
+      handleFiltersReset,
+    );
+    setPagination(paginationResource);
+  };
 
   const handleFiltersReset = useCallback(() => {
     dispatch(resetFilters());
@@ -120,8 +134,28 @@ const useProposalsListData = (searchParams: string) => {
     [],
   );
 
+  const handleAssignReviewerSuccess = () => {
+    getPagination();
+    dispatch(resetSelectedIds());
+  };
+
+  const handleMultipleAssignReviewerSuccess = (result: {
+    successful: PostAssignReviewerResponse[];
+    failed: unknown[];
+  }) => {
+    getPagination();
+    dispatch(resetSelectedIds());
+    if (result.failed.length > 0) {
+      setMultipleAssignErrorsCount(result.failed.length);
+    }
+  };
+
   const handleMultipleErrorsSnackbarClose = () => {
     setMultipleErrorsCount(0);
+  };
+
+  const handleMultipleAssignErrorsSnackbarClose = () => {
+    setMultipleAssignErrorsCount(0);
   };
 
   //   useEffect
@@ -174,9 +208,13 @@ const useProposalsListData = (searchParams: string) => {
     tracks,
     reviewers,
     multipleErrorsCount,
+    multipleAssignErrorsCount,
     handleStatusSuccess,
     handleMultipleStatusSuccess,
+    handleAssignReviewerSuccess,
+    handleMultipleAssignReviewerSuccess,
     closeErrorSnackbar: handleMultipleErrorsSnackbarClose,
+    closeAssignErrorSnackbar: handleMultipleAssignErrorsSnackbarClose,
     handleFiltersReset,
   };
 };

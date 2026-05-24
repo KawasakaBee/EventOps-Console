@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchProposal, fetchUsers } from '../api/proposalDetailsApi';
-import { useAppDispatch } from '@/shared/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import {
   addHistory,
   hydrateAvailableStatuses,
@@ -10,7 +10,10 @@ import {
   updateAvailableActions,
 } from './proposalDetailsSlice';
 import { ID } from '@/shared/types/primitives.types';
-import { PatchProposalStatusResponse } from '@/entities/proposal/api/contracts';
+import {
+  PatchProposalStatusResponse,
+  PostAssignReviewerResponse,
+} from '@/entities/proposal/api/contracts';
 import { fetchTracks } from '@/entities/track/api/trackApi';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
 import { ProposalResource, UsersResource } from './types';
@@ -20,6 +23,7 @@ import { ReviewersResource } from '@/entities/reviewer/api/types';
 const useProposalDetailsData = (id: ID) => {
   //state
   const dispatch = useAppDispatch();
+  const pageData = useAppSelector((store) => store.proposalDetails);
 
   const [proposal, setProposal] = useState<ProposalResource>({
     status: 'loading',
@@ -45,6 +49,27 @@ const useProposalDetailsData = (id: ID) => {
     dispatch(addHistory(result.historyEntry));
     dispatch(updateAvailableActions(result.availableActions));
     dispatch(hydrateAvailableStatuses(result.availableStatuses));
+  };
+
+  const handleAssignReviewerSuccess = async (
+    result: PostAssignReviewerResponse,
+  ) => {
+    const getProposal = async () => {
+      dispatch(resetDetails());
+      const proposalResource = await fetchProposal(
+        result.proposalId,
+        getProposal,
+      );
+      if (proposalResource.data) {
+        dispatch(hydrateDetails(proposalResource.data));
+        dispatch(
+          hydrateAvailableStatuses(proposalResource.data.availableStatuses),
+        );
+      }
+      setProposal(proposalResource.proposal);
+    };
+
+    getProposal();
   };
 
   // useEffect
@@ -95,10 +120,12 @@ const useProposalDetailsData = (id: ID) => {
 
   return {
     proposal,
+    pageData,
     tracks,
     reviewers,
     users,
     handleStatusSuccess,
+    handleAssignReviewerSuccess,
   };
 };
 

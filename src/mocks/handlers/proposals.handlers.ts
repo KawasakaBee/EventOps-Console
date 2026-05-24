@@ -19,7 +19,11 @@ import {
   PostCreateReviewResponse,
   PostProposalResponse,
 } from '@/entities/proposal/api/contracts';
-import { appendProposalHistory, createHistory } from '../db/history';
+import {
+  appendAssignReviewerHistory,
+  appendProposalHistory,
+  createHistory,
+} from '../db/history';
 import {
   assignReviewer,
   createReview,
@@ -350,7 +354,13 @@ export const proposalHandlers = [
       const canUserChangeProposalStatus = isManagerLike(userRole);
       if (!canUserChangeProposalStatus) return forbiddenError();
 
-      assignReviewer(id, reviewerId);
+      if (proposal.status !== 'submitted' && proposal.status !== 'in_review')
+        return forbiddenError();
+
+      assignReviewer(id, reviewer);
+      appendAssignReviewerHistory(id, userId, 'reviewer_assigned', {
+        reviewerId: reviewer.id,
+      });
 
       const response: PostAssignReviewerResponse = {
         proposalId: id,

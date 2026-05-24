@@ -923,11 +923,7 @@ export const initialReviewers = [
 
 export const reviewers: Reviewer[] = [...initialReviewers];
 
-export const assignReviewer = (proposalId: ID, reviewerId: ID) => {
-  const reviewer = reviewers.find((reviewer) => reviewer.id === reviewerId);
-
-  if (!reviewer) return;
-
+export const assignReviewer = (proposalId: ID, reviewer: Reviewer) => {
   if (!reviewer.proposalIds.includes(proposalId)) {
     reviewer.proposalIds = [...reviewer.proposalIds, proposalId];
   }

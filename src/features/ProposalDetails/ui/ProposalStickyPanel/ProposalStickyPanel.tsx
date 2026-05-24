@@ -36,6 +36,7 @@ import {
 } from '@/entities/proposal/model/typeGuards';
 import formatMinutesDuration from '@/shared/utils/formatMinutesDuration';
 import { useRouter } from 'next/navigation';
+import { openSingleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   data,
@@ -110,6 +111,11 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   const handleToEditRedirect = () => {
     if (!proposal || proposal.status !== 'draft') return;
     router.push(`/submit/${proposal.id}`);
+  };
+
+  const handleReviewerAssignDialogOpen = () => {
+    if (!data.proposal) return;
+    dispatch(openSingleAssignReviewer({ id: data.proposal.id }));
   };
 
   return (
@@ -236,6 +242,16 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   variant="outlined"
                   size="small"
                   onClick={() => handlePendingStatusChange('changes_requested')}
+                >
+                  {availableActionsDictionary[action]}
+                </Button>
+              ) : action === 'assignReviewer' ? (
+                <Button
+                  key={action}
+                  mode="button"
+                  variant="outlined"
+                  size="small"
+                  onClick={handleReviewerAssignDialogOpen}
                 >
                   {availableActionsDictionary[action]}
                 </Button>

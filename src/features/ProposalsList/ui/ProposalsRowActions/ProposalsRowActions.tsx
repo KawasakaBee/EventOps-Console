@@ -11,6 +11,7 @@ import {
   proposalActionsDictionary,
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
+import { openSingleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 
 const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
   actions,
@@ -73,6 +74,12 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
     handleMenuClose();
   };
 
+  const handleReviewerAssign = () => {
+    dispatch(openSingleAssignReviewer({ id: proposalId }));
+    handleStatusesMenuClose();
+    handleMenuClose();
+  };
+
   return (
     <Stack direction="row" spacing={1} sx={sx.actionsContainer}>
       {actions.includes('viewDetails') && (
@@ -126,6 +133,13 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
                     </Menu>
                   </Box>
                 )
+              ) : action === 'assignReviewer' ? (
+                <MenuItem
+                  key={`Actions-menu-item-${action}`}
+                  onClick={handleReviewerAssign}
+                >
+                  {proposalActionsDictionary[action]}
+                </MenuItem>
               ) : (
                 <MenuItem
                   key={`Actions-menu-item-${action}`}

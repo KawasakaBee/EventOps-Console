@@ -17,19 +17,30 @@ import ProposalStatusTransitionDialog from '@/features/ProposalStatusTransition/
 import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
 import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 import { useAuth } from '@/entities/user/model/AuthProvider';
+import ReviewerAssignDialog from '@/features/ReviewerAssign/ui/ReviewerAssignDialog';
+import { closeAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 
 const ProposalPage = () => {
   const { user } = useAuth();
   const pathname = usePathname();
   const proposalId = useParams<{ id: string }>().id;
   const dispatch = useAppDispatch();
-  const pageData = useAppSelector((store) => store.proposalDetails);
+  const assingReviewer = useAppSelector(
+    (store) => store.assignReviewer.assignReviewer,
+  );
   const transition = useAppSelector(
     (store) => store.statusTransition.transition,
   );
 
-  const { proposal, tracks, reviewers, users, handleStatusSuccess } =
-    useDetailsPageData(proposalId);
+  const {
+    proposal,
+    pageData,
+    tracks,
+    reviewers,
+    users,
+    handleStatusSuccess,
+    handleAssignReviewerSuccess,
+  } = useDetailsPageData(proposalId);
 
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const isDataReady = proposal.status === 'success';
@@ -56,6 +67,10 @@ const ProposalPage = () => {
 
   const handleStatusDialogClose = () => {
     dispatch(closeStatusTransition());
+  };
+
+  const handleReviewerAssignDialogClose = () => {
+    dispatch(closeAssignReviewer());
   };
 
   const proposalTitle = pageData.proposal?.title ? (
@@ -118,6 +133,14 @@ const ProposalPage = () => {
                 id={transition.id}
                 onClose={handleStatusDialogClose}
                 onSuccess={handleStatusSuccess}
+              />
+            )}
+            {assingReviewer.type === 'single' && (
+              <ReviewerAssignDialog
+                mode="single"
+                onClose={handleReviewerAssignDialogClose}
+                proposalId={assingReviewer.id}
+                onSuccess={handleAssignReviewerSuccess}
               />
             )}
           </>

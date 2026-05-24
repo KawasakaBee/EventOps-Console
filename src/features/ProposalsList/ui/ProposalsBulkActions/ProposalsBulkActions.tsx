@@ -15,6 +15,7 @@ import {
   proposalActionsDictionary,
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
+import { openMultipleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 
 const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   user,
@@ -104,6 +105,12 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
     handleActionsMenuClose();
   };
 
+  const handleReviewerAssign = () => {
+    dispatch(openMultipleAssignReviewer({ ids: selectedIds }));
+    handleStatusesMenuClose();
+    handleActionsMenuClose();
+  };
+
   return (
     <Stack direction="row" spacing={1} sx={sx.actionsWrapper}>
       <Button
@@ -125,36 +132,38 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
       >
         {showMenu ? (
           availableActions.map((action) =>
-            action === 'changeStatus' ? (
-              availableStatuses.length !== 0 && (
-                <Box key={`Actions-menu-item-${action}`}>
-                  <MenuItem onClick={(event) => handleStatusesMenuOpen(event)}>
+            action === 'changeStatus'
+              ? availableStatuses.length !== 0 && (
+                  <Box key={`Actions-menu-item-${action}`}>
+                    <MenuItem
+                      onClick={(event) => handleStatusesMenuOpen(event)}
+                    >
+                      {proposalActionsDictionary[action]}
+                    </MenuItem>
+                    <Menu
+                      open={isStatusMenuOpened}
+                      anchorEl={statusesAnchorEl}
+                      onClose={handleStatusesMenuClose}
+                    >
+                      {availableStatuses.map((status) => (
+                        <MenuItem
+                          key={`Statuses-menu-item-${status}`}
+                          onClick={() => handleStatusChange(status)}
+                        >
+                          {statusDictionary[status]}
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </Box>
+                )
+              : action === 'assignReviewer' && (
+                  <MenuItem
+                    key={`Actions-menu-item-${action}`}
+                    onClick={handleReviewerAssign}
+                  >
                     {proposalActionsDictionary[action]}
                   </MenuItem>
-                  <Menu
-                    open={isStatusMenuOpened}
-                    anchorEl={statusesAnchorEl}
-                    onClose={handleStatusesMenuClose}
-                  >
-                    {availableStatuses.map((status) => (
-                      <MenuItem
-                        key={`Statuses-menu-item-${status}`}
-                        onClick={() => handleStatusChange(status)}
-                      >
-                        {statusDictionary[status]}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </Box>
-              )
-            ) : (
-              <MenuItem
-                key={`Actions-menu-item-${action}`}
-                disabled //Удалить, когда будут реализованы actions
-              >
-                {proposalActionsDictionary[action]}
-              </MenuItem>
-            ),
+                ),
           )
         ) : (
           <MenuItem key="actions-menu-item-empty}" disabled>
