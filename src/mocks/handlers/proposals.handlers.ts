@@ -15,7 +15,6 @@ import {
   PostAssignReviewerResponse,
   PostCreateCommentRequest,
   PostCreateCommentResponse,
-  PostCreateReviewRequest,
   PostCreateReviewResponse,
   PostProposalResponse,
 } from '@/entities/proposal/api/contracts';
@@ -79,6 +78,7 @@ import mapProposalRequestToProposalBody from '../utils/mapProposalRequestToPropo
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
 import isHistoryValueEqual from '../utils/isHistoryValueEqual';
+import { createReviewSchema } from '@/entities/review/api/schema';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request, cookies }) => {
@@ -381,9 +381,17 @@ export const proposalHandlers = [
 
       const userRole = user.role;
       const id = params.id;
-      const body = (await request.json()) as PostCreateReviewRequest; //Провалидировать
-
       if (!isId(id)) return proposalError();
+
+      const bodyRaw = await request.json();
+      const parsedBody = createReviewSchema.safeParse(bodyRaw);
+
+      if (!parsedBody.success) {
+        const errorBody = zodErrorParse(parsedBody.error);
+        return validationError(errorBody);
+      }
+
+      const body = parsedBody.data;
 
       const isUserCanCreateReview = canCreateReview(userRole, id, userId);
       if (!isUserCanCreateReview) return forbiddenError();

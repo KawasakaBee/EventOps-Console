@@ -15,6 +15,14 @@ export const recommendationsNames = [
 ] as const;
 
 export type RecommendationName = (typeof recommendationsNames)[number];
+
+export const scores = [
+  'scoreContent',
+  'scoreRelevance',
+  'scoreDelivery',
+] as const;
+
+export type Score = (typeof scores)[number];
 export interface Review {
   id: ID;
   proposalId: ID;

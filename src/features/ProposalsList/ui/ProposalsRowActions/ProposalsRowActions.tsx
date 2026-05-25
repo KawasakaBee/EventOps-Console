@@ -12,6 +12,7 @@ import {
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
 import { openSingleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
+import { openCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
 
 const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
   actions,
@@ -76,7 +77,11 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
 
   const handleReviewerAssign = () => {
     dispatch(openSingleAssignReviewer({ id: proposalId }));
-    handleStatusesMenuClose();
+    handleMenuClose();
+  };
+
+  const handleReviewCreateDialogOpen = () => {
+    dispatch(openCreateReviewDialog({ id: proposalId }));
     handleMenuClose();
   };
 
@@ -137,6 +142,13 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
                 <MenuItem
                   key={`Actions-menu-item-${action}`}
                   onClick={handleReviewerAssign}
+                >
+                  {proposalActionsDictionary[action]}
+                </MenuItem>
+              ) : action === 'addReview' ? (
+                <MenuItem
+                  key={`Actions-menu-item-${action}`}
+                  onClick={handleReviewCreateDialogOpen}
                 >
                   {proposalActionsDictionary[action]}
                 </MenuItem>

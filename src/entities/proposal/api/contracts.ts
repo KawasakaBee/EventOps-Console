@@ -9,7 +9,7 @@ import {
   ProposalListItem,
   ProposalStatus,
 } from '@/entities/proposal/model/types';
-import { Recommendation, Review } from '@/entities/review/model/types';
+import { Review } from '@/entities/review/model/types';
 import { Speaker } from '@/entities/speaker/model/types';
 import { PaginationEnvelope } from '@/shared/types/api.types';
 import { ID } from '@/shared/types/primitives.types';
@@ -68,14 +68,6 @@ export interface PostAssignReviewerRequest {
 export interface PostAssignReviewerResponse {
   proposalId: ID;
   reviewerId: ID;
-}
-
-export interface PostCreateReviewRequest {
-  scoreContent: number;
-  scoreRelevance: number;
-  scoreDelivery: number;
-  recommendation: Recommendation;
-  comment: string;
 }
 
 export interface PostCreateReviewResponse {

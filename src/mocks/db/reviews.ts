@@ -1,7 +1,7 @@
 import { Review } from '@/entities/review/model/types';
-import { PostCreateReviewRequest } from '@/entities/proposal/api/contracts';
 import { ID } from '@/shared/types/primitives.types';
 import { Reviewer } from '@/entities/reviewer/model/types';
+import { PostCreateReviewRequest } from '@/entities/review/api/schema';
 
 export const initialReviews = [
   {
@@ -937,6 +937,9 @@ export const createReview = (
   const review: Review = {
     id: crypto.randomUUID(),
     ...input,
+    scoreContent: Number(input.scoreContent),
+    scoreDelivery: Number(input.scoreDelivery),
+    scoreRelevance: Number(input.scoreRelevance),
     proposalId,
     reviewerId,
   };

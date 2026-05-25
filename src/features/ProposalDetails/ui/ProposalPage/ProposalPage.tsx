@@ -19,6 +19,8 @@ import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 import { useAuth } from '@/entities/user/model/AuthProvider';
 import ReviewerAssignDialog from '@/features/ReviewerAssign/ui/ReviewerAssignDialog';
 import { closeAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
+import ReviewCreateDialog from '@/features/ReviewCreate/ui/ReviewCreateDialog';
+import { closeCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
 
 const ProposalPage = () => {
   const { user } = useAuth();
@@ -31,6 +33,9 @@ const ProposalPage = () => {
   const transition = useAppSelector(
     (store) => store.statusTransition.transition,
   );
+  const createReview = useAppSelector(
+    (store) => store.createReview.createReview,
+  );
 
   const {
     proposal,
@@ -40,6 +45,7 @@ const ProposalPage = () => {
     users,
     handleStatusSuccess,
     handleAssignReviewerSuccess,
+    handleCreateReviewSuccess,
   } = useDetailsPageData(proposalId);
 
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
@@ -71,6 +77,10 @@ const ProposalPage = () => {
 
   const handleReviewerAssignDialogClose = () => {
     dispatch(closeAssignReviewer());
+  };
+
+  const handleReviewCreateDialogClose = () => {
+    dispatch(closeCreateReviewDialog());
   };
 
   const proposalTitle = pageData.proposal?.title ? (
@@ -141,6 +151,13 @@ const ProposalPage = () => {
                 onClose={handleReviewerAssignDialogClose}
                 proposalId={assingReviewer.id}
                 onSuccess={handleAssignReviewerSuccess}
+              />
+            )}
+            {createReview.type === 'open' && (
+              <ReviewCreateDialog
+                onClose={handleReviewCreateDialogClose}
+                proposalId={createReview.id}
+                onSuccess={handleCreateReviewSuccess}
               />
             )}
           </>

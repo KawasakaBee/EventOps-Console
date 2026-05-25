@@ -1,4 +1,4 @@
-import { Recommendation, RecommendationName } from './types';
+import { Recommendation, RecommendationName, Score } from './types';
 
 export const recommendationDictionary: Record<
   Recommendation,
@@ -7,4 +7,10 @@ export const recommendationDictionary: Record<
   approve: 'Принять',
   reject: 'Отклонить',
   request_changes: 'Нужны изменения',
+};
+
+export const scoresDictionary: Record<Score, string> = {
+  scoreContent: 'Контент',
+  scoreRelevance: 'Релевантность',
+  scoreDelivery: 'Подача',
 };

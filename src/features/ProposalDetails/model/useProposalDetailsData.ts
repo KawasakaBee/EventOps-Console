@@ -6,6 +6,7 @@ import {
   hydrateAvailableStatuses,
   hydrateDetails,
   hydrateProposal,
+  hydrateReviews,
   resetDetails,
   updateAvailableActions,
 } from './proposalDetailsSlice';
@@ -13,6 +14,7 @@ import { ID } from '@/shared/types/primitives.types';
 import {
   PatchProposalStatusResponse,
   PostAssignReviewerResponse,
+  PostCreateReviewResponse,
 } from '@/entities/proposal/api/contracts';
 import { fetchTracks } from '@/entities/track/api/trackApi';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
@@ -72,6 +74,14 @@ const useProposalDetailsData = (id: ID) => {
     getProposal();
   };
 
+  const handleCreateReviewSuccess = async (
+    result: PostCreateReviewResponse,
+  ) => {
+    if (!pageData.proposal) return;
+
+    dispatch(hydrateReviews([...pageData.reviews, result.review]));
+  };
+
   // useEffect
 
   useEffect(() => {
@@ -126,6 +136,7 @@ const useProposalDetailsData = (id: ID) => {
     users,
     handleStatusSuccess,
     handleAssignReviewerSuccess,
+    handleCreateReviewSuccess,
   };
 };
 

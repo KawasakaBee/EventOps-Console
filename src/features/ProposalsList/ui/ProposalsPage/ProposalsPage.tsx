@@ -36,6 +36,8 @@ import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
 import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 import ReviewerAssignDialog from '@/features/ReviewerAssign/ui/ReviewerAssignDialog';
 import { closeAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
+import ReviewCreateDialog from '@/features/ReviewCreate/ui/ReviewCreateDialog';
+import { closeCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
 
 const ProposalsPage = () => {
   const router = useRouter();
@@ -110,6 +112,9 @@ const ProposalsPage = () => {
   const assingReviewer = useAppSelector(
     (store) => store.assignReviewer.assignReviewer,
   );
+  const createReview = useAppSelector(
+    (store) => store.createReview.createReview,
+  );
   const selectedIds = useAppSelector(
     (store) => store.proposalsFilters.selectedIds,
   );
@@ -168,6 +173,10 @@ const ProposalsPage = () => {
 
   const handleReviewerAssignDialogClose = () => {
     dispatch(closeAssignReviewer());
+  };
+
+  const handleReviewCreateDialogClose = () => {
+    dispatch(closeCreateReviewDialog());
   };
 
   return (
@@ -316,6 +325,13 @@ const ProposalsPage = () => {
           onClose={handleReviewerAssignDialogClose}
           proposalIds={assingReviewer.ids}
           onSuccess={handleMultipleAssignReviewerSuccess}
+        />
+      )}
+      {createReview.type === 'open' && (
+        <ReviewCreateDialog
+          onClose={handleReviewCreateDialogClose}
+          proposalId={createReview.id}
+          onSuccess={() => null}
         />
       )}
       <Snackbar
