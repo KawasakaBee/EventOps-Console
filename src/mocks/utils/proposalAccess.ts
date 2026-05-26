@@ -71,7 +71,7 @@ export const canUserCreateComment = (
   proposalId: ID,
   userId: ID,
 ): boolean => {
-  if (role === 'manager') return true;
+  if (isManagerLike(role)) return true;
   if (role === 'reviewer')
     return isProposalAssignedToReviewer(proposalId, userId);
   return false;

@@ -38,6 +38,7 @@ import formatMinutesDuration from '@/shared/utils/formatMinutesDuration';
 import { useRouter } from 'next/navigation';
 import { openSingleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 import { openCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
+import { openAddCommentDialog } from '@/features/CommentAdd/model/commentAddSlice';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   data,
@@ -122,6 +123,11 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   const handleReviewCreateDialogOpen = () => {
     if (!data.proposal) return;
     dispatch(openCreateReviewDialog({ id: data.proposal.id }));
+  };
+
+  const handleCommentAddDialogOpen = () => {
+    if (!data.proposal) return;
+    dispatch(openAddCommentDialog({ id: data.proposal.id }));
   };
 
   return (
@@ -268,6 +274,16 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   variant="outlined"
                   size="small"
                   onClick={handleReviewCreateDialogOpen}
+                >
+                  {availableActionsDictionary[action]}
+                </Button>
+              ) : action === 'addComment' ? (
+                <Button
+                  key={action}
+                  mode="button"
+                  variant="outlined"
+                  size="small"
+                  onClick={handleCommentAddDialogOpen}
                 >
                   {availableActionsDictionary[action]}
                 </Button>

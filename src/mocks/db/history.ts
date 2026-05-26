@@ -6241,7 +6241,7 @@ export const appendProposalHistory = (
   return historyItem;
 };
 
-export const appendAssignReviewerHistory = (
+export const appendAdditionalHistory = (
   proposalId: ID,
   userId: ID,
   action: HistoryAction,

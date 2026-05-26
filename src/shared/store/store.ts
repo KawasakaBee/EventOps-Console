@@ -1,3 +1,4 @@
+import { addCommentReducer } from '@/features/CommentAdd/model/commentAddSlice';
 import { detailsReducer } from '@/features/ProposalDetails/model/proposalDetailsSlice';
 import { proposalsFiltersReducer } from '@/features/ProposalsList/model/proposalsListSlice';
 import { statusTransitionReducer } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
@@ -12,6 +13,7 @@ export const store = configureStore({
     statusTransition: statusTransitionReducer,
     assignReviewer: assignReviewerReducer,
     createReview: createReviewReducer,
+    addComment: addCommentReducer,
   },
 });
 

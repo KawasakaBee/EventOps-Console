@@ -60,8 +60,12 @@ const detailsSlice = createSlice({
       state.proposal = action.payload;
     },
 
-    hydrateReviews: (state, action: PayloadAction<DetailsState['reviews']>) => {
-      state.reviews = action.payload;
+    addReview: (state, action: PayloadAction<Review>) => {
+      state.reviews = [...state.reviews, action.payload];
+    },
+
+    addComment: (state, action: PayloadAction<Comment>) => {
+      state.comments = [...state.comments, action.payload];
     },
 
     addHistory: (state, action: PayloadAction<HistoryEntry>) => {
@@ -88,7 +92,8 @@ export const {
   hydrateDetails,
   resetDetails,
   hydrateProposal,
-  hydrateReviews,
+  addReview,
+  addComment,
   addHistory,
   updateAvailableActions,
   hydrateAvailableStatuses,

@@ -59,6 +59,7 @@ export const applyProposalAccessFilter = (
         reviewer.proposalIds.includes(proposal.id),
       );
     }
+    return [];
   }
   if (access === 'ownedBySpeaker') {
     return proposals.filter((proposal) =>

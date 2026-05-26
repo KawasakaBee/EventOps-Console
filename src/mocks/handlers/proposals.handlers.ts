@@ -13,13 +13,12 @@ import {
   PatchProposalStatusResponse,
   PostAssignReviewerRequest,
   PostAssignReviewerResponse,
-  PostCreateCommentRequest,
   PostCreateCommentResponse,
   PostCreateReviewResponse,
   PostProposalResponse,
 } from '@/entities/proposal/api/contracts';
 import {
-  appendAssignReviewerHistory,
+  appendAdditionalHistory,
   appendProposalHistory,
   createHistory,
 } from '../db/history';
@@ -79,6 +78,7 @@ import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
 import isHistoryValueEqual from '../utils/isHistoryValueEqual';
 import { createReviewSchema } from '@/entities/review/api/schema';
+import { addCommentSchema } from '@/entities/comment/api/schema';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request, cookies }) => {
@@ -358,7 +358,7 @@ export const proposalHandlers = [
         return forbiddenError();
 
       assignReviewer(id, reviewer);
-      appendAssignReviewerHistory(id, userId, 'reviewer_assigned', {
+      appendAdditionalHistory(id, userId, 'reviewer_assigned', {
         reviewerId: reviewer.id,
       });
 
@@ -397,9 +397,16 @@ export const proposalHandlers = [
       if (!isUserCanCreateReview) return forbiddenError();
 
       const review = createReview(id, userId, body);
+      const history = appendAdditionalHistory(id, userId, 'review_added', {
+        reviewId: review.id,
+        recommendation: review.recommendation,
+      });
+
+      if (!history) return proposalError();
 
       const response: PostCreateReviewResponse = {
         review,
+        history,
         aggregatedScores:
           review.scoreContent + review.scoreDelivery + review.scoreRelevance,
       };
@@ -418,17 +425,32 @@ export const proposalHandlers = [
 
       const userRole = user.role;
       const id = params.id;
-      const { message } = (await request.json()) as PostCreateCommentRequest; //Провалидировать
-
       if (!isId(id)) return proposalError();
+
+      const bodyRaw = await request.json();
+
+      const parsedBody = addCommentSchema.safeParse(bodyRaw);
+
+      if (!parsedBody.success) {
+        const errorBody = zodErrorParse(parsedBody.error);
+        return validationError(errorBody);
+      }
+
+      const body = parsedBody.data;
 
       const isUserCanCreateComment = canUserCreateComment(userRole, id, userId);
       if (!isUserCanCreateComment) return forbiddenError();
 
-      const comment = createComment(id, userId, userRole, message);
+      const comment = createComment(id, userId, userRole, body.message);
+      const history = appendAdditionalHistory(id, userId, 'comment_added', {
+        commentId: comment.id,
+      });
+
+      if (!history) return proposalError();
 
       const response: PostCreateCommentResponse = {
         comment,
+        history,
       };
 
       return HttpResponse.json(response);

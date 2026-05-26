@@ -27,6 +27,7 @@ export const permissionsByRole: Record<Role, Permission[]> = {
     'proposals:view',
     'proposals:change-status',
     'review:assign',
+    'review:comment',
     'speakers:list',
     'schedule:view',
     'schedule:assign',

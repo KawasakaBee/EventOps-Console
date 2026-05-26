@@ -44,7 +44,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
     return (
       <Box>
         {normalizePayload.map((obj, idx) => (
-          <Typography key={idx} variant="body2">
+          <Typography key={idx} variant="body2" sx={sx.payload}>
             {obj}
           </Typography>
         ))}

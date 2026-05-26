@@ -1,7 +1,7 @@
 import { ErrorEnvelope } from '../../../shared/types/api.types';
 import { ErrorStateProps } from '../../../shared/ui/ErrorState/ErrorState.types';
 
-const getReviewCreateErrorState = (
+const getAddCommentErrorState = (
   error: ErrorEnvelope['error'],
   actions: {
     retry: () => void;
@@ -115,4 +115,4 @@ const getReviewCreateErrorState = (
   }
 };
 
-export default getReviewCreateErrorState;
+export default getAddCommentErrorState;

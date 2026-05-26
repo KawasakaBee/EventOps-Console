@@ -72,13 +72,11 @@ export interface PostAssignReviewerResponse {
 
 export interface PostCreateReviewResponse {
   review: Review;
+  history: HistoryEntry;
   aggregatedScores: number;
-}
-
-export interface PostCreateCommentRequest {
-  message: string;
 }
 
 export interface PostCreateCommentResponse {
   comment: Comment;
+  history: HistoryEntry;
 }

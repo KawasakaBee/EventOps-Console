@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import {
   addHistory,
   hydrateAvailableStatuses,
+  addComment,
   hydrateDetails,
   hydrateProposal,
-  hydrateReviews,
+  addReview,
   resetDetails,
   updateAvailableActions,
 } from './proposalDetailsSlice';
@@ -14,6 +15,7 @@ import { ID } from '@/shared/types/primitives.types';
 import {
   PatchProposalStatusResponse,
   PostAssignReviewerResponse,
+  PostCreateCommentResponse,
   PostCreateReviewResponse,
 } from '@/entities/proposal/api/contracts';
 import { fetchTracks } from '@/entities/track/api/trackApi';
@@ -53,33 +55,34 @@ const useProposalDetailsData = (id: ID) => {
     dispatch(hydrateAvailableStatuses(result.availableStatuses));
   };
 
+  const getProposal = async (id: ID) => {
+    dispatch(resetDetails());
+    const proposalResource = await fetchProposal(id, () => getProposal(id));
+    if (proposalResource.data) {
+      dispatch(hydrateDetails(proposalResource.data));
+      dispatch(
+        hydrateAvailableStatuses(proposalResource.data.availableStatuses),
+      );
+    }
+    setProposal(proposalResource.proposal);
+  };
+
   const handleAssignReviewerSuccess = async (
     result: PostAssignReviewerResponse,
   ) => {
-    const getProposal = async () => {
-      dispatch(resetDetails());
-      const proposalResource = await fetchProposal(
-        result.proposalId,
-        getProposal,
-      );
-      if (proposalResource.data) {
-        dispatch(hydrateDetails(proposalResource.data));
-        dispatch(
-          hydrateAvailableStatuses(proposalResource.data.availableStatuses),
-        );
-      }
-      setProposal(proposalResource.proposal);
-    };
-
-    getProposal();
+    getProposal(result.proposalId);
   };
 
   const handleCreateReviewSuccess = async (
     result: PostCreateReviewResponse,
   ) => {
-    if (!pageData.proposal) return;
+    dispatch(addReview(result.review));
+    dispatch(addHistory(result.history));
+  };
 
-    dispatch(hydrateReviews([...pageData.reviews, result.review]));
+  const handleAddCommentSuccess = async (result: PostCreateCommentResponse) => {
+    dispatch(addComment(result.comment));
+    dispatch(addHistory(result.history));
   };
 
   // useEffect
@@ -137,6 +140,7 @@ const useProposalDetailsData = (id: ID) => {
     handleStatusSuccess,
     handleAssignReviewerSuccess,
     handleCreateReviewSuccess,
+    handleAddCommentSuccess,
   };
 };
 

@@ -21,6 +21,8 @@ import ReviewerAssignDialog from '@/features/ReviewerAssign/ui/ReviewerAssignDia
 import { closeAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 import ReviewCreateDialog from '@/features/ReviewCreate/ui/ReviewCreateDialog';
 import { closeCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
+import { closeAddCommentDialog } from '@/features/CommentAdd/model/commentAddSlice';
+import CommentAddDialog from '@/features/CommentAdd/ui/CommentAddDialog';
 
 const ProposalPage = () => {
   const { user } = useAuth();
@@ -36,6 +38,7 @@ const ProposalPage = () => {
   const createReview = useAppSelector(
     (store) => store.createReview.createReview,
   );
+  const addComment = useAppSelector((store) => store.addComment.addComment);
 
   const {
     proposal,
@@ -46,6 +49,7 @@ const ProposalPage = () => {
     handleStatusSuccess,
     handleAssignReviewerSuccess,
     handleCreateReviewSuccess,
+    handleAddCommentSuccess,
   } = useDetailsPageData(proposalId);
 
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
@@ -81,6 +85,10 @@ const ProposalPage = () => {
 
   const handleReviewCreateDialogClose = () => {
     dispatch(closeCreateReviewDialog());
+  };
+
+  const handleCommentAddDialogClose = () => {
+    dispatch(closeAddCommentDialog());
   };
 
   const proposalTitle = pageData.proposal?.title ? (
@@ -158,6 +166,13 @@ const ProposalPage = () => {
                 onClose={handleReviewCreateDialogClose}
                 proposalId={createReview.id}
                 onSuccess={handleCreateReviewSuccess}
+              />
+            )}
+            {addComment.type === 'open' && (
+              <CommentAddDialog
+                onClose={handleCommentAddDialogClose}
+                proposalId={addComment.id}
+                onSuccess={handleAddCommentSuccess}
               />
             )}
           </>

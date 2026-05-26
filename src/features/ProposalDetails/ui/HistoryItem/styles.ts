@@ -10,7 +10,8 @@ type Key =
   | 'itemChangesWrapper'
   | 'itemChanges'
   | 'changesPrev'
-  | 'changesNext';
+  | 'changesNext'
+  | 'payload';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -23,6 +24,7 @@ export const styles: Style = () => {
     },
     timelineContent: {
       minWidth: 0,
+      p: 3,
     },
     timelineContentWrapper: {
       minWidth: 0,
@@ -35,7 +37,6 @@ export const styles: Style = () => {
     },
     itemChangesWrapper: {
       alignItems: 'center',
-      paddingBlock: 4,
     },
     itemChanges: {
       alignItems: 'center',
@@ -46,9 +47,12 @@ export const styles: Style = () => {
       wordBreak: 'break-word',
     },
     changesNext: {
-      minWidth: 0,
       overflowWrap: 'anywhere',
       wordBreak: 'break-word',
+    },
+    payload: {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   };
 };

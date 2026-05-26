@@ -62,6 +62,7 @@ const useReviewerAssignData = (props: AssignReviewerProps) => {
     mountedRef.current = true;
 
     return () => {
+      abortRequest();
       mountedRef.current = false;
     };
   }, []);

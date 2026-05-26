@@ -1,23 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { CreateReviewResource } from './types';
-import { fetchReviewCreate } from '../api/ReviewCreateApi';
 import { UseFormGetValues } from 'react-hook-form';
-import { CreateReviewValues } from './schema';
+import { AddCommentValues } from './schema';
+import { useEffect, useRef, useState } from 'react';
+import { AddCommentResource } from './types';
+import { fetchCommentAdd } from '../api/CommentAddApi';
 import { ID } from '@/shared/types/primitives.types';
-import { PostCreateReviewResponse } from '@/entities/proposal/api/contracts';
+import { PostCreateCommentResponse } from '@/entities/proposal/api/contracts';
 
-const useCreateReviewData = (
-  getValues: UseFormGetValues<CreateReviewValues>,
+const useCommentAddData = (
   proposalId: ID,
-  onSuccess: (result: PostCreateReviewResponse) => void,
+  getValues: UseFormGetValues<AddCommentValues>,
+  onSuccess: (result: PostCreateCommentResponse) => void,
 ) => {
   // state
-  const [createReviewData, setCreateReviewData] =
-    useState<CreateReviewResource>({
-      status: 'idle',
-      data: null,
-      errorProps: null,
-    });
+  const [addCommentData, setAddCommentData] = useState<AddCommentResource>({
+    status: 'idle',
+    data: null,
+    errorProps: null,
+  });
 
   const mountedRef = useRef(false);
   const versionRef = useRef(0);
@@ -40,8 +39,8 @@ const useCreateReviewData = (
 
   // handlers
 
-  const handleCreateReviewSubmit = async () => {
-    setCreateReviewData({
+  const handleAddCommentSubmit = async () => {
+    setAddCommentData({
       status: 'loading',
       data: null,
       errorProps: null,
@@ -54,10 +53,10 @@ const useCreateReviewData = (
 
     const fields = getValues();
 
-    const response = await fetchReviewCreate(
+    const response = await fetchCommentAdd(
       proposalId,
       fields,
-      handleCreateReviewSubmit,
+      handleAddCommentSubmit,
       controller.signal,
     );
 
@@ -70,14 +69,14 @@ const useCreateReviewData = (
 
     if (response === null) return;
 
-    setCreateReviewData(response);
+    setAddCommentData(response);
 
     if (response.data) {
       onSuccess(response.data);
     }
   };
 
-  return { createReviewData, handleCreateReviewSubmit };
+  return { addCommentData, handleAddCommentSubmit };
 };
 
-export default useCreateReviewData;
+export default useCommentAddData;
