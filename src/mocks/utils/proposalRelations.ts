@@ -1,13 +1,9 @@
 import { ID } from '@/shared/types/primitives.types';
 import { reviewers } from '../db/reviews';
-import { Proposal } from '@/entities/proposal/model/types';
 import { users } from '../db/users';
 import { speakers } from '../db/speakers';
 
-export const isProposalOwnedByUser = (
-  proposal: Proposal,
-  userId: ID,
-): boolean => {
+export const isProposalOwnedByUser = (ownerId: ID, userId: ID): boolean => {
   const user = users.find((item) => item.id === userId);
 
   if (!user || user.role !== 'speaker') return false;
@@ -16,7 +12,7 @@ export const isProposalOwnedByUser = (
 
   if (!speaker) return false;
 
-  return proposal.ownerId === speaker.id;
+  return ownerId === speaker.id;
 };
 
 export const isProposalAssignedToReviewer = (proposalId: ID, userId: ID) => {

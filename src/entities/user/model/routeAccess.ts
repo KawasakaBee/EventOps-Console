@@ -1,7 +1,7 @@
 import { Route } from '@/shared/lib/routes/types';
 import { Role } from './types';
 
-export const routesByRole: Record<Role, Exclude<Route, '/login'>[]> = {
+export const routesByRole: Record<Role, Route[]> = {
   admin: [
     '/dashboard',
     '/proposals',

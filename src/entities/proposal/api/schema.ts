@@ -9,7 +9,7 @@ import {
   speakerSubmitSchema,
 } from '@/entities/speaker/api/schema';
 
-const proposalDraftSchema = z.object({
+export const proposalDraftSchema = z.object({
   status: z.literal('draft'),
   title: z.string().trim().optional(),
   format: z.enum(proposalFormats, 'Некорректный формат'),

@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw';
 import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
-import { reviewers } from '../db/reviews';
 import { unauthorizedError } from '../utils/httpErrors';
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
+import { reviewers } from '../db/reviews';
 
 export const reviewersHandlers = [
   http.get('/api/reviewers', ({ cookies }) => {

@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { validateDurationByFormat } from './validation';
 import { tags } from '@/entities/tag/model/types';
 
-const speakerBaseSchema = z.object({
+export const speakerBaseSchema = z.object({
   id: z.string().nullable(),
   name: z.string().trim().min(1, 'Обязательное поле'),
   email: z.email('Email должен быть валидным'),
@@ -16,7 +16,7 @@ const speakerBaseSchema = z.object({
     .string()
     .trim()
     .min(50, 'Поле "О себе" должно содержать минимум 50 символов'),
-  links: z.string(),
+  links: z.string().optional(),
 });
 
 const proposalSubmissionBaseSchema = z.object({

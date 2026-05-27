@@ -92,7 +92,7 @@ export const proposalHandlers = [
     let result = proposals;
 
     const queryParams = parseProposalsListQuery(request.url);
-    const access = getProposalsListAccess(userRole, queryParams);
+    const access = getProposalsListAccess(userRole, queryParams.owner);
 
     if (access === 'forbidden') return forbiddenError();
 
@@ -131,7 +131,10 @@ export const proposalHandlers = [
     const proposal = getProposalById(id);
     if (!proposal) return proposalError();
 
-    const isUserHaveAccess = canReadProposal(proposal, userId, userRole);
+    const isUserHaveAccess = canReadProposal(userRole, userId, {
+      proposalId: proposal.id,
+      ownerId: proposal.ownerId,
+    });
 
     if (!isUserHaveAccess) return forbiddenError();
 
@@ -142,7 +145,11 @@ export const proposalHandlers = [
 
     const availableActions = getAvailableProposalActions(
       userRole,
-      proposal,
+      {
+        status: proposal.status,
+        proposalId: proposal.id,
+        ownerId: proposal.ownerId,
+      },
       userId,
       reviews.length,
     );
@@ -308,7 +315,11 @@ export const proposalHandlers = [
 
       const availableActions = getAvailableProposalActions(
         userRole,
-        proposal,
+        {
+          status: proposal.status,
+          proposalId: proposal.id,
+          ownerId: proposal.ownerId,
+        },
         userId,
         foundNextReviewsCount,
       );
@@ -411,7 +422,7 @@ export const proposalHandlers = [
           review.scoreContent + review.scoreDelivery + review.scoreRelevance,
       };
 
-      return HttpResponse.json(response);
+      return HttpResponse.json(response, { status: 201 });
     },
   ),
 
@@ -453,7 +464,7 @@ export const proposalHandlers = [
         history,
       };
 
-      return HttpResponse.json(response);
+      return HttpResponse.json(response, { status: 201 });
     },
   ),
 ];

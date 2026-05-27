@@ -3,16 +3,23 @@ import {
   isProposalAssignedToReviewer,
   isProposalOwnedByUser,
 } from './proposalRelations';
-import { Proposal, ProposalAction } from '@/entities/proposal/model/types';
+import {
+  ProposalAction,
+  ProposalStatus,
+} from '@/entities/proposal/model/types';
 import { ID } from '@/shared/types/primitives.types';
 
 export const getAvailableProposalActions = (
   role: Role,
-  proposal: Proposal,
+  params: {
+    status: ProposalStatus;
+    proposalId: ID;
+    ownerId: ID;
+  },
   userId: ID,
   reviewerCount: number,
 ): ProposalAction[] => {
-  const status = proposal.status;
+  const { status, proposalId, ownerId } = params;
   const availableActions: ProposalAction[] = [];
 
   if (role === 'admin' || role === 'manager') {
@@ -35,14 +42,14 @@ export const getAvailableProposalActions = (
   }
 
   if (role === 'reviewer') {
-    if (!isProposalAssignedToReviewer(proposal.id, userId)) return [];
+    if (!isProposalAssignedToReviewer(proposalId, userId)) return [];
 
     if (status === 'submitted' || status === 'in_review')
       availableActions.push('addComment', 'addReview');
   }
 
   if (role === 'speaker') {
-    if (!isProposalOwnedByUser(proposal, userId)) return [];
+    if (!isProposalOwnedByUser(ownerId, userId)) return [];
 
     if (status === 'draft') availableActions.push('edit', 'submit');
   }

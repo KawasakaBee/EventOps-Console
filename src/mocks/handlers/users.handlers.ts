@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw';
 import { GetUsersListResponse } from '@/entities/user/api/contracts';
-import { users } from '../db/users';
 import { unauthorizedError } from '../utils/httpErrors';
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
+import { users } from '../db/users';
 
 export const usersHandlers = [
   http.get('/api/users', ({ cookies }) => {

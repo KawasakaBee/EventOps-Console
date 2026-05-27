@@ -63,7 +63,7 @@ export const applyProposalAccessFilter = (
   }
   if (access === 'ownedBySpeaker') {
     return proposals.filter((proposal) =>
-      isProposalOwnedByUser(proposal, userId),
+      isProposalOwnedByUser(proposal.ownerId, userId),
     );
   }
   return proposals;

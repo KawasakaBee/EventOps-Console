@@ -15,7 +15,10 @@ export const getBreadcrumbsRoute = (
   return isBreadcrumbsRoute(pathname) ? pathname : null;
 };
 
-export const normalizeRoute = (pathname: string): Route | null => {
+export const normalizeRoute = (value: string): Route | null => {
+  const url = new URL(value, 'http://localhost');
+  const pathname = url.pathname;
+
   if (pathname === '/login') return '/login';
   if (pathname === '/dashboard') return '/dashboard';
   if (pathname === '/proposals') return '/proposals';

@@ -9,11 +9,11 @@ import {
   GetSpeakerItemResponse,
   GetSpeakersListResponse,
 } from '@/entities/speaker/api/contracts';
-import { speakers } from '../db/speakers';
 import { getSpeakerByEmail } from '../utils/proposalSelectors';
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
 import { getSpeakerById } from '@/entities/speaker/lib/speakerSelectors';
+import { speakers } from '../db/speakers';
 
 export const speakersHandlers = [
   http.get('/api/speakers', ({ cookies }) => {

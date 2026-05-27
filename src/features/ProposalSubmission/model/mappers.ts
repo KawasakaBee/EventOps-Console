@@ -69,7 +69,7 @@ export const hasFilledSpeakerData = (
       speaker.company.trim() ||
       speaker.position.trim() ||
       speaker.bio.trim() ||
-      speaker.links.trim(),
+      speaker.links?.trim(),
     );
   });
 };

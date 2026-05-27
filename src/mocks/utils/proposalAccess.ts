@@ -1,7 +1,5 @@
 import { ID } from '@/shared/types/primitives.types';
-import { Proposal } from '@/entities/proposal/model/types';
 import { Role } from '@/entities/user/model/types';
-import { ProposalListQuery } from '@/entities/proposal/model/query';
 import {
   isProposalAssignedToReviewer,
   isProposalOwnedByUser,
@@ -19,23 +17,28 @@ export type ProposalListAccess =
 
 export const getProposalsListAccess = (
   role: Role,
-  queryParams: ProposalListQuery,
+  ownerParam: string | null,
 ): ProposalListAccess => {
   if (isManagerLike(role)) return 'all';
   if (role === 'reviewer') return 'assignedToReviewer';
-  if (role === 'speaker' && queryParams.owner === 'me') return 'ownedBySpeaker';
+  if (role === 'speaker' && ownerParam === 'me') return 'ownedBySpeaker';
   return 'forbidden';
 };
 
 export const canReadProposal = (
-  proposal: Proposal,
-  userId: ID,
   role: Role,
+  userId: ID,
+  params: {
+    proposalId: ID;
+    ownerId: ID;
+  },
 ): boolean => {
+  const { proposalId, ownerId } = params;
+
   if (isManagerLike(role)) return true;
   if (role === 'reviewer')
-    return isProposalAssignedToReviewer(proposal.id, userId);
-  if (role === 'speaker') return isProposalOwnedByUser(proposal, userId);
+    return isProposalAssignedToReviewer(proposalId, userId);
+  if (role === 'speaker') return isProposalOwnedByUser(ownerId, userId);
   return false;
 };
 
@@ -51,7 +54,7 @@ export const canChangeProposal = (
   if (role === 'manager') return true;
   if (role === 'speaker')
     return proposal.status === 'draft'
-      ? isProposalOwnedByUser(proposal, userId)
+      ? isProposalOwnedByUser(proposal.ownerId, userId)
       : false;
   return false;
 };
