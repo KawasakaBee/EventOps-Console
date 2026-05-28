@@ -72,9 +72,9 @@ describe('parseProposalsListQuery', () => {
       'http://localhost:3000/proposals?pageSize=50',
     );
 
-    expect(pageSizeTen.pageSize).toStrictEqual(10);
-    expect(pageSizeTwenty.pageSize).toStrictEqual(20);
-    expect(pageSizeFifty.pageSize).toStrictEqual(50);
+    expect(pageSizeTen.pageSize).toBe(10);
+    expect(pageSizeTwenty.pageSize).toBe(20);
+    expect(pageSizeFifty.pageSize).toBe(50);
   });
 
   it('Невалидный размер страницы приводится к валидному', () => {

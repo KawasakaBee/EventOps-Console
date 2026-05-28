@@ -1,3 +1,4 @@
+import { audit } from '../db/audit';
 import { comments } from '../db/comments';
 import { history } from '../db/history';
 import { proposals } from '../db/proposals';
@@ -20,4 +21,5 @@ export const applyScenario = (scenario: MockScenario) => {
   replaceArray(comments, scenario.comments);
   replaceArray(history, scenario.history);
   replaceArray(tracks, scenario.tracks);
+  replaceArray(audit, scenario.audit);
 };

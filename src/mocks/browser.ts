@@ -7,6 +7,8 @@ import { authHandlers } from './handlers/auth.handlers';
 import { tracksHandlers } from './handlers/tracks.handler';
 import { tagsHandlers } from './handlers/tags.handler';
 import { speakersHandlers } from './handlers/speakers.handlers';
+import { auditHandlers } from './handlers/audit.handlers';
+import { commentsHandlers } from './handlers/comments.handlers';
 
 export const worker = setupWorker(
   ...dashboardHandlers,
@@ -17,4 +19,6 @@ export const worker = setupWorker(
   ...usersHandlers,
   ...speakersHandlers,
   ...authHandlers,
+  ...auditHandlers,
+  ...commentsHandlers,
 );

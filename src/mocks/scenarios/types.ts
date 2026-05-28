@@ -1,3 +1,4 @@
+import { AuditLog } from '@/entities/audit/model/types';
 import { Comment } from '@/entities/comment/model/types';
 import { HistoryEntry } from '@/entities/history/model/types';
 import { Proposal } from '@/entities/proposal/model/types';
@@ -15,5 +16,6 @@ export interface MockScenario {
   reviewers: Reviewer[];
   comments: Comment[];
   history: HistoryEntry[];
+  audit: AuditLog[];
   tracks: Track[];
 }

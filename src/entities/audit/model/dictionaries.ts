@@ -1,9 +1,6 @@
-import { HistoryAction, HistoryActionName } from './types';
+import { AuditAction, AuditEntity } from './types';
 
-export const historyActionsDictionary: Record<
-  HistoryAction,
-  HistoryActionName
-> = {
+export const auditActionsDictionary: Record<AuditAction, string> = {
   created: 'Создано',
   updated: 'Обновлено',
   status_changed: 'Изменён статус',
@@ -12,4 +9,10 @@ export const historyActionsDictionary: Record<
   review_added: 'Добавлено ревью',
   scheduled: 'Добавлено в расписание',
   unscheduled: 'Удалено из расписания',
+};
+
+export const auditEntitiesDictionary: Record<AuditEntity, string> = {
+  proposal: 'Заявка',
+  scheduleSlot: 'Слот расписания',
+  settings: 'Настройки',
 };

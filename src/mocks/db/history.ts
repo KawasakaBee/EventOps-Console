@@ -1,5 +1,4 @@
 import {
-  HistoryAction,
   HistoryEntry,
   ProposalFieldChange,
   TechField,
@@ -9,6 +8,8 @@ import { ID } from '@/shared/types/primitives.types';
 import { proposals } from './proposals';
 import { Proposal } from '@/entities/proposal/model/types';
 import isHistoryValueEqual from '../utils/isHistoryValueEqual';
+import { AuditAction } from '@/entities/audit/model/types';
+import { audit, historyItemToAuditItem } from './audit';
 
 export const initialHistory = [
   {
@@ -6190,7 +6191,9 @@ export const history: HistoryEntry[] = [...initialHistory];
 export const createHistory = (
   proposalId: ID,
   actorId: ID,
-  action: HistoryAction,
+  action: AuditAction,
+  changes?: ProposalFieldChange[],
+  payload?: Record<string, unknown>,
 ): HistoryEntry => {
   const historyItem: HistoryEntry = {
     id: crypto.randomUUID(),
@@ -6200,7 +6203,11 @@ export const createHistory = (
     createdAt: new Date().toISOString(),
   };
 
+  if (changes) historyItem.changes = changes;
+  if (payload) historyItem.payload = payload;
+
   history.push(historyItem);
+  audit.push(historyItemToAuditItem(historyItem));
 
   return historyItem;
 };
@@ -6209,7 +6216,7 @@ export const appendProposalHistory = (
   proposalId: ID,
   userId: ID,
   patch: Partial<Proposal>,
-  action: HistoryAction,
+  action: AuditAction,
   payload?: Record<string, unknown>,
 ): HistoryEntry | null => {
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
@@ -6224,7 +6231,6 @@ export const appendProposalHistory = (
 
   if (changedFields.length === 0) return null;
 
-  const historyItem = createHistory(proposalId, userId, action);
   const resultValues: ProposalFieldChange[] = [];
 
   changedFields.forEach((field) => {
@@ -6235,8 +6241,13 @@ export const appendProposalHistory = (
     });
   });
 
-  historyItem.changes = resultValues;
-  if (payload) historyItem.payload = payload;
+  const historyItem = createHistory(
+    proposalId,
+    userId,
+    action,
+    resultValues,
+    payload,
+  );
 
   return historyItem;
 };
@@ -6244,14 +6255,19 @@ export const appendProposalHistory = (
 export const appendAdditionalHistory = (
   proposalId: ID,
   userId: ID,
-  action: HistoryAction,
+  action: AuditAction,
   payload?: Record<string, unknown>,
 ): HistoryEntry | null => {
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
   if (!proposal) return null;
 
-  const historyItem = createHistory(proposalId, userId, action);
-  if (payload) historyItem.payload = payload;
+  const historyItem = createHistory(
+    proposalId,
+    userId,
+    action,
+    undefined,
+    payload,
+  );
 
   return historyItem;
 };

@@ -17,6 +17,17 @@ export const sortBy = [
 
 export type SortBy = (typeof sortBy)[number];
 
+export const auditSortBy = [
+  'id',
+  'action',
+  'entityType',
+  'entityId',
+  'actorId',
+  'createdAt',
+] as const;
+
+export type AuditSortBy = (typeof auditSortBy)[number];
+
 export const sortOrder = ['asc', 'desc'] as const;
 
 export type SortOrder = (typeof sortOrder)[number];

@@ -12,6 +12,7 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
   users,
   comments,
   reviewers,
+  tracks,
 }) => {
   const sx = styles();
 
@@ -36,6 +37,7 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
               isLastItem={idx === history.length - 1}
               comments={comments}
               reviewers={reviewers}
+              tracks={tracks}
             />
           ) : (
             <HistoryItem
@@ -45,6 +47,7 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
               isLastItem={idx === history.length - 1}
               comments={comments}
               reviewers={reviewers}
+              tracks={tracks}
             />
           )
         ) : (

@@ -1,7 +1,9 @@
+import { PageSize } from './primitives.types';
+
 export interface PaginationEnvelope<T> {
   items: T[];
   page: number;
-  pageSize: number;
+  pageSize: PageSize;
   total: number;
   totalPages: number;
 }

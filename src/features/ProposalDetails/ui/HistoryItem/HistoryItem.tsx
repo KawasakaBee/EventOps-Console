@@ -12,8 +12,8 @@ import formatHistoryChangeValues from '@/entities/history/lib/formatHistoryChang
 import { styles } from './styles';
 import formatHistoryPayloadLines from '@/entities/history/lib/formatHistoryPayloadLines';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import { historyActionsDictionary } from '@/entities/history/model/dictionaries';
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
+import { auditActionsDictionary } from '@/entities/audit/model/dictionaries';
 
 const HistoryItem: React.FC<IHistoryItemProps> = ({
   item,
@@ -21,22 +21,24 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
   isLastItem,
   comments,
   reviewers,
+  tracks,
 }) => {
   const sx = styles();
 
   const isUserResourceLoaded =
     user.status === 'success' || user.status === 'error';
   const isUserError = user.status === 'error';
-  const isReviwersDataLoaded =
+  const isReviewersDataLoaded =
     reviewers.status === 'success' || reviewers.status === 'error';
-  const isReviwersError = reviewers.status === 'error';
+  const isReviewersError = reviewers.status === 'error';
+  const isTracksSuccess = tracks.status === 'success';
 
   const normalizedHistoryPayload = () => {
-    if (!item.payload || !isReviwersDataLoaded) return null;
+    if (!item.payload || !isReviewersDataLoaded) return null;
 
     const normalizePayload = formatHistoryPayloadLines(
       item.payload,
-      isReviwersError ? null : reviewers.data,
+      isReviewersError ? null : reviewers.data,
       comments,
     );
     if (!normalizePayload) return null;
@@ -65,7 +67,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
           </Typography>
           <Stack direction="row" spacing={2} sx={sx.itemChangesWrapper}>
             <Typography variant="subtitle1">
-              <b>{historyActionsDictionary[item.action]}</b>
+              <b>{auditActionsDictionary[item.action]}</b>
             </Typography>
             {item.changes && item.changes.length !== 0 && (
               <Stack
@@ -74,7 +76,10 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
                 sx={sx.timelineContentWrapper}
               >
                 {item.changes.map((act) => {
-                  const [prev, next] = formatHistoryChangeValues(act);
+                  const [prev, next] = formatHistoryChangeValues(
+                    act,
+                    isTracksSuccess ? tracks.data : [],
+                  );
                   return (
                     <Stack
                       key={act.field}

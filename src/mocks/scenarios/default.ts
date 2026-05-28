@@ -1,3 +1,4 @@
+import { historyItemToAuditItem } from '../db/audit';
 import { comments } from '../db/comments';
 import { history } from '../db/history';
 import { proposals } from '../db/proposals';
@@ -17,6 +18,7 @@ const defaultScenarioSnapshot: MockScenario = {
   reviewers: clone(reviewers),
   comments: clone(comments),
   history: clone(history),
+  audit: clone(history.map(historyItemToAuditItem)),
   tracks: clone(tracks),
 };
 
@@ -31,6 +33,7 @@ export const buildEmptyProposals = (): MockScenario => ({
   reviewers: [],
   comments: [],
   history: [],
+  audit: [],
   tracks: [],
 });
 
@@ -42,5 +45,6 @@ export const buildEmptyWithProposals = (): MockScenario => ({
   reviewers: [],
   comments: [],
   history: [],
+  audit: [],
   tracks: clone(defaultScenarioSnapshot.tracks),
 });

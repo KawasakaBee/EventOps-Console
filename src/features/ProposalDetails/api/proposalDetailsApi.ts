@@ -1,27 +1,8 @@
-import { GetUsersListResponse } from '@/entities/user/api/contracts';
 import { ID } from '@/shared/types/primitives.types';
 import getProposalErrorState from '../model/getProposalErrorState';
 import { GetProposalResponse } from '@/entities/proposal/api/contracts';
-import { ProposalResource, UsersResource } from '../model/types';
+import { ProposalResource } from '../model/types';
 import { normalizeFetch } from '@/shared/api/normalizeResponse';
-
-export const fetchUsers = async (): Promise<UsersResource> => {
-  const users: UsersResource = {
-    status: 'loading',
-    data: [],
-  };
-
-  const response = await normalizeFetch<GetUsersListResponse>('/api/users');
-
-  if (!response.ok) {
-    users.status = 'error';
-    return users;
-  }
-
-  users.data = response.data.users;
-  users.status = 'success';
-  return users;
-};
 
 export const fetchProposal = async (
   id: ID,

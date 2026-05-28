@@ -143,6 +143,7 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
               users={users}
               comments={data.comments}
               reviewers={reviewersList}
+              tracks={tracks}
             />
           </Box>
         )}

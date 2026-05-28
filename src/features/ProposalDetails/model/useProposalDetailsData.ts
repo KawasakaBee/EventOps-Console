@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchProposal, fetchUsers } from '../api/proposalDetailsApi';
+import { fetchProposal } from '../api/proposalDetailsApi';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import {
   addHistory,
@@ -20,9 +20,11 @@ import {
 } from '@/entities/proposal/api/contracts';
 import { fetchTracks } from '@/entities/track/api/trackApi';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
-import { ProposalResource, UsersResource } from './types';
+import { ProposalResource } from './types';
 import { TracksResource } from '@/entities/track/api/types';
 import { ReviewersResource } from '@/entities/reviewer/api/types';
+import { UsersResource } from '@/entities/user/api/types';
+import { fetchUsers } from '@/entities/user/api/userApi';
 
 const useProposalDetailsData = (id: ID) => {
   //state

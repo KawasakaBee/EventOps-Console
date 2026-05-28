@@ -15,10 +15,11 @@ import {
   isProposalLevel,
   isProposalStatus,
 } from '@/entities/proposal/model/typeGuards';
-import { tracks } from '@/mocks/db/tracks';
+import { Track } from '@/entities/track/model/types';
 
 const formatHistoryChangeValues = (
   changes: ProposalFieldChange,
+  tracks?: Track[],
 ): FormattedChangeValues => {
   const resultParse = (prev: string, next: string): FormattedChangeValues => {
     return [prev || 'Начальное значение', next];
@@ -99,7 +100,7 @@ const formatHistoryChangeValues = (
     );
   }
 
-  if (changes.field === 'trackId') {
+  if (changes.field === 'trackId' && tracks) {
     if (
       typeof changes.previousValue !== 'string' ||
       typeof changes.nextValue !== 'string'

@@ -8,6 +8,8 @@ import { speakersHandlers } from '@/mocks/handlers/speakers.handlers';
 import { tagsHandlers } from '@/mocks/handlers/tags.handler';
 import { tracksHandlers } from '@/mocks/handlers/tracks.handler';
 import { usersHandlers } from '@/mocks/handlers/users.handlers';
+import { auditHandlers } from '@/mocks/handlers/audit.handlers';
+import { commentsHandlers } from '@/mocks/handlers/comments.handlers';
 
 export const server = setupServer(
   ...dashboardHandlers,
@@ -18,4 +20,6 @@ export const server = setupServer(
   ...usersHandlers,
   ...speakersHandlers,
   ...authHandlers,
+  ...auditHandlers,
+  ...commentsHandlers,
 );
