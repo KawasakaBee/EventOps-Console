@@ -9,7 +9,9 @@ import { PostCreateCommentResponse } from '@/entities/proposal/api/contracts';
 const useCommentAddData = (
   proposalId: ID,
   getValues: UseFormGetValues<AddCommentValues>,
-  onSuccess: (result: PostCreateCommentResponse) => void,
+  onSubmit: (comment: string) => string,
+  onError: (tempId: ID) => void,
+  onSuccess: (result: PostCreateCommentResponse, tempId: ID) => void,
 ) => {
   // state
   const [addCommentData, setAddCommentData] = useState<AddCommentResource>({
@@ -52,6 +54,7 @@ const useCommentAddData = (
     abortRef.current = controller;
 
     const fields = getValues();
+    const tempId = onSubmit(fields.message);
 
     const response = await fetchCommentAdd(
       proposalId,
@@ -60,19 +63,30 @@ const useCommentAddData = (
       controller.signal,
     );
 
-    if (!mountedRef.current) return;
-    if (saveVersion !== versionRef.current) return;
+    if (!mountedRef.current) {
+      onError(tempId);
+      return;
+    }
+    if (saveVersion !== versionRef.current) {
+      onError(tempId);
+      return;
+    }
 
     if (abortRef.current === controller) {
       abortRef.current = null;
     }
 
-    if (response === null) return;
+    if (response === null) {
+      onError(tempId);
+      return;
+    }
 
     setAddCommentData(response);
 
     if (response.data) {
-      onSuccess(response.data);
+      onSuccess(response.data, tempId);
+    } else {
+      onError(tempId);
     }
   };
 

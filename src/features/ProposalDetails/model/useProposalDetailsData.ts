@@ -10,6 +10,7 @@ import {
   addReview,
   resetDetails,
   updateAvailableActions,
+  deleteTemporalComment,
 } from './proposalDetailsSlice';
 import { ID } from '@/shared/types/primitives.types';
 import {
@@ -25,10 +26,12 @@ import { TracksResource } from '@/entities/track/api/types';
 import { ReviewersResource } from '@/entities/reviewer/api/types';
 import { UsersResource } from '@/entities/user/api/types';
 import { fetchUsers } from '@/entities/user/api/userApi';
+import { useAuth } from '@/entities/user/model/AuthProvider';
 
 const useProposalDetailsData = (id: ID) => {
   //state
   const dispatch = useAppDispatch();
+  const { user } = useAuth();
   const pageData = useAppSelector((store) => store.proposalDetails);
 
   const [proposal, setProposal] = useState<ProposalResource>({
@@ -82,7 +85,31 @@ const useProposalDetailsData = (id: ID) => {
     dispatch(addHistory(result.history));
   };
 
-  const handleAddCommentSuccess = async (result: PostCreateCommentResponse) => {
+  const handleAddCommentSubmit = (comment: string) => {
+    const tempId = `temp-${crypto.randomUUID()}`;
+    const optimisticCommentBody = {
+      id: tempId,
+      proposalId: id,
+      actorId: user.id,
+      actorRole: user.role,
+      message: comment,
+      createdAt: new Date().toISOString(),
+    };
+
+    dispatch(addComment(optimisticCommentBody));
+
+    return tempId;
+  };
+
+  const handleAddCommentError = (tempId: ID) => {
+    dispatch(deleteTemporalComment(tempId));
+  };
+
+  const handleAddCommentSuccess = async (
+    result: PostCreateCommentResponse,
+    tempId: ID,
+  ) => {
+    dispatch(deleteTemporalComment(tempId));
     dispatch(addComment(result.comment));
     dispatch(addHistory(result.history));
   };
@@ -142,6 +169,8 @@ const useProposalDetailsData = (id: ID) => {
     handleStatusSuccess,
     handleAssignReviewerSuccess,
     handleCreateReviewSuccess,
+    handleAddCommentSubmit,
+    handleAddCommentError,
     handleAddCommentSuccess,
   };
 };

@@ -49,6 +49,8 @@ const ProposalPage = () => {
     handleStatusSuccess,
     handleAssignReviewerSuccess,
     handleCreateReviewSuccess,
+    handleAddCommentSubmit,
+    handleAddCommentError,
     handleAddCommentSuccess,
   } = useDetailsPageData(proposalId);
 
@@ -172,6 +174,8 @@ const ProposalPage = () => {
               <CommentAddDialog
                 onClose={handleCommentAddDialogClose}
                 proposalId={addComment.id}
+                onSubmit={handleAddCommentSubmit}
+                onError={handleAddCommentError}
                 onSuccess={handleAddCommentSuccess}
               />
             )}

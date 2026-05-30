@@ -4,5 +4,7 @@ import { ID } from '@/shared/types/primitives.types';
 export interface ICommentAddDialogProps {
   onClose: () => void;
   proposalId: ID;
-  onSuccess: (result: PostCreateCommentResponse) => void;
+  onSubmit: (comment: string) => string;
+  onError: (tempId: ID) => void;
+  onSuccess: (result: PostCreateCommentResponse, tempId: ID) => void;
 }

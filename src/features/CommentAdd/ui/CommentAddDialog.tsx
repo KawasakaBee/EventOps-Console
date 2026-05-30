@@ -19,6 +19,8 @@ import Button from '@/shared/ui/Button/Button';
 const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
   proposalId,
   onClose,
+  onSubmit,
+  onError,
   onSuccess,
 }) => {
   const methods = useForm<AddCommentValues>({
@@ -38,6 +40,8 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
   const { addCommentData, handleAddCommentSubmit } = useCommentAddData(
     proposalId,
     getValues,
+    onSubmit,
+    onError,
     onSuccess,
   );
 

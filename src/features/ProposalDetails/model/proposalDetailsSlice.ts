@@ -7,6 +7,7 @@ import {
 } from '@/entities/proposal/model/types';
 import { Review } from '@/entities/review/model/types';
 import { Speaker } from '@/entities/speaker/model/types';
+import { ID } from '@/shared/types/primitives.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type DetailsState = {
@@ -68,6 +69,12 @@ const detailsSlice = createSlice({
       state.comments = [...state.comments, action.payload];
     },
 
+    deleteTemporalComment: (state, action: PayloadAction<ID>) => {
+      state.comments = [
+        ...state.comments.filter((comment) => comment.id !== action.payload),
+      ];
+    },
+
     addHistory: (state, action: PayloadAction<HistoryEntry>) => {
       state.history = [...state.history, action.payload];
     },
@@ -94,6 +101,7 @@ export const {
   hydrateProposal,
   addReview,
   addComment,
+  deleteTemporalComment,
   addHistory,
   updateAvailableActions,
   hydrateAvailableStatuses,
