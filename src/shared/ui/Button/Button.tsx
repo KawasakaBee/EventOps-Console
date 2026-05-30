@@ -7,8 +7,16 @@ import { IButton, sizeConfig, variantConfig } from './Button.types';
 import Link from 'next/link';
 
 const Button: React.FC<IButton> = (props) => {
-  const { mode, variant, size, ariaLabel, isDisableElevation, sx, onClick } =
-    props;
+  const {
+    mode,
+    variant,
+    size,
+    ariaLabel,
+    isDisableElevation,
+    intent,
+    sx,
+    onClick,
+  } = props;
 
   const {
     borderColor,
@@ -16,6 +24,16 @@ const Button: React.FC<IButton> = (props) => {
     disabledBorderColor,
     color,
     hoverColor,
+    submitBorderColor,
+    submitColor,
+    submitBgcolor,
+    hoverSubmitBorderColor,
+    hoverSubmitBgcolor,
+    dangerBorderColor,
+    dangerColor,
+    dangerBgcolor,
+    hoverDangerBorderColor,
+    hoverDangerBgcolor,
     bgColor,
     hoverBgColor,
     disabledBgColor,
@@ -26,22 +44,37 @@ const Button: React.FC<IButton> = (props) => {
   const { minWidth, paddingBlock, paddingInline, fontSize, iconFontSize } =
     sizeConfig[size];
 
+  const isSubmit = intent === 'success';
+  const isDanger = intent === 'danger';
+
   const commonButtonStyles = {
     minWidth,
     paddingBlock,
     paddingInline,
     border: '1px solid',
-    borderColor,
+    borderColor: isSubmit
+      ? submitBorderColor
+      : isDanger
+        ? dangerBorderColor
+        : borderColor,
     borderRadius: 1.5,
     fontSize,
     lineHeight: '1.2',
     letterSpacing: '-0.05em',
-    color,
-    bgcolor: bgColor,
+    color: isSubmit ? submitColor : isDanger ? dangerColor : color,
+    bgcolor: isSubmit ? submitBgcolor : isDanger ? dangerBgcolor : bgColor,
     '&:hover': {
-      borderColor: hoverBorderColor,
+      borderColor: isSubmit
+        ? hoverSubmitBorderColor
+        : isDanger
+          ? hoverDangerBorderColor
+          : hoverBorderColor,
       color: hoverColor,
-      bgcolor: hoverBgColor,
+      bgcolor: isSubmit
+        ? hoverSubmitBgcolor
+        : isDanger
+          ? hoverDangerBgcolor
+          : hoverBgColor,
       '& .MuiSvgIcon-root': {
         color: hoverIconColor,
       },

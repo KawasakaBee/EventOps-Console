@@ -177,7 +177,7 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
                 variant="contained"
                 size="medium"
                 type="submit"
-                sx={sx.acceptButton}
+                intent="success"
                 isDisabled={createReviewData.status === 'loading'}
               >
                 Добавить
@@ -188,7 +188,7 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
                 size="medium"
                 type="button"
                 onClick={onClose}
-                sx={sx.rejectButton}
+                intent="danger"
               >
                 Отменить
               </Button>

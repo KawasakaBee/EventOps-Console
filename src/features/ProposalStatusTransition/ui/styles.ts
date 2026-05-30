@@ -9,9 +9,7 @@ type Key =
   | 'statusNext'
   | 'formControl'
   | 'reasonInput'
-  | 'buttonsContainer'
-  | 'acceptButton'
-  | 'rejectButton';
+  | 'buttonsContainer';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -43,24 +41,6 @@ export const styles: Style = () => {
     },
     buttonsContainer: {
       justifyContent: 'center',
-    },
-    acceptButton: {
-      borderColor: 'success.main',
-      color: 'text.secondary',
-      bgcolor: 'success.main',
-      '&:hover': {
-        borderColor: 'success.darken',
-        bgcolor: 'success.darken',
-      },
-    },
-    rejectButton: {
-      borderColor: 'error.main',
-      color: 'text.secondary',
-      bgcolor: 'error.main',
-      '&:hover': {
-        borderColor: 'error.darken',
-        bgcolor: 'error.darken',
-      },
     },
   };
 };

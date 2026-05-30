@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { styles } from './styles';
 import { IPageHeader } from './PageHeader.types';
 import Button from '../Button/Button';
@@ -34,8 +34,10 @@ const PageHeader: React.FC<IPageHeader> = (props) => {
     <Box sx={sx.pageHeader}>
       {breacdrumbs()}
       {pageName && <Typography variant="h1">{pageName}</Typography>}
-      {title}
-      {children}
+      <Stack spacing={2}>
+        <Box>{title}</Box>
+        <Box>{children}</Box>
+      </Stack>
     </Box>
   );
 };

@@ -1,13 +1,5 @@
 import { IMyProposalsTabsProps } from './MyProposalsTabs.types';
-import {
-  Box,
-  MenuItem,
-  Pagination,
-  Select,
-  Stack,
-  Tab,
-  Tabs,
-} from '@mui/material';
+import { Box, Stack, Tab, Tabs } from '@mui/material';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import { myProposalsTabs } from '../../model/types';
 import { myProposalsTabsDictionary } from '../../model/dictionary';
@@ -17,7 +9,7 @@ import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import MyProposalsTableSkeleton from '../MyProposalsTable/MyProposalsTableSkeleton';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import useMyProposalsTabsData from '../../model/useMyProposalsTabsData';
-import { PAGE_SIZE_OPTIONS } from '@/shared/config/layout';
+import PaginationControl from '@/shared/ui/PaginationControl/PaginationControl';
 
 const MyProposalsTabs: React.FC<IMyProposalsTabsProps> = ({
   proposalsData,
@@ -26,15 +18,11 @@ const MyProposalsTabs: React.FC<IMyProposalsTabsProps> = ({
 }) => {
   const {
     currentTab,
-    selectedPage,
-    selectedPageSize,
     isProposalsDataLoaded,
     isProposalsError,
     isDraftsDataLoaded,
     isDraftsError,
     handleTabChange,
-    handlePageChange,
-    handlePageSizeChange,
     handleToSubmitRedirect,
   } = useMyProposalsTabsData(proposalsData, draftsData);
 
@@ -81,25 +69,10 @@ const MyProposalsTabs: React.FC<IMyProposalsTabsProps> = ({
             <MyProposalsTableSkeleton />
           )}
           {!isProposalsError && (
-            <Stack direction="row" spacing={4} sx={sx.paginationWrapper}>
-              <Pagination
-                count={proposalsData.data?.totalPages ?? 1}
-                page={selectedPage}
-                disabled={!isProposalsDataLoaded}
-                onChange={(_, page) => handlePageChange(page)}
-              />
-              <Select
-                value={selectedPageSize}
-                onChange={(event) => handlePageSizeChange(event.target.value)}
-                disabled={!isProposalsDataLoaded}
-              >
-                {PAGE_SIZE_OPTIONS.map((option) => (
-                  <MenuItem key={`Select-option-${option}`} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Stack>
+            <PaginationControl
+              totalPages={proposalsData.data?.totalPages}
+              isDisabled={!isProposalsDataLoaded}
+            />
           )}
         </Box>
       )}
@@ -124,25 +97,10 @@ const MyProposalsTabs: React.FC<IMyProposalsTabsProps> = ({
             <MyProposalsTableSkeleton />
           )}
           {!isDraftsError && (
-            <Stack direction="row" spacing={4} sx={sx.paginationWrapper}>
-              <Pagination
-                count={draftsData.data?.totalPages ?? 1}
-                page={selectedPage}
-                disabled={!isDraftsDataLoaded}
-                onChange={(_, page) => handlePageChange(page)}
-              />
-              <Select
-                value={selectedPageSize}
-                onChange={(event) => handlePageSizeChange(event.target.value)}
-                disabled={!isDraftsDataLoaded}
-              >
-                {PAGE_SIZE_OPTIONS.map((option) => (
-                  <MenuItem key={`Select-option-${option}`} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Stack>
+            <PaginationControl
+              totalPages={draftsData.data?.totalPages}
+              isDisabled={!isDraftsDataLoaded}
+            />
           )}
         </Box>
       )}

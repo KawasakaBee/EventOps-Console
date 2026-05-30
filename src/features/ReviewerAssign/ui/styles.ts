@@ -1,13 +1,7 @@
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key =
-  | 'dialogPaper'
-  | 'dialogContent'
-  | 'formControl'
-  | 'formHelperTest'
-  | 'acceptButton'
-  | 'rejectButton';
+type Key = 'dialogPaper' | 'dialogContent' | 'formControl' | 'formHelperTest';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -31,24 +25,6 @@ export const styles: Style = () => {
     },
     formHelperTest: {
       color: 'error.main',
-    },
-    acceptButton: {
-      borderColor: 'success.main',
-      color: 'text.secondary',
-      bgcolor: 'success.main',
-      '&:hover': {
-        borderColor: 'success.darken',
-        bgcolor: 'success.darken',
-      },
-    },
-    rejectButton: {
-      borderColor: 'error.main',
-      color: 'text.secondary',
-      bgcolor: 'error.main',
-      '&:hover': {
-        borderColor: 'error.darken',
-        bgcolor: 'error.darken',
-      },
     },
   };
 };

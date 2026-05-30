@@ -8,6 +8,16 @@ export const variantConfig: Record<ButtonVariant, VariantConfig> = {
     disabledBorderColor: 'text.disabled',
     color: 'text.secondary',
     hoverColor: 'text.secondary',
+    submitBorderColor: 'success.main',
+    submitColor: 'text.secondary',
+    submitBgcolor: 'success.main',
+    hoverSubmitBorderColor: 'success.darken',
+    hoverSubmitBgcolor: 'success.darken',
+    dangerBorderColor: 'error.main',
+    dangerColor: 'text.secondary',
+    dangerBgcolor: 'error.main',
+    hoverDangerBorderColor: 'error.darken',
+    hoverDangerBgcolor: 'error.darken',
     bgColor: 'primary.main',
     hoverBgColor: 'primary.light',
     disabledBgColor: 'text.disabled',
@@ -21,6 +31,16 @@ export const variantConfig: Record<ButtonVariant, VariantConfig> = {
     disabledBorderColor: 'text.disabled',
     color: 'text.primary',
     hoverColor: 'text.secondary',
+    submitBorderColor: 'success.main',
+    submitColor: 'text.secondary',
+    submitBgcolor: 'success.main',
+    hoverSubmitBorderColor: 'success.darken',
+    hoverSubmitBgcolor: 'success.darken',
+    dangerBorderColor: 'error.main',
+    dangerColor: 'text.secondary',
+    dangerBgcolor: 'error.main',
+    hoverDangerBorderColor: 'error.darken',
+    hoverDangerBgcolor: 'error.darken',
     bgColor: 'text.secondary',
     hoverBgColor: 'primary.light',
     disabledBgColor: 'text.disabled',
@@ -56,6 +76,7 @@ export const sizeConfig: Record<ButtonSize, SizeConfig> = {
 
 export type ButtonVariant = 'contained' | 'outlined';
 export type ButtonSize = 'small' | 'medium' | 'large';
+type ButtonIntent = 'primary' | 'success' | 'danger';
 
 export interface VariantConfig {
   borderColor: string;
@@ -69,6 +90,16 @@ export interface VariantConfig {
   iconColor: string;
   hoverIconColor: string;
   disabledIconColor: string;
+  submitBorderColor: string;
+  submitColor: string;
+  submitBgcolor: string;
+  hoverSubmitBorderColor: string;
+  hoverSubmitBgcolor: string;
+  dangerBorderColor: string;
+  dangerColor: string;
+  dangerBgcolor: string;
+  hoverDangerBorderColor: string;
+  hoverDangerBgcolor: string;
 }
 
 export interface SizeConfig {
@@ -83,6 +114,7 @@ interface IBaseProps {
   variant: ButtonVariant;
   size: ButtonSize;
   isDisableElevation?: boolean;
+  intent?: ButtonIntent;
   sx?: SxProps<Theme>;
 }
 

@@ -7,7 +7,6 @@ import { UsersResource } from '@/entities/user/api/types';
 import toLoadableResource from '@/shared/utils/toLoadableResource';
 import { fetchUsers } from '@/entities/user/api/userApi';
 import { usePathname, useRouter } from 'next/navigation';
-import { isPageSize } from '@/shared/utils/typeGuards';
 import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
 import { ReviewersResource } from '@/entities/reviewer/api/types';
 import { CommentsResource } from '@/entities/comment/api/types';
@@ -108,35 +107,12 @@ const useAuditData = (searchParams: string) => {
 
   // handlers
 
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set('page', String(page));
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
-  const handlePageSizeChange = (value: unknown) => {
-    const pageSize = Number(value);
-
-    if (!isPageSize(pageSize)) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set('pageSize', String(pageSize));
-    params.set('page', '1');
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
   return {
     pagination,
     reviewers: reviewersToResource,
     comments: commentsToResource,
     users: usersToResource,
     auditFiltersReset,
-    handlePageChange,
-    handlePageSizeChange,
   };
 };
 

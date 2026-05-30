@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'paginationWrapper' | 'exportSnackbar';
+type Key = 'exportSnackbar';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,9 +8,6 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    paginationWrapper: {
-      alignItems: 'center',
-    },
     exportSnackbar: {
       width: 300,
     },

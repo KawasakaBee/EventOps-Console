@@ -2,19 +2,11 @@
 
 import Button from '@/shared/ui/Button/Button';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import {
-  MenuItem,
-  Pagination,
-  Select,
-  Skeleton,
-  Snackbar,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Skeleton, Snackbar, Stack, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import parsePositiveInt from '@/shared/utils/parsePositiveInt';
-import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from '@/shared/config/layout';
+import { DEFAULT_PAGE_SIZE } from '@/shared/config/layout';
 import { isPageSize } from '@/shared/utils/typeGuards';
 import { PageSize } from '@/shared/types/primitives.types';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
@@ -26,8 +18,6 @@ import useProposalsPageData from '../../model/useProposalsListData';
 import { closeStatusTransition } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
 import ProposalsBulkActions from '../ProposalsBulkActions/ProposalsBulkActions';
 import ProposalsFilterBar from '../ProposalsFilterBar/ProposalsFilterBar';
-import ProposalsInfo from '../ProposalsInfo/ProposalsInfo';
-import ProposalsInfoSkeleton from '../ProposalsInfo/ProposalsInfoSkeleton';
 import ProposalsTableSkeleton from '../ProposalsTable/ProposalsTableSkeleton';
 import ProposalsTable from '../ProposalsTable/ProposalsTable';
 import ProposalStatusTransitionDialog from '@/features/ProposalStatusTransition/ui/ProposalStatusTransitionDialog';
@@ -38,9 +28,10 @@ import ReviewerAssignDialog from '@/features/ReviewerAssign/ui/ReviewerAssignDia
 import { closeAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 import ReviewCreateDialog from '@/features/ReviewCreate/ui/ReviewCreateDialog';
 import { closeCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
+import PaginationControl from '@/shared/ui/PaginationControl/PaginationControl';
+import InfoCards from '@/shared/ui/InfoCards/InfoCards';
 
 const ProposalsPage = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
   const dispatch = useAppDispatch();
@@ -138,27 +129,6 @@ const ProposalsPage = () => {
 
   const sx = styles();
 
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set('page', String(page));
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
-  const handlePageSizeChange = (value: unknown) => {
-    const pageSize = Number(value);
-
-    if (!isPageSize(pageSize)) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set('pageSize', String(pageSize));
-    params.set('page', '1');
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
   const handleOpenExportSnackbar = () => {
     setIsExportSnackbarOpen(true);
   };
@@ -216,18 +186,16 @@ const ProposalsPage = () => {
           </Button>
         </Stack>
       </PageHeader>
-      {isInitialLoading ? (
-        <ProposalsInfoSkeleton />
-      ) : (
-        isDataReady &&
-        pagination.data && (
-          <ProposalsInfo
-            totalProposalsCount={pagination.data.total}
-            selectedPage={selectedPage}
-            selectedPageSize={selectedPageSize}
-            filtersCount={activeFiltersCount}
-          />
-        )
+      {isDataReady && pagination.data && (
+        <InfoCards
+          items={[
+            { label: 'Всего заявок:', value: pagination.data.total },
+            { label: 'Страница:', value: selectedPage },
+            { label: 'Заявок на странице:', value: selectedPageSize },
+            { label: 'Активные фильтры:', value: activeFiltersCount },
+          ]}
+          isLoading={isInitialLoading}
+        />
       )}
       <ProposalsFilterBar
         searchParams={searchParams}
@@ -271,25 +239,10 @@ const ProposalsPage = () => {
         !criticalErrorProps &&
         proposalList &&
         proposalList.length !== 0 && (
-          <Stack direction="row" spacing={4} sx={sx.paginationWrapper}>
-            <Pagination
-              count={pagination.data?.totalPages ?? 1}
-              page={selectedPage}
-              disabled={isInitialLoading}
-              onChange={(_, page) => handlePageChange(page)}
-            />
-            <Select
-              value={selectedPageSize}
-              onChange={(event) => handlePageSizeChange(event.target.value)}
-              disabled={isInitialLoading}
-            >
-              {PAGE_SIZE_OPTIONS.map((option) => (
-                <MenuItem key={`Select-option-${option}`} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          </Stack>
+          <PaginationControl
+            totalPages={pagination.data?.totalPages}
+            isDisabled={isInitialLoading}
+          />
         )}
       {transition.type === 'single' && (
         <ProposalStatusTransitionDialog

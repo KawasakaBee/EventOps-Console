@@ -116,7 +116,7 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
               variant="contained"
               size="medium"
               type="submit"
-              sx={sx.acceptButton}
+              intent="success"
               onClick={handleReviewerAssign}
               isDisabled={
                 !isReviewersDataLoaded || isReviewersError || !currentReviewer
@@ -130,7 +130,7 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
               size="medium"
               type="button"
               onClick={() => handleCloseDialog(onClose)}
-              sx={sx.rejectButton}
+              intent="danger"
             >
               Отменить
             </Button>

@@ -14,6 +14,7 @@ const meta = {
     children: 'Button',
     isDisabled: false,
     ariaLabel: 'Test Button',
+    intent: 'primary',
     onClick: fn(),
   },
   argTypes: {
@@ -29,6 +30,10 @@ const meta = {
       control: 'inline-radio',
       options: ['small', 'medium', 'large'],
     },
+    intent: {
+      control: 'inline-radio',
+      options: ['primary', 'submit', 'danger'],
+    },
   },
 } satisfies Meta<typeof Button>;
 
@@ -41,6 +46,48 @@ export const DefaultButton: Story = {
     children: 'Button',
     variant: 'contained',
     size: 'medium',
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByTestId('custom-button');
+
+    await expect(button).toBeVisible();
+    if ('children' in args) {
+      await expect(canvas.getByText(String(args.children))).toBeInTheDocument();
+    }
+    await userEvent.click(button);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
+  },
+};
+
+export const SubmitButton: Story = {
+  args: {
+    mode: 'button',
+    children: 'Button',
+    variant: 'contained',
+    size: 'medium',
+    intent: 'success',
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByTestId('custom-button');
+
+    await expect(button).toBeVisible();
+    if ('children' in args) {
+      await expect(canvas.getByText(String(args.children))).toBeInTheDocument();
+    }
+    await userEvent.click(button);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
+  },
+};
+
+export const DangerButton: Story = {
+  args: {
+    mode: 'button',
+    children: 'Button',
+    variant: 'contained',
+    size: 'medium',
+    intent: 'danger',
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);

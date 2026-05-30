@@ -105,7 +105,7 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
                 variant="contained"
                 size="medium"
                 type="submit"
-                sx={sx.acceptButton}
+                intent="success"
                 isDisabled={addCommentData.status === 'loading'}
               >
                 Добавить
@@ -115,8 +115,8 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
                 variant="contained"
                 size="medium"
                 type="button"
+                intent="danger"
                 onClick={onClose}
-                sx={sx.rejectButton}
               >
                 Отменить
               </Button>

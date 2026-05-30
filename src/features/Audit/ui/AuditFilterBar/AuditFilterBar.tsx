@@ -17,7 +17,9 @@ import {
   auditEntitiesDictionary,
 } from '@/entities/audit/model/dictionaries';
 import Button from '@/shared/ui/Button/Button';
-import AuditSearchInput from '../AuditSearchInput/AuditSearchInput';
+import SearchInput from '@/shared/ui/SearchInput/SearchInput';
+import { patchAuditFilters } from '../../model/auditSlice';
+import { useAppDispatch } from '@/shared/store/hooks';
 
 const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
   searchParams,
@@ -25,6 +27,8 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
   isDisabled,
   handleFiltersReset,
 }) => {
+  const dispatch = useAppDispatch();
+
   const {
     filters,
     handleActionFilter,
@@ -50,13 +54,18 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
 
   const sx = styles();
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+    dispatch(patchAuditFilters({ search: value || null }));
+  };
+
   return (
     <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
-      <AuditSearchInput
-        isLoading={isDisabled}
-        sxFormControl={sx.filterInput}
-        sxSearchInput={sx.filterSearchInput}
+      <SearchInput
         searchValue={filters.search ?? ''}
+        label="Поиск по ID действия или ID сущности"
+        isDisabled={isDisabled}
+        handleSearchChange={handleSearchChange}
       />
       <Stack direction="row" sx={sx.filtersWrapper}>
         <FormControl disabled={isDisabled} sx={sx.filterInput}>

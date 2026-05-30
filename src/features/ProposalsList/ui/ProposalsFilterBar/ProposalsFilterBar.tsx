@@ -15,7 +15,6 @@ import { isId } from '@/shared/utils/typeGuards';
 import { ID } from '@/shared/types/primitives.types';
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
-import ProposalSearchInput from '../ProposalsSearchInput/ProposalsSearchInput';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { parseProposalsListQuery } from '@/entities/proposal/lib/parseProposalsListQuery';
@@ -42,6 +41,7 @@ import {
   isProposalLevel,
   isProposalStatus,
 } from '@/entities/proposal/model/typeGuards';
+import SearchInput from '@/shared/ui/SearchInput/SearchInput';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   tracks,
@@ -135,6 +135,12 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
     }
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    dispatch(patchFilters({ search: value || null }));
+  };
+
   const setFilterParam = (
     queryType: keyof FiltersState['draftFilters'],
     params: URLSearchParams,
@@ -172,11 +178,11 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
 
   return (
     <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
-      <ProposalSearchInput
-        isLoading={isDisabled}
-        sxFormControl={sx.filterInput}
-        sxSearchInput={sx.filterSearchInput}
+      <SearchInput
         searchValue={filters.search ?? ''}
+        label="Поиск по названию"
+        isDisabled={isDisabled}
+        handleSearchChange={handleSearchChange}
       />
       <Stack direction="row" sx={sx.filtersWrapper}>
         <FormControl disabled={isDisabled} sx={sx.filterInput}>

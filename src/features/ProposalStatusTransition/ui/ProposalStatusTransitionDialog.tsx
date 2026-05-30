@@ -97,8 +97,8 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
                     variant="contained"
                     size="medium"
                     type="submit"
+                    intent="success"
                     isDisabled={isLoading}
-                    sx={sx.acceptButton}
                   >
                     {isLoading ? <CircularProgress /> : 'Изменить статус'}
                   </Button>
@@ -108,7 +108,7 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
                     size="medium"
                     type="button"
                     onClick={onClose}
-                    sx={sx.rejectButton}
+                    intent="danger"
                   >
                     Отмена
                   </Button>

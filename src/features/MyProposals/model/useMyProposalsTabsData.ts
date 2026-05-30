@@ -3,10 +3,6 @@ import { useMemo } from 'react';
 import { MyProposalsTab } from './types';
 import { isMyPropsalsTab } from './typeGuards';
 import { PaginationResource } from '@/features/ProposalsList/model/types';
-import parsePositiveInt from '@/shared/utils/parsePositiveInt';
-import { PageSize } from '@/shared/types/primitives.types';
-import { DEFAULT_PAGE_SIZE } from '@/shared/config/layout';
-import { isPageSize } from '@/shared/utils/typeGuards';
 
 const useMyProposalsTabsData = (
   proposals: PaginationResource,
@@ -26,22 +22,6 @@ const useMyProposalsTabsData = (
     if (!isMyPropsalsTab(tab)) return defaultTab;
 
     return tab;
-  }, [searchParams]);
-
-  const selectedPage = useMemo(
-    () => parsePositiveInt(searchParams.get('page'), 1),
-    [searchParams],
-  );
-  const selectedPageSize = useMemo((): PageSize => {
-    const queryPageSize = searchParams.get('pageSize');
-
-    if (!queryPageSize) return DEFAULT_PAGE_SIZE;
-
-    const parsedPageSize = Number(queryPageSize);
-
-    if (!isPageSize(parsedPageSize)) return DEFAULT_PAGE_SIZE;
-
-    return parsedPageSize;
   }, [searchParams]);
 
   const isProposalsDataLoaded =
@@ -64,42 +44,17 @@ const useMyProposalsTabsData = (
     router.replace(`${pathname}?${params.toString()}`);
   };
 
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set('page', String(page));
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
-  const handlePageSizeChange = (value: unknown) => {
-    const pageSize = Number(value);
-
-    if (!isPageSize(pageSize)) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set('pageSize', String(pageSize));
-    params.set('page', '1');
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
   const handleToSubmitRedirect = () => {
     router.push('/submit');
   };
 
   return {
     currentTab,
-    selectedPage,
-    selectedPageSize,
     isProposalsDataLoaded,
     isProposalsError,
     isDraftsDataLoaded,
     isDraftsError,
     handleTabChange,
-    handlePageChange,
-    handlePageSizeChange,
     handleToSubmitRedirect,
   };
 };
