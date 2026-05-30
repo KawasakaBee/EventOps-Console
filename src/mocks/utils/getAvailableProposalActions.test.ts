@@ -194,7 +194,7 @@ describe('getAvailableProposalActions', () => {
         'speaker-user-003',
         1,
       ),
-    ).toStrictEqual(['edit', 'submit']);
+    ).toStrictEqual(['edit']);
   });
 
   it('Запрещенные для спикера действия для своей заявки в статусе отправлена', () => {

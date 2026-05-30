@@ -184,17 +184,6 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                     </Button>
                   </Box>
                 </Tooltip>
-              ) : action === 'edit' ? (
-                <Button
-                  key={action}
-                  mode="button"
-                  variant="contained"
-                  size="small"
-                  sx={styles({ action }).criticalButton}
-                  onClick={handleToEditRedirect}
-                >
-                  {availableActionsDictionary[action]}
-                </Button>
               ) : (
                 <Button
                   key={action}
@@ -202,7 +191,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   variant="contained"
                   size="small"
                   sx={styles({ action }).criticalButton}
-                  isDisabled
+                  onClick={handleToEditRedirect}
                 >
                   {availableActionsDictionary[action]}
                 </Button>

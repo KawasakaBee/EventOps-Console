@@ -104,7 +104,7 @@ export const proposalHandlers = [
     const total = result.length;
 
     result = paginateProposals(queryParams, result);
-    const proposalsListItem = mapProposalsToListItems(result);
+    const proposalsListItem = mapProposalsToListItems(result, user.role);
 
     const response: GetProposalsListResponse = {
       items: proposalsListItem,
@@ -158,6 +158,7 @@ export const proposalHandlers = [
     const availableStatuses = getAvailableProposalStatuses(
       proposal.status,
       reviews.length,
+      user.role,
     );
 
     const response: GetProposalResponse = {
@@ -287,6 +288,7 @@ export const proposalHandlers = [
       const prevAvailableStatuses = getAvailableProposalStatuses(
         prevProposal.status,
         foundPrevReviewsCount,
+        user.role,
       );
 
       if (!prevAvailableStatuses.includes(status)) return forbiddenError();
@@ -328,6 +330,7 @@ export const proposalHandlers = [
       const availableStatuses = getAvailableProposalStatuses(
         proposal.status,
         foundNextReviewsCount,
+        user.role,
       );
 
       const response: PatchProposalStatusResponse = {

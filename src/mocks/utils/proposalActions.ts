@@ -51,7 +51,7 @@ export const getAvailableProposalActions = (
   if (role === 'speaker') {
     if (!isProposalOwnedByUser(ownerId, userId)) return [];
 
-    if (status === 'draft') availableActions.push('edit', 'submit');
+    if (status === 'draft') availableActions.push('edit');
   }
 
   return availableActions;

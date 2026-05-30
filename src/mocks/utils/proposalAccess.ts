@@ -51,7 +51,7 @@ export const canChangeProposal = (
 ): boolean => {
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
   if (!proposal) return false;
-  if (role === 'manager') return true;
+  if (isManagerLike(role)) return true;
   if (role === 'speaker')
     return proposal.status === 'draft'
       ? isProposalOwnedByUser(proposal.ownerId, userId)

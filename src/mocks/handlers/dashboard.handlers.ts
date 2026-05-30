@@ -25,7 +25,7 @@ export const dashboardHandlers = [
 
     if (!isDashboardRange(range)) return queryError();
 
-    const dashboard = getDashboard(range);
+    const dashboard = getDashboard(range, user.role);
     const response: GetDashboardResponse = dashboard;
 
     return HttpResponse.json(response);

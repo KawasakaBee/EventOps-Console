@@ -1,4 +1,3 @@
-import { permissionsByRole } from '@/entities/user/model/permissions';
 import type { User } from '@/entities/user/model/types';
 
 export const initialUsers = [
@@ -8,7 +7,6 @@ export const initialUsers = [
     email: 'admin@eventops.dev',
     role: 'admin',
     eventIds: ['1'],
-    permissions: permissionsByRole.admin,
   },
   {
     id: '2',
@@ -16,7 +14,6 @@ export const initialUsers = [
     email: 'manager@eventops.dev',
     role: 'manager',
     eventIds: ['1'],
-    permissions: permissionsByRole.manager,
   },
   {
     id: 'manager-002',
@@ -24,7 +21,6 @@ export const initialUsers = [
     email: 'anna.petrova@eventops.dev',
     role: 'manager',
     eventIds: ['1'],
-    permissions: permissionsByRole.manager,
   },
   {
     id: 'manager-003',
@@ -32,7 +28,6 @@ export const initialUsers = [
     email: 'mikhail.sokolov@eventops.dev',
     role: 'manager',
     eventIds: ['1'],
-    permissions: permissionsByRole.manager,
   },
   {
     id: '3',
@@ -40,7 +35,6 @@ export const initialUsers = [
     email: 'reviewer@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-002',
@@ -48,7 +42,6 @@ export const initialUsers = [
     email: 'elena.morozova@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-003',
@@ -56,7 +49,6 @@ export const initialUsers = [
     email: 'ivan.smirnov@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-004',
@@ -64,7 +56,6 @@ export const initialUsers = [
     email: 'dmitry.volkov@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-005',
@@ -72,7 +63,6 @@ export const initialUsers = [
     email: 'maria.kuznetsova@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-006',
@@ -80,7 +70,6 @@ export const initialUsers = [
     email: 'alexey.orlov@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-007',
@@ -88,7 +77,6 @@ export const initialUsers = [
     email: 'olga.lebedeva@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-008',
@@ -96,7 +84,6 @@ export const initialUsers = [
     email: 'nikita.fedorov@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-009',
@@ -104,7 +91,6 @@ export const initialUsers = [
     email: 'sofia.belova@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: 'reviewer-010',
@@ -112,7 +98,6 @@ export const initialUsers = [
     email: 'pavel.antonov@eventops.dev',
     role: 'reviewer',
     eventIds: ['1'],
-    permissions: permissionsByRole.reviewer,
   },
   {
     id: '4',
@@ -120,7 +105,6 @@ export const initialUsers = [
     email: 'demo.speaker@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: '4',
   },
   {
@@ -129,7 +113,6 @@ export const initialUsers = [
     email: 'kira.antonova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-002',
   },
   {
@@ -138,7 +121,6 @@ export const initialUsers = [
     email: 'oleg.romanov@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-003',
   },
   {
@@ -147,7 +129,6 @@ export const initialUsers = [
     email: 'nina.volkova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-004',
   },
   {
@@ -156,7 +137,6 @@ export const initialUsers = [
     email: 'timur.galiev@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-005',
   },
   {
@@ -165,7 +145,6 @@ export const initialUsers = [
     email: 'alina.safina@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-006',
   },
   {
@@ -174,7 +153,6 @@ export const initialUsers = [
     email: 'sergey.pavlov@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-007',
   },
   {
@@ -183,7 +161,6 @@ export const initialUsers = [
     email: 'daria.mikhailova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-008',
   },
   {
@@ -192,7 +169,6 @@ export const initialUsers = [
     email: 'roman.egorov@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-009',
   },
   {
@@ -201,7 +177,6 @@ export const initialUsers = [
     email: 'ekaterina.zueva@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-010',
   },
   {
@@ -210,7 +185,6 @@ export const initialUsers = [
     email: 'viktor.denisov@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-011',
   },
   {
@@ -219,7 +193,6 @@ export const initialUsers = [
     email: 'irina.markova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-012',
   },
   {
@@ -228,7 +201,6 @@ export const initialUsers = [
     email: 'maxim.borisov@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-013',
   },
   {
@@ -237,7 +209,6 @@ export const initialUsers = [
     email: 'polina.karpova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-014',
   },
   {
@@ -246,7 +217,6 @@ export const initialUsers = [
     email: 'andrey.belyaev@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-015',
   },
   {
@@ -255,7 +225,6 @@ export const initialUsers = [
     email: 'yulia.sidorova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-016',
   },
   {
@@ -264,7 +233,6 @@ export const initialUsers = [
     email: 'kirill.fomin@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-017',
   },
   {
@@ -273,7 +241,6 @@ export const initialUsers = [
     email: 'natalia.osipova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-018',
   },
   {
@@ -282,7 +249,6 @@ export const initialUsers = [
     email: 'artem.kuzin@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-019',
   },
   {
@@ -291,7 +257,6 @@ export const initialUsers = [
     email: 'marina.gromova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-020',
   },
   {
@@ -300,7 +265,6 @@ export const initialUsers = [
     email: 'gleb.tarasov@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-021',
   },
   {
@@ -309,7 +273,6 @@ export const initialUsers = [
     email: 'lena.vinogradova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-022',
   },
   {
@@ -318,7 +281,6 @@ export const initialUsers = [
     email: 'stepan.nikitin@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-023',
   },
   {
@@ -327,7 +289,6 @@ export const initialUsers = [
     email: 'vera.lobanova@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-024',
   },
   {
@@ -336,7 +297,6 @@ export const initialUsers = [
     email: 'ilya.medvedev@example.com',
     role: 'speaker',
     eventIds: ['1'],
-    permissions: permissionsByRole.speaker,
     speakerId: 'speaker-025',
   },
 ] satisfies User[];

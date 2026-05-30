@@ -3,9 +3,11 @@ import { reviews } from '../db/reviews';
 import { ID } from '@/shared/types/primitives.types';
 import { ProposalListQuery } from '@/entities/proposal/model/query';
 import getAvailableProposalStatuses from './proposalStatusTransitions';
+import { Role } from '@/entities/user/model/types';
 
 export const mapProposalsToListItems = (
   proposals: Proposal[],
+  role: Role,
 ): ProposalListItem[] => {
   const foundReviewsCount = (id: ID) =>
     reviews.filter((review) => review.proposalId === id).length;
@@ -21,6 +23,7 @@ export const mapProposalsToListItems = (
     availableStatuses: getAvailableProposalStatuses(
       p.status,
       foundReviewsCount(p.id),
+      role,
     ),
   }));
 };

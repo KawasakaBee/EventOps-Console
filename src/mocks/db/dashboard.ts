@@ -14,6 +14,7 @@ import {
   proposalStatuses,
 } from '@/entities/proposal/model/types';
 import { mapProposalsToListItems } from '../utils/proposalList';
+import { Role } from '@/entities/user/model/types';
 
 const getKpis = (proposals: Proposal[]): DashboardKpis => {
   return {
@@ -69,7 +70,10 @@ const getProposalsInsideRange = (
   );
 };
 
-const getRecentSubmissions = (proposals: Proposal[]): ProposalListItem[] => {
+const getRecentSubmissions = (
+  proposals: Proposal[],
+  role: Role,
+): ProposalListItem[] => {
   let result = proposals;
 
   result = result.toSorted((a, b) => {
@@ -81,7 +85,7 @@ const getRecentSubmissions = (proposals: Proposal[]): ProposalListItem[] => {
 
   result = result.slice(0, 5);
 
-  return mapProposalsToListItems(result);
+  return mapProposalsToListItems(result, role);
 };
 
 const getMissingReviewers = (proposals: Proposal[]): AttentionItem => {
@@ -138,12 +142,12 @@ const getAttentionItems = (proposals: Proposal[]): AttentionItem[] => {
   ];
 };
 
-export const getDashboard = (days: DashboardRange): Dashboard => {
+export const getDashboard = (days: DashboardRange, role: Role): Dashboard => {
   const proposals = getProposalsInsideRange(dbProposals, days);
   const kpis = getKpis(proposals);
   const submissionsByStatus = getSubmissionsByStatus(proposals);
   const byTrack = getProposalsByTrackId(proposals);
-  const recentSubmissions = getRecentSubmissions(proposals);
+  const recentSubmissions = getRecentSubmissions(proposals, role);
   const attentionItems = getAttentionItems(dbProposals);
 
   return {

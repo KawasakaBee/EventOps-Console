@@ -39,11 +39,7 @@ export const proposalActions = [
 export type ProposalAction = (typeof proposalActions)[number];
 
 export const criticalActions = proposalActions.filter(
-  (action) =>
-    action === 'edit' ||
-    action === 'submit' ||
-    action === 'accept' ||
-    action === 'reject',
+  (action) => action === 'edit' || action === 'accept' || action === 'reject',
 );
 
 export type CriticalAction = (typeof criticalActions)[number];

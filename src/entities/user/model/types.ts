@@ -1,5 +1,4 @@
 import { ID } from '@/shared/types/primitives.types';
-import type { Permission } from './permissions';
 
 export interface User {
   id: ID;
@@ -7,7 +6,6 @@ export interface User {
   email: string;
   role: Role;
   eventIds: ID[];
-  permissions: Permission[];
   speakerId?: ID;
 }
 

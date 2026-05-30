@@ -9,6 +9,10 @@ import {
 } from './proposalAccess';
 
 describe('getProposalsListAccess', () => {
+  it('Доступы для администратора', () => {
+    expect(getProposalsListAccess('admin', null)).toBe('all');
+  });
+
   it('Доступы для менеджера', () => {
     expect(getProposalsListAccess('manager', null)).toBe('all');
   });
@@ -30,6 +34,15 @@ describe('getProposalsListAccess', () => {
 });
 
 describe('canReadProposal', () => {
+  it('Администратор может читать любую заявку', () => {
+    expect(
+      canReadProposal('admin', '1', {
+        proposalId: 'proposal-013',
+        ownerId: 'speaker-008',
+      }),
+    ).toBe(true);
+  });
+
   it('Менеджер может читать любую заявку', () => {
     expect(
       canReadProposal('manager', '2', {
