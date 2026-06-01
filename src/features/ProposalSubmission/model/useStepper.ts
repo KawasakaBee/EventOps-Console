@@ -3,21 +3,16 @@ import { SubmitValues } from './schema';
 import { useState } from 'react';
 import { steps, stepsNumbersByName, SubmitStep } from './steps';
 import changeStep from './changeStep';
-import { fetchCreateProposal } from '../api/ProposalSubmissionApi';
 import { useRouter } from 'next/navigation';
-import { SubmitProposalResource } from './types';
 import { ID } from '@/shared/types/primitives.types';
+import { useCreateProposalMutation } from '../api/proposalSubmissionApi';
 
 const useStepper = (id: ID | null, clearStorage: () => void) => {
   // state
   const router = useRouter();
   const { trigger, getValues } = useFormContext<SubmitValues>();
 
-  const [draft, setDraft] = useState<SubmitProposalResource>({
-    status: 'idle',
-    data: null,
-    errorProps: null,
-  });
+  const [createProposal, createState] = useCreateProposalMutation();
 
   const [activeStep, setActiveStep] = useState<SubmitStep>('basic');
   const [isDraftDialogOpened, setIsDraftDialogOpened] =
@@ -46,21 +41,21 @@ const useStepper = (id: ID | null, clearStorage: () => void) => {
   };
 
   const handleDraftSubmit = async () => {
-    if (draft.status === 'success') return;
-
-    setDraft({
-      status: 'loading',
-      data: null,
-      errorProps: null,
-    });
+    if (createState.isSuccess || createState.isLoading) return;
 
     const formValues = getValues();
 
-    const createdResource = await fetchCreateProposal(formValues, 'draft', () =>
-      setIsDraftDialogOpened(false),
-    );
+    const { duration, ...restValues } = formValues;
+    const normalizeDuration = Number(duration);
 
-    setDraft(createdResource);
+    const requestBody = {
+      ...restValues,
+      status: 'draft' as const,
+      duration: normalizeDuration,
+    };
+
+    await createProposal(requestBody);
+
     setIsDraftDialogOpened(true);
   };
 
@@ -69,8 +64,8 @@ const useStepper = (id: ID | null, clearStorage: () => void) => {
   };
 
   const handleDraftContinue = () => {
-    if (draft.data && !id) {
-      router.push(`/submit/${draft.data.id}`);
+    if (createState.data && !id) {
+      router.push(`/submit/${createState.data.proposal.id}`);
     }
     clearStorage();
   };
@@ -84,7 +79,7 @@ const useStepper = (id: ID | null, clearStorage: () => void) => {
     handleStepNext,
     handleDraftSubmit,
     isDraftDialogOpened,
-    draft,
+    createState,
     handleDraftDialogClose,
     handleDraftContinue,
   };

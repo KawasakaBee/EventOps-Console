@@ -20,14 +20,16 @@ import Button from '@/shared/ui/Button/Button';
 import SearchInput from '@/shared/ui/SearchInput/SearchInput';
 import { patchAuditFilters } from '../../model/auditSlice';
 import { useAppDispatch } from '@/shared/store/hooks';
+import { useGetUsersQuery } from '@/entities/user/api/userApi';
 
 const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
   searchParams,
-  users,
   isDisabled,
   handleFiltersReset,
 }) => {
   const dispatch = useAppDispatch();
+
+  const { data, isLoading, isError } = useGetUsersQuery();
 
   const {
     filters,
@@ -40,10 +42,11 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
   const actionsList = filters.action;
   const entitiesList = filters.entity;
 
-  const isUsersSuccess = users.status === 'success';
+  const isUsersSuccess =
+    !isLoading && !isError && data && data.users.length !== 0;
 
   const usersOptions = isUsersSuccess
-    ? users.data.map((item) => ({
+    ? data.users.map((item) => ({
         label: item.name,
         id: item.id,
       }))

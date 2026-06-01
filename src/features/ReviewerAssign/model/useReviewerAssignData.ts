@@ -1,21 +1,14 @@
-import { fetchReviewers } from '@/entities/reviewer/api/reviewerApi';
-import { ReviewersResource } from '@/entities/reviewer/api/types';
 import { ID } from '@/shared/types/primitives.types';
-import toLoadableResource from '@/shared/utils/toLoadableResource';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { fetchReviewerAssign } from '../api/ReviewerAssignApi';
-import { AssignResource, AssignReviewerProps } from './types';
+import { useMemo, useRef, useState } from 'react';
+import { AssignReviewerProps } from './types';
+import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
+import { useAssignReviewerMutation } from '../api/ReviewerAssignApi';
 
 const useReviewerAssignData = (props: AssignReviewerProps) => {
   // state
-  const [reviewers, setReviewers] = useState<ReviewersResource>({
-    status: 'loading',
-    data: [],
-  });
-  const [assignData, setAssignData] = useState<AssignResource>({
-    status: 'idle',
-    errorProps: null,
-  });
+
+  const reviewers = useGetReviewersQuery();
+  const [assignReviewer, assignState] = useAssignReviewerMutation();
 
   const [currentReviewer, setCurrentReviewer] = useState<{
     label: string;
@@ -23,49 +16,16 @@ const useReviewerAssignData = (props: AssignReviewerProps) => {
   } | null>(null);
   const [emptyReviewerError, setEmptyReviewerError] = useState<string>('');
 
-  const mountedRef = useRef(false);
-  const versionRef = useRef(0);
-  const abortRef = useRef<AbortController | null>(null);
   const autocompleteAnchor = useRef<HTMLInputElement | null>(null);
 
   const reviewersOptions = useMemo(
-    () => reviewers.data.map((item) => ({ label: item.name, id: item.id })),
+    () =>
+      (reviewers.data?.reviewers ?? []).map((item) => ({
+        label: item.name,
+        id: item.id,
+      })),
     [reviewers.data],
   );
-
-  const reviewersToResource = toLoadableResource(
-    reviewers.status,
-    reviewersOptions,
-    'Не удалось загрузить список ревьюверов',
-  );
-
-  const abortRequest = () => {
-    abortRef.current?.abort();
-    abortRef.current = null;
-  };
-
-  // useEffect
-
-  useEffect(() => {
-    const getReviewers = async () => {
-      const reviewersResource = await fetchReviewers();
-
-      if (!mountedRef.current) return;
-
-      setReviewers(reviewersResource);
-    };
-
-    getReviewers();
-  }, []);
-
-  useEffect(() => {
-    mountedRef.current = true;
-
-    return () => {
-      abortRequest();
-      mountedRef.current = false;
-    };
-  }, []);
 
   // handlers
 
@@ -85,53 +45,63 @@ const useReviewerAssignData = (props: AssignReviewerProps) => {
       setEmptyReviewerError('Выберите ревьюера');
       return;
     }
-
-    abortRequest();
-
-    const saveVersion = ++versionRef.current;
-    const controller = new AbortController();
-    abortRef.current = controller;
-
-    setAssignData({
-      status: 'loading',
-      errorProps: null,
-    });
-
-    const response = await fetchReviewerAssign(
-      props,
-      currentReviewer.id,
-      handleReviewerAssign,
-      controller.signal,
-    );
-
-    if (abortRef.current === controller) {
-      abortRef.current = null;
+    if (props.mode === 'single') {
+      await assignReviewer({
+        id: props.proposalId,
+        reviewerId: currentReviewer.id,
+      }).unwrap();
+      return;
     }
 
-    if (!mountedRef.current) return;
-    if (saveVersion !== versionRef.current) return;
+    if (props.mode === 'multiple') {
+      const { onSuccess } = props;
 
-    if (response === null) return;
+      const requests = props.proposalIds.map(async (proposalId) => {
+        try {
+          const data = await assignReviewer({
+            id: proposalId,
+            reviewerId: currentReviewer.id,
+          }).unwrap();
 
-    setAssignData(response);
+          return {
+            status: 'fulfilled' as const,
+            proposalId,
+            data,
+          };
+        } catch (error) {
+          return {
+            status: 'rejected' as const,
+            proposalId,
+            error,
+          };
+        }
+      });
+
+      const results = await Promise.all(requests);
+
+      const failedCount = results.flatMap((result) =>
+        result.status === 'rejected'
+          ? [{ id: result.proposalId, error: result.error }]
+          : [],
+      ).length;
+
+      onSuccess(failedCount);
+    }
   };
 
   const handleCloseDialog = (onClose: () => void) => {
     onClose();
-    setAssignData({
-      status: 'idle',
-      errorProps: null,
-    });
   };
 
   return {
-    reviewers: reviewersToResource,
-    assignData,
+    reviewers,
+    reviewersOptions,
     currentReviewer,
     autocompleteAnchor,
     emptyReviewerError,
     handleReviewerSet,
     handleReviewerAssign,
+    assignState,
     handleCloseDialog,
   };
 };

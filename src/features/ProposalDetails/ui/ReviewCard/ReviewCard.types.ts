@@ -1,8 +1,12 @@
 import { Review } from '@/entities/review/model/types';
-import { ReviewerListItem } from '@/entities/reviewer/model/types';
-import { Resource } from '@/shared/types/resource.types';
+import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
+import { AppBaseQueryError } from '@/shared/api/baseApi';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export interface IReviewCardProps {
   review: Review;
-  reviewer: Resource<ReviewerListItem>;
+  reviewers: GetReviewersResponse | undefined;
+  isReviewersLoading: boolean;
+  isReviewersError: boolean;
+  reviewersError: AppBaseQueryError | SerializedError | undefined;
 }

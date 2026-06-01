@@ -2,10 +2,10 @@ import { PROPOSAL_DRAFT_STORAGE_KEY } from '@/shared/config/layout';
 import { isId } from '@/shared/utils/typeGuards';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { fetchChangeProposal } from '../api/ProposalSubmissionApi';
 import { SubmitValues } from './schema';
 import { SubmitDirtyFields } from './types';
 import { buildDirtySubmitPayload } from './mappers';
+import { useChangeProposalMutation } from '../api/proposalSubmissionApi';
 
 const useSubmissionAutosave = (
   methods: UseFormReturn<SubmitValues>,
@@ -13,19 +13,14 @@ const useSubmissionAutosave = (
 ) => {
   const { reset, getValues, resetField } = methods;
 
+  const [changeProposal] = useChangeProposalMutation();
+
   const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const autosaveVersionRef = useRef(0);
-  const autosaveAbortRef = useRef<AbortController | null>(null);
 
   const [isRecoveryDialogOpened, setIsRecoveryDialogOpened] =
     useState<boolean>(false);
   const [recoveryData, setRecoveryData] = useState<SubmitValues | null>(null);
   const [isAutosaveError, setIsAutosaveError] = useState<boolean>(false);
-
-  const abortAutosaveRequest = useCallback(() => {
-    autosaveAbortRef.current?.abort();
-    autosaveAbortRef.current = null;
-  }, []);
 
   const clearAutosaveTimer = useCallback(() => {
     if (!autosaveTimerRef.current) return;
@@ -106,37 +101,19 @@ const useSubmissionAutosave = (
       if (!draftId || !isId(draftId)) return;
 
       clearAutosaveTimer();
-      abortAutosaveRequest();
-
-      const saveVersion = autosaveVersionRef.current + 1;
-      autosaveVersionRef.current = saveVersion;
 
       autosaveTimerRef.current = setTimeout(async () => {
         const formValues = getValues();
         const requestBody = buildDirtySubmitPayload(dirtyFields, formValues);
 
-        const controller = new AbortController();
-        autosaveAbortRef.current = controller;
-
-        const result = await fetchChangeProposal(
-          requestBody,
-          'draft',
-          draftId,
-          () => null,
-          controller.signal,
-        );
-
-        if (autosaveAbortRef.current === controller) {
-          autosaveAbortRef.current = null;
-        }
+        const result = await changeProposal({
+          id: draftId,
+          payload: { ...requestBody, status: 'draft' },
+        });
 
         autosaveTimerRef.current = null;
 
-        if (saveVersion !== autosaveVersionRef.current) return;
-
-        if (result === null) return;
-
-        if (result.status === 'error') {
+        if (result.error) {
           setIsAutosaveError(true);
           return;
         }
@@ -151,7 +128,7 @@ const useSubmissionAutosave = (
       getValues,
       resetAutosavedFields,
       clearAutosaveTimer,
-      abortAutosaveRequest,
+      changeProposal,
     ],
   );
 
@@ -227,9 +204,8 @@ const useSubmissionAutosave = (
   useEffect(() => {
     return () => {
       clearAutosaveTimer();
-      abortAutosaveRequest();
     };
-  }, [clearAutosaveTimer, abortAutosaveRequest]);
+  }, [clearAutosaveTimer]);
 
   return {
     scheduleAutosave,
@@ -241,6 +217,7 @@ const useSubmissionAutosave = (
     deleteFormFromStorage,
     isAutosaveError,
     handleAutosaveErrorClose,
+    clearAutosaveTimer,
   };
 };
 

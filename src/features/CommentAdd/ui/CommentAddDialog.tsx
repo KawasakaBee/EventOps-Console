@@ -15,13 +15,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useCommentAddData from '../model/useCommentAddData';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import Button from '@/shared/ui/Button/Button';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getAddCommentErrorState from '../model/getAddCommentErrorState';
 
 const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
   proposalId,
   onClose,
-  onSubmit,
-  onError,
-  onSuccess,
 }) => {
   const methods = useForm<AddCommentValues>({
     defaultValues,
@@ -37,17 +36,10 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
     formState: { errors },
   } = methods;
 
-  const { addCommentData, handleAddCommentSubmit } = useCommentAddData(
+  const { createState, handleAddCommentSubmit } = useCommentAddData(
     proposalId,
     getValues,
-    onSubmit,
-    onError,
-    onSuccess,
   );
-
-  const isCommentDataLoaded =
-    addCommentData.status === 'success' || addCommentData.status === 'error';
-  const isCommentDataError = addCommentData.status === 'error';
 
   const sx = styles();
 
@@ -61,28 +53,30 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
         },
       }}
     >
-      {isCommentDataLoaded ? (
-        isCommentDataError ? (
-          addCommentData.errorProps && (
-            <ErrorState {...addCommentData.errorProps} />
-          )
-        ) : (
-          <>
-            <DialogTitle>Комментарий успешно добавлен!</DialogTitle>
-            <DialogContent>Вы можете продолжить работу с заявкой</DialogContent>
-            <DialogActions>
-              <Button
-                mode="button"
-                variant="contained"
-                size="medium"
-                type="button"
-                onClick={onClose}
-              >
-                Продолжить
-              </Button>
-            </DialogActions>
-          </>
+      {createState.isError ? (
+        isAppBaseQueryError(createState.error) && (
+          <ErrorState
+            {...getAddCommentErrorState(createState.error.error, {
+              retry: handleAddCommentSubmit,
+            })}
+          />
         )
+      ) : createState.data ? (
+        <>
+          <DialogTitle>Комментарий успешно добавлен!</DialogTitle>
+          <DialogContent>Вы можете продолжить работу с заявкой</DialogContent>
+          <DialogActions>
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              type="button"
+              onClick={onClose}
+            >
+              Продолжить
+            </Button>
+          </DialogActions>
+        </>
       ) : (
         <>
           <DialogTitle>Добавить комментарий</DialogTitle>
@@ -106,7 +100,7 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
                 size="medium"
                 type="submit"
                 intent="success"
-                isDisabled={addCommentData.status === 'loading'}
+                isDisabled={createState.isLoading}
               >
                 Добавить
               </Button>

@@ -17,15 +17,28 @@ import {
   formatDictionary,
   levelDictionary,
 } from '@/entities/proposal/model/dictionaries';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { Proposal } from '@/entities/proposal/model/types';
+import { Track } from '@/entities/track/model/types';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 
 const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
   proposal,
-  track,
 }) => {
-  const isDataLoaded = track.status === 'success' || track.status === 'error';
-  const isError = track.status === 'error';
-
   const sx = styles();
+
+  const { data, isLoading, isError, error } = useGetTracksQuery();
+
+  const track = (proposalData: Proposal, tracks: Track[]) => {
+    const foundTrack = tracks.find(
+      (track) => track.id === proposalData.trackId,
+    );
+    return (
+      foundTrack ?? {
+        title: 'Трек не найден',
+      }
+    );
+  };
 
   return proposal ? (
     <Stack spacing={6}>
@@ -48,12 +61,17 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
               shape="rounded"
               size="small"
             />
-            {isDataLoaded ? (
-              <Typography>
-                Трек: {isError ? track.message : track.data.title}
-              </Typography>
-            ) : (
+            {isLoading ? (
               <Skeleton variant="text" width={200} />
+            ) : (
+              <Typography>
+                Трек:{' '}
+                {isError
+                  ? getApiErrorMessage(error)
+                  : data
+                    ? track(proposal, data.tracks).title
+                    : 'Не удалось загрузить трек'}
+              </Typography>
             )}
             <Typography>
               Продолжительность:

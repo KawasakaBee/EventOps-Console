@@ -1,8 +1,5 @@
 import { ProposalStatus } from '@/entities/proposal/model/types';
-import { PatchProposalStatusResponse } from '@/entities/proposal/api/contracts';
 import { ID } from '@/shared/types/primitives.types';
-import { PageStatus } from '@/shared/types/resource.types';
-import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 
 export type StatusTransition =
   | { type: 'idle' }
@@ -31,26 +28,15 @@ export type OpenMultipleTransitionPayload = {
   nextStatus: ProposalStatus;
 };
 
-export type MultipleStatusTransitionResult = {
-  successful: PatchProposalStatusResponse[];
-  failed: unknown[];
-};
-
 export type StatusTransitionSubmitProps =
   | {
       mode: 'single';
-      id: ID;
+      proposalId: ID;
       nextStatus: ProposalStatus;
-      onSuccess: (result: PatchProposalStatusResponse) => void;
     }
   | {
       mode: 'multiple';
-      ids: ID[];
+      proposalIds: ID[];
       nextStatus: ProposalStatus;
-      onSuccess: (result: MultipleStatusTransitionResult) => void;
+      onSuccess: (failedCount: number) => void;
     };
-
-export interface DialogResource {
-  status: PageStatus;
-  errorProps: ErrorStateProps | null;
-}

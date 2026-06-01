@@ -18,19 +18,20 @@ import { useMemo } from 'react';
 import { ProposalListItem } from '@/entities/proposal/model/types';
 import { Track } from '@/entities/track/model/types';
 import MyProposalsRowActions from '../MyProposalsRowActions/MyProposalsRowActions';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 
 const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
   proposal,
   role,
   tracks,
+  isTracksLoading,
+  isTracksError,
+  tracksError,
 }) => {
   const rowActions = useMemo(
     () => getProposalsListRowActions(role, proposal.status),
     [role, proposal.status],
   );
-
-  const isDataLoaded = tracks.status === 'success' || tracks.status === 'error';
-  const isError = tracks.status === 'error';
 
   const track = (proposal: ProposalListItem, tracks: Track[]) => {
     const foundTrack = tracks.find((track) => track.id === proposal.trackId);
@@ -60,14 +61,18 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
       case 'level':
         return levelDictionary[data.level];
       case 'trackId': {
-        if (!isDataLoaded)
+        if (isTracksLoading)
           return (
             <Skeleton
               variant="text"
               width={myProposalTableWidthDictionary[rowName].skeletonWidth}
             />
           );
-        return isError ? tracks.message : track(proposal, tracks.data).title;
+        return isTracksError
+          ? getApiErrorMessage(tracksError)
+          : tracks
+            ? track(proposal, tracks.tracks).title
+            : 'Не удалось загрузить трек';
       }
       case 'updatedAt':
         return formatIsoDateTime(data.updatedAt);

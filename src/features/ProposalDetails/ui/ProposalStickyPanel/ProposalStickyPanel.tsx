@@ -39,14 +39,17 @@ import { useRouter } from 'next/navigation';
 import { openSingleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 import { openCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
 import { openAddCommentDialog } from '@/features/CommentAdd/model/commentAddSlice';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
-  data,
-  tracks,
+  details,
 }) => {
   const router = useRouter();
-  const { proposal, availableActions } = data;
+  const { proposal, availableActions } = details;
   const dispatch = useAppDispatch();
+
+  const { data, isLoading, isError, error } = useGetTracksQuery();
 
   const [statusMenuAnchorEl, setStatusMenuAnchorEl] =
     useState<HTMLElement | null>(null);
@@ -60,10 +63,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     [availableActions],
   );
 
-  const isDataLoaded = tracks.status === 'success' || tracks.status === 'error';
-  const isError = tracks.status === 'error';
-
-  const isAcceptAndRejectButtonDisable = data.reviews.length === 0;
+  const isAcceptAndRejectButtonDisable = details.reviews.length === 0;
   const isStatusMenuOpened = !!statusMenuAnchorEl;
 
   const sx = styles({ action: 'edit' });
@@ -72,10 +72,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     const foundTrack = tracks.find((track) => track.id === proposal.trackId);
     return (
       foundTrack ?? {
-        id: '',
         title: 'Трек не удалось загрузить',
-        description: '',
-        order: 0,
       }
     );
   };
@@ -99,12 +96,12 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
 
     setStatusMenuAnchorEl(null);
 
-    if (!data.proposal) return;
+    if (!details.proposal) return;
 
     dispatch(
       openSingleStatusTransition({
-        id: data.proposal.id,
-        prevStatus: data.proposal.status,
+        id: details.proposal.id,
+        prevStatus: details.proposal.status,
         nextStatus: status,
       }),
     );
@@ -116,18 +113,18 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   };
 
   const handleReviewerAssignDialogOpen = () => {
-    if (!data.proposal) return;
-    dispatch(openSingleAssignReviewer({ id: data.proposal.id }));
+    if (!details.proposal) return;
+    dispatch(openSingleAssignReviewer({ id: details.proposal.id }));
   };
 
   const handleReviewCreateDialogOpen = () => {
-    if (!data.proposal) return;
-    dispatch(openCreateReviewDialog({ id: data.proposal.id }));
+    if (!details.proposal) return;
+    dispatch(openCreateReviewDialog({ id: details.proposal.id }));
   };
 
   const handleCommentAddDialogOpen = () => {
-    if (!data.proposal) return;
-    dispatch(openAddCommentDialog({ id: data.proposal.id }));
+    if (!details.proposal) return;
+    dispatch(openAddCommentDialog({ id: details.proposal.id }));
   };
 
   return (
@@ -203,7 +200,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
           <Stack spacing={1}>
             {additionalActions.map((action) =>
               action === 'changeStatus' ? (
-                data.availableStatuses.length !== 0 && (
+                details.availableStatuses.length !== 0 && (
                   <Box key={action}>
                     <Button
                       mode="button"
@@ -219,8 +216,8 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                       anchorEl={statusMenuAnchorEl}
                       onClose={handleStatusMenuClose}
                     >
-                      {data.availableStatuses.length !== 0 ? (
-                        data.availableStatuses.map((status) => (
+                      {details.availableStatuses.length !== 0 ? (
+                        details.availableStatuses.map((status) => (
                           <MenuItem
                             key={`Statuses-menu-item-${status}`}
                             onClick={() => handlePendingStatusChange(status)}
@@ -292,13 +289,15 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
         )}
         <SecondaryStickyButtons />
         <Stack spacing={1}>
-          {isDataLoaded && data.proposal ? (
+          {!isLoading && details.proposal ? (
             <Typography variant="subtitle2">
               Трек:{' '}
               <b>
                 {isError
-                  ? tracks.message
-                  : track(data.proposal, tracks.data).title}
+                  ? getApiErrorMessage(error)
+                  : data
+                    ? track(details.proposal, data.tracks).title
+                    : 'Не удалось загрузить трек'}
               </b>
             </Typography>
           ) : (

@@ -20,21 +20,20 @@ import {
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { styles } from './styles';
-import { IBasicStepProps } from './BasicStep.types';
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
 import TitleRow from './TitleRow';
 import DurationRow from './DurationRow';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 
-const BasicStep: React.FC<IBasicStepProps> = ({ tracks, reFetchTracks }) => {
+const BasicStep = () => {
   const { register, control, setValue, getValues } =
     useFormContext<BasicValues>();
 
-  const isTracksResourceLoaded =
-    tracks.status === 'success' || tracks.status === 'error';
-  const isTracksError = tracks.status === 'error';
-  const isTracksEmpty = tracks.status === 'success' && tracks.data.length === 0;
+  const { data, isLoading, isError, error, refetch } = useGetTracksQuery();
+
   const isTracksSelectDisabled =
-    !isTracksResourceLoaded || isTracksError || isTracksEmpty;
+    isLoading || isError || !data || data.tracks.length === 0;
 
   const sx = styles();
 
@@ -136,12 +135,16 @@ const BasicStep: React.FC<IBasicStepProps> = ({ tracks, reFetchTracks }) => {
                   disabled={isTracksSelectDisabled}
                   required
                 >
-                  {isTracksResourceLoaded ? (
-                    isTracksError ? (
-                      <InputLabel id={`${type}-label`} disabled>
-                        {tracks.message}
-                      </InputLabel>
-                    ) : isTracksEmpty ? (
+                  {isLoading ? (
+                    <InputLabel id={`${type}-label`} disabled>
+                      Загрузка треков
+                    </InputLabel>
+                  ) : isError ? (
+                    <InputLabel id={`${type}-label`} disabled>
+                      {getApiErrorMessage(error)}
+                    </InputLabel>
+                  ) : data ? (
+                    data.tracks.length === 0 ? (
                       <InputLabel id={`${type}-label`} disabled>
                         Нет треков для выбора
                       </InputLabel>
@@ -151,8 +154,8 @@ const BasicStep: React.FC<IBasicStepProps> = ({ tracks, reFetchTracks }) => {
                       </InputLabel>
                     )
                   ) : (
-                    <InputLabel id={`${type}-label`} disabled>
-                      Загрузка треков
+                    <InputLabel id={`${type}-label`}>
+                      Не удалось загрузить трек
                     </InputLabel>
                   )}
                   <Select
@@ -162,33 +165,35 @@ const BasicStep: React.FC<IBasicStepProps> = ({ tracks, reFetchTracks }) => {
                     label={proposalSubmitFieldsDictionary[type]}
                     disabled={isTracksSelectDisabled}
                   >
-                    {isTracksResourceLoaded ? (
-                      isTracksError ? (
-                        <MenuItem>{tracks.message}</MenuItem>
-                      ) : isTracksEmpty ? (
+                    {isLoading ? (
+                      <MenuItem>Загрузка треков</MenuItem>
+                    ) : isError ? (
+                      <MenuItem>{getApiErrorMessage(error)}</MenuItem>
+                    ) : data ? (
+                      data.tracks.length === 0 ? (
                         <MenuItem>Нет треков для выбора</MenuItem>
                       ) : (
-                        tracks.data.map((track) => (
+                        data.tracks.map((track) => (
                           <MenuItem key={track.id} value={track.id}>
                             {track.title}
                           </MenuItem>
                         ))
                       )
                     ) : (
-                      <MenuItem>Загрузка треков</MenuItem>
+                      <MenuItem>Не удалось загрузить трек</MenuItem>
                     )}
                   </Select>
                   {fieldState.error && (
                     <FormHelperText>{fieldState.error.message}</FormHelperText>
                   )}
                 </FormControl>
-                {(isTracksError || isTracksEmpty) && (
+                {(isError || !data || data.tracks.length === 0) && (
                   <Button
                     mode="button"
                     variant="contained"
                     size="small"
                     type="button"
-                    onClick={reFetchTracks}
+                    onClick={refetch}
                   >
                     Повторить
                   </Button>

@@ -6,22 +6,13 @@ import getFinalReviewRecommendation from '@/entities/review/lib/getFinalReviewRe
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { styles } from './styles';
 import ReviewCardSkeleton from '../ReviewCard/ReviewCardSkeleton';
-import { Review } from '@/entities/review/model/types';
-import { ReviewerListItem } from '@/entities/reviewer/model/types';
+import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
 
 const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
   reviews,
   canAssignReviewer,
-  reviewers,
 }) => {
-  const isDataLoaded =
-    reviewers.status === 'success' || reviewers.status === 'error';
-  const isError = reviewers.status === 'error';
-
-  const reviewer = (review: Review, reviewers: ReviewerListItem[]) => {
-    const foundReviewer = reviewers.find((r) => r.id === review.reviewerId);
-    return foundReviewer ?? { id: '', name: 'Данные ревьюера недоступны' };
-  };
+  const { data, isLoading, isError, error } = useGetReviewersQuery();
 
   const sx = styles();
 
@@ -54,28 +45,17 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
           <Typography variant="h2">Ревью:</Typography>
           <Stack spacing={2}>
             {reviews.map((review) => {
-              return isDataLoaded ? (
-                isError ? (
-                  <ReviewCard
-                    key={review.id}
-                    review={review}
-                    reviewer={{
-                      status: reviewers.status,
-                      message: reviewers.message,
-                    }}
-                  />
-                ) : (
-                  <ReviewCard
-                    key={review.id}
-                    review={review}
-                    reviewer={{
-                      status: reviewers.status,
-                      data: reviewer(review, reviewers.data),
-                    }}
-                  />
-                )
-              ) : (
+              return isLoading ? (
                 <ReviewCardSkeleton key={review.id} />
+              ) : (
+                <ReviewCard
+                  key={review.id}
+                  review={review}
+                  reviewers={data}
+                  isReviewersLoading={isLoading}
+                  isReviewersError={isError}
+                  reviewersError={error}
+                />
               );
             })}
           </Stack>

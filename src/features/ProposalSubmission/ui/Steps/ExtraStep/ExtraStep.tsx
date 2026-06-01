@@ -13,19 +13,18 @@ import {
 import { Controller, useFormContext } from 'react-hook-form';
 import { styles } from './styles';
 import Button from '@/shared/ui/Button/Button';
-import { IExtraStepProps } from './ExtraStep.types';
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
 import NotesRaw from './NotesRaw';
+import { useGetTagsQuery } from '@/entities/tag/api/tagApi';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 
-const ExtraStep: React.FC<IExtraStepProps> = ({ tags, reFetchTags }) => {
+const ExtraStep = () => {
   const { register, control } = useFormContext<ExtraValues>();
 
-  const isTagsResourceLoaded =
-    tags.status === 'success' || tags.status === 'error';
-  const isTagsError = tags.status === 'error';
-  const isTagsEmpty = tags.status === 'success' && tags.data.length === 0;
+  const { data, isLoading, isError, error, refetch } = useGetTagsQuery();
+
   const isTagsAutocompleteDisabled =
-    !isTagsResourceLoaded || isTagsError || isTagsEmpty;
+    isLoading || isError || !data || data.tags.length === 0;
 
   const sx = styles();
 
@@ -46,20 +45,26 @@ const ExtraStep: React.FC<IExtraStepProps> = ({ tags, reFetchTags }) => {
                 >
                   <Autocomplete
                     {...field}
-                    options={isTagsAutocompleteDisabled ? [] : tags.data}
+                    options={isTagsAutocompleteDisabled ? [] : data.tags}
                     value={Array.isArray(field.value) ? field.value : []}
                     onChange={(_, value) => field.onChange(value)}
                     id={type}
                     multiple
                     renderInput={(params) =>
-                      isTagsResourceLoaded ? (
-                        isTagsError ? (
-                          <TextField
-                            {...params}
-                            disabled
-                            label={tags.message}
-                          />
-                        ) : isTagsEmpty ? (
+                      isLoading ? (
+                        <TextField
+                          {...params}
+                          disabled
+                          label="Загрузка тегов"
+                        />
+                      ) : isError ? (
+                        <TextField
+                          {...params}
+                          disabled
+                          label={getApiErrorMessage(error)}
+                        />
+                      ) : data ? (
+                        data.tags.length === 0 ? (
                           <TextField
                             {...params}
                             disabled
@@ -77,20 +82,20 @@ const ExtraStep: React.FC<IExtraStepProps> = ({ tags, reFetchTags }) => {
                         <TextField
                           {...params}
                           disabled
-                          label="Загрузка тегов"
+                          label="Не удалось загрузить тег"
                         />
                       )
                     }
                     disabled={isTagsAutocompleteDisabled}
                   />
                 </FormControl>
-                {(isTagsError || isTagsEmpty) && (
+                {(isError || !data || data.tags.length === 0) && (
                   <Button
                     mode="button"
                     variant="contained"
                     size="small"
                     type="button"
-                    onClick={reFetchTags}
+                    onClick={refetch}
                   >
                     Повторить
                   </Button>

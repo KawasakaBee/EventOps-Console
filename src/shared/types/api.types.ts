@@ -16,10 +16,6 @@ export interface ErrorEnvelope {
   };
 }
 
-export type ApiResult<T> =
-  | { ok: true; data: T }
-  | { ok: false; error: ErrorEnvelope['error']; status: number };
-
 export const errorCodes = [
   'REQUEST_ABORTED',
   'AUTH_REQUIRED',

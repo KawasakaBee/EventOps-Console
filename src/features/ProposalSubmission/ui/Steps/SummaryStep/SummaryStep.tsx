@@ -1,7 +1,6 @@
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
 import { Chip, Skeleton, Stack, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import { ISummaryStepProps } from './SummaryStep.types';
 import { useMemo } from 'react';
 import { steps } from '@/features/ProposalSubmission/model/steps';
 import { SubmitValues } from '@/features/ProposalSubmission/model/schema';
@@ -13,20 +12,20 @@ import {
   speakerFields,
   speakerFieldsDictionary,
 } from '@/entities/speaker/api/dictionary';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 
-const SummaryStep: React.FC<ISummaryStepProps> = ({ tracks }) => {
+const SummaryStep = () => {
   const { getValues } = useFormContext<SubmitValues>();
 
-  const isTracksResourceLoaded =
-    tracks.status === 'success' || tracks.status === 'error';
-  const isTracksError = tracks.status === 'error';
-  const isTracksEmpty = tracks.status === 'success' && tracks.data.length === 0;
+  const { data, isLoading, isError, error } = useGetTracksQuery();
+
   const currentTrack = useMemo(
     () =>
-      isTracksResourceLoaded && !isTracksError && !isTracksEmpty
-        ? tracks.data.find((track) => track.id === getValues('trackId'))
+      !isLoading && !isError && data && data.tracks.length !== 0
+        ? data.tracks.find((track) => track.id === getValues('trackId'))
         : undefined,
-    [tracks, getValues, isTracksEmpty, isTracksError, isTracksResourceLoaded],
+    [data, getValues, isError, isLoading],
   );
 
   return (
@@ -40,20 +39,18 @@ const SummaryStep: React.FC<ISummaryStepProps> = ({ tracks }) => {
                 <Typography variant="subtitle2">
                   {proposalSubmitFieldsDictionary[field]}:
                 </Typography>
-                {isTracksResourceLoaded ? (
-                  isTracksError ? (
-                    <Typography variant="body2">{tracks.message}</Typography>
-                  ) : isTracksEmpty || !currentTrack ? (
-                    <Typography variant="body2">
-                      Не удалось определить трек
-                    </Typography>
-                  ) : (
-                    <Typography variant="body2">
-                      {currentTrack.title}
-                    </Typography>
-                  )
-                ) : (
+                {isLoading ? (
                   <Skeleton variant="text" width={250} />
+                ) : isError ? (
+                  <Typography variant="body2">
+                    {getApiErrorMessage(error)}
+                  </Typography>
+                ) : !currentTrack ? (
+                  <Typography variant="body2">
+                    Не удалось определить трек
+                  </Typography>
+                ) : (
+                  <Typography variant="body2">{currentTrack.title}</Typography>
                 )}
               </Stack>
             ) : (

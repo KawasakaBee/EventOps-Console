@@ -42,10 +42,11 @@ import {
   isProposalStatus,
 } from '@/entities/proposal/model/typeGuards';
 import SearchInput from '@/shared/ui/SearchInput/SearchInput';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
-  tracks,
-  reviewers,
   searchParams,
   isDisabled,
   handleResetFilters,
@@ -57,6 +58,9 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
     (state) => state.proposalsFilters.draftFilters,
   );
 
+  const tracks = useGetTracksQuery();
+  const reviewers = useGetReviewersQuery();
+
   const statusesList = filters.status;
   const trackIdsList = filters.trackId;
   const levelsList = filters.level;
@@ -64,14 +68,14 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
 
   const queryString = searchParams.toString();
 
-  const isTracksResourceLoaded =
-    tracks.status === 'success' || tracks.status === 'error';
-  const isTracksError = tracks.status === 'error';
-  const isTrackSuccess = tracks.status === 'success';
-  const isReviewersSuccess = reviewers.status === 'success';
+  const isReviewersSuccess =
+    !reviewers.isError &&
+    !reviewers.isLoading &&
+    reviewers.data &&
+    reviewers.data.reviewers.length !== 0;
 
   const reviewerOptions = isReviewersSuccess
-    ? reviewers.data.map((item) => ({
+    ? reviewers.data.reviewers.map((item) => ({
         label: item.name,
         id: item.id,
       }))
@@ -203,10 +207,12 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
         </FormControl>
 
         <FormControl
-          disabled={isDisabled || !isTrackSuccess!}
+          disabled={isDisabled || tracks.isLoading || tracks.isError}
           sx={sx.filterInput}
         >
-          {isTracksResourceLoaded ? (
+          {tracks.isLoading ? (
+            <Skeleton variant="text" />
+          ) : (
             <>
               <InputLabel id="proposal-trackId-select">Трек</InputLabel>
               <Select
@@ -216,10 +222,10 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
                 multiple
                 onChange={(event) => handleTrackIdFilter(event.target.value)}
               >
-                {isTracksError ? (
-                  <MenuItem>{tracks.message}</MenuItem>
-                ) : (
-                  tracks.data.map((track) => (
+                {tracks.isError ? (
+                  <MenuItem>{getApiErrorMessage(tracks.error)}</MenuItem>
+                ) : tracks.data ? (
+                  tracks.data.tracks.map((track) => (
                     <MenuItem
                       key={`Select-option-${track.id}`}
                       value={track.id}
@@ -227,11 +233,11 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
                       {track.title}
                     </MenuItem>
                   ))
+                ) : (
+                  <MenuItem>Нет доступных треков</MenuItem>
                 )}
               </Select>
             </>
-          ) : (
-            <Skeleton variant="text" />
           )}
         </FormControl>
 

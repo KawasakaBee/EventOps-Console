@@ -16,12 +16,14 @@ import {
 } from '../../model/tableColumns';
 import { useAuth } from '@/entities/user/model/AuthProvider';
 import MyProposalsTableRow from '../MyProposalsTableRow/MyProposalsTableRow';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 
 const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
-  data,
-  tracks,
+  proposalsList,
 }) => {
   const { user } = useAuth();
+
+  const { data, isLoading, isError, error } = useGetTracksQuery();
 
   const sx = styles();
 
@@ -50,12 +52,15 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((proposal) => (
+          {proposalsList.map((proposal) => (
             <MyProposalsTableRow
               key={`Table-body-row-${proposal.id}`}
               proposal={proposal}
               role={user.role}
-              tracks={tracks}
+              tracks={data}
+              isTracksLoading={isLoading}
+              isTracksError={isError}
+              tracksError={error}
             />
           ))}
         </TableBody>

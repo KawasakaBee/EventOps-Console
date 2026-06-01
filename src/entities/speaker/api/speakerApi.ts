@@ -1,22 +1,18 @@
-import { normalizeFetch } from '@/shared/api/normalizeResponse';
-import { SpeakersResource } from '../model/types';
-import { GetSpeakersListResponse } from './contracts';
+import { baseApi } from '@/shared/api/baseApi';
+import { GetSpeakerFindResponse, GetSpeakerItemResponse } from './contracts';
 
-export const fetchSpeakers = async (): Promise<SpeakersResource> => {
-  const speakers: SpeakersResource = {
-    status: 'loading',
-    data: [],
-  };
+export const speakerApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    getUserAsSpeaker: build.query<GetSpeakerItemResponse, void>({
+      query: () => '/speaker',
+      providesTags: ['Speaker'],
+    }),
+    findSpeakerByEmail: build.query<GetSpeakerFindResponse, string>({
+      query: (queryParams) => `/speakers/find?${queryParams}`,
+      providesTags: ['Speaker'],
+    }),
+  }),
+});
 
-  const response =
-    await normalizeFetch<GetSpeakersListResponse>('/api/speakers');
-
-  if (!response.ok) {
-    speakers.status = 'error';
-    return speakers;
-  }
-
-  speakers.data = response.data.speakers;
-  speakers.status = 'success';
-  return speakers;
-};
+export const { useGetUserAsSpeakerQuery, useLazyFindSpeakerByEmailQuery } =
+  speakerApi;

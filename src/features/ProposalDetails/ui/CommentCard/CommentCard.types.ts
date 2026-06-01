@@ -1,8 +1,11 @@
 import { Comment } from '@/entities/comment/model/types';
-import { UserListItem } from '@/entities/user/model/types';
-import { Resource } from '@/shared/types/resource.types';
+import { GetUsersListResponse } from '@/entities/user/api/contracts';
+import { AppBaseQueryError } from '@/shared/api/baseApi';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export interface ICommentCardProps {
   comment: Comment;
-  user: Resource<UserListItem>;
+  users: GetUsersListResponse | undefined;
+  isUsersError: boolean;
+  usersError: AppBaseQueryError | SerializedError | undefined;
 }

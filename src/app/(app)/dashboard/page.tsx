@@ -1,101 +1,36 @@
 'use client';
-// import PageHeader from '@/shared/ui/PageHeader/PageHeader';
+
 import { Box, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { User } from '@/entities/user/model/types';
-import { Dashboard as DashboardType } from '@/entities/dashboard/model/types';
-import { GetDashboardResponse } from '@/entities/dashboard/api/contracts';
-import getCurrentUser from '@/entities/user/api/userApi';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
-import getDashboardErrorState from '@/features/Dashboard/model/getDashboardErrorState';
-import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
+import { useGetDashboardQuery } from '@/entities/dashboard/api/dashboardApi';
 
 const Dashboard = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [dashboard, setDashboard] = useState<DashboardType | null>(null);
-  const [, setErrorProps] = useState<ErrorStateProps | null>(null);
-
-  useEffect(() => {
-    const getErrorActions = () => ({
-      onClose: () => setErrorProps(null),
-    });
-
-    const getUser = async () => {
-      setUser(null);
-
-      const response = await getCurrentUser();
-
-      if (!response.ok) {
-        setUser(null);
-        setErrorProps(
-          getDashboardErrorState(response.error, getErrorActions()),
-        );
-        return;
-      }
-
-      setUser(response.data);
-    };
-
-    getUser();
-  }, []);
-
-  useEffect(() => {
-    let ignored = false;
-
-    const getDashboard = async () => {
-      try {
-        if (!user) return;
-
-        const response = await fetch(
-          `/api/events/${user?.eventIds[0]}/dashboard?range=30d`,
-        );
-
-        if (!response.ok) return;
-
-        const parsedResponse: GetDashboardResponse = await response.json();
-        if (!ignored) setDashboard(parsedResponse);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    void getDashboard();
-
-    return () => {
-      ignored = true;
-    };
-  }, [user]);
+  const dashboard = useGetDashboardQuery({ id: '1', range: '30d' });
 
   return (
     <>
-      {/* <PageHeader
-        title="This is PageHeader title"
-        subtitle="This is PageHeader Subtitle"
-      >
-        This is custom text inside PageHeader
-      </PageHeader> */}
       <Typography variant="h1">This is Dashboard</Typography>
       {dashboard && (
         <Box>
-          {dashboard.kpis && (
+          {dashboard.data?.kpis && (
             <SectionCard title="KPIS" actions>
               <Typography variant="h5">
-                Total submissions - {dashboard.kpis.totalSubmissions}
+                Total submissions - {dashboard.data?.kpis.totalSubmissions}
               </Typography>
               <Typography variant="h5">
-                Proposal in review - {dashboard.kpis.inReview}
+                Proposal in review - {dashboard.data?.kpis.inReview}
               </Typography>
               <Typography variant="h5">
-                Accepted proposals - {dashboard.kpis.accepted}
+                Accepted proposals - {dashboard.data?.kpis.accepted}
               </Typography>
               <Typography variant="h5">
-                Rejected proposals - {dashboard.kpis.rejected}
+                Rejected proposals - {dashboard.data?.kpis.rejected}
               </Typography>
             </SectionCard>
           )}
-          {dashboard.submissionsByStatus.length !== 0 && (
+          {dashboard.data?.submissionsByStatus.length !== 0 && (
             <SectionCard title="Submissions by status" actions>
-              {dashboard.submissionsByStatus.map((proposal) => (
+              {dashboard.data?.submissionsByStatus.map((proposal) => (
                 <Box key={proposal.status}>
                   <Typography variant="h5">
                     Proposal status: {proposal.status}
@@ -106,9 +41,9 @@ const Dashboard = () => {
             </SectionCard>
           )}
 
-          {dashboard.byTrack.length !== 0 && (
+          {dashboard.data?.byTrack.length !== 0 && (
             <SectionCard title="Proposals by trask ID" actions>
-              {dashboard.byTrack.map((proposal) => (
+              {dashboard.data?.byTrack.map((proposal) => (
                 <Box key={proposal.trackId}>
                   <Typography variant="h5">
                     Proposal track ID: {proposal.trackId}
@@ -119,9 +54,9 @@ const Dashboard = () => {
             </SectionCard>
           )}
 
-          {dashboard.recentSubmissions.length !== 0 && (
+          {dashboard.data?.recentSubmissions.length !== 0 && (
             <SectionCard title="Recent submissions" actions>
-              {dashboard.recentSubmissions.map((proposal) => (
+              {dashboard.data?.recentSubmissions.map((proposal) => (
                 <Box key={proposal.id}>
                   <Typography variant="h5">
                     Proposal: {proposal.title}
@@ -139,9 +74,9 @@ const Dashboard = () => {
               ))}
             </SectionCard>
           )}
-          {dashboard.attentionItems.length !== 0 && (
+          {dashboard.data?.attentionItems.length !== 0 && (
             <SectionCard title="Attention block" actions>
-              {dashboard.attentionItems.map((item) => (
+              {dashboard.data?.attentionItems.map((item) => (
                 <Box key={item.id}>
                   <Typography variant="h5">
                     Attention theme: {item.type}

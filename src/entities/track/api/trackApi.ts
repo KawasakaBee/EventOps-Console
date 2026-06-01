@@ -1,21 +1,13 @@
-import { GetTracksResponse } from '@/entities/track/api/contracts';
-import { TracksResource } from './types';
-import { normalizeFetch } from '@/shared/api/normalizeResponse';
+import { baseApi } from '@/shared/api/baseApi';
+import { GetTracksResponse } from './contracts';
 
-export const fetchTracks = async (): Promise<TracksResource> => {
-  const tracks: TracksResource = {
-    status: 'loading',
-    data: [],
-  };
+export const trackApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    getTracks: build.query<GetTracksResponse, void>({
+      query: () => '/tracks',
+      providesTags: ['Track'],
+    }),
+  }),
+});
 
-  const response = await normalizeFetch<GetTracksResponse>('/api/tracks');
-
-  if (!response.ok) {
-    tracks.status = 'error';
-    return tracks;
-  }
-
-  tracks.data = response.data.tracks;
-  tracks.status = 'success';
-  return tracks;
-};
+export const { useGetTracksQuery } = trackApi;

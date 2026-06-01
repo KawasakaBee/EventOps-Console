@@ -25,11 +25,12 @@ import { recommendations, Score } from '@/entities/review/model/types';
 import Button from '@/shared/ui/Button/Button';
 import useCreateReviewData from '../model/useReviewCreateData';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getReviewCreateErrorState from '../model/getReviewCreateErrorState';
 
 const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
   onClose,
   proposalId,
-  onSuccess,
 }) => {
   const methods = useForm<CreateReviewValues>({
     defaultValues,
@@ -46,16 +47,10 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
     formState: { errors },
   } = methods;
 
-  const { createReviewData, handleCreateReviewSubmit } = useCreateReviewData(
+  const { createState, handleCreateReviewSubmit } = useCreateReviewData(
     getValues,
     proposalId,
-    onSuccess,
   );
-
-  const isCreateDataLoaded =
-    createReviewData.status === 'success' ||
-    createReviewData.status === 'error';
-  const isCreateDataError = createReviewData.status === 'error';
 
   const sx = styles();
 
@@ -100,28 +95,31 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
         },
       }}
     >
-      {isCreateDataLoaded ? (
-        isCreateDataError ? (
-          createReviewData.errorProps && (
-            <ErrorState {...createReviewData.errorProps} />
-          )
-        ) : (
-          <>
-            <DialogTitle>Ревью успешно добавлено!</DialogTitle>
-            <DialogContent>Вы можете продолжить работу с заявкой</DialogContent>
-            <DialogActions>
-              <Button
-                mode="button"
-                variant="contained"
-                size="medium"
-                type="button"
-                onClick={onClose}
-              >
-                Продолжить
-              </Button>
-            </DialogActions>
-          </>
+      {' '}
+      {createState.isError ? (
+        isAppBaseQueryError(createState.error) && (
+          <ErrorState
+            {...getReviewCreateErrorState(createState.error.error, {
+              retry: handleCreateReviewSubmit,
+            })}
+          />
         )
+      ) : createState.data ? (
+        <>
+          <DialogTitle>Ревью успешно добавлено!</DialogTitle>
+          <DialogContent>Вы можете продолжить работу с заявкой</DialogContent>
+          <DialogActions>
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              type="button"
+              onClick={onClose}
+            >
+              Продолжить
+            </Button>
+          </DialogActions>
+        </>
       ) : (
         <>
           <DialogTitle>Добавить ревью</DialogTitle>
@@ -178,7 +176,7 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
                 size="medium"
                 type="submit"
                 intent="success"
-                isDisabled={createReviewData.status === 'loading'}
+                isDisabled={createState.isLoading}
               >
                 Добавить
               </Button>

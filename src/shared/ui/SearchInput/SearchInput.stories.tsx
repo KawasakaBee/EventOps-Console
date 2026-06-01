@@ -53,7 +53,7 @@ export const Input: Story = {
   },
 };
 
-export const LoadingInput: Story = {
+export const DisabledInput: Story = {
   args: {
     isDisabled: true,
   },

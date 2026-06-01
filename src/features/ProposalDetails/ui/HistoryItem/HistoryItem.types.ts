@@ -1,15 +1,20 @@
 import { Comment } from '@/entities/comment/model/types';
 import { HistoryEntry } from '@/entities/history/model/types';
-import { ReviewerListItem } from '@/entities/reviewer/model/types';
-import { Track } from '@/entities/track/model/types';
-import { UserListItem } from '@/entities/user/model/types';
-import { Resource } from '@/shared/types/resource.types';
+import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
+import { GetTracksResponse } from '@/entities/track/api/contracts';
+import { GetUsersListResponse } from '@/entities/user/api/contracts';
+import { AppBaseQueryError } from '@/shared/api/baseApi';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export interface IHistoryItemProps {
   item: HistoryEntry;
-  user: Resource<UserListItem>;
+  users: GetUsersListResponse | undefined;
+  isUsersError: boolean;
+  usersError: AppBaseQueryError | SerializedError | undefined;
   isLastItem: boolean;
   comments: Comment[];
-  reviewers: Resource<ReviewerListItem[]>;
-  tracks: Resource<Track[]>;
+  reviewers: GetReviewersResponse | undefined;
+  isReviewersError: boolean;
+  tracks: GetTracksResponse | undefined;
+  isTracksError: boolean;
 }

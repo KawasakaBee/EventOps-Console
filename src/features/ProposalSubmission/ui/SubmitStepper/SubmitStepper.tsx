@@ -20,25 +20,18 @@ import { submitSteps } from '../../model/steps';
 import { submitStepsDictionary } from '../../model/dictionary';
 import { ISubmitStepperProps } from './SubmitStepper.types';
 import useStepper from '../../model/useStepper';
-import SpeakersStepSkeleton from '../Steps/SpeakersStep/SpeakersStepSkeleton';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import DoneIcon from '@mui/icons-material/Done';
 import ErrorIcon from '@mui/icons-material/Error';
 import { styles } from './styles';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getSubmissionErrorState from '../../model/getSubmissionErrorState';
 
 const SubmitStepper: React.FC<ISubmitStepperProps> = ({
   id,
   speakers,
-  tracks,
-  reFetchTracks,
-  tags,
-  reFetchTags,
   clearStorage,
 }) => {
-  const isSpeakersResourceLoaded =
-    speakers.status === 'success' || speakers.status === 'error';
-  const isSpeakersError = speakers.status === 'error';
-
   const {
     activeStep,
     activeStepNumber,
@@ -48,35 +41,29 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
     handleStepNext,
     handleDraftSubmit,
     isDraftDialogOpened,
-    draft,
+    createState,
     handleDraftDialogClose,
     handleDraftContinue,
   } = useStepper(id, clearStorage);
 
   const sx = styles();
 
-  const isDraftDataLoaded =
-    draft.status === 'success' || draft.status === 'error';
-  const isDraftError = draft.status === 'error';
-
   const submissionStep = () => {
     switch (activeStep) {
       case 'description':
         return <DescriptionStep />;
       case 'speakers':
-        return isSpeakersResourceLoaded ? (
+        return (
           <SpeakersStep
-            errorMessage={isSpeakersError ? speakers.message : null}
+            errorMessage={speakers ? null : 'Не удалось загрузить спикеров'}
           />
-        ) : (
-          <SpeakersStepSkeleton />
         );
       case 'extra':
-        return <ExtraStep tags={tags} reFetchTags={reFetchTags} />;
+        return <ExtraStep />;
       case 'summary':
-        return <SummaryStep tracks={tracks} />;
+        return <SummaryStep />;
       default:
-        return <BasicStep tracks={tracks} reFetchTracks={reFetchTracks} />;
+        return <BasicStep />;
     }
   };
 
@@ -124,7 +111,7 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
               size="medium"
               type="button"
               onClick={handleDraftSubmit}
-              isDisabled={draft.status === 'success'}
+              isDisabled={createState.isSuccess || createState.isLoading}
             >
               Сохранить черновик
             </Button>
@@ -143,16 +130,30 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
       </Stack>
       <Dialog
         open={isDraftDialogOpened}
-        onClose={isDraftError ? handleDraftDialogClose : () => null}
+        onClose={createState.isError ? handleDraftDialogClose : () => null}
         slotProps={{ paper: { sx: sx.dialogPaper } }}
       >
-        {isDraftDataLoaded ? (
+        {createState.isLoading ? (
+          <Stack spacing={2}>
+            <Skeleton variant="text" width="30%" sx={sx.titleSkeleton} />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" width="40%" height={60} />
+          </Stack>
+        ) : (
           <>
             <DialogContent id="dialog-description">
-              {isDraftError && draft.errorProps ? (
+              {createState.isError ? (
                 <Stack direction="row" spacing={1} sx={sx.dialogContentWrapper}>
                   <ErrorIcon sx={sx.dialogStatusError} />
-                  <ErrorState {...draft.errorProps} />
+                  {isAppBaseQueryError(createState.error) && (
+                    <ErrorState
+                      {...getSubmissionErrorState(createState.error.error, {
+                        retry: handleDraftSubmit,
+                      })}
+                    />
+                  )}
                 </Stack>
               ) : (
                 <Stack direction="row" spacing={1} sx={sx.dialogContentWrapper}>
@@ -164,7 +165,7 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
               )}
             </DialogContent>
             <DialogActions sx={sx.dialogActions}>
-              {!isDraftError && (
+              {!createState.isError && (
                 <Button
                   mode="button"
                   variant="contained"
@@ -176,14 +177,6 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
               )}
             </DialogActions>
           </>
-        ) : (
-          <Stack spacing={2}>
-            <Skeleton variant="text" width="30%" sx={sx.titleSkeleton} />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" width="40%" height={60} />
-          </Stack>
         )}
       </Dialog>
     </>

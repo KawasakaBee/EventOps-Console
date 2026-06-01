@@ -6,7 +6,7 @@ import {
   TimelineSeparator,
 } from '@mui/lab';
 import { IHistoryItemProps } from './HistoryItem.types';
-import { Box, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import formatHistoryChangeValues from '@/entities/history/lib/formatHistoryChangeValues';
 import { styles } from './styles';
@@ -14,31 +14,35 @@ import formatHistoryPayloadLines from '@/entities/history/lib/formatHistoryPaylo
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
 import { auditActionsDictionary } from '@/entities/audit/model/dictionaries';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { HistoryEntry } from '@/entities/history/model/types';
+import { UserListItem } from '@/entities/user/model/types';
 
 const HistoryItem: React.FC<IHistoryItemProps> = ({
   item,
-  user,
+  users,
+  isUsersError,
+  usersError,
   isLastItem,
   comments,
   reviewers,
+  isReviewersError,
   tracks,
+  isTracksError,
 }) => {
   const sx = styles();
 
-  const isUserResourceLoaded =
-    user.status === 'success' || user.status === 'error';
-  const isUserError = user.status === 'error';
-  const isReviewersDataLoaded =
-    reviewers.status === 'success' || reviewers.status === 'error';
-  const isReviewersError = reviewers.status === 'error';
-  const isTracksSuccess = tracks.status === 'success';
+  const user = (history: HistoryEntry, users: UserListItem[]) => {
+    const foundUser = users.find((u) => u.id === history.actorId);
+    return foundUser ?? { name: 'Данные автора недоступны' };
+  };
 
   const normalizedHistoryPayload = () => {
-    if (!item.payload || !isReviewersDataLoaded) return null;
+    if (!item.payload) return null;
 
     const normalizePayload = formatHistoryPayloadLines(
       item.payload,
-      isReviewersError ? null : reviewers.data,
+      isReviewersError ? null : (reviewers?.reviewers ?? null),
       comments,
     );
     if (!normalizePayload) return null;
@@ -78,7 +82,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
                 {item.changes.map((act) => {
                   const [prev, next] = formatHistoryChangeValues(
                     act,
-                    isTracksSuccess ? tracks.data : [],
+                    !isTracksError && tracks ? tracks.tracks : [],
                   );
                   return (
                     <Stack
@@ -108,13 +112,16 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
             )}
           </Stack>
           {normalizedHistoryPayload()}
-          {isUserResourceLoaded ? (
-            <Typography variant="body1">
-              by <i>{isUserError ? user.message : user.data.name}</i>
-            </Typography>
-          ) : (
-            <Skeleton variant="text" width={150} />
-          )}
+          <Typography variant="body1">
+            by{' '}
+            <i>
+              {isUsersError
+                ? getApiErrorMessage(usersError)
+                : users
+                  ? user(item, users.users).name
+                  : 'Пользователя не удалось загрузить'}
+            </i>
+          </Typography>
         </Stack>
       </TimelineContent>
     </TimelineItem>

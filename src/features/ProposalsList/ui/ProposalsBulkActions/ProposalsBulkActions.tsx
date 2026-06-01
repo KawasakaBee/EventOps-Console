@@ -18,7 +18,7 @@ import {
 import { openMultipleAssignReviewer } from '@/features/ReviewerAssign/model/reviewerAssignSlice';
 
 const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
-  user,
+  userRole,
   proposals,
   selectedIds,
   isDisabled,
@@ -35,12 +35,7 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   );
 
   const availableActions: ProposalListAction[] = useMemo(() => {
-    if (
-      !user ||
-      !proposals ||
-      proposals.length === 0 ||
-      selectedIds.length === 0
-    )
+    if (!proposals || proposals.length === 0 || selectedIds.length === 0)
       return [];
 
     const proposalsMap: Map<ID, ProposalStatus> = new Map(
@@ -51,13 +46,13 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
       const value = proposalsMap.get(id);
       if (!value) return [];
 
-      return getProposalsListActions(user.role, value);
+      return getProposalsListActions(userRole, value);
     });
 
     return actions[0].filter((action) =>
       actions.every((arr) => arr.includes(action)),
     );
-  }, [user, proposals, selectedIds]);
+  }, [userRole, proposals, selectedIds]);
 
   const isActionsMenuOpened = !!actionsAnchorEl;
   const isStatusMenuOpened = !!statusesAnchorEl;

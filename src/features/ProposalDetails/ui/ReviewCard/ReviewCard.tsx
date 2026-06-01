@@ -9,13 +9,23 @@ import {
 import { IReviewCardProps } from './ReviewCard.types';
 import { styles } from './styles';
 import { recommendationDictionary } from '@/entities/review/model/dictionaries';
+import { ReviewerListItem } from '@/entities/reviewer/model/types';
+import { Review } from '@/entities/review/model/types';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 
-const ReviewCard: React.FC<IReviewCardProps> = ({ review, reviewer }) => {
+const ReviewCard: React.FC<IReviewCardProps> = ({
+  review,
+  reviewers,
+  isReviewersLoading,
+  isReviewersError,
+  reviewersError,
+}) => {
   const sx = styles();
 
-  const isDataLoaded =
-    reviewer.status === 'success' || reviewer.status === 'error';
-  const isError = reviewer.status === 'error';
+  const reviewer = (review: Review, reviewers: ReviewerListItem[]) => {
+    const foundReviewer = reviewers.find((r) => r.id === review.reviewerId);
+    return foundReviewer ?? { name: 'Данные ревьюера недоступны' };
+  };
 
   return (
     <Grid
@@ -31,12 +41,18 @@ const ReviewCard: React.FC<IReviewCardProps> = ({ review, reviewer }) => {
         sx={sx.reviewCardReviewerWrapper}
       >
         <Grid size="auto">
-          {isDataLoaded ? (
-            <Typography variant="subtitle2">
-              <b>{isError ? reviewer.message : reviewer.data.name}</b>
-            </Typography>
-          ) : (
+          {isReviewersLoading ? (
             <Skeleton variant="text" width={200} />
+          ) : (
+            <Typography variant="subtitle2">
+              <b>
+                {isReviewersError
+                  ? getApiErrorMessage(reviewersError)
+                  : reviewers
+                    ? reviewer(review, reviewers.reviewers).name
+                    : 'Не удалось загрузить ревьюера'}
+              </b>
+            </Typography>
           )}
         </Grid>
         <Grid size="auto">

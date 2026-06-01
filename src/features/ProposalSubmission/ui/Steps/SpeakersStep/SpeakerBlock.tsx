@@ -5,8 +5,8 @@ import { Stack, Typography } from '@mui/material';
 import EmailRow from './EmailRow';
 import SpeakerRow from './SpeakerRow';
 import { memo, useCallback, useEffect, useRef } from 'react';
-import { fetchSpeakerFind } from '@/features/ProposalSubmission/api/ProposalSubmissionApi';
 import { styles } from './styles';
+import { useLazyFindSpeakerByEmailQuery } from '@/entities/speaker/api/speakerApi';
 
 const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
   ({ control, register, getValues, setValue, idx, ownerIdx }) => {
@@ -14,6 +14,8 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
       control,
       name: `speakers.${idx}.id`,
     });
+
+    const [findSpeakerByEmail] = useLazyFindSpeakerByEmailQuery();
 
     const isMountedRef = useRef(true);
     const latestIdxRef = useRef(idx);
@@ -32,13 +34,9 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
 
         const requestId = lookupRequestIdRef.current[idx];
 
-        let foundedSpeaker: Awaited<ReturnType<typeof fetchSpeakerFind>>;
+        const emailSearchParams = new URLSearchParams({ email }).toString();
 
-        try {
-          foundedSpeaker = await fetchSpeakerFind(email);
-        } catch {
-          return;
-        }
+        const result = await findSpeakerByEmail(emailSearchParams);
 
         if (!isMountedRef.current) return;
         if (latestIdxRef.current !== idx) return;
@@ -48,7 +46,7 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
 
         if (currentEmail.trim() !== email.trim()) return;
 
-        if (!foundedSpeaker.found) {
+        if (!result.data || !result.data.found) {
           const currentSpeakerId = getValues(`speakers.${idx}.id`);
 
           if (currentSpeakerId !== null) {
@@ -79,7 +77,7 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
           return;
         }
 
-        const speaker = foundedSpeaker.speaker;
+        const speaker = result.data.speaker;
 
         const speakerBody = {
           id: speaker.id,
@@ -96,7 +94,7 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
           shouldValidate: true,
         });
       },
-      [getValues, setValue],
+      [getValues, setValue, findSpeakerByEmail],
     );
 
     const handleSpeakerSearchDebounced = useCallback(

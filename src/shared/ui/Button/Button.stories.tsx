@@ -32,7 +32,7 @@ const meta = {
     },
     intent: {
       control: 'inline-radio',
-      options: ['primary', 'submit', 'danger'],
+      options: ['primary', 'success', 'danger'],
     },
   },
 } satisfies Meta<typeof Button>;

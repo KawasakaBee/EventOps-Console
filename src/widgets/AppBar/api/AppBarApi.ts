@@ -1,31 +1,16 @@
-import getAppBarErrorState from '../model/getAppBarErrorState';
 import { PostLogoutResponse } from '@/entities/user/api/contracts';
-import { LogoutResource } from '../ui/AppBar.types';
-import { normalizeFetch } from '@/shared/api/normalizeResponse';
+import { baseApi } from '@/shared/api/baseApi';
 
-export const fetchLogout = async (
-  onClose: () => void,
-): Promise<LogoutResource> => {
-  const getErrorActions = {
-    onClose,
-  };
+export const appBarApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    logout: build.mutation<PostLogoutResponse, void>({
+      query: () => ({
+        url: '/logout',
+        method: 'POST',
+      }),
+      invalidatesTags: ['User'],
+    }),
+  }),
+});
 
-  const logoutData: LogoutResource = {
-    status: 'loading',
-    errorProps: null,
-  };
-
-  const response = await normalizeFetch<PostLogoutResponse>('/api/logout', {
-    method: 'POST',
-  });
-
-  if (!response.ok) {
-    logoutData.errorProps = getAppBarErrorState(getErrorActions);
-    logoutData.status = 'error';
-    return logoutData;
-  }
-
-  logoutData.status = 'success';
-
-  return logoutData;
-};
+export const { useLogoutMutation } = appBarApi;

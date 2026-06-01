@@ -1,14 +1,22 @@
 import { AuditLog } from '@/entities/audit/model/types';
-import { Comment } from '@/entities/comment/model/types';
-import { ReviewerListItem } from '@/entities/reviewer/model/types';
-import { UserListItem } from '@/entities/user/model/types';
-import { Resource } from '@/shared/types/resource.types';
+import { GetCommentsResponse } from '@/entities/comment/api/contracts';
+import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
+import { GetUsersListResponse } from '@/entities/user/api/contracts';
+import { AppBaseQueryError } from '@/shared/api/baseApi';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export interface IAuditTableRowProps {
   auditItem: AuditLog;
-  users: Resource<UserListItem[]>;
-  reviewers: Resource<ReviewerListItem[]>;
-  comments: Resource<Comment[]>;
+  users: GetUsersListResponse | undefined;
+  isUsersLoading: boolean;
+  isUsersError: boolean;
+  usersError: AppBaseQueryError | SerializedError | undefined;
+  reviewers: GetReviewersResponse | undefined;
+  isReviewersLoading: boolean;
+  isReviewersError: boolean;
+  comments: GetCommentsResponse | undefined;
+  isCommentsLoading: boolean;
+  isCommentsError: boolean;
 }
 
 export interface IAuditRenderCellProps {

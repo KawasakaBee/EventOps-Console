@@ -21,19 +21,25 @@ import {
   proposalTableWidthDictionary,
 } from '../../model/tableColumns';
 import getProposalsListRowActions from '@/entities/proposal/lib/getProposalsListRowActions';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 
 const ProposalsTableRow = memo(
-  ({ proposal, sx, isSelected, role, tracks }: IProposalTableRowProps) => {
+  ({
+    proposal,
+    sx,
+    isSelected,
+    role,
+    tracks,
+    isTracksLoading,
+    isTracksError,
+    tracksError,
+  }: IProposalTableRowProps) => {
     const dispatch = useAppDispatch();
 
     const rowActions = useMemo(
       () => getProposalsListRowActions(role, proposal.status),
       [role, proposal.status],
     );
-
-    const isDataLoaded =
-      tracks.status === 'success' || tracks.status === 'error';
-    const isError = tracks.status === 'error';
 
     const track = (proposal: ProposalListItem, tracks: Track[]) => {
       const foundTrack = tracks.find((track) => track.id === proposal.trackId);
@@ -63,14 +69,18 @@ const ProposalsTableRow = memo(
         case 'level':
           return levelDictionary[data.level];
         case 'trackId': {
-          if (!isDataLoaded)
+          if (isTracksLoading)
             return (
               <Skeleton
                 variant="text"
                 width={proposalTableWidthDictionary[rowName].skeletonWidth}
               />
             );
-          return isError ? tracks.message : track(proposal, tracks.data).title;
+          return isTracksError
+            ? getApiErrorMessage(tracksError)
+            : tracks
+              ? track(proposal, tracks.tracks).title
+              : 'Не удалось загрузить трек';
         }
         case 'updatedAt':
           return formatIsoDateTime(data.updatedAt);

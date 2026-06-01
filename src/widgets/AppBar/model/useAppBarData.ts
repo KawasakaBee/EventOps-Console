@@ -1,17 +1,22 @@
 import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { fetchLogout } from '../api/AppBarApi';
+import { useLogoutMutation } from '../api/AppBarApi';
+import getAppBarErrorState from './getAppBarErrorState';
 
 const useAppBarData = () => {
   const router = useRouter();
   const [errorProps, setErrorProps] = useState<ErrorStateProps | null>(null);
 
-  const handleLogout = async () => {
-    const logoutData = await fetchLogout(() => setErrorProps(null));
+  const [logout] = useLogoutMutation();
 
-    if (logoutData.status === 'error') {
-      setErrorProps(logoutData.errorProps);
+  const handleLogout = async () => {
+    const logoutData = await logout();
+
+    if (logoutData.error) {
+      setErrorProps(
+        getAppBarErrorState({ onClose: () => setErrorProps(null) }),
+      );
       return;
     }
 

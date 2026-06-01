@@ -2,72 +2,70 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import {
-  fetchChangeProposal,
-  fetchCreateProposal,
-} from '../api/ProposalSubmissionApi';
+  useChangeProposalMutation,
+  useCreateProposalMutation,
+} from '../api/proposalSubmissionApi';
 import { SubmitValues } from './schema';
 import { ID } from '@/shared/types/primitives.types';
 import { isId } from '@/shared/utils/typeGuards';
-import { SubmitProposalResource } from './types';
 
 const useSubmissionSubmit = (
   methods: UseFormReturn<SubmitValues>,
   draftId: unknown,
   deleteFormFromStorage: () => void,
+  clearAutosaveTimer: () => void,
 ) => {
+  // state
   const router = useRouter();
   const { getValues } = methods;
 
   const [isSubmitDialogOpened, setIsSubmitDialogOpened] =
     useState<boolean>(false);
 
-  const [submitData, setSubmitData] = useState<SubmitProposalResource>({
-    status: 'idle',
-    data: null,
-    errorProps: null,
-  });
+  const [createProposal, createState] = useCreateProposalMutation();
+  const [changeProposal, changeState] = useChangeProposalMutation();
+
+  //  handlers
 
   const handleFormSubmit = async () => {
-    if (submitData.status === 'success') return;
+    if (createState.isSuccess || changeState.isSuccess) return;
 
+    clearAutosaveTimer();
     setIsSubmitDialogOpened(false);
-    setSubmitData({
-      status: 'loading',
-      data: null,
-      errorProps: null,
-    });
 
     const formValues = getValues();
 
+    const { duration, ...restValues } = formValues;
+    const normalizeDuration = Number(duration);
+
+    const requestBody = {
+      ...restValues,
+      status: 'submitted' as const,
+      duration: normalizeDuration,
+    };
+
     if (draftId && isId(draftId)) {
-      const response = await fetchChangeProposal(
-        formValues,
-        'submitted',
-        draftId,
-        () => setIsSubmitDialogOpened(false),
-      );
+      await changeProposal({
+        id: draftId,
+        payload: requestBody,
+      });
 
-      if (response === null) return;
-
-      setSubmitData(response);
       setIsSubmitDialogOpened(true);
 
       return;
     }
 
-    const response = await fetchCreateProposal(
-      formValues,
-      'submitted',
-      handleFormSubmit,
-    );
+    const response = await createProposal(requestBody);
+
+    setIsSubmitDialogOpened(true);
+
+    if (response.error) return;
 
     deleteFormFromStorage();
-    setSubmitData(response);
-    setIsSubmitDialogOpened(true);
   };
 
   const handleSubmitDialogClose = () => {
-    if (submitData.status === 'success') return;
+    if (createState.isSuccess || changeState.isSuccess) return;
 
     setIsSubmitDialogOpened(false);
   };
@@ -77,10 +75,11 @@ const useSubmissionSubmit = (
   };
 
   return {
-    handleFormSubmit,
+    createState,
+    changeState,
     isSubmitDialogOpened,
+    handleFormSubmit,
     handleSubmitDialogClose,
-    submitData,
     handleRedirectToProposals,
   };
 };

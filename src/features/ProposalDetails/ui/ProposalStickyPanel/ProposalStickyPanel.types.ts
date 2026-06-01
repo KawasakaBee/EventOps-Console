@@ -1,8 +1,5 @@
-import { Resource } from '@/shared/types/resource.types';
-import { DetailsState } from '../../model/proposalDetailsSlice';
-import { Track } from '@/entities/track/model/types';
+import { GetProposalResponse } from '@/entities/proposal/api/contracts';
 
 export interface IProposalStickyPanelProps {
-  data: DetailsState;
-  tracks: Resource<Track[]>;
+  details: GetProposalResponse;
 }

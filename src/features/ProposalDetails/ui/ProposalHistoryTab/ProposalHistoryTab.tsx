@@ -4,54 +4,39 @@ import HistoryItem from '../HistoryItem/HistoryItem';
 import { styles } from './styles';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import HistoryItemSkeleton from '../HistoryItem/HistoryItemSkeleton';
-import { HistoryEntry } from '@/entities/history/model/types';
-import { UserListItem } from '@/entities/user/model/types';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
+import { useGetUsersQuery } from '@/entities/user/api/userApi';
 
 const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
   history,
-  users,
   comments,
-  reviewers,
-  tracks,
 }) => {
   const sx = styles();
 
-  const isUsersResourceLoaded =
-    users.status === 'success' || users.status === 'error';
-  const isUsersError = users.status === 'error';
-
-  const user = (history: HistoryEntry, users: UserListItem[]) => {
-    const foundUser = users.find((u) => u.id === history.actorId);
-    return foundUser ?? { id: '', name: 'Данные автора недоступны' };
-  };
+  const users = useGetUsersQuery();
+  const tracks = useGetTracksQuery();
+  const reviewers = useGetReviewersQuery();
 
   return history.length !== 0 ? (
     <Timeline sx={sx.timeline}>
       {history.map((item, idx) => {
-        return isUsersResourceLoaded ? (
-          isUsersError ? (
-            <HistoryItem
-              key={item.id}
-              item={item}
-              user={{ status: users.status, message: users.message }}
-              isLastItem={idx === history.length - 1}
-              comments={comments}
-              reviewers={reviewers}
-              tracks={tracks}
-            />
-          ) : (
-            <HistoryItem
-              key={item.id}
-              item={item}
-              user={{ status: users.status, data: user(item, users.data) }}
-              isLastItem={idx === history.length - 1}
-              comments={comments}
-              reviewers={reviewers}
-              tracks={tracks}
-            />
-          )
-        ) : (
+        return users.isLoading || tracks.isLoading || reviewers.isLoading ? (
           <HistoryItemSkeleton key={item.id} />
+        ) : (
+          <HistoryItem
+            key={item.id}
+            item={item}
+            isLastItem={idx === history.length - 1}
+            users={users.data}
+            isUsersError={users.isError}
+            usersError={users.error}
+            comments={comments}
+            reviewers={reviewers.data}
+            isReviewersError={reviewers.isError}
+            tracks={tracks.data}
+            isTracksError={tracks.isError}
+          />
         );
       })}
     </Timeline>

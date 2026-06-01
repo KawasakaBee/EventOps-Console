@@ -3,46 +3,29 @@ import { IProposalCommentsTabProps } from './ProposalCommentsTab.types';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import CommentCard from '../CommentCard/CommentCard';
 import CommentCardSkeleton from '../CommentCard/CommentCardSkeleton';
-import { Comment } from '@/entities/comment/model/types';
-import { UserListItem } from '@/entities/user/model/types';
+import { useGetUsersQuery } from '@/entities/user/api/userApi';
 
 const ProposalCommentsTab: React.FC<IProposalCommentsTabProps> = ({
   comments,
   canAddComment,
-  users,
 }) => {
-  const isDataLoaded = users.status === 'success' || users.status === 'error';
-  const isError = users.status === 'error';
-
-  const user = (comment: Comment, users: UserListItem[]) => {
-    const foundUser = users.find((u) => u.id === comment.actorId);
-    return foundUser ?? { id: '', name: 'Данные автора недоступны' };
-  };
+  const { data, isLoading, isError, error } = useGetUsersQuery();
 
   return (
     <Box>
       {comments.length !== 0 ? (
         <Stack spacing={10}>
           {comments.map((comment) => {
-            return isDataLoaded ? (
-              isError ? (
-                <CommentCard
-                  key={comment.id}
-                  comment={comment}
-                  user={{ status: users.status, message: users.message }}
-                />
-              ) : (
-                <CommentCard
-                  key={comment.id}
-                  comment={comment}
-                  user={{
-                    status: users.status,
-                    data: user(comment, users.data),
-                  }}
-                />
-              )
-            ) : (
+            return isLoading ? (
               <CommentCardSkeleton key={comment.id} />
+            ) : (
+              <CommentCard
+                key={comment.id}
+                comment={comment}
+                users={data}
+                isUsersError={isError}
+                usersError={error}
+              />
             );
           })}
         </Stack>

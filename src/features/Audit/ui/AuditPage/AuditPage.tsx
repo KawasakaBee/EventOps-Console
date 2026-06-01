@@ -14,6 +14,9 @@ import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import PaginationControl from '@/shared/ui/PaginationControl/PaginationControl';
 import InfoCards from '@/shared/ui/InfoCards/InfoCards';
+import { useGetAuditPaginationQuery } from '../../api/auditApi';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getAuditErrorState from '../../model/getAuditErrorState';
 
 const AuditPage = () => {
   const pathname = usePathname();
@@ -21,12 +24,9 @@ const AuditPage = () => {
   const stringifySearchParams = searchParams.toString();
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
 
-  const { pagination, reviewers, comments, users, auditFiltersReset } =
-    useAuditData(stringifySearchParams);
-
-  const isPaginationDataLoaded =
-    pagination.status === 'success' || pagination.status === 'error';
-  const isPaginationError = pagination.status === 'error';
+  const { data, isLoading, isError, error, refetch } =
+    useGetAuditPaginationQuery(stringifySearchParams);
+  const { auditFiltersReset } = useAuditData();
 
   const activeFiltersCount = useMemo((): number => {
     const filters = new Set(
@@ -60,61 +60,56 @@ const AuditPage = () => {
       {
         <InfoCards
           items={[
-            { label: 'Всего действий:', value: pagination.data?.total },
-            { label: 'Страница:', value: pagination.data?.page },
+            { label: 'Всего действий:', value: data?.total },
+            { label: 'Страница:', value: data?.page },
             {
               label: 'Действий на странице:',
-              value: pagination.data?.pageSize,
+              value: data?.pageSize,
             },
             { label: 'Активные фильтры:', value: activeFiltersCount },
           ]}
-          isLoading={!isPaginationDataLoaded}
+          isLoading={isLoading}
         />
       }
       <AuditFilterBar
         searchParams={stringifySearchParams}
-        users={users}
-        isDisabled={!isPaginationDataLoaded || isPaginationError}
+        isDisabled={isLoading || isError}
         handleFiltersReset={auditFiltersReset}
       />
-      {isPaginationDataLoaded ? (
-        isPaginationError ? (
-          pagination.errorProps && <ErrorState {...pagination.errorProps} />
-        ) : pagination.data && pagination.data.items.length !== 0 ? (
-          <AuditTable
-            audit={pagination.data.items}
-            users={users}
-            reviewers={reviewers}
-            comments={comments}
-          />
-        ) : activeFiltersCount === 0 ? (
-          <EmptyState
-            title="Данных пока нет"
-            subtitle="Когда будут совершены какие-либо действия, они появятся в этом списке."
-          />
-        ) : (
-          <EmptyState
-            title="По текущим фильтрам ничего не найдено"
-            subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
-            action={{
-              handler: auditFiltersReset,
-              buttonName: 'Сбросить фильтры',
-            }}
+      {isLoading ? (
+        <AuditTableSkeleton />
+      ) : isError ? (
+        isAppBaseQueryError(error) && (
+          <ErrorState
+            {...getAuditErrorState(error.error, {
+              retry: refetch,
+              resetFilters: auditFiltersReset,
+            })}
           />
         )
+      ) : data && data.items.length !== 0 ? (
+        <AuditTable audit={data.items} />
+      ) : activeFiltersCount === 0 ? (
+        <EmptyState
+          title="Данных пока нет"
+          subtitle="Когда будут совершены какие-либо действия, они появятся в этом списке."
+        />
       ) : (
-        <AuditTableSkeleton />
+        <EmptyState
+          title="По текущим фильтрам ничего не найдено"
+          subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
+          action={{
+            handler: auditFiltersReset,
+            buttonName: 'Сбросить фильтры',
+          }}
+        />
       )}
-      {isPaginationDataLoaded &&
-        !pagination.errorProps &&
-        pagination.data &&
-        pagination.data.items &&
-        pagination.data.items.length !== 0 && (
-          <PaginationControl
-            totalPages={pagination.data?.totalPages}
-            isDisabled={pagination.status !== 'success'}
-          />
-        )}
+      {!isError && data?.totalPages !== 0 && (
+        <PaginationControl
+          totalPages={data?.totalPages}
+          isDisabled={isLoading}
+        />
+      )}
     </>
   );
 };

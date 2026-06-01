@@ -14,33 +14,31 @@ import {
 import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import formatHistoryPayloadLines from '@/entities/history/lib/formatHistoryPayloadLines';
 import { styles } from './styles';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 
 const AuditTableRow: React.FC<IAuditTableRowProps> = ({
   auditItem,
   users,
+  isUsersLoading,
+  isUsersError,
+  usersError,
   reviewers,
+  isReviewersLoading,
+  isReviewersError,
   comments,
+  isCommentsLoading,
+  isCommentsError,
 }) => {
-  const isUsersDataLoaded =
-    users.status === 'success' || users.status === 'error';
-  const isUsersError = users.status === 'error';
-  const isReviewersDataLoaded =
-    reviewers.status === 'success' || reviewers.status === 'error';
-  const isReviewersError = reviewers.status === 'error';
-  const isCommentsDataLoaded =
-    comments.status === 'success' || comments.status === 'error';
-  const isCommentsError = comments.status === 'error';
-
   const sx = styles();
 
   const normalizedHistoryPayload = () => {
-    if (!auditItem.payload || !isReviewersDataLoaded || !isCommentsDataLoaded)
+    if (!auditItem.payload || isReviewersLoading || isCommentsLoading)
       return null;
 
     const normalizePayload = formatHistoryPayloadLines(
       auditItem.payload,
-      isReviewersError ? null : reviewers.data,
-      isCommentsError ? [] : comments.data,
+      isReviewersError ? null : (reviewers?.reviewers ?? null),
+      isCommentsError ? [] : (comments?.comments ?? []),
     );
     if (!normalizePayload) return 'Нет примечания';
 
@@ -66,16 +64,18 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
       case 'entityId':
         return data.entityId;
       case 'actorId': {
-        if (!isUsersDataLoaded)
+        if (isUsersLoading)
           return (
             <Skeleton
               variant="text"
               width={auditTableWidthDictionary['actorId'].skeletonWidth}
             />
           );
-        if (isUsersError) return users.message;
+        if (isUsersError) return getApiErrorMessage(usersError);
 
-        const currentUser = users.data.find((user) => user.id === data.actorId);
+        const currentUser = users
+          ? users.users.find((user) => user.id === data.actorId)
+          : null;
 
         return currentUser?.name ?? 'Пользователь не найден';
       }

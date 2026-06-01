@@ -21,6 +21,8 @@ import {
 import Button from '@/shared/ui/Button/Button';
 import { styles } from './styles';
 import { IAutosaveWatcherProps } from './SubmitPage.types';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getSubmissionErrorState from '../../model/getSubmissionErrorState';
 
 const AutosaveWatcher: React.FC<IAutosaveWatcherProps> = ({
   control,
@@ -65,12 +67,7 @@ const SubmitPage = () => {
 
   const {
     draft,
-    id,
-    speakers,
-    tracks,
-    reFetchTracks,
-    tags,
-    reFetchTags,
+    proposalId,
     scheduleAutosave,
     scheduleRecoveryAutosave,
     isRecoveryDialogOpened,
@@ -81,35 +78,28 @@ const SubmitPage = () => {
     isAutosaveError,
     handleAutosaveErrorClose,
     handleFormSubmit,
+    createState,
+    changeState,
     isSubmitDialogOpened,
     handleSubmitDialogClose,
-    submitData,
     handleRedirectToProposals,
   } = useSubmissionData(methods);
-
-  const isDraftDataLoaded =
-    draft.status === 'success' || draft.status === 'error';
-  const isDraftError = draft.status === 'error';
-
-  const iSubmitDataLoaded =
-    submitData.status === 'success' || submitData.status === 'error';
-  const iSubmitError = submitData.status === 'error';
 
   const sx = styles();
 
   useEffect(() => {
-    if (id) return;
+    if (proposalId) return;
     if (!recoveryCheckedRef.current) {
       formRecovery();
       recoveryCheckedRef.current = true;
     }
-  }, [formRecovery, id]);
+  }, [formRecovery, proposalId]);
 
   return (
     <FormProvider {...methods}>
       <AutosaveWatcher
         control={control}
-        id={id}
+        id={proposalId}
         scheduleAutosave={scheduleAutosave}
         scheduleRecoveryAutosave={scheduleRecoveryAutosave}
       />
@@ -117,22 +107,22 @@ const SubmitPage = () => {
         onSubmit={handleSubmit(handleFormSubmit)}
         style={{ height: '100%' }}
       >
-        {isDraftDataLoaded ? (
-          isDraftError ? (
-            draft.errorProps && <ErrorState {...draft.errorProps} />
-          ) : (
-            <SubmitStepper
-              id={id}
-              speakers={speakers}
-              tracks={tracks}
-              reFetchTracks={reFetchTracks}
-              tags={tags}
-              reFetchTags={reFetchTags}
-              clearStorage={deleteFormFromStorage}
+        {draft.isLoading ? (
+          <SubmitStepperSkeleton />
+        ) : draft.isError ? (
+          isAppBaseQueryError(draft.error) && (
+            <ErrorState
+              {...getSubmissionErrorState(draft.error.error, {
+                retry: draft.refetch,
+              })}
             />
           )
         ) : (
-          <SubmitStepperSkeleton />
+          <SubmitStepper
+            id={proposalId}
+            speakers={draft.data?.speakers}
+            clearStorage={deleteFormFromStorage}
+          />
         )}
       </form>
       <Dialog
@@ -180,23 +170,36 @@ const SubmitPage = () => {
           },
         }}
       >
-        {iSubmitDataLoaded ? (
+        {createState.isLoading || changeState.isLoading ? (
+          <CircularProgress sx={sx.submitCircularProgress} />
+        ) : (
           <>
             <DialogTitle sx={sx.submitDialogTitle}>
-              {iSubmitError
+              {createState.isError || changeState.isError
                 ? 'Не удалось создать заявку...'
                 : 'Заявка успешно создана!'}
             </DialogTitle>
             <DialogContent sx={sx.submitDialogContent}>
-              {iSubmitError ? (
+              {createState.isError || changeState.isError ? (
                 <Stack>
-                  {!id && (
+                  {!proposalId && (
                     <Typography>
                       Сохраните заявку как черновик, чтобы не потерять данные!
                     </Typography>
                   )}
-                  {submitData.errorProps && (
-                    <ErrorState {...submitData.errorProps} />
+                  {isAppBaseQueryError(createState.error) && (
+                    <ErrorState
+                      {...getSubmissionErrorState(createState.error.error, {
+                        retry: handleFormSubmit,
+                      })}
+                    />
+                  )}
+                  {isAppBaseQueryError(changeState.error) && (
+                    <ErrorState
+                      {...getSubmissionErrorState(changeState.error.error, {
+                        retry: handleFormSubmit,
+                      })}
+                    />
                   )}
                 </Stack>
               ) : (
@@ -204,16 +207,20 @@ const SubmitPage = () => {
               )}
             </DialogContent>
             <DialogActions sx={sx.submitDialogActions}>
-              {!iSubmitError && (
+              {!createState.isError && !changeState.isError && (
                 <Button
                   mode="button"
                   variant="contained"
                   size="medium"
                   type="button"
                   onClick={() =>
-                    submitData.data
-                      ? handleRedirectToProposals(submitData.data.id)
-                      : handleSubmitDialogClose()
+                    createState.data
+                      ? handleRedirectToProposals(createState.data.proposal.id)
+                      : changeState.data
+                        ? handleRedirectToProposals(
+                            changeState.data.proposal.id,
+                          )
+                        : handleSubmitDialogClose()
                   }
                 >
                   Продолжить
@@ -221,8 +228,6 @@ const SubmitPage = () => {
               )}
             </DialogActions>
           </>
-        ) : (
-          <CircularProgress sx={sx.submitCircularProgress} />
         )}
       </Dialog>
       <ErrorState

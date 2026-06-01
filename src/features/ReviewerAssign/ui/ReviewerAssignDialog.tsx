@@ -15,30 +15,26 @@ import useReviewerAssignData from '../model/useReviewerAssignData';
 import { styles } from './styles';
 import Button from '@/shared/ui/Button/Button';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
+import {
+  getApiErrorMessage,
+  isAppBaseQueryError,
+} from '@/shared/api/getApiErrorMessage';
+import getAssignErrorState from '../model/getAssignErrorState';
 
 const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
   const {
     reviewers,
-    assignData,
+    reviewersOptions,
     currentReviewer,
     autocompleteAnchor,
     emptyReviewerError,
     handleReviewerSet,
     handleReviewerAssign,
+    assignState,
     handleCloseDialog,
   } = useReviewerAssignData(props);
 
   const { onClose } = props;
-
-  const isReviewerAssigned =
-    assignData.status === 'success' || assignData.status === 'error';
-  const isAssignError = assignData.status === 'error';
-
-  const isReviewersDataLoaded =
-    reviewers.status === 'success' || reviewers.status === 'error';
-  const isReviewersError = reviewers.status === 'error';
-  const isEmptyReviewers =
-    reviewers.status === 'success' && reviewers.data.length === 0;
 
   const sx = styles();
 
@@ -52,52 +48,64 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
         },
       }}
     >
-      {isReviewerAssigned ? (
-        isAssignError ? (
-          assignData.errorProps && <ErrorState {...assignData.errorProps} />
-        ) : (
-          <>
-            <DialogTitle>Ревьюер успешно назначен!</DialogTitle>
-            <DialogContent>Вы можете продолжить работу с заявкой</DialogContent>
-            <DialogActions>
-              <Button
-                mode="button"
-                variant="contained"
-                size="medium"
-                type="button"
-                onClick={() => handleCloseDialog(onClose)}
-              >
-                Продолжить
-              </Button>
-            </DialogActions>
-          </>
+      {assignState.isError ? (
+        isAppBaseQueryError(assignState.error) && (
+          <ErrorState
+            {...getAssignErrorState(assignState.error.error, {
+              retry: handleReviewerAssign,
+            })}
+          />
         )
+      ) : assignState.data ? (
+        <>
+          <DialogTitle>Ревьюер успешно назначен!</DialogTitle>
+          <DialogContent>Вы можете продолжить работу с заявкой</DialogContent>
+          <DialogActions>
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              type="button"
+              onClick={() => handleCloseDialog(onClose)}
+            >
+              Продолжить
+            </Button>
+          </DialogActions>
+        </>
       ) : (
         <>
           <DialogTitle>Назначить ревьюера</DialogTitle>
           <DialogContent sx={sx.dialogContent}>
             <FormControl sx={sx.formControl}>
-              {isReviewersDataLoaded ? (
+              {reviewers.isLoading ? (
+                <Skeleton variant="text" />
+              ) : (
                 <Stack spacing={1}>
                   <Autocomplete
-                    options={isReviewersError ? [] : reviewers.data}
+                    options={reviewers.isError ? [] : reviewersOptions}
                     value={currentReviewer}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         label={
-                          isReviewersError
-                            ? reviewers.message
-                            : isEmptyReviewers
-                              ? 'Нет доступных ревьюеров'
-                              : 'Ревьюер'
+                          reviewers.isError
+                            ? getApiErrorMessage(reviewers.error)
+                            : reviewers.data
+                              ? reviewers.data.reviewers.length === 0
+                                ? 'Нет доступных ревьюеров'
+                                : 'Ревьюер'
+                              : 'Не удалось загрузить ревьюера'
                         }
                         inputRef={autocompleteAnchor}
                         error={!!emptyReviewerError}
                       />
                     )}
                     onChange={(_, option) => handleReviewerSet(option?.id)}
-                    disabled={isReviewersError || isEmptyReviewers}
+                    disabled={
+                      reviewers.isError ||
+                      !reviewers.data ||
+                      reviewers.data.reviewers.length === 0
+                    }
                   />
                   {!!emptyReviewerError && (
                     <FormHelperText sx={sx.formHelperTest}>
@@ -105,8 +113,6 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
                     </FormHelperText>
                   )}
                 </Stack>
-              ) : (
-                <Skeleton variant="text" />
               )}
             </FormControl>
           </DialogContent>
@@ -119,7 +125,7 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
               intent="success"
               onClick={handleReviewerAssign}
               isDisabled={
-                !isReviewersDataLoaded || isReviewersError || !currentReviewer
+                reviewers.isLoading || reviewers.isError || !currentReviewer
               }
             >
               Назначить

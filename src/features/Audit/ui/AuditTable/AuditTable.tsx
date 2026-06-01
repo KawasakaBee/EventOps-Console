@@ -20,17 +20,19 @@ import { isSortOrder } from '@/shared/utils/typeGuards';
 import { AuditSortBy } from '@/shared/types/primitives.types';
 import { IAuditTableProps } from './AuditTable.types';
 import AuditTableRow from '../AuditTableRow/AuditTableRow';
+import { useGetCommentsQuery } from '@/entities/comment/api/commentApi';
+import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
+import { useGetUsersQuery } from '@/entities/user/api/userApi';
 
-const AuditTable: React.FC<IAuditTableProps> = ({
-  audit,
-  users,
-  reviewers,
-  comments,
-}) => {
+const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const stringifySearchParams = searchParams.toString();
+
+  const users = useGetUsersQuery();
+  const comments = useGetCommentsQuery();
+  const reviewers = useGetReviewersQuery();
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');
@@ -97,9 +99,16 @@ const AuditTable: React.FC<IAuditTableProps> = ({
             <AuditTableRow
               key={`Table-body-row-${item.id}`}
               auditItem={item}
-              users={users}
-              reviewers={reviewers}
-              comments={comments}
+              users={users.data}
+              isUsersLoading={users.isLoading}
+              isUsersError={users.isError}
+              usersError={users.error}
+              reviewers={reviewers.data}
+              isReviewersLoading={reviewers.isLoading}
+              isReviewersError={reviewers.isError}
+              comments={comments.data}
+              isCommentsLoading={comments.isLoading}
+              isCommentsError={comments.isError}
             />
           ))}
         </TableBody>

@@ -23,10 +23,10 @@ import {
   proposalListItemKeys,
   proposalTableWidthDictionary,
 } from '../../model/tableColumns';
+import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
-  tracks,
   role,
 }) => {
   const router = useRouter();
@@ -36,6 +36,8 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
   const selectedIds = useAppSelector(
     (store) => store.proposalsFilters.selectedIds,
   );
+
+  const { data, isLoading, isError, error } = useGetTracksQuery();
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');
@@ -142,7 +144,10 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
               sx={sx.tableCheckbox}
               isSelected={selectedIdsSet.has(proposal.id)}
               role={role}
-              tracks={tracks}
+              tracks={data}
+              isTracksLoading={isLoading}
+              isTracksError={isError}
+              tracksError={error}
             />
           ))}
         </TableBody>

@@ -14,13 +14,15 @@ import Button from '@/shared/ui/Button/Button';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import useStatusTransitionSubmit from '../model/useStatusTransitionSubmit';
 import { statusDictionary } from '@/entities/proposal/model/dictionaries';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getStatusTransitionErrorState from '../model/getStatusTransitionErrorState';
 
 const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
   props,
 ) => {
   const { mode, prevStatus, nextStatus, onClose } = props;
   const {
-    dialog,
+    changeState,
     reasonValue,
     reasonError,
     isMustHaveReason,
@@ -28,7 +30,6 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
     handleStatusChange,
     handleReasonValueChange,
   } = useStatusTransitionSubmit(props);
-  const isLoading = dialog.status === 'loading';
 
   const sx = styles();
 
@@ -42,7 +43,32 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
         },
       }}
     >
-      {!dialog.errorProps && dialog.status !== 'success' && (
+      {changeState.isError ? (
+        isAppBaseQueryError(changeState.error) && (
+          <ErrorState
+            {...getStatusTransitionErrorState(changeState.error.error, {
+              retry: () => null,
+              onClose,
+            })}
+          />
+        )
+      ) : changeState.data ? (
+        <Stack spacing={2} sx={sx.dialogContainer}>
+          <Typography variant="h2">
+            Статус заявки успешно изменён на{' '}
+            <b>{statusDictionary[nextStatus]}</b>
+          </Typography>
+          <Button
+            mode="button"
+            variant="contained"
+            size="medium"
+            type="button"
+            onClick={onClose}
+          >
+            Продолжить
+          </Button>
+        </Stack>
+      ) : (
         <Stack spacing={4} sx={sx.dialogContainer}>
           <Typography variant="h2">
             {mode === 'single'
@@ -62,7 +88,7 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
             <FormControl
               required={isMustHaveReason}
               sx={sx.formControl}
-              disabled={isLoading}
+              disabled={changeState.isLoading}
             >
               <Stack spacing={2}>
                 {isMustHaveReason && (
@@ -75,7 +101,7 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
                     onChange={(event) => {
                       handleReasonValueChange(event.target.value);
                     }}
-                    disabled={isLoading}
+                    disabled={changeState.isLoading}
                     error={reasonError}
                     helperText={
                       reasonError
@@ -98,9 +124,13 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
                     size="medium"
                     type="submit"
                     intent="success"
-                    isDisabled={isLoading}
+                    isDisabled={changeState.isLoading}
                   >
-                    {isLoading ? <CircularProgress /> : 'Изменить статус'}
+                    {changeState.isLoading ? (
+                      <CircularProgress />
+                    ) : (
+                      'Изменить статус'
+                    )}
                   </Button>
                   <Button
                     mode="button"
@@ -118,24 +148,6 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
           </Box>
         </Stack>
       )}
-      {!dialog.errorProps && dialog.status === 'success' && !isLoading && (
-        <Stack spacing={2} sx={sx.dialogContainer}>
-          <Typography variant="h2">
-            Статус заявки успешно изменён на{' '}
-            <b>{statusDictionary[nextStatus]}</b>
-          </Typography>
-          <Button
-            mode="button"
-            variant="contained"
-            size="medium"
-            type="button"
-            onClick={onClose}
-          >
-            Продолжить
-          </Button>
-        </Stack>
-      )}
-      {dialog.errorProps && <ErrorState {...dialog.errorProps} />}
     </Dialog>
   );
 };

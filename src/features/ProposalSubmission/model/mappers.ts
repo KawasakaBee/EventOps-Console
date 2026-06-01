@@ -44,7 +44,7 @@ export const mapDraftToSubmitValues = (
   return {
     title: draft.title,
     format: draft.format,
-    duration: String(draft.duration),
+    duration: draft.duration === 0 ? '' : String(draft.duration),
     level: draft.level,
     trackId: draft.trackId,
     abstract: draft.abstract,
@@ -84,6 +84,13 @@ export const buildDirtySubmitPayload = (
     const value = formValues[key];
 
     if (value === undefined) return;
+
+    if (key === 'duration') {
+      const normalizeDuration = Number(formValues[key]);
+
+      requestBody[key] = normalizeDuration;
+      return;
+    }
 
     requestBody[key] = value;
   });

@@ -1,21 +1,13 @@
-import { TagsResource } from './types';
+import { baseApi } from '@/shared/api/baseApi';
 import { GetTagsResponse } from './contracts';
-import { normalizeFetch } from '@/shared/api/normalizeResponse';
 
-export const fetchTags = async (): Promise<TagsResource> => {
-  const tags: TagsResource = {
-    status: 'loading',
-    data: [],
-  };
+export const tagApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    getTags: build.query<GetTagsResponse, void>({
+      query: () => '/tags',
+      providesTags: ['Tag'],
+    }),
+  }),
+});
 
-  const response = await normalizeFetch<GetTagsResponse>('/api/tags');
-
-  if (!response.ok) {
-    tags.status = 'error';
-    return tags;
-  }
-
-  tags.data = response.data.tags;
-  tags.status = 'success';
-  return tags;
-};
+export const { useGetTagsQuery } = tagApi;

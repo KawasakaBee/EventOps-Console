@@ -10,9 +10,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { styles } from './styles';
 import SpeakerCard from '../SpeakerCard/SpeakerCard';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
-import { Track } from '@/entities/track/model/types';
 import ProposalOverviewTabSkeleton from '../ProposalOverviewTab/ProposalOverviewTabSkeleton';
-import { Proposal } from '@/entities/proposal/model/types';
 import {
   ProposalDetailsTab,
   proposalDetailsTabs,
@@ -22,18 +20,12 @@ import { isProposalDetailsTab } from '../../model/typeGuards';
 
 const ProposalContent: React.FC<IProposalContentProps> = ({
   data,
-  tracks,
-  reviewersList,
-  users,
   speakers,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchParamsString = searchParams.toString();
-
-  const isDataLoaded = tracks.status === 'success' || tracks.status === 'error';
-  const isError = tracks.status === 'error';
 
   const currentTab = useMemo(() => {
     const defaultTab: ProposalDetailsTab = 'overview';
@@ -57,18 +49,6 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
   );
 
   const sx = styles();
-
-  const track = (proposal: Proposal, tracks: Track[]) => {
-    const foundTrack = tracks.find((track) => track.id === proposal.trackId);
-    return (
-      foundTrack ?? {
-        id: proposal.trackId,
-        title: 'Трек не найден',
-        description: '',
-        order: 0,
-      }
-    );
-  };
 
   const handleChangeCurrentTab = (
     _: React.SyntheticEvent,
@@ -98,21 +78,8 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
       <SectionCard title={null} restSx={sx.tabCard}>
         {currentTab === 'overview' && (
           <Box>
-            {isDataLoaded && data.proposal ? (
-              isError ? (
-                <ProposalOverviewTab
-                  proposal={data.proposal}
-                  track={{ status: tracks.status, message: tracks.message }}
-                />
-              ) : (
-                <ProposalOverviewTab
-                  proposal={data.proposal}
-                  track={{
-                    status: tracks.status,
-                    data: track(data.proposal, tracks.data),
-                  }}
-                />
-              )
+            {data.proposal ? (
+              <ProposalOverviewTab proposal={data.proposal} />
             ) : (
               <ProposalOverviewTabSkeleton />
             )}
@@ -123,7 +90,6 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
             <ProposalReviewsTab
               reviews={data.reviews}
               canAssignReviewer={canAssignReviewer}
-              reviewers={reviewersList}
             />
           </Box>
         )}
@@ -132,7 +98,6 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
             <ProposalCommentsTab
               comments={data.comments}
               canAddComment={canAddComment}
-              users={users}
             />
           </Box>
         )}
@@ -140,10 +105,7 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
           <Box>
             <ProposalHistoryTab
               history={data.history}
-              users={users}
               comments={data.comments}
-              reviewers={reviewersList}
-              tracks={tracks}
             />
           </Box>
         )}

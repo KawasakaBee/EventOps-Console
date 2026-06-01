@@ -1,45 +1,46 @@
-import {
-  Avatar,
-  Box,
-  Chip,
-  Grid,
-  Skeleton,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Chip, Grid, Stack, Typography } from '@mui/material';
 import { ICommentCardProps } from './CommentCard.types';
 import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
 import { styles } from './styles';
 import getAvatarInitials from '../../model/getAvatarInitials';
 import { rolesDictionary } from '@/entities/user/model/dictionaries';
+import { UserListItem } from '@/entities/user/model/types';
+import { Comment } from '@/entities/comment/model/types';
+import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 
-const CommentCard: React.FC<ICommentCardProps> = ({ comment, user }) => {
+const CommentCard: React.FC<ICommentCardProps> = ({
+  comment,
+  users,
+  isUsersError,
+  usersError,
+}) => {
   const sx = styles({ role: comment.actorRole });
 
-  const isDataLoaded = user.status === 'success' || user.status === 'error';
-  const isError = user.status === 'error';
+  const user = (comment: Comment, users: UserListItem[]) => {
+    const foundUser = users.find((u) => u.id === comment.actorId);
+    return foundUser ?? { name: 'Данные автора недоступны' };
+  };
 
   return (
     <Grid container columnSpacing={2}>
       <Grid size="auto">
-        {isDataLoaded ? (
-          <Avatar sx={sx.avatar}>
-            {isError ? 'U' : getAvatarInitials(user.data.name)}
-          </Avatar>
-        ) : (
-          <Skeleton variant="circular" width={40} height={40} />
-        )}
+        <Avatar sx={sx.avatar}>
+          {isUsersError
+            ? 'U'
+            : users
+              ? getAvatarInitials(user(comment, users.users).name)
+              : 'U'}
+        </Avatar>
       </Grid>
       <Grid size="grow">
         <Stack direction="row" spacing={1} sx={sx.bioWrapper}>
-          {isDataLoaded ? (
-            <Typography variant="body2" sx={sx.userName}>
-              {isError ? user.message : user.data.name}
-            </Typography>
-          ) : (
-            <Skeleton variant="text" width={200} />
-          )}
-
+          <Typography variant="body2" sx={sx.userName}>
+            {isUsersError
+              ? getApiErrorMessage(usersError)
+              : users
+                ? user(comment, users.users).name
+                : 'Не удалось загрузить пользователя'}
+          </Typography>
           <Chip label={rolesDictionary[comment.actorRole]} sx={sx.userRole} />
         </Stack>
         <Box sx={sx.timeWrapper}>

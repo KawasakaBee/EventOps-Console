@@ -13,7 +13,6 @@ import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks';
 import { styles } from './styles';
-import toLoadableResource from '@/shared/utils/toLoadableResource';
 import useProposalsPageData from '../../model/useProposalsListData';
 import { closeStatusTransition } from '@/features/ProposalStatusTransition/model/proposalStatusTransitionSlice';
 import ProposalsBulkActions from '../ProposalsBulkActions/ProposalsBulkActions';
@@ -30,6 +29,9 @@ import ReviewCreateDialog from '@/features/ReviewCreate/ui/ReviewCreateDialog';
 import { closeCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCreateSlice';
 import PaginationControl from '@/shared/ui/PaginationControl/PaginationControl';
 import InfoCards from '@/shared/ui/InfoCards/InfoCards';
+import { useAuth } from '@/entities/user/model/AuthProvider';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getProposalsErrorState from '../../model/getProposalsErrorState';
 
 const ProposalsPage = () => {
   const pathname = usePathname();
@@ -37,17 +39,13 @@ const ProposalsPage = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const searchParamsString = searchParams.toString();
+  const { user } = useAuth();
 
   const {
     pagination,
-    user,
-    tracks,
-    reviewers,
     multipleErrorsCount,
     multipleAssignErrorsCount,
-    handleStatusSuccess,
     handleMultipleStatusSuccess,
-    handleAssignReviewerSuccess,
     handleMultipleAssignReviewerSuccess,
     closeErrorSnackbar,
     closeAssignErrorSnackbar,
@@ -56,17 +54,6 @@ const ProposalsPage = () => {
 
   const [isExportSnackbarOpen, setIsExportSnackbarOpen] =
     useState<boolean>(false);
-
-  const isDataReady =
-    pagination.status === 'success' && user.status === 'success';
-  const isPageUnavailable =
-    pagination.status !== 'success' || user.status !== 'success';
-  const isInitialLoading =
-    pagination.status === 'idle' ||
-    pagination.status === 'loading' ||
-    user.status === 'idle' ||
-    user.status === 'loading';
-  const criticalErrorProps = user.errorProps ?? pagination.errorProps;
 
   const selectedPageSize = useMemo((): PageSize => {
     const queryPageSize = searchParams.get('pageSize');
@@ -116,17 +103,6 @@ const ProposalsPage = () => {
     availableProposalsMultipleStatuses,
   } = getCommonAvailableStatuses(proposalList, selectedIds);
 
-  const tracksToResource = toLoadableResource(
-    tracks.status,
-    tracks.data,
-    'Трек не удалось загрузить',
-  );
-  const reviewersToResource = toLoadableResource(
-    reviewers.status,
-    reviewers.data,
-    'Данные ревьюера не удалось загрузить',
-  );
-
   const sx = styles();
 
   const handleOpenExportSnackbar = () => {
@@ -163,68 +139,65 @@ const ProposalsPage = () => {
         }
       >
         <Stack direction="row" spacing={2}>
-          {user.data && proposalList && isDataReady ? (
+          {pagination.isLoading ? (
+            <Skeleton variant="text" width={300} />
+          ) : (
             <ProposalsBulkActions
-              user={user.data}
-              proposals={proposalList}
+              userRole={user.role}
+              proposals={proposalList ?? []}
               selectedIds={selectedIds}
-              isDisabled={isPageUnavailable}
+              isDisabled={!pagination.isSuccess}
               availableStatuses={availableProposalsMultipleStatuses()}
               currentStatuses={selectedProposalsMultipleStatuses}
             />
-          ) : (
-            <Skeleton variant="text" width={300} />
           )}
           <Button
             mode="button"
             variant="outlined"
             size="small"
-            isDisabled={isPageUnavailable}
+            isDisabled={!pagination.isSuccess}
             onClick={handleOpenExportSnackbar}
           >
             Экспорт
           </Button>
         </Stack>
       </PageHeader>
-      {isDataReady && pagination.data && (
+      {
         <InfoCards
           items={[
-            { label: 'Всего заявок:', value: pagination.data.total },
+            { label: 'Всего заявок:', value: pagination.data?.total },
             { label: 'Страница:', value: selectedPage },
             { label: 'Заявок на странице:', value: selectedPageSize },
             { label: 'Активные фильтры:', value: activeFiltersCount },
           ]}
-          isLoading={isInitialLoading}
+          isLoading={pagination.isLoading}
         />
-      )}
+      }
       <ProposalsFilterBar
         searchParams={searchParams}
-        isDisabled={isPageUnavailable}
-        tracks={tracksToResource}
-        reviewers={reviewersToResource}
+        isDisabled={!pagination.isSuccess}
         handleResetFilters={handleFiltersReset}
       />
-      {isInitialLoading ? (
+      {pagination.isLoading ? (
         <ProposalsTableSkeleton />
-      ) : (pagination.status === 'error' || user.status === 'error') &&
-        criticalErrorProps ? (
-        <ErrorState {...criticalErrorProps} />
-      ) : isDataReady &&
-        proposalList &&
-        proposalList.length !== 0 &&
-        user.data ? (
-        <ProposalsTable
-          proposals={proposalList}
-          tracks={tracksToResource}
-          role={user.data.role}
-        />
-      ) : isDataReady && activeFiltersCount === 0 ? (
+      ) : pagination.isError ? (
+        isAppBaseQueryError(pagination.error) && (
+          <ErrorState
+            {...getProposalsErrorState(pagination.error.error, {
+              retry: pagination.refetch,
+              resetFilters: handleFiltersReset,
+            })}
+          />
+        )
+      ) : proposalList && proposalList.length !== 0 ? (
+        <ProposalsTable proposals={proposalList} role={user.role} />
+      ) : pagination.isSuccess && activeFiltersCount === 0 ? (
         <EmptyState
           title="Заявок пока нет"
           subtitle="Когда спикеры отправят заявки, они появятся в этом списке."
         />
       ) : (
-        isDataReady && (
+        pagination.isSuccess && (
           <EmptyState
             title="По текущим фильтрам ничего не найдено"
             subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
@@ -235,23 +208,19 @@ const ProposalsPage = () => {
           />
         )
       )}
-      {isDataReady &&
-        !criticalErrorProps &&
-        proposalList &&
-        proposalList.length !== 0 && (
-          <PaginationControl
-            totalPages={pagination.data?.totalPages}
-            isDisabled={isInitialLoading}
-          />
-        )}
+      {!pagination.isError && pagination.data?.totalPages !== 0 && (
+        <PaginationControl
+          totalPages={pagination.data?.totalPages}
+          isDisabled={pagination.isLoading}
+        />
+      )}
       {transition.type === 'single' && (
         <ProposalStatusTransitionDialog
           mode="single"
           prevStatus={transition.prevStatus}
           nextStatus={transition.nextStatus}
-          id={transition.id}
+          proposalId={transition.id}
           onClose={handleStatusDialogClose}
-          onSuccess={handleStatusSuccess}
         />
       )}
       {transition.type === 'multiple' && (
@@ -259,7 +228,7 @@ const ProposalsPage = () => {
           mode="multiple"
           prevStatus={transition.prevStatus}
           nextStatus={transition.nextStatus}
-          ids={transition.ids}
+          proposalIds={transition.ids}
           onClose={handleStatusDialogClose}
           onSuccess={handleMultipleStatusSuccess}
         />
@@ -269,7 +238,6 @@ const ProposalsPage = () => {
           mode="single"
           onClose={handleReviewerAssignDialogClose}
           proposalId={assingReviewer.id}
-          onSuccess={handleAssignReviewerSuccess}
         />
       )}
       {assingReviewer.type === 'multiple' && (
@@ -284,7 +252,6 @@ const ProposalsPage = () => {
         <ReviewCreateDialog
           onClose={handleReviewCreateDialogClose}
           proposalId={createReview.id}
-          onSuccess={() => null}
         />
       )}
       <Snackbar

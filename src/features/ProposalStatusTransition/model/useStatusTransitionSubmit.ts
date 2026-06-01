@@ -1,13 +1,12 @@
 import { useRef, useState } from 'react';
-import { DialogResource, StatusTransitionSubmitProps } from './types';
-import { patchProposalStatusChange } from '../api/proposalStatusTransitionApi';
+import { StatusTransitionSubmitProps } from './types';
+import { useChangeStatusMutation } from '../api/proposalStatusTransitionApi';
+import { PatchProposalStatusRequest } from '@/entities/proposal/api/contracts';
 
 const useStatusTransitionSubmit = (props: StatusTransitionSubmitProps) => {
   // state
-  const [dialog, setDialog] = useState<DialogResource>({
-    status: 'idle',
-    errorProps: null,
-  });
+  const [changeStatus, changeState] = useChangeStatusMutation();
+
   const [reasonValue, setReasonValue] = useState<string>('');
   const [reasonError, setReasonError] = useState<boolean>(false);
 
@@ -26,8 +25,6 @@ const useStatusTransitionSubmit = (props: StatusTransitionSubmitProps) => {
   const handleStatusChange = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
-    if (dialog.status === 'loading') return;
-
     event.preventDefault();
 
     if (isReasonInvalid) {
@@ -36,22 +33,57 @@ const useStatusTransitionSubmit = (props: StatusTransitionSubmitProps) => {
       return;
     }
 
-    setDialog({
-      status: 'loading',
-      errorProps: null,
-    });
+    const { nextStatus } = props;
+    const requestBody: PatchProposalStatusRequest = {
+      status: nextStatus,
+      reason: isMustHaveReason ? reasonValue : undefined,
+    };
 
-    const DialogResource = await patchProposalStatusChange(
-      props,
-      isMustHaveReason,
-      reasonValue,
-    );
-    setDialog(DialogResource);
+    if (props.mode === 'single') {
+      await changeStatus({
+        id: props.proposalId,
+        payload: requestBody,
+      }).unwrap();
+      return;
+    }
+
+    if (props.mode === 'multiple') {
+      const { onSuccess } = props;
+
+      const requests = props.proposalIds.map(async (proposalId) => {
+        try {
+          const data = await changeStatus({
+            id: proposalId,
+            payload: requestBody,
+          }).unwrap();
+
+          return {
+            status: 'fulfilled' as const,
+            proposalId,
+            data,
+          };
+        } catch (error) {
+          return {
+            status: 'rejected' as const,
+            proposalId,
+            error,
+          };
+        }
+      });
+
+      const results = await Promise.all(requests);
+
+      const failedCount = results.flatMap((result) =>
+        result.status === 'rejected'
+          ? [{ id: result.proposalId, error: result.error }]
+          : [],
+      ).length;
+
+      onSuccess(failedCount);
+    }
   };
 
   const handleReasonValueChange = (value: string) => {
-    if (dialog.status === 'loading') return;
-
     setReasonValue(value);
 
     if (reasonError) {
@@ -60,7 +92,7 @@ const useStatusTransitionSubmit = (props: StatusTransitionSubmitProps) => {
   };
 
   return {
-    dialog,
+    changeState,
     reasonValue,
     reasonError,
     isMustHaveReason,

@@ -1,6 +1,7 @@
 'use client';
 
 import { PostDemoLoginRequest } from '@/entities/user/api/contracts';
+import { useLoginDemoMutation } from '@/entities/user/api/userApi';
 import { demoRoles } from '@/entities/user/model/types';
 import Button from '@/shared/ui/Button/Button';
 import { Stack, Typography } from '@mui/material';
@@ -14,16 +15,11 @@ const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
 
 const Login = () => {
   const router = useRouter();
+  const [login] = useLoginDemoMutation();
 
   const handleDemoLogin = async (role: PostDemoLoginRequest['role']) => {
     try {
-      const response = await fetch('/api/demo-login', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({ role: role }),
-      });
+      const response = await login({ role }).unwrap();
 
       if (response.ok) {
         router.push(redirectByRole[role]);
