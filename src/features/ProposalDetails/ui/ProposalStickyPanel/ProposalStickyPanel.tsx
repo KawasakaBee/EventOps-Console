@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import { useMemo, useState } from 'react';
 import Button from '@/shared/ui/Button/Button';
 import SecondaryStickyButtons from '../SecondaryStickyButtons/SecondaryStickyButtons';

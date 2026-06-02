@@ -3,6 +3,7 @@ import { comments } from '../db/comments';
 import { history } from '../db/history';
 import { proposals } from '../db/proposals';
 import { reviewers, reviews } from '../db/reviews';
+import { schedule } from '../db/schedule';
 import { speakers } from '../db/speakers';
 import { tracks } from '../db/tracks';
 import { users } from '../db/users';
@@ -20,6 +21,7 @@ const defaultScenarioSnapshot: MockScenario = {
   history: clone(history),
   audit: clone(history.map(historyItemToAuditItem)),
   tracks: clone(tracks),
+  schedule: clone(schedule),
 };
 
 export const buildDefaultScenario = (): MockScenario =>
@@ -35,6 +37,7 @@ export const buildEmptyProposals = (): MockScenario => ({
   history: [],
   audit: [],
   tracks: [],
+  schedule: { eventId: '', days: [], times: [], slots: [] },
 });
 
 export const buildEmptyWithProposals = (): MockScenario => ({
@@ -47,4 +50,5 @@ export const buildEmptyWithProposals = (): MockScenario => ({
   history: [],
   audit: [],
   tracks: clone(defaultScenarioSnapshot.tracks),
+  schedule: { eventId: '', days: [], times: [], slots: [] },
 });

@@ -12,7 +12,7 @@ import {
   formatDictionary,
   levelDictionary,
 } from '@/entities/proposal/model/dictionaries';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import getProposalsListRowActions from '@/entities/proposal/lib/getProposalsListRowActions';
 import { useMemo } from 'react';
 import { ProposalListItem } from '@/entities/proposal/model/types';

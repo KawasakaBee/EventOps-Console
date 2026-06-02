@@ -19,36 +19,12 @@ const getProposalErrorState = (
           buttonName: 'Вернуться к списку заявок',
         },
       };
-    case 'USER_NOT_FOUND':
+    case 'AUTH_REQUIRED':
       return {
         type: 'state',
         title: 'Ошибка авторизации',
         subtitle:
           'Сервис не может Вас авторизовать, попробуйте авторизоваться заново.',
-        fullHeight: true,
-        link: {
-          to: '/login',
-          buttonName: 'Перейти на страницу авторизации',
-        },
-      };
-    case 'ROLE_NOT_FOUND':
-      return {
-        type: 'state',
-        title: 'Ошибка авторизации',
-        subtitle:
-          'Сервис не может определить Вашу роль, попробуйте авторизоваться заново.',
-        fullHeight: true,
-        link: {
-          to: '/login',
-          buttonName: 'Перейти на страницу авторизации',
-        },
-      };
-    case 'INVALID_ROLE':
-      return {
-        type: 'state',
-        title: 'Ошибка авторизации',
-        subtitle:
-          'Сервис не может определить Вашу роль, попробуйте авторизоваться заново.',
         fullHeight: true,
         link: {
           to: '/login',

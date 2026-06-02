@@ -1,5 +1,7 @@
+import SchedulePage from '@/features/Schedule/ui/SchedulePage/SchedulePage';
+
 const Schedule = () => {
-  return <>This is schedule page</>;
+  return <SchedulePage />;
 };
 
 export default Schedule;

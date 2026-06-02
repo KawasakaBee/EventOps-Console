@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { IProposalOverviewTabProps } from './ProposalOverviewTab.types';
 import formatMinutesDuration from '@/shared/utils/formatMinutesDuration';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { styles } from './styles';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';

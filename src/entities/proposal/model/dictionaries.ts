@@ -60,5 +60,5 @@ export const availableActionsDictionary: Record<
 export const formatDurationMap: Record<ProposalFormat, readonly string[]> = {
   talk: ['30', '45'],
   workshop: ['90', '120'],
-  lightning: ['10'],
+  lightning: ['30'],
 };

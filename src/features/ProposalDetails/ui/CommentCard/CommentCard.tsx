@@ -1,6 +1,6 @@
 import { Avatar, Box, Chip, Grid, Stack, Typography } from '@mui/material';
 import { ICommentCardProps } from './CommentCard.types';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import { styles } from './styles';
 import getAvatarInitials from '../../model/getAvatarInitials';
 import { rolesDictionary } from '@/entities/user/model/dictionaries';

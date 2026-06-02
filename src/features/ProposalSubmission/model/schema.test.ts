@@ -182,7 +182,7 @@ describe('basicSchema', () => {
     const lightningResult = basicSchema.safeParse({
       ...validBasicCourse,
       format: 'lightning',
-      duration: '10',
+      duration: '30',
     });
 
     expect(workshopResult.success).toBe(true);

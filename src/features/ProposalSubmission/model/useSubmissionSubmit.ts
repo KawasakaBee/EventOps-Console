@@ -1,13 +1,13 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import {
-  useChangeProposalMutation,
-  useCreateProposalMutation,
-} from '../api/proposalSubmissionApi';
 import { SubmitValues } from './schema';
 import { ID } from '@/shared/types/primitives.types';
 import { isId } from '@/shared/utils/typeGuards';
+import {
+  useChangeProposalMutation,
+  useCreateProposalMutation,
+} from '../api/ProposalSubmissionApi';
 
 const useSubmissionSubmit = (
   methods: UseFormReturn<SubmitValues>,

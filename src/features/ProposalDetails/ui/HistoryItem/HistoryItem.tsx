@@ -7,7 +7,7 @@ import {
 } from '@mui/lab';
 import { IHistoryItemProps } from './HistoryItem.types';
 import { Box, Divider, Stack, Typography } from '@mui/material';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import formatHistoryChangeValues from '@/entities/history/lib/formatHistoryChangeValues';
 import { styles } from './styles';
 import formatHistoryPayloadLines from '@/entities/history/lib/formatHistoryPayloadLines';

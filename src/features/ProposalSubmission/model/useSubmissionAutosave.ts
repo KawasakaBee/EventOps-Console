@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { SubmitValues } from './schema';
 import { SubmitDirtyFields } from './types';
 import { buildDirtySubmitPayload } from './mappers';
-import { useChangeProposalMutation } from '../api/proposalSubmissionApi';
+import { useChangeProposalMutation } from '../api/ProposalSubmissionApi';
 
 const useSubmissionAutosave = (
   methods: UseFormReturn<SubmitValues>,

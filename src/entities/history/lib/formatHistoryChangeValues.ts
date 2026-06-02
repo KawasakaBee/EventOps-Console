@@ -2,7 +2,7 @@ import {
   FormattedChangeValues,
   ProposalFieldChange,
 } from '@/entities/history/model/types';
-import formatIsoDateTime from '../../../shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '../../../shared/utils/formatTimeAndDate';
 import formatMinutesDuration from '../../../shared/utils/formatMinutesDuration';
 import {
   formatDictionary,

@@ -23,16 +23,16 @@ export const proposalLevels = ['junior', 'middle', 'senior'] as const;
 export type ProposalLevel = (typeof proposalLevels)[number];
 
 export const proposalActions = [
-  'accept', //accepted
-  'reject', //rejected
-  'submit', //submitted
-  'edit', //draft
-  'schedule', //scheduled
-  'assignReviewer', //in_review
+  'accept',
+  'reject',
+  'submit',
+  'edit',
+  'schedule',
+  'assignReviewer',
   'addReview',
   'addComment',
-  'requestChanges', //changes_requested
-  'changeStatus', //all
+  'requestChanges',
+  'changeStatus',
   'viewDetails',
 ] as const;
 

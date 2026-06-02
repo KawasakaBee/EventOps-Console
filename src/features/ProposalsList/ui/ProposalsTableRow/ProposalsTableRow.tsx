@@ -2,7 +2,7 @@ import { Checkbox, Skeleton, TableCell, TableRow } from '@mui/material';
 import { memo, useMemo } from 'react';
 import ProposalsRowActions from '../ProposalsRowActions/ProposalsRowActions';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import { toggleSelectedId } from '../../model/proposalsListSlice';
 import { ID } from '@/shared/types/primitives.types';
 import {

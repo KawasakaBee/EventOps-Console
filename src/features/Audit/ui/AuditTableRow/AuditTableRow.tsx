@@ -11,7 +11,7 @@ import {
   auditActionsDictionary,
   auditEntitiesDictionary,
 } from '@/entities/audit/model/dictionaries';
-import formatIsoDateTime from '@/shared/utils/formatIsoDateTime';
+import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
 import formatHistoryPayloadLines from '@/entities/history/lib/formatHistoryPayloadLines';
 import { styles } from './styles';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';

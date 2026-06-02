@@ -10,6 +10,7 @@ import { tracksHandlers } from '@/mocks/handlers/tracks.handler';
 import { usersHandlers } from '@/mocks/handlers/users.handlers';
 import { auditHandlers } from '@/mocks/handlers/audit.handlers';
 import { commentsHandlers } from '@/mocks/handlers/comments.handlers';
+import { scheduleHandlers } from '@/mocks/handlers/schedule.handlers';
 
 export const server = setupServer(
   ...dashboardHandlers,
@@ -22,4 +23,5 @@ export const server = setupServer(
   ...authHandlers,
   ...auditHandlers,
   ...commentsHandlers,
+  ...scheduleHandlers,
 );
