@@ -11,6 +11,7 @@ const getAvailableProposalStatuses = (
 
   if (status === 'draft') return ['submitted'];
   if (status === 'submitted') return ['in_review'];
+  if (status === 'accepted') return ['scheduled'];
   if (status === 'in_review') {
     if (reviewsCount === 0) return ['changes_requested'];
     return ['changes_requested', 'accepted', 'rejected'];

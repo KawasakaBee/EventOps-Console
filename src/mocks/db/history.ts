@@ -17,14 +17,14 @@ export const initialHistory = [
     proposalId: 'proposal-001',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-01-29T22:00:00+03:00',
+    createdAt: '2026-01-29T22:00:00.00Z',
   },
   {
     id: 'history-002',
     proposalId: 'proposal-001',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-02-01T01:00:00+03:00',
+    createdAt: '2026-02-01T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -38,7 +38,7 @@ export const initialHistory = [
     proposalId: 'proposal-001',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-01T11:00:00+03:00',
+    createdAt: '2026-02-01T11:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -48,7 +48,7 @@ export const initialHistory = [
     proposalId: 'proposal-001',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-01T21:00:00+03:00',
+    createdAt: '2026-02-01T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -62,7 +62,7 @@ export const initialHistory = [
     proposalId: 'proposal-001',
     actorId: '2',
     action: 'comment_added',
-    createdAt: '2026-02-01T23:03:00+03:00',
+    createdAt: '2026-02-01T23:03:00.00Z',
     payload: {
       commentId: 'comment-001',
     },
@@ -72,14 +72,14 @@ export const initialHistory = [
     proposalId: 'proposal-002',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-02-14T04:00:00+03:00',
+    createdAt: '2026-02-14T04:00:00.00Z',
   },
   {
     id: 'history-007',
     proposalId: 'proposal-002',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-02-15T10:00:00+03:00',
+    createdAt: '2026-02-15T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -93,7 +93,7 @@ export const initialHistory = [
     proposalId: 'proposal-002',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-16T00:00:00+03:00',
+    createdAt: '2026-02-16T00:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -103,7 +103,7 @@ export const initialHistory = [
     proposalId: 'proposal-002',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-02-16T06:00:00+03:00',
+    createdAt: '2026-02-16T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -117,7 +117,7 @@ export const initialHistory = [
     proposalId: 'proposal-002',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-02-16T20:00:00+03:00',
+    createdAt: '2026-02-16T20:00:00.00Z',
     payload: {
       reviewId: 'review-001',
       recommendation: 'approve',
@@ -128,7 +128,7 @@ export const initialHistory = [
     proposalId: 'proposal-002',
     actorId: 'reviewer-009',
     action: 'comment_added',
-    createdAt: '2026-02-17T05:03:00+03:00',
+    createdAt: '2026-02-17T05:03:00.00Z',
     payload: {
       commentId: 'comment-002',
     },
@@ -138,14 +138,14 @@ export const initialHistory = [
     proposalId: 'proposal-003',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-04-20T09:00:00+03:00',
+    createdAt: '2026-04-20T09:00:00.00Z',
   },
   {
     id: 'history-013',
     proposalId: 'proposal-003',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-04-23T12:00:00+03:00',
+    createdAt: '2026-04-23T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -159,7 +159,7 @@ export const initialHistory = [
     proposalId: 'proposal-003',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-23T23:00:00+03:00',
+    createdAt: '2026-04-23T23:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -169,7 +169,7 @@ export const initialHistory = [
     proposalId: 'proposal-003',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-24T01:00:00+03:00',
+    createdAt: '2026-04-24T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -183,7 +183,7 @@ export const initialHistory = [
     proposalId: 'proposal-003',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-04-24T13:00:00+03:00',
+    createdAt: '2026-04-24T13:00:00.00Z',
     payload: {
       reviewId: 'review-002',
       recommendation: 'reject',
@@ -194,7 +194,7 @@ export const initialHistory = [
     proposalId: 'proposal-003',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-24T20:00:00+03:00',
+    createdAt: '2026-04-24T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -211,21 +211,21 @@ export const initialHistory = [
     proposalId: 'proposal-004',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-03-01T16:00:00+03:00',
+    createdAt: '2026-03-01T16:00:00.00Z',
   },
   {
     id: 'history-019',
     proposalId: 'proposal-005',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-03-23T18:00:00+03:00',
+    createdAt: '2026-03-23T18:00:00.00Z',
   },
   {
     id: 'history-020',
     proposalId: 'proposal-005',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-03-25T19:00:00+03:00',
+    createdAt: '2026-03-25T19:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -239,7 +239,7 @@ export const initialHistory = [
     proposalId: 'proposal-005',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-26T00:00:00+03:00',
+    createdAt: '2026-03-26T00:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -249,7 +249,7 @@ export const initialHistory = [
     proposalId: 'proposal-005',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-26T01:00:00+03:00',
+    createdAt: '2026-03-26T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -263,7 +263,7 @@ export const initialHistory = [
     proposalId: 'proposal-005',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-03-26T13:00:00+03:00',
+    createdAt: '2026-03-26T13:00:00.00Z',
     payload: {
       reviewId: 'review-003',
       recommendation: 'approve',
@@ -274,7 +274,7 @@ export const initialHistory = [
     proposalId: 'proposal-005',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-26T19:00:00+03:00',
+    createdAt: '2026-03-26T19:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -291,14 +291,14 @@ export const initialHistory = [
     proposalId: 'proposal-006',
     actorId: 'speaker-user-012',
     action: 'created',
-    createdAt: '2026-02-26T23:00:00+03:00',
+    createdAt: '2026-02-26T23:00:00.00Z',
   },
   {
     id: 'history-026',
     proposalId: 'proposal-006',
     actorId: 'speaker-user-012',
     action: 'status_changed',
-    createdAt: '2026-03-03T05:00:00+03:00',
+    createdAt: '2026-03-03T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -312,7 +312,7 @@ export const initialHistory = [
     proposalId: 'proposal-006',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-03T07:00:00+03:00',
+    createdAt: '2026-03-03T07:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -322,7 +322,7 @@ export const initialHistory = [
     proposalId: 'proposal-006',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-03T13:00:00+03:00',
+    createdAt: '2026-03-03T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -336,7 +336,7 @@ export const initialHistory = [
     proposalId: 'proposal-006',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-03-03T22:00:00+03:00',
+    createdAt: '2026-03-03T22:00:00.00Z',
     payload: {
       reviewId: 'review-004',
       recommendation: 'request_changes',
@@ -347,7 +347,7 @@ export const initialHistory = [
     proposalId: 'proposal-006',
     actorId: 'manager-002',
     action: 'comment_added',
-    createdAt: '2026-03-04T00:03:00+03:00',
+    createdAt: '2026-03-04T00:03:00.00Z',
     payload: {
       commentId: 'comment-003',
     },
@@ -357,7 +357,7 @@ export const initialHistory = [
     proposalId: 'proposal-006',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-04T16:00:00+03:00',
+    createdAt: '2026-03-04T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -375,21 +375,21 @@ export const initialHistory = [
     proposalId: 'proposal-007',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-04-15T07:00:00+03:00',
+    createdAt: '2026-04-15T07:00:00.00Z',
   },
   {
     id: 'history-033',
     proposalId: 'proposal-008',
     actorId: 'speaker-user-002',
     action: 'created',
-    createdAt: '2026-02-06T19:00:00+03:00',
+    createdAt: '2026-02-06T19:00:00.00Z',
   },
   {
     id: 'history-034',
     proposalId: 'proposal-008',
     actorId: 'speaker-user-002',
     action: 'status_changed',
-    createdAt: '2026-02-08T01:00:00+03:00',
+    createdAt: '2026-02-08T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -403,7 +403,7 @@ export const initialHistory = [
     proposalId: 'proposal-008',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-08T12:00:00+03:00',
+    createdAt: '2026-02-08T12:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -413,7 +413,7 @@ export const initialHistory = [
     proposalId: 'proposal-008',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-08T21:00:00+03:00',
+    createdAt: '2026-02-08T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -427,7 +427,7 @@ export const initialHistory = [
     proposalId: 'proposal-008',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-02-09T00:00:00+03:00',
+    createdAt: '2026-02-09T00:00:00.00Z',
     payload: {
       reviewId: 'review-005',
       recommendation: 'approve',
@@ -438,7 +438,7 @@ export const initialHistory = [
     proposalId: 'proposal-008',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-09T09:00:00+03:00',
+    createdAt: '2026-02-09T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -455,14 +455,14 @@ export const initialHistory = [
     proposalId: 'proposal-009',
     actorId: 'speaker-user-009',
     action: 'created',
-    createdAt: '2026-03-27T02:00:00+03:00',
+    createdAt: '2026-03-27T02:00:00.00Z',
   },
   {
     id: 'history-040',
     proposalId: 'proposal-009',
     actorId: 'speaker-user-009',
     action: 'status_changed',
-    createdAt: '2026-03-29T05:00:00+03:00',
+    createdAt: '2026-03-29T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -476,7 +476,7 @@ export const initialHistory = [
     proposalId: 'proposal-009',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-29T14:00:00+03:00',
+    createdAt: '2026-03-29T14:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -486,14 +486,14 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-03-06T03:00:00+03:00',
+    createdAt: '2026-03-06T03:00:00.00Z',
   },
   {
     id: 'history-043',
     proposalId: 'proposal-010',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-03-08T07:00:00+03:00',
+    createdAt: '2026-03-08T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -507,7 +507,7 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-08T09:00:00+03:00',
+    createdAt: '2026-03-08T09:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -517,7 +517,7 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-08T19:00:00+03:00',
+    createdAt: '2026-03-08T19:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -527,7 +527,7 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-08T21:00:00+03:00',
+    createdAt: '2026-03-08T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -541,7 +541,7 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: 'reviewer-005',
     action: 'review_added',
-    createdAt: '2026-03-09T03:00:00+03:00',
+    createdAt: '2026-03-09T03:00:00.00Z',
     payload: {
       reviewId: 'review-006',
       recommendation: 'approve',
@@ -552,7 +552,7 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-03-09T15:00:00+03:00',
+    createdAt: '2026-03-09T15:00:00.00Z',
     payload: {
       reviewId: 'review-007',
       recommendation: 'approve',
@@ -563,7 +563,7 @@ export const initialHistory = [
     proposalId: 'proposal-010',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-10T01:00:00+03:00',
+    createdAt: '2026-03-10T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -580,14 +580,14 @@ export const initialHistory = [
     proposalId: 'proposal-011',
     actorId: 'speaker-user-011',
     action: 'created',
-    createdAt: '2026-04-05T16:00:00+03:00',
+    createdAt: '2026-04-05T16:00:00.00Z',
   },
   {
     id: 'history-051',
     proposalId: 'proposal-011',
     actorId: 'speaker-user-011',
     action: 'status_changed',
-    createdAt: '2026-04-08T18:00:00+03:00',
+    createdAt: '2026-04-08T18:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -601,7 +601,7 @@ export const initialHistory = [
     proposalId: 'proposal-011',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-09T07:00:00+03:00',
+    createdAt: '2026-04-09T07:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -611,7 +611,7 @@ export const initialHistory = [
     proposalId: 'proposal-011',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-09T16:00:00+03:00',
+    createdAt: '2026-04-09T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -625,7 +625,7 @@ export const initialHistory = [
     proposalId: 'proposal-011',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-04-09T18:00:00+03:00',
+    createdAt: '2026-04-09T18:00:00.00Z',
     payload: {
       reviewId: 'review-008',
       recommendation: 'approve',
@@ -636,7 +636,7 @@ export const initialHistory = [
     proposalId: 'proposal-011',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-10T00:00:00+03:00',
+    createdAt: '2026-04-10T00:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -653,14 +653,14 @@ export const initialHistory = [
     proposalId: 'proposal-012',
     actorId: 'speaker-user-012',
     action: 'created',
-    createdAt: '2026-02-09T23:00:00+03:00',
+    createdAt: '2026-02-09T23:00:00.00Z',
   },
   {
     id: 'history-057',
     proposalId: 'proposal-012',
     actorId: 'speaker-user-012',
     action: 'status_changed',
-    createdAt: '2026-02-12T01:00:00+03:00',
+    createdAt: '2026-02-12T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -674,14 +674,14 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: 'speaker-user-008',
     action: 'created',
-    createdAt: '2026-04-02T09:00:00+03:00',
+    createdAt: '2026-04-02T09:00:00.00Z',
   },
   {
     id: 'history-059',
     proposalId: 'proposal-013',
     actorId: 'speaker-user-008',
     action: 'status_changed',
-    createdAt: '2026-04-06T10:00:00+03:00',
+    createdAt: '2026-04-06T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -695,7 +695,7 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-06T19:00:00+03:00',
+    createdAt: '2026-04-06T19:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -705,7 +705,7 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-07T01:00:00+03:00',
+    createdAt: '2026-04-07T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -715,7 +715,7 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-07T05:00:00+03:00',
+    createdAt: '2026-04-07T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -729,7 +729,7 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-04-07T19:00:00+03:00',
+    createdAt: '2026-04-07T19:00:00.00Z',
     payload: {
       reviewId: 'review-009',
       recommendation: 'request_changes',
@@ -740,7 +740,7 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: 'reviewer-010',
     action: 'comment_added',
-    createdAt: '2026-04-08T04:03:00+03:00',
+    createdAt: '2026-04-08T04:03:00.00Z',
     payload: {
       commentId: 'comment-004',
     },
@@ -750,7 +750,7 @@ export const initialHistory = [
     proposalId: 'proposal-013',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-08T16:00:00+03:00',
+    createdAt: '2026-04-08T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -768,14 +768,14 @@ export const initialHistory = [
     proposalId: 'proposal-014',
     actorId: 'speaker-user-017',
     action: 'created',
-    createdAt: '2026-04-08T00:00:00+03:00',
+    createdAt: '2026-04-08T00:00:00.00Z',
   },
   {
     id: 'history-067',
     proposalId: 'proposal-014',
     actorId: 'speaker-user-017',
     action: 'status_changed',
-    createdAt: '2026-04-10T03:00:00+03:00',
+    createdAt: '2026-04-10T03:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -789,7 +789,7 @@ export const initialHistory = [
     proposalId: 'proposal-014',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-10T05:00:00+03:00',
+    createdAt: '2026-04-10T05:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -799,7 +799,7 @@ export const initialHistory = [
     proposalId: 'proposal-014',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-10T14:00:00+03:00',
+    createdAt: '2026-04-10T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -813,7 +813,7 @@ export const initialHistory = [
     proposalId: 'proposal-014',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-04-11T02:00:00+03:00',
+    createdAt: '2026-04-11T02:00:00.00Z',
     payload: {
       reviewId: 'review-010',
       recommendation: 'request_changes',
@@ -824,7 +824,7 @@ export const initialHistory = [
     proposalId: 'proposal-014',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-11T14:00:00+03:00',
+    createdAt: '2026-04-11T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -842,14 +842,14 @@ export const initialHistory = [
     proposalId: 'proposal-015',
     actorId: 'speaker-user-007',
     action: 'created',
-    createdAt: '2026-02-28T00:00:00+03:00',
+    createdAt: '2026-02-28T00:00:00.00Z',
   },
   {
     id: 'history-073',
     proposalId: 'proposal-015',
     actorId: 'speaker-user-007',
     action: 'status_changed',
-    createdAt: '2026-03-02T05:00:00+03:00',
+    createdAt: '2026-03-02T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -863,7 +863,7 @@ export const initialHistory = [
     proposalId: 'proposal-015',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-02T15:00:00+03:00',
+    createdAt: '2026-03-02T15:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -873,7 +873,7 @@ export const initialHistory = [
     proposalId: 'proposal-015',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-02T20:00:00+03:00',
+    createdAt: '2026-03-02T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -887,7 +887,7 @@ export const initialHistory = [
     proposalId: 'proposal-015',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-03-03T05:00:00+03:00',
+    createdAt: '2026-03-03T05:00:00.00Z',
     payload: {
       reviewId: 'review-011',
       recommendation: 'approve',
@@ -898,7 +898,7 @@ export const initialHistory = [
     proposalId: 'proposal-015',
     actorId: 'manager-002',
     action: 'comment_added',
-    createdAt: '2026-03-03T07:03:00+03:00',
+    createdAt: '2026-03-03T07:03:00.00Z',
     payload: {
       commentId: 'comment-005',
     },
@@ -908,7 +908,7 @@ export const initialHistory = [
     proposalId: 'proposal-015',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-03T18:00:00+03:00',
+    createdAt: '2026-03-03T18:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -925,14 +925,14 @@ export const initialHistory = [
     proposalId: 'proposal-016',
     actorId: 'speaker-user-002',
     action: 'created',
-    createdAt: '2026-03-21T21:00:00+03:00',
+    createdAt: '2026-03-21T21:00:00.00Z',
   },
   {
     id: 'history-080',
     proposalId: 'proposal-016',
     actorId: 'speaker-user-002',
     action: 'status_changed',
-    createdAt: '2026-03-23T01:00:00+03:00',
+    createdAt: '2026-03-23T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -946,7 +946,7 @@ export const initialHistory = [
     proposalId: 'proposal-016',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-23T06:00:00+03:00',
+    createdAt: '2026-03-23T06:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -956,7 +956,7 @@ export const initialHistory = [
     proposalId: 'proposal-016',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-23T13:00:00+03:00',
+    createdAt: '2026-03-23T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -970,7 +970,7 @@ export const initialHistory = [
     proposalId: 'proposal-016',
     actorId: 'reviewer-010',
     action: 'review_added',
-    createdAt: '2026-03-24T03:00:00+03:00',
+    createdAt: '2026-03-24T03:00:00.00Z',
     payload: {
       reviewId: 'review-012',
       recommendation: 'approve',
@@ -981,14 +981,14 @@ export const initialHistory = [
     proposalId: 'proposal-017',
     actorId: 'speaker-user-018',
     action: 'created',
-    createdAt: '2026-02-05T02:00:00+03:00',
+    createdAt: '2026-02-05T02:00:00.00Z',
   },
   {
     id: 'history-085',
     proposalId: 'proposal-017',
     actorId: 'speaker-user-018',
     action: 'status_changed',
-    createdAt: '2026-02-09T07:00:00+03:00',
+    createdAt: '2026-02-09T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1002,7 +1002,7 @@ export const initialHistory = [
     proposalId: 'proposal-017',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-09T15:00:00+03:00',
+    createdAt: '2026-02-09T15:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -1012,7 +1012,7 @@ export const initialHistory = [
     proposalId: 'proposal-017',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-02-09T23:00:00+03:00',
+    createdAt: '2026-02-09T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1026,7 +1026,7 @@ export const initialHistory = [
     proposalId: 'proposal-017',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-02-10T14:00:00+03:00',
+    createdAt: '2026-02-10T14:00:00.00Z',
     payload: {
       reviewId: 'review-013',
       recommendation: 'request_changes',
@@ -1037,7 +1037,7 @@ export const initialHistory = [
     proposalId: 'proposal-017',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-11T08:00:00+03:00',
+    createdAt: '2026-02-11T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1055,14 +1055,14 @@ export const initialHistory = [
     proposalId: 'proposal-018',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-04-03T05:00:00+03:00',
+    createdAt: '2026-04-03T05:00:00.00Z',
   },
   {
     id: 'history-091',
     proposalId: 'proposal-018',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-04-07T11:00:00+03:00',
+    createdAt: '2026-04-07T11:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1076,7 +1076,7 @@ export const initialHistory = [
     proposalId: 'proposal-018',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-07T14:00:00+03:00',
+    createdAt: '2026-04-07T14:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -1086,7 +1086,7 @@ export const initialHistory = [
     proposalId: 'proposal-018',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-07T21:00:00+03:00',
+    createdAt: '2026-04-07T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1100,7 +1100,7 @@ export const initialHistory = [
     proposalId: 'proposal-018',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-04-08T02:00:00+03:00',
+    createdAt: '2026-04-08T02:00:00.00Z',
     payload: {
       reviewId: 'review-014',
       recommendation: 'approve',
@@ -1111,7 +1111,7 @@ export const initialHistory = [
     proposalId: 'proposal-018',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-08T17:00:00+03:00',
+    createdAt: '2026-04-08T17:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1128,7 +1128,7 @@ export const initialHistory = [
     proposalId: 'proposal-018',
     actorId: 'manager-002',
     action: 'scheduled',
-    createdAt: '2026-04-10T00:00:00+03:00',
+    createdAt: '2026-04-10T00:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1145,14 +1145,14 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-03-10T00:00:00+03:00',
+    createdAt: '2026-03-10T00:00:00.00Z',
   },
   {
     id: 'history-098',
     proposalId: 'proposal-019',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-03-12T04:00:00+03:00',
+    createdAt: '2026-03-12T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1166,7 +1166,7 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-12T06:00:00+03:00',
+    createdAt: '2026-03-12T06:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -1176,7 +1176,7 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-12T17:00:00+03:00',
+    createdAt: '2026-03-12T17:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -1186,7 +1186,7 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-12T18:00:00+03:00',
+    createdAt: '2026-03-12T18:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1200,7 +1200,7 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: 'reviewer-010',
     action: 'review_added',
-    createdAt: '2026-03-13T00:00:00+03:00',
+    createdAt: '2026-03-13T00:00:00.00Z',
     payload: {
       reviewId: 'review-015',
       recommendation: 'approve',
@@ -1211,7 +1211,7 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: 'manager-002',
     action: 'comment_added',
-    createdAt: '2026-03-13T07:03:00+03:00',
+    createdAt: '2026-03-13T07:03:00.00Z',
     payload: {
       commentId: 'comment-006',
     },
@@ -1221,7 +1221,7 @@ export const initialHistory = [
     proposalId: 'proposal-019',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-13T17:00:00+03:00',
+    createdAt: '2026-03-13T17:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1238,14 +1238,14 @@ export const initialHistory = [
     proposalId: 'proposal-020',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-01-29T11:00:00+03:00',
+    createdAt: '2026-01-29T11:00:00.00Z',
   },
   {
     id: 'history-106',
     proposalId: 'proposal-020',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-01-30T13:00:00+03:00',
+    createdAt: '2026-01-30T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1259,7 +1259,7 @@ export const initialHistory = [
     proposalId: 'proposal-020',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-01-31T00:00:00+03:00',
+    createdAt: '2026-01-31T00:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -1269,7 +1269,7 @@ export const initialHistory = [
     proposalId: 'proposal-020',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-01-31T04:00:00+03:00',
+    createdAt: '2026-01-31T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1283,7 +1283,7 @@ export const initialHistory = [
     proposalId: 'proposal-020',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-01-31T08:00:00+03:00',
+    createdAt: '2026-01-31T08:00:00.00Z',
     payload: {
       reviewId: 'review-016',
       recommendation: 'approve',
@@ -1294,14 +1294,14 @@ export const initialHistory = [
     proposalId: 'proposal-021',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-03-03T06:00:00+03:00',
+    createdAt: '2026-03-03T06:00:00.00Z',
   },
   {
     id: 'history-111',
     proposalId: 'proposal-021',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-03-04T11:00:00+03:00',
+    createdAt: '2026-03-04T11:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1315,7 +1315,7 @@ export const initialHistory = [
     proposalId: 'proposal-021',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-04T14:00:00+03:00',
+    createdAt: '2026-03-04T14:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -1325,7 +1325,7 @@ export const initialHistory = [
     proposalId: 'proposal-021',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-04T19:00:00+03:00',
+    createdAt: '2026-03-04T19:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1339,7 +1339,7 @@ export const initialHistory = [
     proposalId: 'proposal-021',
     actorId: 'reviewer-004',
     action: 'comment_added',
-    createdAt: '2026-03-05T04:03:00+03:00',
+    createdAt: '2026-03-05T04:03:00.00Z',
     payload: {
       commentId: 'comment-007',
     },
@@ -1349,14 +1349,14 @@ export const initialHistory = [
     proposalId: 'proposal-022',
     actorId: 'speaker-user-021',
     action: 'created',
-    createdAt: '2026-04-02T23:00:00+03:00',
+    createdAt: '2026-04-02T23:00:00.00Z',
   },
   {
     id: 'history-116',
     proposalId: 'proposal-022',
     actorId: 'speaker-user-021',
     action: 'status_changed',
-    createdAt: '2026-04-05T05:00:00+03:00',
+    createdAt: '2026-04-05T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1370,7 +1370,7 @@ export const initialHistory = [
     proposalId: 'proposal-022',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-05T19:00:00+03:00',
+    createdAt: '2026-04-05T19:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -1380,14 +1380,14 @@ export const initialHistory = [
     proposalId: 'proposal-023',
     actorId: 'speaker-user-015',
     action: 'created',
-    createdAt: '2026-03-21T22:00:00+03:00',
+    createdAt: '2026-03-21T22:00:00.00Z',
   },
   {
     id: 'history-119',
     proposalId: 'proposal-023',
     actorId: 'speaker-user-015',
     action: 'status_changed',
-    createdAt: '2026-03-26T01:00:00+03:00',
+    createdAt: '2026-03-26T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1401,7 +1401,7 @@ export const initialHistory = [
     proposalId: 'proposal-023',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-26T05:00:00+03:00',
+    createdAt: '2026-03-26T05:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -1411,7 +1411,7 @@ export const initialHistory = [
     proposalId: 'proposal-023',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-26T09:00:00+03:00',
+    createdAt: '2026-03-26T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1425,7 +1425,7 @@ export const initialHistory = [
     proposalId: 'proposal-023',
     actorId: 'reviewer-006',
     action: 'comment_added',
-    createdAt: '2026-03-26T10:03:00+03:00',
+    createdAt: '2026-03-26T10:03:00.00Z',
     payload: {
       commentId: 'comment-008',
     },
@@ -1435,14 +1435,14 @@ export const initialHistory = [
     proposalId: 'proposal-024',
     actorId: 'speaker-user-021',
     action: 'created',
-    createdAt: '2026-02-18T22:00:00+03:00',
+    createdAt: '2026-02-18T22:00:00.00Z',
   },
   {
     id: 'history-124',
     proposalId: 'proposal-024',
     actorId: 'speaker-user-021',
     action: 'status_changed',
-    createdAt: '2026-02-19T23:00:00+03:00',
+    createdAt: '2026-02-19T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1456,7 +1456,7 @@ export const initialHistory = [
     proposalId: 'proposal-024',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-20T12:00:00+03:00',
+    createdAt: '2026-02-20T12:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -1466,7 +1466,7 @@ export const initialHistory = [
     proposalId: 'proposal-024',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-20T17:00:00+03:00',
+    createdAt: '2026-02-20T17:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1480,7 +1480,7 @@ export const initialHistory = [
     proposalId: 'proposal-024',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-02-21T03:00:00+03:00',
+    createdAt: '2026-02-21T03:00:00.00Z',
     payload: {
       reviewId: 'review-017',
       recommendation: 'approve',
@@ -1491,7 +1491,7 @@ export const initialHistory = [
     proposalId: 'proposal-024',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-21T16:00:00+03:00',
+    createdAt: '2026-02-21T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1508,7 +1508,7 @@ export const initialHistory = [
     proposalId: 'proposal-024',
     actorId: 'manager-003',
     action: 'scheduled',
-    createdAt: '2026-02-24T22:00:00+03:00',
+    createdAt: '2026-02-24T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1525,14 +1525,14 @@ export const initialHistory = [
     proposalId: 'proposal-025',
     actorId: 'speaker-user-023',
     action: 'created',
-    createdAt: '2026-03-29T06:00:00+03:00',
+    createdAt: '2026-03-29T06:00:00.00Z',
   },
   {
     id: 'history-131',
     proposalId: 'proposal-025',
     actorId: 'speaker-user-023',
     action: 'status_changed',
-    createdAt: '2026-04-02T09:00:00+03:00',
+    createdAt: '2026-04-02T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1546,7 +1546,7 @@ export const initialHistory = [
     proposalId: 'proposal-025',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-02T20:00:00+03:00',
+    createdAt: '2026-04-02T20:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -1556,7 +1556,7 @@ export const initialHistory = [
     proposalId: 'proposal-025',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-02T22:00:00+03:00',
+    createdAt: '2026-04-02T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1570,7 +1570,7 @@ export const initialHistory = [
     proposalId: 'proposal-025',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-04-03T04:00:00+03:00',
+    createdAt: '2026-04-03T04:00:00.00Z',
     payload: {
       reviewId: 'review-018',
       recommendation: 'reject',
@@ -1581,7 +1581,7 @@ export const initialHistory = [
     proposalId: 'proposal-025',
     actorId: 'reviewer-009',
     action: 'comment_added',
-    createdAt: '2026-04-03T05:03:00+03:00',
+    createdAt: '2026-04-03T05:03:00.00Z',
     payload: {
       commentId: 'comment-009',
     },
@@ -1591,7 +1591,7 @@ export const initialHistory = [
     proposalId: 'proposal-025',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-03T16:00:00+03:00',
+    createdAt: '2026-04-03T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1608,14 +1608,14 @@ export const initialHistory = [
     proposalId: 'proposal-026',
     actorId: 'speaker-user-002',
     action: 'created',
-    createdAt: '2026-03-20T21:00:00+03:00',
+    createdAt: '2026-03-20T21:00:00.00Z',
   },
   {
     id: 'history-138',
     proposalId: 'proposal-026',
     actorId: 'speaker-user-002',
     action: 'status_changed',
-    createdAt: '2026-03-21T22:00:00+03:00',
+    createdAt: '2026-03-21T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1629,7 +1629,7 @@ export const initialHistory = [
     proposalId: 'proposal-026',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-22T09:00:00+03:00',
+    createdAt: '2026-03-22T09:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -1639,7 +1639,7 @@ export const initialHistory = [
     proposalId: 'proposal-026',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-22T10:00:00+03:00',
+    createdAt: '2026-03-22T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1653,7 +1653,7 @@ export const initialHistory = [
     proposalId: 'proposal-026',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-03-22T13:00:00+03:00',
+    createdAt: '2026-03-22T13:00:00.00Z',
     payload: {
       reviewId: 'review-019',
       recommendation: 'request_changes',
@@ -1664,7 +1664,7 @@ export const initialHistory = [
     proposalId: 'proposal-026',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-23T04:00:00+03:00',
+    createdAt: '2026-03-23T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1682,14 +1682,14 @@ export const initialHistory = [
     proposalId: 'proposal-027',
     actorId: 'speaker-user-010',
     action: 'created',
-    createdAt: '2026-02-02T11:00:00+03:00',
+    createdAt: '2026-02-02T11:00:00.00Z',
   },
   {
     id: 'history-144',
     proposalId: 'proposal-027',
     actorId: 'speaker-user-010',
     action: 'status_changed',
-    createdAt: '2026-02-03T13:00:00+03:00',
+    createdAt: '2026-02-03T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1703,7 +1703,7 @@ export const initialHistory = [
     proposalId: 'proposal-027',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-04T01:00:00+03:00',
+    createdAt: '2026-02-04T01:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -1713,7 +1713,7 @@ export const initialHistory = [
     proposalId: 'proposal-027',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-02-04T04:00:00+03:00',
+    createdAt: '2026-02-04T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1727,7 +1727,7 @@ export const initialHistory = [
     proposalId: 'proposal-027',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-02-04T06:00:00+03:00',
+    createdAt: '2026-02-04T06:00:00.00Z',
     payload: {
       reviewId: 'review-020',
       recommendation: 'reject',
@@ -1738,7 +1738,7 @@ export const initialHistory = [
     proposalId: 'proposal-027',
     actorId: '3',
     action: 'comment_added',
-    createdAt: '2026-02-04T07:03:00+03:00',
+    createdAt: '2026-02-04T07:03:00.00Z',
     payload: {
       commentId: 'comment-010',
     },
@@ -1748,7 +1748,7 @@ export const initialHistory = [
     proposalId: 'proposal-027',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-04T16:00:00+03:00',
+    createdAt: '2026-02-04T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1765,14 +1765,14 @@ export const initialHistory = [
     proposalId: 'proposal-028',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-03-27T23:00:00+03:00',
+    createdAt: '2026-03-27T23:00:00.00Z',
   },
   {
     id: 'history-151',
     proposalId: 'proposal-028',
     actorId: 'speaker-user-022',
     action: 'status_changed',
-    createdAt: '2026-03-29T04:00:00+03:00',
+    createdAt: '2026-03-29T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1786,7 +1786,7 @@ export const initialHistory = [
     proposalId: 'proposal-028',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-29T10:00:00+03:00',
+    createdAt: '2026-03-29T10:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-003',
     },
@@ -1796,7 +1796,7 @@ export const initialHistory = [
     proposalId: 'proposal-028',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-29T12:00:00+03:00',
+    createdAt: '2026-03-29T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1810,7 +1810,7 @@ export const initialHistory = [
     proposalId: 'proposal-028',
     actorId: 'reviewer-003',
     action: 'review_added',
-    createdAt: '2026-03-29T18:00:00+03:00',
+    createdAt: '2026-03-29T18:00:00.00Z',
     payload: {
       reviewId: 'review-021',
       recommendation: 'request_changes',
@@ -1821,14 +1821,14 @@ export const initialHistory = [
     proposalId: 'proposal-029',
     actorId: 'speaker-user-020',
     action: 'created',
-    createdAt: '2026-03-21T12:00:00+03:00',
+    createdAt: '2026-03-21T12:00:00.00Z',
   },
   {
     id: 'history-156',
     proposalId: 'proposal-029',
     actorId: 'speaker-user-020',
     action: 'status_changed',
-    createdAt: '2026-03-22T14:00:00+03:00',
+    createdAt: '2026-03-22T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1842,7 +1842,7 @@ export const initialHistory = [
     proposalId: 'proposal-029',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-23T04:00:00+03:00',
+    createdAt: '2026-03-23T04:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -1852,7 +1852,7 @@ export const initialHistory = [
     proposalId: 'proposal-029',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-23T10:00:00+03:00',
+    createdAt: '2026-03-23T10:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -1862,7 +1862,7 @@ export const initialHistory = [
     proposalId: 'proposal-029',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-23T11:00:00+03:00',
+    createdAt: '2026-03-23T11:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1876,7 +1876,7 @@ export const initialHistory = [
     proposalId: 'proposal-029',
     actorId: 'reviewer-010',
     action: 'review_added',
-    createdAt: '2026-03-23T19:00:00+03:00',
+    createdAt: '2026-03-23T19:00:00.00Z',
     payload: {
       reviewId: 'review-022',
       recommendation: 'reject',
@@ -1887,7 +1887,7 @@ export const initialHistory = [
     proposalId: 'proposal-029',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-24T12:00:00+03:00',
+    createdAt: '2026-03-24T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1904,14 +1904,14 @@ export const initialHistory = [
     proposalId: 'proposal-030',
     actorId: 'speaker-user-023',
     action: 'created',
-    createdAt: '2026-02-18T03:00:00+03:00',
+    createdAt: '2026-02-18T03:00:00.00Z',
   },
   {
     id: 'history-163',
     proposalId: 'proposal-030',
     actorId: 'speaker-user-023',
     action: 'status_changed',
-    createdAt: '2026-02-22T08:00:00+03:00',
+    createdAt: '2026-02-22T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1925,7 +1925,7 @@ export const initialHistory = [
     proposalId: 'proposal-030',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-22T15:00:00+03:00',
+    createdAt: '2026-02-22T15:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -1935,7 +1935,7 @@ export const initialHistory = [
     proposalId: 'proposal-030',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-02-22T21:00:00+03:00',
+    createdAt: '2026-02-22T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -1949,7 +1949,7 @@ export const initialHistory = [
     proposalId: 'proposal-030',
     actorId: 'reviewer-002',
     action: 'comment_added',
-    createdAt: '2026-02-23T06:03:00+03:00',
+    createdAt: '2026-02-23T06:03:00.00Z',
     payload: {
       commentId: 'comment-011',
     },
@@ -1959,14 +1959,14 @@ export const initialHistory = [
     proposalId: 'proposal-031',
     actorId: 'speaker-user-025',
     action: 'created',
-    createdAt: '2026-04-16T06:00:00+03:00',
+    createdAt: '2026-04-16T06:00:00.00Z',
   },
   {
     id: 'history-168',
     proposalId: 'proposal-031',
     actorId: 'speaker-user-025',
     action: 'updated',
-    createdAt: '2026-04-17T08:00:00+03:00',
+    createdAt: '2026-04-17T08:00:00.00Z',
     changes: [
       {
         field: 'abstract',
@@ -1980,14 +1980,14 @@ export const initialHistory = [
     proposalId: 'proposal-032',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-02-10T23:00:00+03:00',
+    createdAt: '2026-02-10T23:00:00.00Z',
   },
   {
     id: 'history-170',
     proposalId: 'proposal-032',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-02-12T01:00:00+03:00',
+    createdAt: '2026-02-12T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2001,7 +2001,7 @@ export const initialHistory = [
     proposalId: 'proposal-032',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-12T04:00:00+03:00',
+    createdAt: '2026-02-12T04:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -2011,7 +2011,7 @@ export const initialHistory = [
     proposalId: 'proposal-032',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-12T08:00:00+03:00',
+    createdAt: '2026-02-12T08:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -2021,7 +2021,7 @@ export const initialHistory = [
     proposalId: 'proposal-032',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-12T13:00:00+03:00',
+    createdAt: '2026-02-12T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2035,7 +2035,7 @@ export const initialHistory = [
     proposalId: 'proposal-032',
     actorId: 'manager-002',
     action: 'comment_added',
-    createdAt: '2026-02-12T21:03:00+03:00',
+    createdAt: '2026-02-12T21:03:00.00Z',
     payload: {
       commentId: 'comment-012',
     },
@@ -2045,14 +2045,14 @@ export const initialHistory = [
     proposalId: 'proposal-033',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-03-17T23:00:00+03:00',
+    createdAt: '2026-03-17T23:00:00.00Z',
   },
   {
     id: 'history-176',
     proposalId: 'proposal-033',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-03-21T04:00:00+03:00',
+    createdAt: '2026-03-21T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2066,7 +2066,7 @@ export const initialHistory = [
     proposalId: 'proposal-033',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-21T10:00:00+03:00',
+    createdAt: '2026-03-21T10:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -2076,7 +2076,7 @@ export const initialHistory = [
     proposalId: 'proposal-033',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-21T15:00:00+03:00',
+    createdAt: '2026-03-21T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2090,7 +2090,7 @@ export const initialHistory = [
     proposalId: 'proposal-033',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-03-22T00:00:00+03:00',
+    createdAt: '2026-03-22T00:00:00.00Z',
     payload: {
       reviewId: 'review-023',
       recommendation: 'request_changes',
@@ -2101,7 +2101,7 @@ export const initialHistory = [
     proposalId: 'proposal-033',
     actorId: '3',
     action: 'comment_added',
-    createdAt: '2026-03-22T06:03:00+03:00',
+    createdAt: '2026-03-22T06:03:00.00Z',
     payload: {
       commentId: 'comment-013',
     },
@@ -2111,7 +2111,7 @@ export const initialHistory = [
     proposalId: 'proposal-033',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-22T14:00:00+03:00',
+    createdAt: '2026-03-22T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2129,14 +2129,14 @@ export const initialHistory = [
     proposalId: 'proposal-034',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-03-03T16:00:00+03:00',
+    createdAt: '2026-03-03T16:00:00.00Z',
   },
   {
     id: 'history-183',
     proposalId: 'proposal-034',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-03-05T20:00:00+03:00',
+    createdAt: '2026-03-05T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2150,7 +2150,7 @@ export const initialHistory = [
     proposalId: 'proposal-034',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-06T07:00:00+03:00',
+    createdAt: '2026-03-06T07:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-003',
     },
@@ -2160,7 +2160,7 @@ export const initialHistory = [
     proposalId: 'proposal-034',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-06T10:00:00+03:00',
+    createdAt: '2026-03-06T10:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -2170,7 +2170,7 @@ export const initialHistory = [
     proposalId: 'proposal-034',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-06T12:00:00+03:00',
+    createdAt: '2026-03-06T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2184,7 +2184,7 @@ export const initialHistory = [
     proposalId: 'proposal-034',
     actorId: 'reviewer-003',
     action: 'review_added',
-    createdAt: '2026-03-07T03:00:00+03:00',
+    createdAt: '2026-03-07T03:00:00.00Z',
     payload: {
       reviewId: 'review-024',
       recommendation: 'approve',
@@ -2195,7 +2195,7 @@ export const initialHistory = [
     proposalId: 'proposal-034',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-07T09:00:00+03:00',
+    createdAt: '2026-03-07T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2212,14 +2212,14 @@ export const initialHistory = [
     proposalId: 'proposal-035',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-01-31T21:00:00+03:00',
+    createdAt: '2026-01-31T21:00:00.00Z',
   },
   {
     id: 'history-190',
     proposalId: 'proposal-035',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-02-02T02:00:00+03:00',
+    createdAt: '2026-02-02T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2233,7 +2233,7 @@ export const initialHistory = [
     proposalId: 'proposal-035',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-02T07:00:00+03:00',
+    createdAt: '2026-02-02T07:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -2243,7 +2243,7 @@ export const initialHistory = [
     proposalId: 'proposal-035',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-02T09:00:00+03:00',
+    createdAt: '2026-02-02T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2257,7 +2257,7 @@ export const initialHistory = [
     proposalId: 'proposal-035',
     actorId: 'reviewer-005',
     action: 'review_added',
-    createdAt: '2026-02-02T13:00:00+03:00',
+    createdAt: '2026-02-02T13:00:00.00Z',
     payload: {
       reviewId: 'review-025',
       recommendation: 'approve',
@@ -2268,7 +2268,7 @@ export const initialHistory = [
     proposalId: 'proposal-035',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-02-02T15:00:00+03:00',
+    createdAt: '2026-02-02T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2285,14 +2285,14 @@ export const initialHistory = [
     proposalId: 'proposal-036',
     actorId: 'speaker-user-006',
     action: 'created',
-    createdAt: '2026-04-01T07:00:00+03:00',
+    createdAt: '2026-04-01T07:00:00.00Z',
   },
   {
     id: 'history-196',
     proposalId: 'proposal-036',
     actorId: 'speaker-user-006',
     action: 'status_changed',
-    createdAt: '2026-04-02T12:00:00+03:00',
+    createdAt: '2026-04-02T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2306,7 +2306,7 @@ export const initialHistory = [
     proposalId: 'proposal-036',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-02T21:00:00+03:00',
+    createdAt: '2026-04-02T21:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -2316,7 +2316,7 @@ export const initialHistory = [
     proposalId: 'proposal-036',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-03T01:00:00+03:00',
+    createdAt: '2026-04-03T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -2326,7 +2326,7 @@ export const initialHistory = [
     proposalId: 'proposal-036',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-03T09:00:00+03:00',
+    createdAt: '2026-04-03T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2340,7 +2340,7 @@ export const initialHistory = [
     proposalId: 'proposal-036',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-04-03T18:00:00+03:00',
+    createdAt: '2026-04-03T18:00:00.00Z',
     payload: {
       reviewId: 'review-026',
       recommendation: 'request_changes',
@@ -2351,14 +2351,14 @@ export const initialHistory = [
     proposalId: 'proposal-037',
     actorId: 'speaker-user-004',
     action: 'created',
-    createdAt: '2026-03-04T18:00:00+03:00',
+    createdAt: '2026-03-04T18:00:00.00Z',
   },
   {
     id: 'history-202',
     proposalId: 'proposal-037',
     actorId: 'speaker-user-004',
     action: 'status_changed',
-    createdAt: '2026-03-07T23:00:00+03:00',
+    createdAt: '2026-03-07T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2372,7 +2372,7 @@ export const initialHistory = [
     proposalId: 'proposal-037',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-08T01:00:00+03:00',
+    createdAt: '2026-03-08T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -2382,7 +2382,7 @@ export const initialHistory = [
     proposalId: 'proposal-037',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-08T08:00:00+03:00',
+    createdAt: '2026-03-08T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2396,7 +2396,7 @@ export const initialHistory = [
     proposalId: 'proposal-037',
     actorId: 'reviewer-005',
     action: 'review_added',
-    createdAt: '2026-03-08T21:00:00+03:00',
+    createdAt: '2026-03-08T21:00:00.00Z',
     payload: {
       reviewId: 'review-027',
       recommendation: 'approve',
@@ -2407,7 +2407,7 @@ export const initialHistory = [
     proposalId: 'proposal-037',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-09T14:00:00+03:00',
+    createdAt: '2026-03-09T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2424,7 +2424,7 @@ export const initialHistory = [
     proposalId: 'proposal-037',
     actorId: '2',
     action: 'scheduled',
-    createdAt: '2026-03-11T20:00:00+03:00',
+    createdAt: '2026-03-11T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2441,14 +2441,14 @@ export const initialHistory = [
     proposalId: 'proposal-038',
     actorId: 'speaker-user-012',
     action: 'created',
-    createdAt: '2026-04-06T10:00:00+03:00',
+    createdAt: '2026-04-06T10:00:00.00Z',
   },
   {
     id: 'history-209',
     proposalId: 'proposal-038',
     actorId: 'speaker-user-012',
     action: 'status_changed',
-    createdAt: '2026-04-09T13:00:00+03:00',
+    createdAt: '2026-04-09T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2462,7 +2462,7 @@ export const initialHistory = [
     proposalId: 'proposal-038',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-09T18:00:00+03:00',
+    createdAt: '2026-04-09T18:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-003',
     },
@@ -2472,7 +2472,7 @@ export const initialHistory = [
     proposalId: 'proposal-038',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-10T03:00:00+03:00',
+    createdAt: '2026-04-10T03:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2486,7 +2486,7 @@ export const initialHistory = [
     proposalId: 'proposal-038',
     actorId: 'reviewer-003',
     action: 'review_added',
-    createdAt: '2026-04-10T17:00:00+03:00',
+    createdAt: '2026-04-10T17:00:00.00Z',
     payload: {
       reviewId: 'review-028',
       recommendation: 'request_changes',
@@ -2497,7 +2497,7 @@ export const initialHistory = [
     proposalId: 'proposal-038',
     actorId: 'reviewer-003',
     action: 'comment_added',
-    createdAt: '2026-04-10T19:03:00+03:00',
+    createdAt: '2026-04-10T19:03:00.00Z',
     payload: {
       commentId: 'comment-014',
     },
@@ -2507,7 +2507,7 @@ export const initialHistory = [
     proposalId: 'proposal-038',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-11T01:00:00+03:00',
+    createdAt: '2026-04-11T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2525,14 +2525,14 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-01-26T04:00:00+03:00',
+    createdAt: '2026-01-26T04:00:00.00Z',
   },
   {
     id: 'history-216',
     proposalId: 'proposal-039',
     actorId: 'speaker-user-022',
     action: 'status_changed',
-    createdAt: '2026-01-30T10:00:00+03:00',
+    createdAt: '2026-01-30T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2546,7 +2546,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-01-30T19:00:00+03:00',
+    createdAt: '2026-01-30T19:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -2556,7 +2556,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-01-31T06:00:00+03:00',
+    createdAt: '2026-01-31T06:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -2566,7 +2566,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-01-31T12:00:00+03:00',
+    createdAt: '2026-01-31T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2580,7 +2580,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-01-31T16:00:00+03:00',
+    createdAt: '2026-01-31T16:00:00.00Z',
     payload: {
       reviewId: 'review-029',
       recommendation: 'reject',
@@ -2591,7 +2591,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-01-31T19:00:00+03:00',
+    createdAt: '2026-01-31T19:00:00.00Z',
     payload: {
       reviewId: 'review-030',
       recommendation: 'reject',
@@ -2602,7 +2602,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'reviewer-002',
     action: 'comment_added',
-    createdAt: '2026-02-01T03:03:00+03:00',
+    createdAt: '2026-02-01T03:03:00.00Z',
     payload: {
       commentId: 'comment-015',
     },
@@ -2612,7 +2612,7 @@ export const initialHistory = [
     proposalId: 'proposal-039',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-01T16:00:00+03:00',
+    createdAt: '2026-02-01T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2629,14 +2629,14 @@ export const initialHistory = [
     proposalId: 'proposal-040',
     actorId: 'speaker-user-020',
     action: 'created',
-    createdAt: '2026-03-18T11:00:00+03:00',
+    createdAt: '2026-03-18T11:00:00.00Z',
   },
   {
     id: 'history-225',
     proposalId: 'proposal-040',
     actorId: 'speaker-user-020',
     action: 'status_changed',
-    createdAt: '2026-03-21T13:00:00+03:00',
+    createdAt: '2026-03-21T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2650,7 +2650,7 @@ export const initialHistory = [
     proposalId: 'proposal-040',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-22T01:00:00+03:00',
+    createdAt: '2026-03-22T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -2660,7 +2660,7 @@ export const initialHistory = [
     proposalId: 'proposal-040',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-22T11:00:00+03:00',
+    createdAt: '2026-03-22T11:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -2670,14 +2670,14 @@ export const initialHistory = [
     proposalId: 'proposal-041',
     actorId: 'speaker-user-020',
     action: 'created',
-    createdAt: '2026-04-20T11:00:00+03:00',
+    createdAt: '2026-04-20T11:00:00.00Z',
   },
   {
     id: 'history-229',
     proposalId: 'proposal-041',
     actorId: 'speaker-user-020',
     action: 'status_changed',
-    createdAt: '2026-04-23T13:00:00+03:00',
+    createdAt: '2026-04-23T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2691,7 +2691,7 @@ export const initialHistory = [
     proposalId: 'proposal-041',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-23T16:00:00+03:00',
+    createdAt: '2026-04-23T16:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -2701,7 +2701,7 @@ export const initialHistory = [
     proposalId: 'proposal-041',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-23T21:00:00+03:00',
+    createdAt: '2026-04-23T21:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -2711,7 +2711,7 @@ export const initialHistory = [
     proposalId: 'proposal-041',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-24T01:00:00+03:00',
+    createdAt: '2026-04-24T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2725,7 +2725,7 @@ export const initialHistory = [
     proposalId: 'proposal-041',
     actorId: 'reviewer-010',
     action: 'review_added',
-    createdAt: '2026-04-24T07:00:00+03:00',
+    createdAt: '2026-04-24T07:00:00.00Z',
     payload: {
       reviewId: 'review-031',
       recommendation: 'approve',
@@ -2736,14 +2736,14 @@ export const initialHistory = [
     proposalId: 'proposal-042',
     actorId: 'speaker-user-002',
     action: 'created',
-    createdAt: '2026-04-05T23:00:00+03:00',
+    createdAt: '2026-04-05T23:00:00.00Z',
   },
   {
     id: 'history-235',
     proposalId: 'proposal-042',
     actorId: 'speaker-user-002',
     action: 'status_changed',
-    createdAt: '2026-04-07T05:00:00+03:00',
+    createdAt: '2026-04-07T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2757,7 +2757,7 @@ export const initialHistory = [
     proposalId: 'proposal-042',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-07T15:00:00+03:00',
+    createdAt: '2026-04-07T15:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -2767,14 +2767,14 @@ export const initialHistory = [
     proposalId: 'proposal-043',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-03-14T22:00:00+03:00',
+    createdAt: '2026-03-14T22:00:00.00Z',
   },
   {
     id: 'history-238',
     proposalId: 'proposal-043',
     actorId: 'speaker-user-022',
     action: 'status_changed',
-    createdAt: '2026-03-15T23:00:00+03:00',
+    createdAt: '2026-03-15T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2788,7 +2788,7 @@ export const initialHistory = [
     proposalId: 'proposal-043',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-16T11:00:00+03:00',
+    createdAt: '2026-03-16T11:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -2798,7 +2798,7 @@ export const initialHistory = [
     proposalId: 'proposal-043',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-16T20:00:00+03:00',
+    createdAt: '2026-03-16T20:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -2808,7 +2808,7 @@ export const initialHistory = [
     proposalId: 'proposal-043',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-17T04:00:00+03:00',
+    createdAt: '2026-03-17T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2822,7 +2822,7 @@ export const initialHistory = [
     proposalId: 'proposal-043',
     actorId: '2',
     action: 'comment_added',
-    createdAt: '2026-03-17T13:03:00+03:00',
+    createdAt: '2026-03-17T13:03:00.00Z',
     payload: {
       commentId: 'comment-016',
     },
@@ -2832,14 +2832,14 @@ export const initialHistory = [
     proposalId: 'proposal-044',
     actorId: 'speaker-user-021',
     action: 'created',
-    createdAt: '2026-02-11T06:00:00+03:00',
+    createdAt: '2026-02-11T06:00:00.00Z',
   },
   {
     id: 'history-244',
     proposalId: 'proposal-044',
     actorId: 'speaker-user-021',
     action: 'status_changed',
-    createdAt: '2026-02-15T10:00:00+03:00',
+    createdAt: '2026-02-15T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2853,7 +2853,7 @@ export const initialHistory = [
     proposalId: 'proposal-044',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-15T19:00:00+03:00',
+    createdAt: '2026-02-15T19:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -2863,7 +2863,7 @@ export const initialHistory = [
     proposalId: 'proposal-044',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-16T03:00:00+03:00',
+    createdAt: '2026-02-16T03:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -2873,7 +2873,7 @@ export const initialHistory = [
     proposalId: 'proposal-044',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-16T05:00:00+03:00',
+    createdAt: '2026-02-16T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2887,7 +2887,7 @@ export const initialHistory = [
     proposalId: 'proposal-044',
     actorId: 'reviewer-006',
     action: 'review_added',
-    createdAt: '2026-02-16T08:00:00+03:00',
+    createdAt: '2026-02-16T08:00:00.00Z',
     payload: {
       reviewId: 'review-032',
       recommendation: 'reject',
@@ -2898,14 +2898,14 @@ export const initialHistory = [
     proposalId: 'proposal-045',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-04-06T23:00:00+03:00',
+    createdAt: '2026-04-06T23:00:00.00Z',
   },
   {
     id: 'history-250',
     proposalId: 'proposal-045',
     actorId: 'speaker-user-022',
     action: 'status_changed',
-    createdAt: '2026-04-10T05:00:00+03:00',
+    createdAt: '2026-04-10T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2919,14 +2919,14 @@ export const initialHistory = [
     proposalId: 'proposal-046',
     actorId: 'speaker-user-004',
     action: 'created',
-    createdAt: '2026-03-08T19:00:00+03:00',
+    createdAt: '2026-03-08T19:00:00.00Z',
   },
   {
     id: 'history-252',
     proposalId: 'proposal-046',
     actorId: 'speaker-user-004',
     action: 'status_changed',
-    createdAt: '2026-03-11T20:00:00+03:00',
+    createdAt: '2026-03-11T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2940,7 +2940,7 @@ export const initialHistory = [
     proposalId: 'proposal-046',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-12T01:00:00+03:00',
+    createdAt: '2026-03-12T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -2950,7 +2950,7 @@ export const initialHistory = [
     proposalId: 'proposal-046',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-12T10:00:00+03:00',
+    createdAt: '2026-03-12T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2964,7 +2964,7 @@ export const initialHistory = [
     proposalId: 'proposal-046',
     actorId: 'reviewer-010',
     action: 'review_added',
-    createdAt: '2026-03-13T02:00:00+03:00',
+    createdAt: '2026-03-13T02:00:00.00Z',
     payload: {
       reviewId: 'review-033',
       recommendation: 'approve',
@@ -2975,7 +2975,7 @@ export const initialHistory = [
     proposalId: 'proposal-046',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-13T12:00:00+03:00',
+    createdAt: '2026-03-13T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -2992,14 +2992,14 @@ export const initialHistory = [
     proposalId: 'proposal-047',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-04-14T08:00:00+03:00',
+    createdAt: '2026-04-14T08:00:00.00Z',
   },
   {
     id: 'history-258',
     proposalId: 'proposal-047',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-04-15T09:00:00+03:00',
+    createdAt: '2026-04-15T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3013,7 +3013,7 @@ export const initialHistory = [
     proposalId: 'proposal-047',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-15T17:00:00+03:00',
+    createdAt: '2026-04-15T17:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -3023,7 +3023,7 @@ export const initialHistory = [
     proposalId: 'proposal-047',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-16T01:00:00+03:00',
+    createdAt: '2026-04-16T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3037,7 +3037,7 @@ export const initialHistory = [
     proposalId: 'proposal-047',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-04-16T08:00:00+03:00',
+    createdAt: '2026-04-16T08:00:00.00Z',
     payload: {
       reviewId: 'review-034',
       recommendation: 'request_changes',
@@ -3048,7 +3048,7 @@ export const initialHistory = [
     proposalId: 'proposal-047',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-16T12:00:00+03:00',
+    createdAt: '2026-04-16T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3066,14 +3066,14 @@ export const initialHistory = [
     proposalId: 'proposal-048',
     actorId: 'speaker-user-015',
     action: 'created',
-    createdAt: '2026-02-28T04:00:00+03:00',
+    createdAt: '2026-02-28T04:00:00.00Z',
   },
   {
     id: 'history-264',
     proposalId: 'proposal-048',
     actorId: 'speaker-user-015',
     action: 'status_changed',
-    createdAt: '2026-03-02T09:00:00+03:00',
+    createdAt: '2026-03-02T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3087,7 +3087,7 @@ export const initialHistory = [
     proposalId: 'proposal-048',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-02T12:00:00+03:00',
+    createdAt: '2026-03-02T12:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -3097,7 +3097,7 @@ export const initialHistory = [
     proposalId: 'proposal-048',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-02T22:00:00+03:00',
+    createdAt: '2026-03-02T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3111,7 +3111,7 @@ export const initialHistory = [
     proposalId: 'proposal-048',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-03-03T09:00:00+03:00',
+    createdAt: '2026-03-03T09:00:00.00Z',
     payload: {
       reviewId: 'review-035',
       recommendation: 'request_changes',
@@ -3122,7 +3122,7 @@ export const initialHistory = [
     proposalId: 'proposal-048',
     actorId: '2',
     action: 'comment_added',
-    createdAt: '2026-03-03T14:03:00+03:00',
+    createdAt: '2026-03-03T14:03:00.00Z',
     payload: {
       commentId: 'comment-017',
     },
@@ -3132,7 +3132,7 @@ export const initialHistory = [
     proposalId: 'proposal-048',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-04T01:00:00+03:00',
+    createdAt: '2026-03-04T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3150,21 +3150,21 @@ export const initialHistory = [
     proposalId: 'proposal-049',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-03-08T10:00:00+03:00',
+    createdAt: '2026-03-08T10:00:00.00Z',
   },
   {
     id: 'history-271',
     proposalId: 'proposal-050',
     actorId: 'speaker-user-019',
     action: 'created',
-    createdAt: '2026-03-01T16:00:00+03:00',
+    createdAt: '2026-03-01T16:00:00.00Z',
   },
   {
     id: 'history-272',
     proposalId: 'proposal-050',
     actorId: 'speaker-user-019',
     action: 'status_changed',
-    createdAt: '2026-03-05T19:00:00+03:00',
+    createdAt: '2026-03-05T19:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3178,7 +3178,7 @@ export const initialHistory = [
     proposalId: 'proposal-050',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-06T02:00:00+03:00',
+    createdAt: '2026-03-06T02:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -3188,7 +3188,7 @@ export const initialHistory = [
     proposalId: 'proposal-050',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-06T12:00:00+03:00',
+    createdAt: '2026-03-06T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3202,14 +3202,14 @@ export const initialHistory = [
     proposalId: 'proposal-051',
     actorId: 'speaker-user-010',
     action: 'created',
-    createdAt: '2026-03-10T05:00:00+03:00',
+    createdAt: '2026-03-10T05:00:00.00Z',
   },
   {
     id: 'history-276',
     proposalId: 'proposal-051',
     actorId: 'speaker-user-010',
     action: 'status_changed',
-    createdAt: '2026-03-13T07:00:00+03:00',
+    createdAt: '2026-03-13T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3223,7 +3223,7 @@ export const initialHistory = [
     proposalId: 'proposal-051',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-13T17:00:00+03:00',
+    createdAt: '2026-03-13T17:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -3233,7 +3233,7 @@ export const initialHistory = [
     proposalId: 'proposal-051',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-13T21:00:00+03:00',
+    createdAt: '2026-03-13T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3247,7 +3247,7 @@ export const initialHistory = [
     proposalId: 'proposal-051',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-03-14T00:00:00+03:00',
+    createdAt: '2026-03-14T00:00:00.00Z',
     payload: {
       reviewId: 'review-036',
       recommendation: 'approve',
@@ -3258,7 +3258,7 @@ export const initialHistory = [
     proposalId: 'proposal-051',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-14T06:00:00+03:00',
+    createdAt: '2026-03-14T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3275,7 +3275,7 @@ export const initialHistory = [
     proposalId: 'proposal-051',
     actorId: 'manager-003',
     action: 'scheduled',
-    createdAt: '2026-03-16T09:00:00+03:00',
+    createdAt: '2026-03-16T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3292,14 +3292,14 @@ export const initialHistory = [
     proposalId: 'proposal-052',
     actorId: 'speaker-user-021',
     action: 'created',
-    createdAt: '2026-02-02T02:00:00+03:00',
+    createdAt: '2026-02-02T02:00:00.00Z',
   },
   {
     id: 'history-283',
     proposalId: 'proposal-052',
     actorId: 'speaker-user-021',
     action: 'status_changed',
-    createdAt: '2026-02-05T04:00:00+03:00',
+    createdAt: '2026-02-05T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3313,7 +3313,7 @@ export const initialHistory = [
     proposalId: 'proposal-052',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-05T13:00:00+03:00',
+    createdAt: '2026-02-05T13:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -3323,7 +3323,7 @@ export const initialHistory = [
     proposalId: 'proposal-052',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-05T18:00:00+03:00',
+    createdAt: '2026-02-05T18:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3337,7 +3337,7 @@ export const initialHistory = [
     proposalId: 'proposal-052',
     actorId: 'manager-002',
     action: 'comment_added',
-    createdAt: '2026-02-05T19:03:00+03:00',
+    createdAt: '2026-02-05T19:03:00.00Z',
     payload: {
       commentId: 'comment-018',
     },
@@ -3347,21 +3347,21 @@ export const initialHistory = [
     proposalId: 'proposal-053',
     actorId: 'speaker-user-024',
     action: 'created',
-    createdAt: '2026-02-23T18:00:00+03:00',
+    createdAt: '2026-02-23T18:00:00.00Z',
   },
   {
     id: 'history-288',
     proposalId: 'proposal-054',
     actorId: 'speaker-user-023',
     action: 'created',
-    createdAt: '2026-02-16T16:00:00+03:00',
+    createdAt: '2026-02-16T16:00:00.00Z',
   },
   {
     id: 'history-289',
     proposalId: 'proposal-054',
     actorId: 'speaker-user-023',
     action: 'status_changed',
-    createdAt: '2026-02-18T17:00:00+03:00',
+    createdAt: '2026-02-18T17:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3375,7 +3375,7 @@ export const initialHistory = [
     proposalId: 'proposal-054',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-19T02:00:00+03:00',
+    createdAt: '2026-02-19T02:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -3385,7 +3385,7 @@ export const initialHistory = [
     proposalId: 'proposal-054',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-19T11:00:00+03:00',
+    createdAt: '2026-02-19T11:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3399,7 +3399,7 @@ export const initialHistory = [
     proposalId: 'proposal-054',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-02-19T19:00:00+03:00',
+    createdAt: '2026-02-19T19:00:00.00Z',
     payload: {
       reviewId: 'review-037',
       recommendation: 'request_changes',
@@ -3410,7 +3410,7 @@ export const initialHistory = [
     proposalId: 'proposal-054',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-02-20T01:03:00+03:00',
+    createdAt: '2026-02-20T01:03:00.00Z',
     payload: {
       commentId: 'comment-019',
     },
@@ -3420,7 +3420,7 @@ export const initialHistory = [
     proposalId: 'proposal-054',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-20T05:00:00+03:00',
+    createdAt: '2026-02-20T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3438,14 +3438,14 @@ export const initialHistory = [
     proposalId: 'proposal-055',
     actorId: 'speaker-user-019',
     action: 'created',
-    createdAt: '2026-01-28T08:00:00+03:00',
+    createdAt: '2026-01-28T08:00:00.00Z',
   },
   {
     id: 'history-296',
     proposalId: 'proposal-055',
     actorId: 'speaker-user-019',
     action: 'status_changed',
-    createdAt: '2026-01-31T11:00:00+03:00',
+    createdAt: '2026-01-31T11:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3459,14 +3459,14 @@ export const initialHistory = [
     proposalId: 'proposal-056',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-01-24T20:00:00+03:00',
+    createdAt: '2026-01-24T20:00:00.00Z',
   },
   {
     id: 'history-298',
     proposalId: 'proposal-056',
     actorId: 'speaker-user-022',
     action: 'status_changed',
-    createdAt: '2026-01-26T02:00:00+03:00',
+    createdAt: '2026-01-26T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3480,7 +3480,7 @@ export const initialHistory = [
     proposalId: 'proposal-056',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-01-26T09:00:00+03:00',
+    createdAt: '2026-01-26T09:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -3490,7 +3490,7 @@ export const initialHistory = [
     proposalId: 'proposal-056',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-01-26T15:00:00+03:00',
+    createdAt: '2026-01-26T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3504,7 +3504,7 @@ export const initialHistory = [
     proposalId: 'proposal-056',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-01-26T19:00:00+03:00',
+    createdAt: '2026-01-26T19:00:00.00Z',
     payload: {
       reviewId: 'review-038',
       recommendation: 'approve',
@@ -3515,7 +3515,7 @@ export const initialHistory = [
     proposalId: 'proposal-056',
     actorId: 'reviewer-009',
     action: 'comment_added',
-    createdAt: '2026-01-27T04:03:00+03:00',
+    createdAt: '2026-01-27T04:03:00.00Z',
     payload: {
       commentId: 'comment-020',
     },
@@ -3525,14 +3525,14 @@ export const initialHistory = [
     proposalId: 'proposal-057',
     actorId: 'speaker-user-025',
     action: 'created',
-    createdAt: '2026-03-31T22:00:00+03:00',
+    createdAt: '2026-03-31T22:00:00.00Z',
   },
   {
     id: 'history-304',
     proposalId: 'proposal-057',
     actorId: 'speaker-user-025',
     action: 'status_changed',
-    createdAt: '2026-04-02T02:00:00+03:00',
+    createdAt: '2026-04-02T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3546,7 +3546,7 @@ export const initialHistory = [
     proposalId: 'proposal-057',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-02T11:00:00+03:00',
+    createdAt: '2026-04-02T11:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -3556,7 +3556,7 @@ export const initialHistory = [
     proposalId: 'proposal-057',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-02T16:00:00+03:00',
+    createdAt: '2026-04-02T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3570,7 +3570,7 @@ export const initialHistory = [
     proposalId: 'proposal-057',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-04-03T06:00:00+03:00',
+    createdAt: '2026-04-03T06:00:00.00Z',
     payload: {
       reviewId: 'review-039',
       recommendation: 'request_changes',
@@ -3581,7 +3581,7 @@ export const initialHistory = [
     proposalId: 'proposal-057',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-03T14:00:00+03:00',
+    createdAt: '2026-04-03T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3599,14 +3599,14 @@ export const initialHistory = [
     proposalId: 'proposal-058',
     actorId: 'speaker-user-020',
     action: 'created',
-    createdAt: '2026-03-21T11:00:00+03:00',
+    createdAt: '2026-03-21T11:00:00.00Z',
   },
   {
     id: 'history-310',
     proposalId: 'proposal-058',
     actorId: 'speaker-user-020',
     action: 'status_changed',
-    createdAt: '2026-03-25T14:00:00+03:00',
+    createdAt: '2026-03-25T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3620,7 +3620,7 @@ export const initialHistory = [
     proposalId: 'proposal-058',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-26T03:00:00+03:00',
+    createdAt: '2026-03-26T03:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -3630,7 +3630,7 @@ export const initialHistory = [
     proposalId: 'proposal-058',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-26T05:00:00+03:00',
+    createdAt: '2026-03-26T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3644,7 +3644,7 @@ export const initialHistory = [
     proposalId: 'proposal-058',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-03-26T21:00:00+03:00',
+    createdAt: '2026-03-26T21:00:00.00Z',
     payload: {
       reviewId: 'review-040',
       recommendation: 'approve',
@@ -3655,7 +3655,7 @@ export const initialHistory = [
     proposalId: 'proposal-058',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-27T12:00:00+03:00',
+    createdAt: '2026-03-27T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3672,14 +3672,14 @@ export const initialHistory = [
     proposalId: 'proposal-059',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-03-06T05:00:00+03:00',
+    createdAt: '2026-03-06T05:00:00.00Z',
   },
   {
     id: 'history-316',
     proposalId: 'proposal-059',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-03-07T08:00:00+03:00',
+    createdAt: '2026-03-07T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3693,14 +3693,14 @@ export const initialHistory = [
     proposalId: 'proposal-060',
     actorId: 'speaker-user-023',
     action: 'created',
-    createdAt: '2026-02-20T22:00:00+03:00',
+    createdAt: '2026-02-20T22:00:00.00Z',
   },
   {
     id: 'history-318',
     proposalId: 'proposal-060',
     actorId: 'speaker-user-023',
     action: 'status_changed',
-    createdAt: '2026-02-21T23:00:00+03:00',
+    createdAt: '2026-02-21T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3714,7 +3714,7 @@ export const initialHistory = [
     proposalId: 'proposal-060',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-22T03:00:00+03:00',
+    createdAt: '2026-02-22T03:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -3724,7 +3724,7 @@ export const initialHistory = [
     proposalId: 'proposal-060',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-22T13:00:00+03:00',
+    createdAt: '2026-02-22T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3738,7 +3738,7 @@ export const initialHistory = [
     proposalId: 'proposal-060',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-02-22T19:00:00+03:00',
+    createdAt: '2026-02-22T19:00:00.00Z',
     payload: {
       reviewId: 'review-041',
       recommendation: 'approve',
@@ -3749,7 +3749,7 @@ export const initialHistory = [
     proposalId: 'proposal-060',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-02-22T21:03:00+03:00',
+    createdAt: '2026-02-22T21:03:00.00Z',
     payload: {
       commentId: 'comment-021',
     },
@@ -3759,7 +3759,7 @@ export const initialHistory = [
     proposalId: 'proposal-060',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-23T02:00:00+03:00',
+    createdAt: '2026-02-23T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3776,14 +3776,14 @@ export const initialHistory = [
     proposalId: 'proposal-061',
     actorId: 'speaker-user-008',
     action: 'created',
-    createdAt: '2026-02-07T23:00:00+03:00',
+    createdAt: '2026-02-07T23:00:00.00Z',
   },
   {
     id: 'history-325',
     proposalId: 'proposal-061',
     actorId: 'speaker-user-008',
     action: 'status_changed',
-    createdAt: '2026-02-10T05:00:00+03:00',
+    createdAt: '2026-02-10T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3797,7 +3797,7 @@ export const initialHistory = [
     proposalId: 'proposal-061',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-10T08:00:00+03:00',
+    createdAt: '2026-02-10T08:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -3807,14 +3807,14 @@ export const initialHistory = [
     proposalId: 'proposal-062',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-03-08T10:00:00+03:00',
+    createdAt: '2026-03-08T10:00:00.00Z',
   },
   {
     id: 'history-328',
     proposalId: 'proposal-062',
     actorId: '4',
     action: 'updated',
-    createdAt: '2026-03-09T11:00:00+03:00',
+    createdAt: '2026-03-09T11:00:00.00Z',
     changes: [
       {
         field: 'abstract',
@@ -3828,14 +3828,14 @@ export const initialHistory = [
     proposalId: 'proposal-063',
     actorId: 'speaker-user-023',
     action: 'created',
-    createdAt: '2026-02-19T16:00:00+03:00',
+    createdAt: '2026-02-19T16:00:00.00Z',
   },
   {
     id: 'history-330',
     proposalId: 'proposal-063',
     actorId: 'speaker-user-023',
     action: 'updated',
-    createdAt: '2026-02-20T18:00:00+03:00',
+    createdAt: '2026-02-20T18:00:00.00Z',
     changes: [
       {
         field: 'abstract',
@@ -3849,14 +3849,14 @@ export const initialHistory = [
     proposalId: 'proposal-064',
     actorId: 'speaker-user-010',
     action: 'created',
-    createdAt: '2026-02-16T00:00:00+03:00',
+    createdAt: '2026-02-16T00:00:00.00Z',
   },
   {
     id: 'history-332',
     proposalId: 'proposal-064',
     actorId: 'speaker-user-010',
     action: 'status_changed',
-    createdAt: '2026-02-20T03:00:00+03:00',
+    createdAt: '2026-02-20T03:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3870,7 +3870,7 @@ export const initialHistory = [
     proposalId: 'proposal-064',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-20T09:00:00+03:00',
+    createdAt: '2026-02-20T09:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -3880,7 +3880,7 @@ export const initialHistory = [
     proposalId: 'proposal-064',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-20T10:00:00+03:00',
+    createdAt: '2026-02-20T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3894,7 +3894,7 @@ export const initialHistory = [
     proposalId: 'proposal-064',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-02-20T18:00:00+03:00',
+    createdAt: '2026-02-20T18:00:00.00Z',
     payload: {
       reviewId: 'review-042',
       recommendation: 'approve',
@@ -3905,7 +3905,7 @@ export const initialHistory = [
     proposalId: 'proposal-064',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-21T10:00:00+03:00',
+    createdAt: '2026-02-21T10:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3922,14 +3922,14 @@ export const initialHistory = [
     proposalId: 'proposal-065',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-02-25T17:00:00+03:00',
+    createdAt: '2026-02-25T17:00:00.00Z',
   },
   {
     id: 'history-338',
     proposalId: 'proposal-065',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-02-27T22:00:00+03:00',
+    createdAt: '2026-02-27T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3943,7 +3943,7 @@ export const initialHistory = [
     proposalId: 'proposal-065',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-28T01:00:00+03:00',
+    createdAt: '2026-02-28T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -3953,7 +3953,7 @@ export const initialHistory = [
     proposalId: 'proposal-065',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-28T06:00:00+03:00',
+    createdAt: '2026-02-28T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -3967,7 +3967,7 @@ export const initialHistory = [
     proposalId: 'proposal-065',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-02-28T19:00:00+03:00',
+    createdAt: '2026-02-28T19:00:00.00Z',
     payload: {
       reviewId: 'review-043',
       recommendation: 'reject',
@@ -3978,7 +3978,7 @@ export const initialHistory = [
     proposalId: 'proposal-065',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-03-01T02:03:00+03:00',
+    createdAt: '2026-03-01T02:03:00.00Z',
     payload: {
       commentId: 'comment-022',
     },
@@ -3988,7 +3988,7 @@ export const initialHistory = [
     proposalId: 'proposal-065',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-01T12:00:00+03:00',
+    createdAt: '2026-03-01T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4005,14 +4005,14 @@ export const initialHistory = [
     proposalId: 'proposal-066',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-03-22T16:00:00+03:00',
+    createdAt: '2026-03-22T16:00:00.00Z',
   },
   {
     id: 'history-345',
     proposalId: 'proposal-066',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-03-25T19:00:00+03:00',
+    createdAt: '2026-03-25T19:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4026,7 +4026,7 @@ export const initialHistory = [
     proposalId: 'proposal-066',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-25T23:00:00+03:00',
+    createdAt: '2026-03-25T23:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -4036,14 +4036,14 @@ export const initialHistory = [
     proposalId: 'proposal-067',
     actorId: 'speaker-user-004',
     action: 'created',
-    createdAt: '2026-04-19T07:00:00+03:00',
+    createdAt: '2026-04-19T07:00:00.00Z',
   },
   {
     id: 'history-348',
     proposalId: 'proposal-067',
     actorId: 'speaker-user-004',
     action: 'status_changed',
-    createdAt: '2026-04-23T12:00:00+03:00',
+    createdAt: '2026-04-23T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4057,7 +4057,7 @@ export const initialHistory = [
     proposalId: 'proposal-067',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-23T15:00:00+03:00',
+    createdAt: '2026-04-23T15:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -4067,7 +4067,7 @@ export const initialHistory = [
     proposalId: 'proposal-067',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-23T20:00:00+03:00',
+    createdAt: '2026-04-23T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4081,7 +4081,7 @@ export const initialHistory = [
     proposalId: 'proposal-067',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-04-24T12:00:00+03:00',
+    createdAt: '2026-04-24T12:00:00.00Z',
     payload: {
       reviewId: 'review-044',
       recommendation: 'approve',
@@ -4092,7 +4092,7 @@ export const initialHistory = [
     proposalId: 'proposal-067',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-24T20:00:00+03:00',
+    createdAt: '2026-04-24T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4109,14 +4109,14 @@ export const initialHistory = [
     proposalId: 'proposal-068',
     actorId: 'speaker-user-011',
     action: 'created',
-    createdAt: '2026-03-09T10:00:00+03:00',
+    createdAt: '2026-03-09T10:00:00.00Z',
   },
   {
     id: 'history-354',
     proposalId: 'proposal-068',
     actorId: 'speaker-user-011',
     action: 'status_changed',
-    createdAt: '2026-03-12T13:00:00+03:00',
+    createdAt: '2026-03-12T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4130,7 +4130,7 @@ export const initialHistory = [
     proposalId: 'proposal-068',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-12T23:00:00+03:00',
+    createdAt: '2026-03-12T23:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-003',
     },
@@ -4140,7 +4140,7 @@ export const initialHistory = [
     proposalId: 'proposal-068',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-13T02:00:00+03:00',
+    createdAt: '2026-03-13T02:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -4150,7 +4150,7 @@ export const initialHistory = [
     proposalId: 'proposal-068',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-13T05:00:00+03:00',
+    createdAt: '2026-03-13T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4164,7 +4164,7 @@ export const initialHistory = [
     proposalId: 'proposal-068',
     actorId: 'reviewer-006',
     action: 'comment_added',
-    createdAt: '2026-03-13T14:03:00+03:00',
+    createdAt: '2026-03-13T14:03:00.00Z',
     payload: {
       commentId: 'comment-023',
     },
@@ -4174,14 +4174,14 @@ export const initialHistory = [
     proposalId: 'proposal-069',
     actorId: 'speaker-user-017',
     action: 'created',
-    createdAt: '2026-02-28T23:00:00+03:00',
+    createdAt: '2026-02-28T23:00:00.00Z',
   },
   {
     id: 'history-360',
     proposalId: 'proposal-069',
     actorId: 'speaker-user-017',
     action: 'status_changed',
-    createdAt: '2026-03-02T01:00:00+03:00',
+    createdAt: '2026-03-02T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4195,7 +4195,7 @@ export const initialHistory = [
     proposalId: 'proposal-069',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-02T10:00:00+03:00',
+    createdAt: '2026-03-02T10:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -4205,7 +4205,7 @@ export const initialHistory = [
     proposalId: 'proposal-069',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-02T20:00:00+03:00',
+    createdAt: '2026-03-02T20:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -4215,7 +4215,7 @@ export const initialHistory = [
     proposalId: 'proposal-069',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-02T23:00:00+03:00',
+    createdAt: '2026-03-02T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4229,7 +4229,7 @@ export const initialHistory = [
     proposalId: 'proposal-069',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-03-03T15:00:00+03:00',
+    createdAt: '2026-03-03T15:00:00.00Z',
     payload: {
       reviewId: 'review-045',
       recommendation: 'reject',
@@ -4240,7 +4240,7 @@ export const initialHistory = [
     proposalId: 'proposal-069',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-03T20:00:00+03:00',
+    createdAt: '2026-03-03T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4257,14 +4257,14 @@ export const initialHistory = [
     proposalId: 'proposal-070',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-03-27T16:00:00+03:00',
+    createdAt: '2026-03-27T16:00:00.00Z',
   },
   {
     id: 'history-367',
     proposalId: 'proposal-070',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-03-30T18:00:00+03:00',
+    createdAt: '2026-03-30T18:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4278,7 +4278,7 @@ export const initialHistory = [
     proposalId: 'proposal-070',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-31T04:00:00+03:00',
+    createdAt: '2026-03-31T04:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -4288,14 +4288,14 @@ export const initialHistory = [
     proposalId: 'proposal-071',
     actorId: 'speaker-user-019',
     action: 'created',
-    createdAt: '2026-04-17T12:00:00+03:00',
+    createdAt: '2026-04-17T12:00:00.00Z',
   },
   {
     id: 'history-370',
     proposalId: 'proposal-071',
     actorId: 'speaker-user-019',
     action: 'updated',
-    createdAt: '2026-04-18T17:00:00+03:00',
+    createdAt: '2026-04-18T17:00:00.00Z',
     changes: [
       {
         field: 'abstract',
@@ -4309,14 +4309,14 @@ export const initialHistory = [
     proposalId: 'proposal-072',
     actorId: 'speaker-user-021',
     action: 'created',
-    createdAt: '2026-03-14T21:00:00+03:00',
+    createdAt: '2026-03-14T21:00:00.00Z',
   },
   {
     id: 'history-372',
     proposalId: 'proposal-072',
     actorId: 'speaker-user-021',
     action: 'status_changed',
-    createdAt: '2026-03-17T03:00:00+03:00',
+    createdAt: '2026-03-17T03:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4330,7 +4330,7 @@ export const initialHistory = [
     proposalId: 'proposal-072',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-17T06:00:00+03:00',
+    createdAt: '2026-03-17T06:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -4340,7 +4340,7 @@ export const initialHistory = [
     proposalId: 'proposal-072',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-17T07:00:00+03:00',
+    createdAt: '2026-03-17T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4354,7 +4354,7 @@ export const initialHistory = [
     proposalId: 'proposal-072',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-03-17T12:00:00+03:00',
+    createdAt: '2026-03-17T12:00:00.00Z',
     payload: {
       reviewId: 'review-046',
       recommendation: 'approve',
@@ -4365,7 +4365,7 @@ export const initialHistory = [
     proposalId: 'proposal-072',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-18T00:00:00+03:00',
+    createdAt: '2026-03-18T00:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4382,7 +4382,7 @@ export const initialHistory = [
     proposalId: 'proposal-072',
     actorId: 'manager-003',
     action: 'scheduled',
-    createdAt: '2026-03-20T06:00:00+03:00',
+    createdAt: '2026-03-20T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4399,14 +4399,14 @@ export const initialHistory = [
     proposalId: 'proposal-073',
     actorId: 'speaker-user-004',
     action: 'created',
-    createdAt: '2026-03-18T22:00:00+03:00',
+    createdAt: '2026-03-18T22:00:00.00Z',
   },
   {
     id: 'history-379',
     proposalId: 'proposal-073',
     actorId: 'speaker-user-004',
     action: 'status_changed',
-    createdAt: '2026-03-21T00:00:00+03:00',
+    createdAt: '2026-03-21T00:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4420,7 +4420,7 @@ export const initialHistory = [
     proposalId: 'proposal-073',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-21T08:00:00+03:00',
+    createdAt: '2026-03-21T08:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -4430,7 +4430,7 @@ export const initialHistory = [
     proposalId: 'proposal-073',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-21T15:00:00+03:00',
+    createdAt: '2026-03-21T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4444,7 +4444,7 @@ export const initialHistory = [
     proposalId: 'proposal-073',
     actorId: 'reviewer-005',
     action: 'review_added',
-    createdAt: '2026-03-22T05:00:00+03:00',
+    createdAt: '2026-03-22T05:00:00.00Z',
     payload: {
       reviewId: 'review-047',
       recommendation: 'request_changes',
@@ -4455,7 +4455,7 @@ export const initialHistory = [
     proposalId: 'proposal-073',
     actorId: 'reviewer-005',
     action: 'comment_added',
-    createdAt: '2026-03-22T10:03:00+03:00',
+    createdAt: '2026-03-22T10:03:00.00Z',
     payload: {
       commentId: 'comment-024',
     },
@@ -4465,7 +4465,7 @@ export const initialHistory = [
     proposalId: 'proposal-073',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-23T03:00:00+03:00',
+    createdAt: '2026-03-23T03:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4483,14 +4483,14 @@ export const initialHistory = [
     proposalId: 'proposal-074',
     actorId: 'speaker-user-020',
     action: 'created',
-    createdAt: '2026-01-28T21:00:00+03:00',
+    createdAt: '2026-01-28T21:00:00.00Z',
   },
   {
     id: 'history-386',
     proposalId: 'proposal-074',
     actorId: 'speaker-user-020',
     action: 'status_changed',
-    createdAt: '2026-02-01T02:00:00+03:00',
+    createdAt: '2026-02-01T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4504,7 +4504,7 @@ export const initialHistory = [
     proposalId: 'proposal-074',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-01T10:00:00+03:00',
+    createdAt: '2026-02-01T10:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -4514,7 +4514,7 @@ export const initialHistory = [
     proposalId: 'proposal-074',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-01T15:00:00+03:00',
+    createdAt: '2026-02-01T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4528,7 +4528,7 @@ export const initialHistory = [
     proposalId: 'proposal-074',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-02-01T23:00:00+03:00',
+    createdAt: '2026-02-01T23:00:00.00Z',
     payload: {
       reviewId: 'review-048',
       recommendation: 'approve',
@@ -4539,7 +4539,7 @@ export const initialHistory = [
     proposalId: 'proposal-074',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-02T02:00:00+03:00',
+    createdAt: '2026-02-02T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4556,7 +4556,7 @@ export const initialHistory = [
     proposalId: 'proposal-074',
     actorId: 'manager-003',
     action: 'scheduled',
-    createdAt: '2026-02-04T08:00:00+03:00',
+    createdAt: '2026-02-04T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4573,14 +4573,14 @@ export const initialHistory = [
     proposalId: 'proposal-075',
     actorId: 'speaker-user-011',
     action: 'created',
-    createdAt: '2026-02-10T01:00:00+03:00',
+    createdAt: '2026-02-10T01:00:00.00Z',
   },
   {
     id: 'history-393',
     proposalId: 'proposal-075',
     actorId: 'speaker-user-011',
     action: 'status_changed',
-    createdAt: '2026-02-12T03:00:00+03:00',
+    createdAt: '2026-02-12T03:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4594,7 +4594,7 @@ export const initialHistory = [
     proposalId: 'proposal-075',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-12T13:00:00+03:00',
+    createdAt: '2026-02-12T13:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -4604,7 +4604,7 @@ export const initialHistory = [
     proposalId: 'proposal-075',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-02-12T14:00:00+03:00',
+    createdAt: '2026-02-12T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4618,7 +4618,7 @@ export const initialHistory = [
     proposalId: 'proposal-075',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-02-12T23:00:00+03:00',
+    createdAt: '2026-02-12T23:00:00.00Z',
     payload: {
       reviewId: 'review-049',
       recommendation: 'request_changes',
@@ -4629,7 +4629,7 @@ export const initialHistory = [
     proposalId: 'proposal-075',
     actorId: 'reviewer-007',
     action: 'comment_added',
-    createdAt: '2026-02-13T05:03:00+03:00',
+    createdAt: '2026-02-13T05:03:00.00Z',
     payload: {
       commentId: 'comment-025',
     },
@@ -4639,7 +4639,7 @@ export const initialHistory = [
     proposalId: 'proposal-075',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-13T12:00:00+03:00',
+    createdAt: '2026-02-13T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4657,14 +4657,14 @@ export const initialHistory = [
     proposalId: 'proposal-076',
     actorId: 'speaker-user-022',
     action: 'created',
-    createdAt: '2026-04-07T23:00:00+03:00',
+    createdAt: '2026-04-07T23:00:00.00Z',
   },
   {
     id: 'history-400',
     proposalId: 'proposal-076',
     actorId: 'speaker-user-022',
     action: 'status_changed',
-    createdAt: '2026-04-11T05:00:00+03:00',
+    createdAt: '2026-04-11T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4678,7 +4678,7 @@ export const initialHistory = [
     proposalId: 'proposal-076',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-11T11:00:00+03:00',
+    createdAt: '2026-04-11T11:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -4688,7 +4688,7 @@ export const initialHistory = [
     proposalId: 'proposal-076',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-12T01:00:00+03:00',
+    createdAt: '2026-04-12T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -4698,7 +4698,7 @@ export const initialHistory = [
     proposalId: 'proposal-076',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-12T11:00:00+03:00',
+    createdAt: '2026-04-12T11:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4712,7 +4712,7 @@ export const initialHistory = [
     proposalId: 'proposal-076',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-04-13T02:00:00+03:00',
+    createdAt: '2026-04-13T02:00:00.00Z',
     payload: {
       reviewId: 'review-050',
       recommendation: 'reject',
@@ -4723,7 +4723,7 @@ export const initialHistory = [
     proposalId: 'proposal-076',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-13T05:00:00+03:00',
+    createdAt: '2026-04-13T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4740,14 +4740,14 @@ export const initialHistory = [
     proposalId: 'proposal-077',
     actorId: 'speaker-user-014',
     action: 'created',
-    createdAt: '2026-02-16T17:00:00+03:00',
+    createdAt: '2026-02-16T17:00:00.00Z',
   },
   {
     id: 'history-407',
     proposalId: 'proposal-077',
     actorId: 'speaker-user-014',
     action: 'status_changed',
-    createdAt: '2026-02-20T23:00:00+03:00',
+    createdAt: '2026-02-20T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4761,14 +4761,14 @@ export const initialHistory = [
     proposalId: 'proposal-078',
     actorId: 'speaker-user-018',
     action: 'created',
-    createdAt: '2026-03-09T19:00:00+03:00',
+    createdAt: '2026-03-09T19:00:00.00Z',
   },
   {
     id: 'history-409',
     proposalId: 'proposal-078',
     actorId: 'speaker-user-018',
     action: 'status_changed',
-    createdAt: '2026-03-13T01:00:00+03:00',
+    createdAt: '2026-03-13T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4782,7 +4782,7 @@ export const initialHistory = [
     proposalId: 'proposal-078',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-13T12:00:00+03:00',
+    createdAt: '2026-03-13T12:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -4792,7 +4792,7 @@ export const initialHistory = [
     proposalId: 'proposal-078',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-13T16:00:00+03:00',
+    createdAt: '2026-03-13T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4806,7 +4806,7 @@ export const initialHistory = [
     proposalId: 'proposal-078',
     actorId: 'reviewer-005',
     action: 'review_added',
-    createdAt: '2026-03-13T22:00:00+03:00',
+    createdAt: '2026-03-13T22:00:00.00Z',
     payload: {
       reviewId: 'review-051',
       recommendation: 'approve',
@@ -4817,7 +4817,7 @@ export const initialHistory = [
     proposalId: 'proposal-078',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-14T06:00:00+03:00',
+    createdAt: '2026-03-14T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4834,14 +4834,14 @@ export const initialHistory = [
     proposalId: 'proposal-079',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-03-09T08:00:00+03:00',
+    createdAt: '2026-03-09T08:00:00.00Z',
   },
   {
     id: 'history-415',
     proposalId: 'proposal-079',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-03-12T09:00:00+03:00',
+    createdAt: '2026-03-12T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4855,7 +4855,7 @@ export const initialHistory = [
     proposalId: 'proposal-079',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-12T16:00:00+03:00',
+    createdAt: '2026-03-12T16:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -4865,7 +4865,7 @@ export const initialHistory = [
     proposalId: 'proposal-079',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-12T21:00:00+03:00',
+    createdAt: '2026-03-12T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4879,7 +4879,7 @@ export const initialHistory = [
     proposalId: 'proposal-079',
     actorId: 'reviewer-002',
     action: 'review_added',
-    createdAt: '2026-03-13T03:00:00+03:00',
+    createdAt: '2026-03-13T03:00:00.00Z',
     payload: {
       reviewId: 'review-052',
       recommendation: 'reject',
@@ -4890,7 +4890,7 @@ export const initialHistory = [
     proposalId: 'proposal-079',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-13T13:00:00+03:00',
+    createdAt: '2026-03-13T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4907,14 +4907,14 @@ export const initialHistory = [
     proposalId: 'proposal-080',
     actorId: 'speaker-user-021',
     action: 'created',
-    createdAt: '2026-03-24T11:00:00+03:00',
+    createdAt: '2026-03-24T11:00:00.00Z',
   },
   {
     id: 'history-421',
     proposalId: 'proposal-080',
     actorId: 'speaker-user-021',
     action: 'status_changed',
-    createdAt: '2026-03-25T15:00:00+03:00',
+    createdAt: '2026-03-25T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4928,7 +4928,7 @@ export const initialHistory = [
     proposalId: 'proposal-080',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-25T18:00:00+03:00',
+    createdAt: '2026-03-25T18:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -4938,7 +4938,7 @@ export const initialHistory = [
     proposalId: 'proposal-080',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-25T21:00:00+03:00',
+    createdAt: '2026-03-25T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4952,7 +4952,7 @@ export const initialHistory = [
     proposalId: 'proposal-080',
     actorId: 'reviewer-008',
     action: 'review_added',
-    createdAt: '2026-03-26T13:00:00+03:00',
+    createdAt: '2026-03-26T13:00:00.00Z',
     payload: {
       reviewId: 'review-053',
       recommendation: 'approve',
@@ -4963,7 +4963,7 @@ export const initialHistory = [
     proposalId: 'proposal-080',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-27T06:00:00+03:00',
+    createdAt: '2026-03-27T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -4980,14 +4980,14 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: 'speaker-user-024',
     action: 'created',
-    createdAt: '2026-04-18T07:00:00+03:00',
+    createdAt: '2026-04-18T07:00:00.00Z',
   },
   {
     id: 'history-427',
     proposalId: 'proposal-081',
     actorId: 'speaker-user-024',
     action: 'status_changed',
-    createdAt: '2026-04-22T09:00:00+03:00',
+    createdAt: '2026-04-22T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5001,7 +5001,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-22T23:00:00+03:00',
+    createdAt: '2026-04-22T23:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -5011,7 +5011,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-23T03:00:00+03:00',
+    createdAt: '2026-04-23T03:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -5021,7 +5021,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-23T08:00:00+03:00',
+    createdAt: '2026-04-23T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5035,7 +5035,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-04-23T18:00:00+03:00',
+    createdAt: '2026-04-23T18:00:00.00Z',
     payload: {
       reviewId: 'review-054',
       recommendation: 'approve',
@@ -5046,7 +5046,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-04-24T03:00:00+03:00',
+    createdAt: '2026-04-24T03:00:00.00Z',
     payload: {
       reviewId: 'review-055',
       recommendation: 'approve',
@@ -5057,7 +5057,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: 'reviewer-007',
     action: 'comment_added',
-    createdAt: '2026-04-24T11:03:00+03:00',
+    createdAt: '2026-04-24T11:03:00.00Z',
     payload: {
       commentId: 'comment-026',
     },
@@ -5067,7 +5067,7 @@ export const initialHistory = [
     proposalId: 'proposal-081',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-24T21:00:00+03:00',
+    createdAt: '2026-04-24T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5084,14 +5084,14 @@ export const initialHistory = [
     proposalId: 'proposal-082',
     actorId: 'speaker-user-017',
     action: 'created',
-    createdAt: '2026-04-11T00:00:00+03:00',
+    createdAt: '2026-04-11T00:00:00.00Z',
   },
   {
     id: 'history-436',
     proposalId: 'proposal-082',
     actorId: 'speaker-user-017',
     action: 'status_changed',
-    createdAt: '2026-04-12T02:00:00+03:00',
+    createdAt: '2026-04-12T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5105,7 +5105,7 @@ export const initialHistory = [
     proposalId: 'proposal-082',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-12T07:00:00+03:00',
+    createdAt: '2026-04-12T07:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -5115,7 +5115,7 @@ export const initialHistory = [
     proposalId: 'proposal-082',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-12T13:00:00+03:00',
+    createdAt: '2026-04-12T13:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-006',
     },
@@ -5125,7 +5125,7 @@ export const initialHistory = [
     proposalId: 'proposal-082',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-04-12T17:00:00+03:00',
+    createdAt: '2026-04-12T17:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5139,14 +5139,14 @@ export const initialHistory = [
     proposalId: 'proposal-083',
     actorId: 'speaker-user-004',
     action: 'created',
-    createdAt: '2026-02-22T03:00:00+03:00',
+    createdAt: '2026-02-22T03:00:00.00Z',
   },
   {
     id: 'history-441',
     proposalId: 'proposal-083',
     actorId: 'speaker-user-004',
     action: 'status_changed',
-    createdAt: '2026-02-24T07:00:00+03:00',
+    createdAt: '2026-02-24T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5160,7 +5160,7 @@ export const initialHistory = [
     proposalId: 'proposal-083',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-24T20:00:00+03:00',
+    createdAt: '2026-02-24T20:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -5170,7 +5170,7 @@ export const initialHistory = [
     proposalId: 'proposal-083',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-25T01:00:00+03:00',
+    createdAt: '2026-02-25T01:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5184,7 +5184,7 @@ export const initialHistory = [
     proposalId: 'proposal-083',
     actorId: '2',
     action: 'comment_added',
-    createdAt: '2026-02-25T07:03:00+03:00',
+    createdAt: '2026-02-25T07:03:00.00Z',
     payload: {
       commentId: 'comment-027',
     },
@@ -5194,14 +5194,14 @@ export const initialHistory = [
     proposalId: 'proposal-084',
     actorId: 'speaker-user-015',
     action: 'created',
-    createdAt: '2026-02-14T01:00:00+03:00',
+    createdAt: '2026-02-14T01:00:00.00Z',
   },
   {
     id: 'history-446',
     proposalId: 'proposal-084',
     actorId: 'speaker-user-015',
     action: 'status_changed',
-    createdAt: '2026-02-15T06:00:00+03:00',
+    createdAt: '2026-02-15T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5215,7 +5215,7 @@ export const initialHistory = [
     proposalId: 'proposal-084',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-15T16:00:00+03:00',
+    createdAt: '2026-02-15T16:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -5225,7 +5225,7 @@ export const initialHistory = [
     proposalId: 'proposal-084',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-16T02:00:00+03:00',
+    createdAt: '2026-02-16T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5239,7 +5239,7 @@ export const initialHistory = [
     proposalId: 'proposal-084',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-02-16T11:00:00+03:00',
+    createdAt: '2026-02-16T11:00:00.00Z',
     payload: {
       reviewId: 'review-056',
       recommendation: 'reject',
@@ -5250,7 +5250,7 @@ export const initialHistory = [
     proposalId: 'proposal-084',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-02-16T13:03:00+03:00',
+    createdAt: '2026-02-16T13:03:00.00Z',
     payload: {
       commentId: 'comment-028',
     },
@@ -5260,7 +5260,7 @@ export const initialHistory = [
     proposalId: 'proposal-084',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-17T07:00:00+03:00',
+    createdAt: '2026-02-17T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5277,14 +5277,14 @@ export const initialHistory = [
     proposalId: 'proposal-085',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-03-21T12:00:00+03:00',
+    createdAt: '2026-03-21T12:00:00.00Z',
   },
   {
     id: 'history-453',
     proposalId: 'proposal-085',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-03-23T17:00:00+03:00',
+    createdAt: '2026-03-23T17:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5298,7 +5298,7 @@ export const initialHistory = [
     proposalId: 'proposal-085',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-24T00:00:00+03:00',
+    createdAt: '2026-03-24T00:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -5308,7 +5308,7 @@ export const initialHistory = [
     proposalId: 'proposal-085',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-24T02:00:00+03:00',
+    createdAt: '2026-03-24T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5322,7 +5322,7 @@ export const initialHistory = [
     proposalId: 'proposal-085',
     actorId: 'reviewer-007',
     action: 'review_added',
-    createdAt: '2026-03-24T08:00:00+03:00',
+    createdAt: '2026-03-24T08:00:00.00Z',
     payload: {
       reviewId: 'review-057',
       recommendation: 'approve',
@@ -5333,7 +5333,7 @@ export const initialHistory = [
     proposalId: 'proposal-085',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-24T23:00:00+03:00',
+    createdAt: '2026-03-24T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5350,7 +5350,7 @@ export const initialHistory = [
     proposalId: 'proposal-085',
     actorId: 'manager-002',
     action: 'scheduled',
-    createdAt: '2026-03-27T06:00:00+03:00',
+    createdAt: '2026-03-27T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5367,21 +5367,21 @@ export const initialHistory = [
     proposalId: 'proposal-086',
     actorId: 'speaker-user-006',
     action: 'created',
-    createdAt: '2026-02-13T00:00:00+03:00',
+    createdAt: '2026-02-13T00:00:00.00Z',
   },
   {
     id: 'history-460',
     proposalId: 'proposal-087',
     actorId: 'speaker-user-018',
     action: 'created',
-    createdAt: '2026-03-05T05:00:00+03:00',
+    createdAt: '2026-03-05T05:00:00.00Z',
   },
   {
     id: 'history-461',
     proposalId: 'proposal-087',
     actorId: 'speaker-user-018',
     action: 'status_changed',
-    createdAt: '2026-03-07T09:00:00+03:00',
+    createdAt: '2026-03-07T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5395,7 +5395,7 @@ export const initialHistory = [
     proposalId: 'proposal-087',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-07T14:00:00+03:00',
+    createdAt: '2026-03-07T14:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-005',
     },
@@ -5405,7 +5405,7 @@ export const initialHistory = [
     proposalId: 'proposal-087',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-07T16:00:00+03:00',
+    createdAt: '2026-03-07T16:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5419,7 +5419,7 @@ export const initialHistory = [
     proposalId: 'proposal-087',
     actorId: 'reviewer-005',
     action: 'review_added',
-    createdAt: '2026-03-07T19:00:00+03:00',
+    createdAt: '2026-03-07T19:00:00.00Z',
     payload: {
       reviewId: 'review-058',
       recommendation: 'request_changes',
@@ -5430,7 +5430,7 @@ export const initialHistory = [
     proposalId: 'proposal-087',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-03-07T23:03:00+03:00',
+    createdAt: '2026-03-07T23:03:00.00Z',
     payload: {
       commentId: 'comment-029',
     },
@@ -5440,7 +5440,7 @@ export const initialHistory = [
     proposalId: 'proposal-087',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-08T02:00:00+03:00',
+    createdAt: '2026-03-08T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5458,14 +5458,14 @@ export const initialHistory = [
     proposalId: 'proposal-088',
     actorId: 'speaker-user-024',
     action: 'created',
-    createdAt: '2026-02-08T02:00:00+03:00',
+    createdAt: '2026-02-08T02:00:00.00Z',
   },
   {
     id: 'history-468',
     proposalId: 'proposal-088',
     actorId: 'speaker-user-024',
     action: 'status_changed',
-    createdAt: '2026-02-11T04:00:00+03:00',
+    createdAt: '2026-02-11T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5479,7 +5479,7 @@ export const initialHistory = [
     proposalId: 'proposal-088',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-11T16:00:00+03:00',
+    createdAt: '2026-02-11T16:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-003',
     },
@@ -5489,7 +5489,7 @@ export const initialHistory = [
     proposalId: 'proposal-088',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-11T20:00:00+03:00',
+    createdAt: '2026-02-11T20:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5503,7 +5503,7 @@ export const initialHistory = [
     proposalId: 'proposal-088',
     actorId: 'reviewer-003',
     action: 'review_added',
-    createdAt: '2026-02-12T07:00:00+03:00',
+    createdAt: '2026-02-12T07:00:00.00Z',
     payload: {
       reviewId: 'review-059',
       recommendation: 'approve',
@@ -5514,7 +5514,7 @@ export const initialHistory = [
     proposalId: 'proposal-088',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-02-12T14:00:00+03:00',
+    createdAt: '2026-02-12T14:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5531,14 +5531,14 @@ export const initialHistory = [
     proposalId: 'proposal-089',
     actorId: 'speaker-user-014',
     action: 'created',
-    createdAt: '2026-03-01T08:00:00+03:00',
+    createdAt: '2026-03-01T08:00:00.00Z',
   },
   {
     id: 'history-474',
     proposalId: 'proposal-089',
     actorId: 'speaker-user-014',
     action: 'status_changed',
-    createdAt: '2026-03-04T12:00:00+03:00',
+    createdAt: '2026-03-04T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5552,7 +5552,7 @@ export const initialHistory = [
     proposalId: 'proposal-089',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-04T17:00:00+03:00',
+    createdAt: '2026-03-04T17:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -5562,14 +5562,14 @@ export const initialHistory = [
     proposalId: 'proposal-090',
     actorId: 'speaker-user-005',
     action: 'created',
-    createdAt: '2026-03-04T05:00:00+03:00',
+    createdAt: '2026-03-04T05:00:00.00Z',
   },
   {
     id: 'history-477',
     proposalId: 'proposal-090',
     actorId: 'speaker-user-005',
     action: 'status_changed',
-    createdAt: '2026-03-07T07:00:00+03:00',
+    createdAt: '2026-03-07T07:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5583,7 +5583,7 @@ export const initialHistory = [
     proposalId: 'proposal-090',
     actorId: 'manager-002',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-07T16:00:00+03:00',
+    createdAt: '2026-03-07T16:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -5593,7 +5593,7 @@ export const initialHistory = [
     proposalId: 'proposal-090',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-07T18:00:00+03:00',
+    createdAt: '2026-03-07T18:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5607,7 +5607,7 @@ export const initialHistory = [
     proposalId: 'proposal-090',
     actorId: '3',
     action: 'review_added',
-    createdAt: '2026-03-08T02:00:00+03:00',
+    createdAt: '2026-03-08T02:00:00.00Z',
     payload: {
       reviewId: 'review-060',
       recommendation: 'approve',
@@ -5618,7 +5618,7 @@ export const initialHistory = [
     proposalId: 'proposal-090',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-08T05:00:00+03:00',
+    createdAt: '2026-03-08T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5635,14 +5635,14 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-03-26T06:00:00+03:00',
+    createdAt: '2026-03-26T06:00:00.00Z',
   },
   {
     id: 'history-483',
     proposalId: 'proposal-091',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-03-27T12:00:00+03:00',
+    createdAt: '2026-03-27T12:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5656,7 +5656,7 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-28T01:00:00+03:00',
+    createdAt: '2026-03-28T01:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-008',
     },
@@ -5666,7 +5666,7 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-28T14:00:00+03:00',
+    createdAt: '2026-03-28T14:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -5676,7 +5676,7 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-28T21:00:00+03:00',
+    createdAt: '2026-03-28T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5690,7 +5690,7 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: 'reviewer-008',
     action: 'review_added',
-    createdAt: '2026-03-29T09:00:00+03:00',
+    createdAt: '2026-03-29T09:00:00.00Z',
     payload: {
       reviewId: 'review-061',
       recommendation: 'reject',
@@ -5701,7 +5701,7 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-03-29T17:03:00+03:00',
+    createdAt: '2026-03-29T17:03:00.00Z',
     payload: {
       commentId: 'comment-030',
     },
@@ -5711,7 +5711,7 @@ export const initialHistory = [
     proposalId: 'proposal-091',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-03-29T22:00:00+03:00',
+    createdAt: '2026-03-29T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5728,14 +5728,14 @@ export const initialHistory = [
     proposalId: 'proposal-092',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-03-19T19:00:00+03:00',
+    createdAt: '2026-03-19T19:00:00.00Z',
   },
   {
     id: 'history-491',
     proposalId: 'proposal-092',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-03-23T22:00:00+03:00',
+    createdAt: '2026-03-23T22:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5749,7 +5749,7 @@ export const initialHistory = [
     proposalId: 'proposal-092',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-24T09:00:00+03:00',
+    createdAt: '2026-03-24T09:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-007',
     },
@@ -5759,14 +5759,14 @@ export const initialHistory = [
     proposalId: 'proposal-093',
     actorId: 'speaker-user-024',
     action: 'created',
-    createdAt: '2026-02-11T21:00:00+03:00',
+    createdAt: '2026-02-11T21:00:00.00Z',
   },
   {
     id: 'history-494',
     proposalId: 'proposal-093',
     actorId: 'speaker-user-024',
     action: 'status_changed',
-    createdAt: '2026-02-14T02:00:00+03:00',
+    createdAt: '2026-02-14T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5780,14 +5780,14 @@ export const initialHistory = [
     proposalId: 'proposal-094',
     actorId: 'speaker-user-005',
     action: 'created',
-    createdAt: '2026-04-21T06:00:00+03:00',
+    createdAt: '2026-04-21T06:00:00.00Z',
   },
   {
     id: 'history-496',
     proposalId: 'proposal-094',
     actorId: 'speaker-user-005',
     action: 'status_changed',
-    createdAt: '2026-04-25T09:00:00+03:00',
+    createdAt: '2026-04-25T09:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5801,7 +5801,7 @@ export const initialHistory = [
     proposalId: 'proposal-094',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-25T18:00:00+03:00',
+    createdAt: '2026-04-25T18:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-010',
     },
@@ -5811,7 +5811,7 @@ export const initialHistory = [
     proposalId: 'proposal-094',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-04-26T02:00:00+03:00',
+    createdAt: '2026-04-26T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5825,7 +5825,7 @@ export const initialHistory = [
     proposalId: 'proposal-094',
     actorId: 'reviewer-010',
     action: 'review_added',
-    createdAt: '2026-04-26T08:00:00+03:00',
+    createdAt: '2026-04-26T08:00:00.00Z',
     payload: {
       reviewId: 'review-062',
       recommendation: 'reject',
@@ -5836,7 +5836,7 @@ export const initialHistory = [
     proposalId: 'proposal-094',
     actorId: 'reviewer-010',
     action: 'comment_added',
-    createdAt: '2026-04-26T10:03:00+03:00',
+    createdAt: '2026-04-26T10:03:00.00Z',
     payload: {
       commentId: 'comment-031',
     },
@@ -5846,14 +5846,14 @@ export const initialHistory = [
     proposalId: 'proposal-095',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-04-12T01:00:00+03:00',
+    createdAt: '2026-04-12T01:00:00.00Z',
   },
   {
     id: 'history-502',
     proposalId: 'proposal-095',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-04-16T05:00:00+03:00',
+    createdAt: '2026-04-16T05:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5867,7 +5867,7 @@ export const initialHistory = [
     proposalId: 'proposal-095',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-04-16T11:00:00+03:00',
+    createdAt: '2026-04-16T11:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -5877,7 +5877,7 @@ export const initialHistory = [
     proposalId: 'proposal-095',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-04-16T13:00:00+03:00',
+    createdAt: '2026-04-16T13:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5891,14 +5891,14 @@ export const initialHistory = [
     proposalId: 'proposal-096',
     actorId: 'speaker-user-003',
     action: 'created',
-    createdAt: '2026-02-17T23:00:00+03:00',
+    createdAt: '2026-02-17T23:00:00.00Z',
   },
   {
     id: 'history-506',
     proposalId: 'proposal-096',
     actorId: 'speaker-user-003',
     action: 'status_changed',
-    createdAt: '2026-02-21T04:00:00+03:00',
+    createdAt: '2026-02-21T04:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5912,7 +5912,7 @@ export const initialHistory = [
     proposalId: 'proposal-096',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-21T06:00:00+03:00',
+    createdAt: '2026-02-21T06:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-002',
     },
@@ -5922,7 +5922,7 @@ export const initialHistory = [
     proposalId: 'proposal-096',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-21T11:00:00+03:00',
+    createdAt: '2026-02-21T11:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -5932,7 +5932,7 @@ export const initialHistory = [
     proposalId: 'proposal-096',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-02-21T21:00:00+03:00',
+    createdAt: '2026-02-21T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5946,7 +5946,7 @@ export const initialHistory = [
     proposalId: 'proposal-096',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-02-22T13:00:00+03:00',
+    createdAt: '2026-02-22T13:00:00.00Z',
     payload: {
       reviewId: 'review-063',
       recommendation: 'approve',
@@ -5957,14 +5957,14 @@ export const initialHistory = [
     proposalId: 'proposal-097',
     actorId: 'speaker-user-013',
     action: 'created',
-    createdAt: '2026-01-25T19:00:00+03:00',
+    createdAt: '2026-01-25T19:00:00.00Z',
   },
   {
     id: 'history-512',
     proposalId: 'proposal-097',
     actorId: 'speaker-user-013',
     action: 'status_changed',
-    createdAt: '2026-01-28T23:00:00+03:00',
+    createdAt: '2026-01-28T23:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -5978,7 +5978,7 @@ export const initialHistory = [
     proposalId: 'proposal-097',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-01-29T13:00:00+03:00',
+    createdAt: '2026-01-29T13:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-003',
     },
@@ -5988,7 +5988,7 @@ export const initialHistory = [
     proposalId: 'proposal-097',
     actorId: 'manager-003',
     action: 'status_changed',
-    createdAt: '2026-01-29T15:00:00+03:00',
+    createdAt: '2026-01-29T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -6002,7 +6002,7 @@ export const initialHistory = [
     proposalId: 'proposal-097',
     actorId: 'reviewer-003',
     action: 'review_added',
-    createdAt: '2026-01-29T23:00:00+03:00',
+    createdAt: '2026-01-29T23:00:00.00Z',
     payload: {
       reviewId: 'review-064',
       recommendation: 'approve',
@@ -6013,7 +6013,7 @@ export const initialHistory = [
     proposalId: 'proposal-097',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-01-30T08:00:00+03:00',
+    createdAt: '2026-01-30T08:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -6030,7 +6030,7 @@ export const initialHistory = [
     proposalId: 'proposal-097',
     actorId: 'manager-002',
     action: 'scheduled',
-    createdAt: '2026-02-02T15:00:00+03:00',
+    createdAt: '2026-02-02T15:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -6047,21 +6047,21 @@ export const initialHistory = [
     proposalId: 'proposal-098',
     actorId: 'speaker-user-020',
     action: 'created',
-    createdAt: '2026-03-16T05:00:00+03:00',
+    createdAt: '2026-03-16T05:00:00.00Z',
   },
   {
     id: 'history-519',
     proposalId: 'proposal-099',
     actorId: 'speaker-user-010',
     action: 'created',
-    createdAt: '2026-02-25T01:00:00+03:00',
+    createdAt: '2026-02-25T01:00:00.00Z',
   },
   {
     id: 'history-520',
     proposalId: 'proposal-099',
     actorId: 'speaker-user-010',
     action: 'status_changed',
-    createdAt: '2026-02-28T02:00:00+03:00',
+    createdAt: '2026-02-28T02:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -6075,7 +6075,7 @@ export const initialHistory = [
     proposalId: 'proposal-099',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-02-28T12:00:00+03:00',
+    createdAt: '2026-02-28T12:00:00.00Z',
     payload: {
       reviewerId: '3',
     },
@@ -6085,14 +6085,14 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: '4',
     action: 'created',
-    createdAt: '2026-03-01T00:00:00+03:00',
+    createdAt: '2026-03-01T00:00:00.00Z',
   },
   {
     id: 'history-523',
     proposalId: 'proposal-100',
     actorId: '4',
     action: 'status_changed',
-    createdAt: '2026-03-02T06:00:00+03:00',
+    createdAt: '2026-03-02T06:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -6106,7 +6106,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: 'manager-003',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-02T10:00:00+03:00',
+    createdAt: '2026-03-02T10:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-004',
     },
@@ -6116,7 +6116,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: '2',
     action: 'reviewer_assigned',
-    createdAt: '2026-03-02T18:00:00+03:00',
+    createdAt: '2026-03-02T18:00:00.00Z',
     payload: {
       reviewerId: 'reviewer-009',
     },
@@ -6126,7 +6126,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: 'manager-002',
     action: 'status_changed',
-    createdAt: '2026-03-02T21:00:00+03:00',
+    createdAt: '2026-03-02T21:00:00.00Z',
     changes: [
       {
         field: 'status',
@@ -6140,7 +6140,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: 'reviewer-004',
     action: 'review_added',
-    createdAt: '2026-03-03T03:00:00+03:00',
+    createdAt: '2026-03-03T03:00:00.00Z',
     payload: {
       reviewId: 'review-065',
       recommendation: 'reject',
@@ -6151,7 +6151,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: 'reviewer-009',
     action: 'review_added',
-    createdAt: '2026-03-03T10:00:00+03:00',
+    createdAt: '2026-03-03T10:00:00.00Z',
     payload: {
       reviewId: 'review-066',
       recommendation: 'request_changes',
@@ -6162,7 +6162,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: 'manager-003',
     action: 'comment_added',
-    createdAt: '2026-03-03T14:03:00+03:00',
+    createdAt: '2026-03-03T14:03:00.00Z',
     payload: {
       commentId: 'comment-032',
     },
@@ -6172,7 +6172,7 @@ export const initialHistory = [
     proposalId: 'proposal-100',
     actorId: '2',
     action: 'status_changed',
-    createdAt: '2026-03-04T06:00:00+03:00',
+    createdAt: '2026-03-04T06:00:00.00Z',
     changes: [
       {
         field: 'status',

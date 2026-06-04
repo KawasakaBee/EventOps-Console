@@ -273,6 +273,16 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                 >
                   {availableActionsDictionary[action]}
                 </Button>
+              ) : action === 'schedule' ? (
+                <Button
+                  key={action}
+                  mode="button"
+                  variant="outlined"
+                  size="small"
+                  onClick={() => handlePendingStatusChange('scheduled')}
+                >
+                  {availableActionsDictionary[action]}
+                </Button>
               ) : (
                 <Button
                   key={action}

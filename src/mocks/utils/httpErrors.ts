@@ -1,6 +1,17 @@
 import { ErrorEnvelope } from '@/shared/types/api.types';
 import { HttpResponse } from 'msw';
 
+export const scheduleAssignError = (errorText: string) =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'SCHEDULE_ASSIGNMENT',
+        message: errorText,
+      },
+    } satisfies ErrorEnvelope,
+    { status: 400 },
+  );
+
 export const validationError = (fields: Record<string, string>) =>
   HttpResponse.json(
     {

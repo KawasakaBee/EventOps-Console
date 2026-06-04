@@ -18,6 +18,14 @@ const getScheduleErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'SCHEDULE_ASSIGNMENT': {
+      return {
+        type: 'state',
+        title: 'Не удалось назначить заявку в слот',
+        subtitle: error.message,
+        fullHeight: true,
+      };
+    }
     case 'AUTH_REQUIRED':
       return {
         type: 'state',
@@ -28,6 +36,16 @@ const getScheduleErrorState = (
         link: {
           to: '/login',
           buttonName: 'Перейти на страницу авторизации',
+        },
+      };
+    case 'INVALID_QUERY':
+      return {
+        type: 'state',
+        title: 'Некорректный несуществующего трека',
+        subtitle: 'Попробуйте запросить данные заново.',
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
         },
       };
     case 'INVALID_RESPONSE':

@@ -32,6 +32,7 @@ export const errorCodes = [
   'UNKNOWN_ERROR',
   'CLIPBOARD_ERROR',
   'VALIDATE_ERROR',
+  'SCHEDULE_ASSIGNMENT',
 ] as const;
 
 export type ErrorCode = (typeof errorCodes)[number];

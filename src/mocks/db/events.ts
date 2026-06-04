@@ -8,8 +8,8 @@ const initialEvents = [
     description: 'Test conf description',
     place: 'Moscow',
     trackIds: tracks.map((track) => track.id),
-    startTime: '2026-04-21T07:00:00+03:00',
-    createdAt: '2026-04-21T07:00:00+03:00',
+    startTime: '2026-04-21T07:00:00.00Z',
+    createdAt: '2026-04-21T07:00:00.00Z',
   },
 ] satisfies Event[];
 

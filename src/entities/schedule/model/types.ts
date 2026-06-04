@@ -19,5 +19,4 @@ export interface ScheduleSlot {
   startTime: ISODateString;
   endTime: string;
   proposalId: ID | null;
-  status: 'scheduled' | 'empty';
 }

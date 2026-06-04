@@ -1,6 +1,5 @@
 import { ProposalFormat } from '@/entities/proposal/model/types';
 import { ScheduleDay, ScheduleSlot } from '@/entities/schedule/model/types';
-import { ErrorEnvelope } from '@/shared/types/api.types';
 import { ID } from '@/shared/types/primitives.types';
 
 export interface ResponseScheduleSlot {
@@ -18,12 +17,6 @@ export type GetScheduleResponse = {
   slots: ResponseScheduleSlot[];
 };
 
-export interface PatchScheduleAssignRequest {
-  slotId: ID;
-  proposalId: ID;
-}
-
 export interface PatchScheduleAssignResponse {
-  slot: ScheduleSlot;
-  conflicts: ErrorEnvelope[];
+  slot: ResponseScheduleSlot;
 }

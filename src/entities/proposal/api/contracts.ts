@@ -65,3 +65,11 @@ export interface PostCreateCommentResponse {
   comment: Comment;
   history: HistoryEntry;
 }
+
+export interface GetProposalsByTrackIdResponse {
+  proposals: {
+    id: ID;
+    label: string;
+    duration: number;
+  }[];
+}

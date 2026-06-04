@@ -1,6 +1,7 @@
 import { ISODateString } from '../types/primitives.types';
 
 const ruDateTimeFormatter = new Intl.DateTimeFormat('ru-RU', {
+  timeZone: 'UTC',
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
@@ -9,6 +10,7 @@ const ruDateTimeFormatter = new Intl.DateTimeFormat('ru-RU', {
 });
 
 const hourMinutes = new Intl.DateTimeFormat('ru-RU', {
+  timeZone: 'UTC',
   hour: '2-digit',
   minute: '2-digit',
 });

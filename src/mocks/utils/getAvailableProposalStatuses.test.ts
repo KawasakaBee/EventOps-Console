@@ -62,10 +62,13 @@ describe('getAvailableProposalStatuses', () => {
     ]);
   });
 
-  it('Заявка в статах принята/отклонена/в расписании не может быть переведена в другие статусы', () => {
+  it('Заявка в статусе принята может быть переведана в статус в расписание', () => {
     expect(
       getAvailableProposalStatuses('accepted', 2, 'manager'),
-    ).toStrictEqual([]);
+    ).toStrictEqual(['scheduled']);
+  });
+
+  it('Заявка в статах отклонена/в расписании не может быть переведена в другие статусы', () => {
     expect(
       getAvailableProposalStatuses('rejected', 2, 'manager'),
     ).toStrictEqual([]);

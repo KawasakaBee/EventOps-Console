@@ -10,7 +10,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-02-01T23:00:00+03:00',
+    createdAt: '2026-02-01T23:00:00.00Z',
   },
   {
     id: 'comment-002',
@@ -19,7 +19,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Содержание выглядит перспективно, но нужна более чёткая структура.',
-    createdAt: '2026-02-17T05:00:00+03:00',
+    createdAt: '2026-02-17T05:00:00.00Z',
   },
   {
     id: 'comment-003',
@@ -28,7 +28,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Заявка подходит по теме трека, но нужно проверить глубину материала.',
-    createdAt: '2026-03-04T00:00:00+03:00',
+    createdAt: '2026-03-04T00:00:00.00Z',
   },
   {
     id: 'comment-004',
@@ -37,7 +37,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Содержание выглядит перспективно, но нужна более чёткая структура.',
-    createdAt: '2026-04-08T04:00:00+03:00',
+    createdAt: '2026-04-08T04:00:00.00Z',
   },
   {
     id: 'comment-005',
@@ -46,7 +46,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Заявка подходит по теме трека, но нужно проверить глубину материала.',
-    createdAt: '2026-03-03T07:00:00+03:00',
+    createdAt: '2026-03-03T07:00:00.00Z',
   },
   {
     id: 'comment-006',
@@ -55,7 +55,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Есть риск пересечения с похожими докладами, нужна дополнительная оценка.',
-    createdAt: '2026-03-13T07:00:00+03:00',
+    createdAt: '2026-03-13T07:00:00.00Z',
   },
   {
     id: 'comment-007',
@@ -64,7 +64,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-03-05T04:00:00+03:00',
+    createdAt: '2026-03-05T04:00:00.00Z',
   },
   {
     id: 'comment-008',
@@ -73,7 +73,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Содержание выглядит перспективно, но нужна более чёткая структура.',
-    createdAt: '2026-03-26T10:00:00+03:00',
+    createdAt: '2026-03-26T10:00:00.00Z',
   },
   {
     id: 'comment-009',
@@ -81,7 +81,7 @@ export const initialComments = [
     actorId: 'reviewer-009',
     actorRole: 'reviewer',
     message: 'Добавил предварительные замечания перед финальным ревью.',
-    createdAt: '2026-04-03T05:00:00+03:00',
+    createdAt: '2026-04-03T05:00:00.00Z',
   },
   {
     id: 'comment-010',
@@ -90,7 +90,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-02-04T07:00:00+03:00',
+    createdAt: '2026-02-04T07:00:00.00Z',
   },
   {
     id: 'comment-011',
@@ -99,7 +99,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Содержание выглядит перспективно, но нужна более чёткая структура.',
-    createdAt: '2026-02-23T06:00:00+03:00',
+    createdAt: '2026-02-23T06:00:00.00Z',
   },
   {
     id: 'comment-012',
@@ -108,7 +108,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Заявка подходит по теме трека, но нужно проверить глубину материала.',
-    createdAt: '2026-02-12T21:00:00+03:00',
+    createdAt: '2026-02-12T21:00:00.00Z',
   },
   {
     id: 'comment-013',
@@ -117,7 +117,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-03-22T06:00:00+03:00',
+    createdAt: '2026-03-22T06:00:00.00Z',
   },
   {
     id: 'comment-014',
@@ -126,7 +126,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-04-10T19:00:00+03:00',
+    createdAt: '2026-04-10T19:00:00.00Z',
   },
   {
     id: 'comment-015',
@@ -135,7 +135,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-02-01T03:00:00+03:00',
+    createdAt: '2026-02-01T03:00:00.00Z',
   },
   {
     id: 'comment-016',
@@ -144,7 +144,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Есть риск пересечения с похожими докладами, нужна дополнительная оценка.',
-    createdAt: '2026-03-17T13:00:00+03:00',
+    createdAt: '2026-03-17T13:00:00.00Z',
   },
   {
     id: 'comment-017',
@@ -153,7 +153,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Заявка подходит по теме трека, но нужно проверить глубину материала.',
-    createdAt: '2026-03-03T14:00:00+03:00',
+    createdAt: '2026-03-03T14:00:00.00Z',
   },
   {
     id: 'comment-018',
@@ -162,7 +162,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-02-05T19:00:00+03:00',
+    createdAt: '2026-02-05T19:00:00.00Z',
   },
   {
     id: 'comment-019',
@@ -171,7 +171,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Попросил ревьюера обратить внимание на практическую применимость доклада.',
-    createdAt: '2026-02-20T01:00:00+03:00',
+    createdAt: '2026-02-20T01:00:00.00Z',
   },
   {
     id: 'comment-020',
@@ -180,7 +180,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Содержание выглядит перспективно, но нужна более чёткая структура.',
-    createdAt: '2026-01-27T04:00:00+03:00',
+    createdAt: '2026-01-27T04:00:00.00Z',
   },
   {
     id: 'comment-021',
@@ -189,7 +189,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-02-22T21:00:00+03:00',
+    createdAt: '2026-02-22T21:00:00.00Z',
   },
   {
     id: 'comment-022',
@@ -198,7 +198,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Есть риск пересечения с похожими докладами, нужна дополнительная оценка.',
-    createdAt: '2026-03-01T02:00:00+03:00',
+    createdAt: '2026-03-01T02:00:00.00Z',
   },
   {
     id: 'comment-023',
@@ -207,7 +207,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-03-13T14:00:00+03:00',
+    createdAt: '2026-03-13T14:00:00.00Z',
   },
   {
     id: 'comment-024',
@@ -216,7 +216,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-03-22T10:00:00+03:00',
+    createdAt: '2026-03-22T10:00:00.00Z',
   },
   {
     id: 'comment-025',
@@ -225,7 +225,7 @@ export const initialComments = [
     actorRole: 'reviewer',
     message:
       'Нужно уточнить целевую аудиторию и ожидаемый уровень подготовки слушателей.',
-    createdAt: '2026-02-13T05:00:00+03:00',
+    createdAt: '2026-02-13T05:00:00.00Z',
   },
   {
     id: 'comment-026',
@@ -233,7 +233,7 @@ export const initialComments = [
     actorId: 'reviewer-007',
     actorRole: 'reviewer',
     message: 'Добавил предварительные замечания перед финальным ревью.',
-    createdAt: '2026-04-24T11:00:00+03:00',
+    createdAt: '2026-04-24T11:00:00.00Z',
   },
   {
     id: 'comment-027',
@@ -242,7 +242,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-02-25T07:00:00+03:00',
+    createdAt: '2026-02-25T07:00:00.00Z',
   },
   {
     id: 'comment-028',
@@ -251,7 +251,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-02-16T13:00:00+03:00',
+    createdAt: '2026-02-16T13:00:00.00Z',
   },
   {
     id: 'comment-029',
@@ -260,7 +260,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'Попросил ревьюера обратить внимание на практическую применимость доклада.',
-    createdAt: '2026-03-07T23:00:00+03:00',
+    createdAt: '2026-03-07T23:00:00.00Z',
   },
   {
     id: 'comment-030',
@@ -269,7 +269,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-03-29T17:00:00+03:00',
+    createdAt: '2026-03-29T17:00:00.00Z',
   },
   {
     id: 'comment-031',
@@ -277,7 +277,7 @@ export const initialComments = [
     actorId: 'reviewer-010',
     actorRole: 'reviewer',
     message: 'Добавил предварительные замечания перед финальным ревью.',
-    createdAt: '2026-04-26T10:00:00+03:00',
+    createdAt: '2026-04-26T10:00:00.00Z',
   },
   {
     id: 'comment-032',
@@ -286,7 +286,7 @@ export const initialComments = [
     actorRole: 'manager',
     message:
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
-    createdAt: '2026-03-03T14:00:00+03:00',
+    createdAt: '2026-03-03T14:00:00.00Z',
   },
 ] satisfies Comment[];
 

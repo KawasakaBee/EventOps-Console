@@ -11,22 +11,26 @@ import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import getScheduleErrorState from '../../model/getScheduleErrorState';
 import ScheduleCell from '../ScheduleCell/ScheduleCell';
 import ScheduleEmpty from '../ScheduleEmpty/ScheduleEmpty';
-import getFreeIntervals from '../../model/getFreeIntervals';
+import getFreeIntervals from '../../../../entities/schedule/lib/getFreeIntervals';
 import ScheduleTimeSkeleton from '../ScheduleTime/ScheduleTimeSkeleton';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ScheduleEmptySkeleton from '../ScheduleEmpty/ScheduleEmptySkeleton';
+import ScheduleAssign from '../ScheduleAssign/ScheduleAssign';
+import { useMemo } from 'react';
+import ScheduleAssignSkeleton from '../ScheduleAssign/ScheduleAssignSkeleton';
 
 const SchedulePage = () => {
   const { schedule, tracks, timeIntervals, rowsCount, timeStartRows } =
     useScheduleData();
 
   const tracksLength = tracks.data?.tracks.length ?? 5;
+  const selectedScheduleDate = schedule.data?.times[0]?.slice(0, 10) ?? '';
   const dayStart = schedule.data?.times[0];
 
-  const scheduleSlots =
-    schedule.data?.slots.filter(
-      (respSlot) => respSlot.slot.status === 'scheduled',
-    ) ?? [];
+  const scheduleSlots = useMemo(
+    () => (schedule.data ? [...schedule.data.slots] : []),
+    [schedule.data],
+  );
 
   const isGridLoading = schedule.isLoading || tracks.isLoading;
   const canRenderGrid = schedule.data && tracks.data;
@@ -53,6 +57,19 @@ const SchedulePage = () => {
         )
       ) : (
         <>
+          {isGridLoading ? (
+            <ScheduleAssignSkeleton />
+          ) : (
+            canRenderGrid && (
+              <ScheduleAssign
+                key={selectedScheduleDate}
+                tracks={tracks.data.tracks}
+                scheduleSlots={scheduleSlots}
+                days={schedule.data?.days ?? []}
+                timeIntervals={timeIntervals}
+              />
+            )
+          )}
           {isGridLoading ? (
             <ScheduleTabsSkeleton />
           ) : (

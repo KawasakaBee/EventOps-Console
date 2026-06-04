@@ -7,6 +7,7 @@ import {
 } from '../db/proposals';
 import {
   GetProposalResponse,
+  GetProposalsByTrackIdResponse,
   GetProposalsListResponse,
   PatchProposalResponse,
   PatchProposalStatusRequest,
@@ -79,6 +80,8 @@ import { getUserById } from '@/entities/user/lib/userSelectors';
 import isHistoryValueEqual from '../utils/isHistoryValueEqual';
 import { createReviewSchema } from '@/entities/review/api/schema';
 import { addCommentSchema } from '@/entities/comment/api/schema';
+import { tracks } from '../db/tracks';
+import { schedule } from '../db/schedule';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request, cookies }) => {
@@ -470,4 +473,36 @@ export const proposalHandlers = [
       return HttpResponse.json(response, { status: 201 });
     },
   ),
+  http.get('/api/schedule/proposals/:id', async ({ params, cookies }) => {
+    const userId = cookies[AUTH_SESSION_COOKIE];
+    const user = getUserById(userId);
+
+    if (!user) return unauthorizedError();
+    if (!isManagerLike(user.role)) return forbiddenError();
+
+    const trackId = params.id;
+
+    if (!isId(trackId)) return queryError();
+
+    const track = tracks.find((track) => track.id === trackId);
+
+    if (!track) return queryError();
+
+    const response: GetProposalsByTrackIdResponse = {
+      proposals: proposals
+        .filter(
+          (proposal) =>
+            proposal.trackId === track.id &&
+            proposal.status === 'scheduled' &&
+            !schedule.slots.some((slot) => slot.proposalId === proposal.id),
+        )
+        .map(({ id, title, duration }) => ({
+          id,
+          label: title,
+          duration,
+        })),
+    };
+
+    return HttpResponse.json(response);
+  }),
 ];

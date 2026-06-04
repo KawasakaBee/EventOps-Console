@@ -1,4 +1,4 @@
-const toMs = (value: string) => new Date(value).getTime();
+export const toMs = (value: string) => new Date(value).getTime();
 
 const getFreeIntervals = (
   time: { from: string; to: string },
