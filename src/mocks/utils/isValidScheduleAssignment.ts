@@ -6,6 +6,7 @@ import { toMs } from '@/entities/schedule/lib/getFreeIntervals';
 import { addHourToIso } from '@/shared/utils/formatTimeAndDate';
 import { getMinutesDiff } from '@/entities/schedule/lib/grid';
 import { AssignmentError } from './scheduleAssignErrorParse';
+import { speakers } from '../db/speakers';
 
 export const isValidScheduleAssignment = (
   payload: PatchScheduleAssignRequest,
@@ -15,7 +16,7 @@ export const isValidScheduleAssignment = (
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
   if (!proposal) return 'PROPOSAL_NOT_FOUND';
 
-  if (proposal.status !== 'scheduled') return 'INVALID_STATUS';
+  if (proposal.status !== 'accepted') return 'INVALID_STATUS';
 
   const track = tracks.find((track) => track.id === trackId);
   if (!track) return 'TRACK_NOT_FOUND';
@@ -55,6 +56,34 @@ export const isValidScheduleAssignment = (
   const isInsideScheduleDay = dayStart <= assignFrom && assignTo <= dayEnd;
 
   if (!isInsideScheduleDay) return 'INVALID_INTERVAL';
+
+  const busySpeakers = speakers.filter((speaker) =>
+    proposal.speakerIds.includes(speaker.id),
+  );
+
+  if (busySpeakers.length === 0) return 'SPEAKERS_NOT_FOUND';
+
+  const speakersAnotherScheduleSlots = schedule.slots.filter((slot) => {
+    if (slot.date !== date) return false;
+
+    const scheduledProposal = proposals.find(
+      (proposal) => proposal.id === slot.proposalId,
+    );
+    if (!scheduledProposal) return false;
+
+    for (const speaker of busySpeakers) {
+      if (scheduledProposal.speakerIds.includes(speaker.id)) return true;
+    }
+  });
+
+  const hasSpeakersOverlap = speakersAnotherScheduleSlots.some((slot) => {
+    const slotFrom = toMs(slot.startTime);
+    const slotTo = toMs(slot.endTime);
+
+    return assignFrom < slotTo && assignTo > slotFrom;
+  });
+
+  if (hasSpeakersOverlap) return 'SPEAKER_CONFLICT';
 
   const busySlots = schedule.slots.filter(
     (slot) =>

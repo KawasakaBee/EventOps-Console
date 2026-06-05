@@ -107,10 +107,13 @@ const useScheduleAssignData = (
       date: searchParams.get('date') ?? days[0].date,
     };
 
-    setSelectedTrack('');
-    setSelectedProposal(null);
-    setSelectedInterval('');
-    assignProposal(payload);
+    const response = await assignProposal(payload);
+
+    if (!response.error) {
+      setSelectedTrack('');
+      setSelectedProposal(null);
+      setSelectedInterval('');
+    }
     setIsAssignDialogOpened(true);
   };
 

@@ -62,9 +62,9 @@ describe('getAvailableProposalStatuses', () => {
     ]);
   });
 
-  it('Заявка в статусе принята может быть переведана в статус в расписание', () => {
+  it('Заявка в статусе принята может быть переведана в статус в расписание на техническом уровне', () => {
     expect(
-      getAvailableProposalStatuses('accepted', 2, 'manager'),
+      getAvailableProposalStatuses('accepted', 2, 'manager', true),
     ).toStrictEqual(['scheduled']);
   });
 

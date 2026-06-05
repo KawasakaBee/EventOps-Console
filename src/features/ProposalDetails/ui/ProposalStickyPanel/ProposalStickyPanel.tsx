@@ -127,6 +127,11 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     dispatch(openAddCommentDialog({ id: details.proposal.id }));
   };
 
+  const handleToScheduleRedirect = () => {
+    if (!proposal || proposal.status !== 'accepted') return;
+    router.push('/schedule');
+  };
+
   return (
     <SectionCard title={null}>
       <Stack spacing={4}>
@@ -279,7 +284,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
-                  onClick={() => handlePendingStatusChange('scheduled')}
+                  onClick={handleToScheduleRedirect}
                 >
                   {availableActionsDictionary[action]}
                 </Button>

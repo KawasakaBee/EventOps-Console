@@ -292,6 +292,7 @@ export const proposalHandlers = [
         prevProposal.status,
         foundPrevReviewsCount,
         user.role,
+        true,
       );
 
       if (!prevAvailableStatuses.includes(status)) return forbiddenError();
@@ -493,7 +494,7 @@ export const proposalHandlers = [
         .filter(
           (proposal) =>
             proposal.trackId === track.id &&
-            proposal.status === 'scheduled' &&
+            proposal.status === 'accepted' &&
             !schedule.slots.some((slot) => slot.proposalId === proposal.id),
         )
         .map(({ id, title, duration }) => ({

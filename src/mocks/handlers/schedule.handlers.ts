@@ -3,6 +3,7 @@ import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { http, HttpResponse } from 'msw';
 import {
   forbiddenError,
+  proposalError,
   scheduleAssignError,
   unauthorizedError,
   validationError,
@@ -20,6 +21,8 @@ import { scheduleSchema } from '@/entities/schedule/api/schema';
 import zodErrorParse from '../utils/zodErrorParse';
 import { isValidScheduleAssignment } from '../utils/isValidScheduleAssignment';
 import scheduleAssignErrorParse from '../utils/scheduleAssignErrorParse';
+import { proposals, updateProposalStatus } from '../db/proposals';
+import { appendProposalHistory } from '../db/history';
 
 export const scheduleHandlers = [
   http.get('/api/schedule', ({ request, cookies }) => {
@@ -63,6 +66,23 @@ export const scheduleHandlers = [
       const errorBody = scheduleAssignErrorParse(assignmentValidation);
       return scheduleAssignError(errorBody);
     }
+
+    const proposal = proposals.find(
+      (proposal) => proposal.id === body.proposalId,
+    );
+
+    if (!proposal) return proposalError();
+
+    const history = appendProposalHistory(
+      body.proposalId,
+      userId,
+      { status: 'scheduled' },
+      'status_changed',
+    );
+    if (!history) return proposalError();
+
+    const updatedProposal = updateProposalStatus(body.proposalId, 'scheduled');
+    if (!updatedProposal) return proposalError();
 
     const [slot] = scheduleSlotToResponseSlot([assignScheduleSlot(body)]);
 

@@ -5,8 +5,8 @@ const validTestPayload = {
   trackId: '2',
   date: '2026-04-21',
   startTime: '2026-04-21T10:00:00.00Z',
-  endTime: '2026-04-21T10:30:00.00Z',
-  proposalId: 'proposal-097',
+  endTime: '2026-04-21T11:30:00.00Z',
+  proposalId: 'proposal-067',
 };
 
 describe('isValidScheduleAssignment', () => {
@@ -19,7 +19,7 @@ describe('isValidScheduleAssignment', () => {
       isValidScheduleAssignment({
         ...validTestPayload,
         startTime: '2026-04-21T11:30:00.00Z',
-        endTime: '2026-04-21T12:00:00.00Z',
+        endTime: '2026-04-21T13:00:00.00Z',
       }),
     ).toBe(true);
   });
@@ -28,8 +28,8 @@ describe('isValidScheduleAssignment', () => {
     expect(
       isValidScheduleAssignment({
         date: '2026-04-22',
-        proposalId: 'proposal-072',
-        trackId: '2',
+        proposalId: 'proposal-088',
+        trackId: '3',
         startTime: '2026-04-22T10:00:00.00Z',
         endTime: '2026-04-22T12:00:00.00Z',
       }),
@@ -67,7 +67,7 @@ describe('isValidScheduleAssignment', () => {
     expect(
       isValidScheduleAssignment({
         ...validTestPayload,
-        proposalId: 'proposal-085',
+        proposalId: 'proposal-088',
       }),
     ).toBe('TRACK_MISMATCH');
   });
@@ -81,25 +81,47 @@ describe('isValidScheduleAssignment', () => {
     ).toBe('INVALID_DAY');
   });
 
+  it('Заявка не может быть назначена с невалидной продолжительностью', () => {
+    expect(
+      isValidScheduleAssignment({
+        ...validTestPayload,
+        startTime: '2026-04-21T10:00:00.00Z',
+        endTime: '2026-04-21T13:00:00.00Z',
+      }),
+    ).toBe('INVALID_DURATION');
+  });
+
   it('Заявка не может быть назначена вне времени расписания', () => {
     expect(
       isValidScheduleAssignment({
         ...validTestPayload,
         startTime: '2026-04-21T09:00:00.00Z',
-        endTime: '2026-04-21T09:30:00.00Z',
+        endTime: '2026-04-21T10:30:00.00Z',
       }),
     ).toBe('INVALID_INTERVAL');
   });
 
-  it('Продолжительность заявки не может выходить быть назначена на занятый слот', () => {
+  it('Заявка не может быть назначена на занятый слот', () => {
     expect(
       isValidScheduleAssignment({
+        proposalId: 'proposal-090',
+        trackId: '5',
         date: '2026-04-22',
-        proposalId: 'proposal-072',
-        trackId: '2',
-        startTime: '2026-04-22T10:30:00.00Z',
-        endTime: '2026-04-22T12:30:00.00Z',
+        startTime: '2026-04-22T10:00:00.00Z',
+        endTime: '2026-04-22T10:45:00.00Z',
       }),
     ).toBe('TIME_CONFLICT');
+  });
+
+  it('Заявка не может быть назначена на слот, если в этот день в это же время выступают спикеры из этой заявки', () => {
+    expect(
+      isValidScheduleAssignment({
+        proposalId: 'proposal-019',
+        trackId: '4',
+        date: '2026-04-22',
+        startTime: '2026-04-22T10:00:00.00Z',
+        endTime: '2026-04-22T10:45:00.00Z',
+      }),
+    ).toBe('SPEAKER_CONFLICT');
   });
 });

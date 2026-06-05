@@ -145,20 +145,15 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
                 >
                   {proposalActionsDictionary[action]}
                 </MenuItem>
-              ) : action === 'addReview' ? (
-                <MenuItem
-                  key={`Actions-menu-item-${action}`}
-                  onClick={handleReviewCreateDialogOpen}
-                >
-                  {proposalActionsDictionary[action]}
-                </MenuItem>
               ) : (
-                <MenuItem
-                  key={`Actions-menu-item-${action}`}
-                  disabled //Удалить, когда будут реализованы actions
-                >
-                  {proposalActionsDictionary[action]}
-                </MenuItem>
+                action === 'addReview' && (
+                  <MenuItem
+                    key={`Actions-menu-item-${action}`}
+                    onClick={handleReviewCreateDialogOpen}
+                  >
+                    {proposalActionsDictionary[action]}
+                  </MenuItem>
+                )
               ),
             )}
           </Menu>
