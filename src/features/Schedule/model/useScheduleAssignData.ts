@@ -3,7 +3,7 @@ import {
   useAssignProposalMutation,
   useLazyGetProposalsByTrackIdQuery,
 } from '../api/scheduleApi';
-import { useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { ID } from '@/shared/types/primitives.types';
 import { ResponseScheduleSlot } from '@/entities/schedule/api/contracts';
 import getFreeIntervals, {
@@ -19,6 +19,13 @@ const useScheduleAssignData = (
     to: string;
   }[],
   days: ScheduleDay[],
+  setSelectedSlot: Dispatch<
+    SetStateAction<{
+      trackId: ID;
+      startTime: string;
+      endTime: string;
+    } | null>
+  >,
 ) => {
   // state
   const searchParams = useSearchParams();
@@ -65,6 +72,26 @@ const useScheduleAssignData = (
     [busySlots, timeIntervals, selectedProposal],
   );
 
+  // useEffect
+
+  useEffect(() => {
+    if (
+      selectedTrack === '' ||
+      selectedProposal === null ||
+      selectedInterval === ''
+    ) {
+      setSelectedSlot(null);
+      return;
+    }
+
+    const [startTime, endTime] = selectedInterval.split(',');
+    setSelectedSlot({
+      trackId: selectedTrack,
+      startTime,
+      endTime,
+    });
+  }, [selectedTrack, selectedProposal, selectedInterval, setSelectedSlot]);
+
   // handlers
 
   const handleTrackSelect = (value: string) => {
@@ -80,7 +107,13 @@ const useScheduleAssignData = (
   const handleProposalSelect = (
     proposal: { id: ID; label: string; duration: number } | null,
   ) => {
-    if (!proposal || selectedTrack === '') return;
+    if (selectedTrack === '') return;
+
+    if (!proposal) {
+      setSelectedProposal(null);
+      setSelectedInterval('');
+      return;
+    }
 
     setSelectedProposal(proposal);
     setSelectedInterval('');

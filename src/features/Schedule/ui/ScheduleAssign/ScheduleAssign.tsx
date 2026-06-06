@@ -26,6 +26,7 @@ const ScheduleAssign: React.FC<IScheduleAssignProps> = ({
   scheduleSlots,
   days,
   timeIntervals,
+  setSelectedSlot,
 }) => {
   const {
     proposalsState,
@@ -41,7 +42,12 @@ const ScheduleAssign: React.FC<IScheduleAssignProps> = ({
     handleIntervalSelect,
     handleProposalAssign,
     handleCloseAssignDialog,
-  } = useScheduleAssignData(scheduleSlots, timeIntervals, days);
+  } = useScheduleAssignData(
+    scheduleSlots,
+    timeIntervals,
+    days,
+    setSelectedSlot,
+  );
 
   const sx = styles();
 

@@ -62,7 +62,7 @@ describe('/api/schedule/assign', () => {
     expect(proposal.proposal.status).toBe('scheduled');
   });
 
-  it('Fдминистратор может назначать заявку в слот расписания', async () => {
+  it('Администратор может назначать заявку в слот расписания', async () => {
     const adminResponse = await fetch('/api/schedule/assign', {
       method: 'PATCH',
       headers: {

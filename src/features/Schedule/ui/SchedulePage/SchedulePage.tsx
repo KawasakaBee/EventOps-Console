@@ -16,16 +16,28 @@ import ScheduleTimeSkeleton from '../ScheduleTime/ScheduleTimeSkeleton';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ScheduleEmptySkeleton from '../ScheduleEmpty/ScheduleEmptySkeleton';
 import ScheduleAssign from '../ScheduleAssign/ScheduleAssign';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ScheduleAssignSkeleton from '../ScheduleAssign/ScheduleAssignSkeleton';
+import { ID } from '@/shared/types/primitives.types';
+import ScheduleHint from '../ScheduleHint/ScheduleHint';
+import { addHourToIso } from '@/shared/utils/formatTimeAndDate';
 
 const SchedulePage = () => {
   const { schedule, tracks, timeIntervals, rowsCount, timeStartRows } =
     useScheduleData();
 
+  const [selectedSlot, setSelectedSlot] = useState<{
+    trackId: ID;
+    startTime: string;
+    endTime: string;
+  } | null>(null);
+
   const tracksLength = tracks.data?.tracks.length ?? 5;
   const selectedScheduleDate = schedule.data?.times[0]?.slice(0, 10) ?? '';
   const dayStart = schedule.data?.times[0];
+  const dayEnd = schedule.data
+    ? addHourToIso(schedule.data.times[schedule.data.times.length - 1])
+    : null;
 
   const scheduleSlots = useMemo(
     () => (schedule.data ? [...schedule.data.slots] : []),
@@ -67,6 +79,7 @@ const SchedulePage = () => {
                 scheduleSlots={scheduleSlots}
                 days={schedule.data?.days ?? []}
                 timeIntervals={timeIntervals}
+                setSelectedSlot={setSelectedSlot}
               />
             )
           )}
@@ -152,6 +165,15 @@ const SchedulePage = () => {
                       />
                     );
                   })}
+                  {selectedSlot && dayStart && dayEnd && (
+                    <ScheduleHint
+                      scheduleSlots={scheduleSlots}
+                      selectedSlot={selectedSlot}
+                      tracks={tracks.data.tracks}
+                      dayStart={dayStart}
+                      dayEnd={dayEnd}
+                    />
+                  )}
                 </>
               ) : (
                 <EmptyState

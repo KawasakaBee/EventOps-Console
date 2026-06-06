@@ -48,7 +48,7 @@ export const palette = {
     main: '#ff5722',
   },
   success: {
-    main: '#4caf50',
+    main: '#4caf50ff',
     darken: '#277029',
   },
   error: {
