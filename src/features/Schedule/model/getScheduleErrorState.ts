@@ -18,6 +18,30 @@ const getScheduleErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'SLOT_NOT_FOUND':
+      return {
+        type: 'state',
+        title: error.message,
+        subtitle: 'Попробуйте перезагрузить страницу и повторить попытку',
+      };
+    case 'UNASSIGN_ERROR':
+      return {
+        type: 'state',
+        title: error.message,
+        subtitle: 'Попробуйте перезагрузить страницу и повторить попытку',
+      };
+    case 'VALIDATE_ERROR':
+      return {
+        type: 'state',
+        title: 'НЕвалидное значение',
+        subtitle: 'Попробуйте снова',
+        fullHeight: true,
+        fields: error.fields,
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить попытку',
+        },
+      };
     case 'SCHEDULE_ASSIGNMENT': {
       return {
         type: 'state',

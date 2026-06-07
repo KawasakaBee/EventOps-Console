@@ -1,13 +1,20 @@
 import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import {
   NEXT_HEADER_ROWS,
   SCHEDULE_STEP_MINUTES,
 } from '@/shared/config/layout';
 import { getMinutesDiff } from '@/entities/schedule/lib/grid';
-import { useGetScheduleQuery } from '../api/scheduleApi';
+import {
+  useGetScheduleQuery,
+  useUnassignProposalMutation,
+} from '../api/scheduleApi';
 import { addHourToIso } from '@/shared/utils/formatTimeAndDate';
+import { ID } from '@/shared/types/primitives.types';
+import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
+import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
+import getScheduleErrorState from './getScheduleErrorState';
 
 const useScheduleData = () => {
   // state
@@ -15,6 +22,19 @@ const useScheduleData = () => {
   const stringifySearchParams = searchParams.toString();
   const schedule = useGetScheduleQuery(stringifySearchParams);
   const tracks = useGetTracksQuery();
+  const [unassignProposal, unassignState] = useUnassignProposalMutation();
+
+  const [selectedSlot, setSelectedSlot] = useState<{
+    trackId: ID;
+    startTime: string;
+    endTime: string;
+  } | null>(null);
+  const [unassignResult, setUnassignResult] = useState<
+    { ok: false; error: ErrorStateProps } | { ok: true } | null
+  >(null);
+  const [unassignConfirm, setUnassignConfirm] = useState<
+    { opened: true; id: string } | { opened: false }
+  >({ opened: false });
 
   const timeIntervals: { from: string; to: string }[] = useMemo(() => {
     const data = schedule.data;
@@ -61,12 +81,52 @@ const useScheduleData = () => {
     [timeIntervals],
   );
 
+  // handlers
+
+  const handleUnassignClose = () => {
+    setUnassignResult(null);
+  };
+
+  const handleUnassignConfirmDialogClose = () => {
+    setUnassignConfirm({ opened: false });
+  };
+
+  const handleProposalUnassign = async () => {
+    if (!unassignConfirm.opened) return;
+    const response = await unassignProposal({ slotId: unassignConfirm.id });
+
+    setUnassignConfirm({ opened: false });
+
+    if (response.error) {
+      const error = { error: response.error };
+      if (isAppBaseQueryError(error)) {
+        setUnassignResult({
+          ok: false,
+          error: getScheduleErrorState(error.error, {
+            retry: () => null,
+          }),
+        });
+        return;
+      }
+    }
+    if (response.data) setUnassignResult(response.data);
+  };
+
   return {
     schedule,
     tracks,
+    unassignState,
     timeIntervals,
     rowsCount,
     timeStartRows,
+    selectedSlot,
+    unassignResult,
+    unassignConfirm,
+    setSelectedSlot,
+    setUnassignConfirm,
+    handleUnassignClose,
+    handleUnassignConfirmDialogClose,
+    handleProposalUnassign,
   };
 };
 

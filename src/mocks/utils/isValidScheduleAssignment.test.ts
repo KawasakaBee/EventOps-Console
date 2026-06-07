@@ -30,8 +30,8 @@ describe('isValidScheduleAssignment', () => {
         date: '2026-04-22',
         proposalId: 'proposal-088',
         trackId: '3',
-        startTime: '2026-04-22T10:00:00.00Z',
-        endTime: '2026-04-22T12:00:00.00Z',
+        startTime: '2026-04-22T12:00:00.00Z',
+        endTime: '2026-04-22T14:00:00.00Z',
       }),
     ).toBe(true);
   });
@@ -104,11 +104,11 @@ describe('isValidScheduleAssignment', () => {
   it('Заявка не может быть назначена на занятый слот', () => {
     expect(
       isValidScheduleAssignment({
-        proposalId: 'proposal-090',
+        proposalId: 'proposal-010',
         trackId: '5',
         date: '2026-04-22',
-        startTime: '2026-04-22T10:00:00.00Z',
-        endTime: '2026-04-22T10:45:00.00Z',
+        startTime: '2026-04-22T12:00:00.00Z',
+        endTime: '2026-04-22T12:30:00.00Z',
       }),
     ).toBe('TIME_CONFLICT');
   });

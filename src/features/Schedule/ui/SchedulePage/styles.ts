@@ -1,7 +1,7 @@
 import { SCHEDULE_STEP_HEIGHT } from '@/shared/config/layout';
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'scheduleContainer' | 'scheduleWrapper';
+type Key = 'scheduleContainer' | 'scheduleWrapper' | 'dialogPaper';
 
 type IStyleProps = {
   tracksLength: number;
@@ -25,6 +25,14 @@ export const styles: Style = (options) => {
       rowGap: 0,
       minWidth: 140 + tracksLength * 220,
       alignItems: 'stretch',
+    },
+    dialogPaper: {
+      alignItems: 'center',
+      minWidth: 600,
+      p: 4,
+      '& .MuiDialogTitle-root + .MuiDialogContent-root': {
+        pt: 2,
+      },
     },
   };
 };

@@ -1,6 +1,28 @@
 import { ErrorEnvelope } from '@/shared/types/api.types';
 import { HttpResponse } from 'msw';
 
+export const unassignError = () =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'UNASSIGN_ERROR',
+        message: 'Не удалось удалить слот из расписания',
+      },
+    } satisfies ErrorEnvelope,
+    { status: 400 },
+  );
+
+export const slotError = () =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'SLOT_NOT_FOUND',
+        message: 'Слот не найден',
+      },
+    } satisfies ErrorEnvelope,
+    { status: 404 },
+  );
+
 export const scheduleAssignError = (errorText: string) =>
   HttpResponse.json(
     {

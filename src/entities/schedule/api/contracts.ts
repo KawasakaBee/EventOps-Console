@@ -20,3 +20,7 @@ export type GetScheduleResponse = {
 export interface PatchScheduleAssignResponse {
   slot: ResponseScheduleSlot;
 }
+
+export interface PatchScheduleUnassignResponse {
+  ok: true;
+}

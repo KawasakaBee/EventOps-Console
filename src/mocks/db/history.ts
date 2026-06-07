@@ -6184,6 +6184,142 @@ export const initialHistory = [
       reason: 'Заявка отклонена по итогам ревью.',
     },
   },
+  {
+    id: 'history-531',
+    proposalId: 'proposal-005',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T09:30:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-043',
+    },
+  },
+  {
+    id: 'history-532',
+    proposalId: 'proposal-008',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T10:10:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-044',
+    },
+  },
+  {
+    id: 'history-533',
+    proposalId: 'proposal-011',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T10:40:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-045',
+    },
+  },
+  {
+    id: 'history-534',
+    proposalId: 'proposal-046',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T11:20:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-046',
+    },
+  },
+  {
+    id: 'history-535',
+    proposalId: 'proposal-058',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T12:00:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-047',
+    },
+  },
+  {
+    id: 'history-536',
+    proposalId: 'proposal-060',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T12:30:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-048',
+    },
+  },
+  {
+    id: 'history-537',
+    proposalId: 'proposal-078',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T13:00:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-049',
+    },
+  },
+  {
+    id: 'history-538',
+    proposalId: 'proposal-090',
+    actorId: '2',
+    action: 'scheduled',
+    createdAt: '2026-04-18T13:30:00.00Z',
+    changes: [
+      {
+        field: 'status',
+        previousValue: 'accepted',
+        nextValue: 'scheduled',
+      },
+    ],
+    payload: {
+      slotId: 'schedule-slot-050',
+    },
+  },
 ] satisfies HistoryEntry[];
 
 export const history: HistoryEntry[] = [...initialHistory];

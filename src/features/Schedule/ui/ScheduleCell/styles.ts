@@ -1,6 +1,13 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'slotCell' | 'slotContainer' | 'slotWrapper' | 'speakerName';
+type Key =
+  | 'slotCell'
+  | 'slotContainer'
+  | 'slotWrapper'
+  | 'speakerName'
+  | 'popover'
+  | 'popoverPaper'
+  | 'popoverCloseButton';
 
 type IStyleProps = {
   column: number;
@@ -48,6 +55,20 @@ export const styles: Style = (options) => {
     },
     speakerName: {
       opacity: 0.5,
+    },
+    popover: {
+      pointerEvents: 'none',
+    },
+    popoverPaper: {
+      pointerEvents: 'auto',
+      p: 2,
+      pr: 6,
+    },
+    popoverCloseButton: {
+      position: 'absolute',
+      right: '10px',
+      top: '50%',
+      transform: 'translateY(-50%)',
     },
   };
 };

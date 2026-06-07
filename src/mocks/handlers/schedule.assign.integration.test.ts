@@ -221,3 +221,112 @@ describe('/api/schedule/assign', () => {
     });
   });
 });
+
+describe('/api/schedule/unassign', () => {
+  it('Удаление заявки из слота с последующим изменением статуса', async () => {
+    const response = await fetch('/api/schedule/unassign', {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=2`,
+      },
+      body: JSON.stringify({ slotId: 'schedule-slot-001' }),
+    });
+
+    expect(response.status).toBe(200);
+    expect(
+      schedule.slots.findIndex((slot) => slot.id === 'schedule-slot-001'),
+    ).toBe(-1);
+
+    const scheduleResponse = await fetch('/api/schedule?date=2026-04-21', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=2`,
+      },
+    });
+
+    const updatedSchedule: GetScheduleResponse = await scheduleResponse.json();
+
+    expect(
+      updatedSchedule.slots.some(
+        (item) => item.slot.id === 'schedule-slot-001',
+      ),
+    ).toBe(false);
+
+    const proposalResult = await fetch('/api/proposals/proposal-051', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=2`,
+      },
+    });
+
+    const proposal: GetProposalResponse = await proposalResult.json();
+
+    expect(proposal.proposal.status).toBe('accepted');
+  });
+
+  it('Администратор может удалять заявку из слота расписания', async () => {
+    const adminResponse = await fetch('/api/schedule/unassign', {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=1`,
+      },
+      body: JSON.stringify({ slotId: 'schedule-slot-001' }),
+    });
+
+    expect(adminResponse.status).toBe(200);
+  });
+
+  it('Менеджер может удалять заявку из слота расписания', async () => {
+    const managerResponse = await fetch('/api/schedule/unassign', {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=2`,
+      },
+      body: JSON.stringify({ slotId: 'schedule-slot-001' }),
+    });
+
+    expect(managerResponse.status).toBe(200);
+  });
+
+  it('Ревьюер или спикер не могут может удалять заявку из слота расписания', async () => {
+    const reviewerResponse = await fetch('/api/schedule/unassign', {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=3`,
+      },
+      body: JSON.stringify({ slotId: 'schedule-slot-001' }),
+    });
+
+    expect(reviewerResponse.status).toBe(403);
+
+    const speakerResponse = await fetch('/api/schedule/unassign', {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=4`,
+      },
+      body: JSON.stringify({ slotId: 'schedule-slot-001' }),
+    });
+
+    expect(speakerResponse.status).toBe(403);
+  });
+
+  it('Нельзя удалить неназначенную заявку из расписания', async () => {
+    const unvalidResponse = await fetch('/api/schedule/unassign', {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Cookie: `${AUTH_SESSION_COOKIE}=2`,
+      },
+      body: JSON.stringify({ slotId: 'schedule-slot-12342134' }),
+    });
+
+    expect(unvalidResponse.status).toBe(404);
+  });
+});

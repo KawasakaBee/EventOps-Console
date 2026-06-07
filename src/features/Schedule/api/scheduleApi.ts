@@ -2,8 +2,12 @@ import { GetProposalsByTrackIdResponse } from '@/entities/proposal/api/contracts
 import {
   GetScheduleResponse,
   PatchScheduleAssignResponse,
+  PatchScheduleUnassignResponse,
 } from '@/entities/schedule/api/contracts';
-import { PatchScheduleAssignRequest } from '@/entities/schedule/api/schema';
+import {
+  PatchScheduleAssignRequest,
+  PatchScheduleUnassignRequest,
+} from '@/entities/schedule/api/schema';
 import { baseApi } from '@/shared/api/baseApi';
 import { ID } from '@/shared/types/primitives.types';
 
@@ -31,6 +35,20 @@ export const scheduleApi = baseApi.injectEndpoints({
         { type: 'Proposal', id: 'LIST' },
       ],
     }),
+    unassignProposal: build.mutation<
+      PatchScheduleUnassignResponse,
+      PatchScheduleUnassignRequest
+    >({
+      query: (payload) => ({
+        url: '/schedule/unassign',
+        method: 'PATCH',
+        body: payload,
+      }),
+      invalidatesTags: [
+        { type: 'Schedule', id: 'LIST' },
+        { type: 'Proposal', id: 'LIST' },
+      ],
+    }),
   }),
 });
 
@@ -38,4 +56,5 @@ export const {
   useGetScheduleQuery,
   useLazyGetProposalsByTrackIdQuery,
   useAssignProposalMutation,
+  useUnassignProposalMutation,
 } = scheduleApi;

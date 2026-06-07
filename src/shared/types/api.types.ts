@@ -17,6 +17,8 @@ export interface ErrorEnvelope {
 }
 
 export const errorCodes = [
+  'UNASSIGN_ERROR',
+  'SLOT_NOT_FOUND',
   'REQUEST_ABORTED',
   'AUTH_REQUIRED',
   'INVALID_ROLE',

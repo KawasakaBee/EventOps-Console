@@ -1,6 +1,15 @@
 'use client';
 
-import { Box, Skeleton, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import useScheduleData from '../../model/useScheduleData';
 import ScheduleTime from '../ScheduleTime/ScheduleTime';
 import ScheduleTabs from '../ScheduleTabs/ScheduleTabs';
@@ -16,21 +25,29 @@ import ScheduleTimeSkeleton from '../ScheduleTime/ScheduleTimeSkeleton';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
 import ScheduleEmptySkeleton from '../ScheduleEmpty/ScheduleEmptySkeleton';
 import ScheduleAssign from '../ScheduleAssign/ScheduleAssign';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import ScheduleAssignSkeleton from '../ScheduleAssign/ScheduleAssignSkeleton';
-import { ID } from '@/shared/types/primitives.types';
 import ScheduleHint from '../ScheduleHint/ScheduleHint';
 import { addHourToIso } from '@/shared/utils/formatTimeAndDate';
+import Button from '@/shared/ui/Button/Button';
 
 const SchedulePage = () => {
-  const { schedule, tracks, timeIntervals, rowsCount, timeStartRows } =
-    useScheduleData();
-
-  const [selectedSlot, setSelectedSlot] = useState<{
-    trackId: ID;
-    startTime: string;
-    endTime: string;
-  } | null>(null);
+  const {
+    schedule,
+    tracks,
+    unassignState,
+    timeIntervals,
+    rowsCount,
+    timeStartRows,
+    selectedSlot,
+    unassignResult,
+    unassignConfirm,
+    setSelectedSlot,
+    setUnassignConfirm,
+    handleUnassignClose,
+    handleUnassignConfirmDialogClose,
+    handleProposalUnassign,
+  } = useScheduleData();
 
   const tracksLength = tracks.data?.tracks.length ?? 5;
   const selectedScheduleDate = schedule.data?.times[0]?.slice(0, 10) ?? '';
@@ -44,7 +61,8 @@ const SchedulePage = () => {
     [schedule.data],
   );
 
-  const isGridLoading = schedule.isLoading || tracks.isLoading;
+  const isGridLoading =
+    schedule.isLoading || tracks.isLoading || unassignState.isLoading;
   const canRenderGrid = schedule.data && tracks.data;
 
   const sx = styles({ tracksLength, rowsCount });
@@ -162,6 +180,7 @@ const SchedulePage = () => {
                         respSlot={respSlot}
                         tracks={tracks.data?.tracks ?? []}
                         dayStart={dayStart}
+                        setUnssign={setUnassignConfirm}
                       />
                     );
                   })}
@@ -184,6 +203,67 @@ const SchedulePage = () => {
             </Box>
           </Box>
         </>
+      )}
+      {unassignConfirm.opened && (
+        <Dialog
+          open
+          onClose={handleUnassignConfirmDialogClose}
+          slotProps={{ paper: { sx: sx.dialogPaper } }}
+        >
+          <DialogTitle>Убрать выбранную заявку из расписания?</DialogTitle>
+          <DialogContent>
+            Это действие удалит выбранную заявку из расписания и переведёт её в
+            статус «Принята»
+          </DialogContent>
+          <DialogActions>
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              intent="success"
+              onClick={handleProposalUnassign}
+              isDisabled={isGridLoading}
+            >
+              Продолжить
+            </Button>
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              intent="danger"
+              onClick={handleUnassignConfirmDialogClose}
+              isDisabled={isGridLoading}
+            >
+              Отменить
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+      {unassignResult && (
+        <Dialog
+          open
+          onClose={handleUnassignClose}
+          slotProps={{ paper: { sx: sx.dialogPaper } }}
+        >
+          {unassignResult.ok ? (
+            <>
+              <DialogTitle>Заявка успешно убрана из расписания</DialogTitle>
+            </>
+          ) : (
+            <ErrorState {...unassignResult.error} />
+          )}
+          <DialogActions>
+            <Button
+              mode="button"
+              variant="contained"
+              size="medium"
+              onClick={handleUnassignClose}
+              isDisabled={isGridLoading}
+            >
+              Продолжить
+            </Button>
+          </DialogActions>
+        </Dialog>
       )}
     </Stack>
   );
