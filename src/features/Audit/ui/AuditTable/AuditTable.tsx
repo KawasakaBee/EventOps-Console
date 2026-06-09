@@ -23,6 +23,7 @@ import AuditTableRow from '../AuditTableRow/AuditTableRow';
 import { useGetCommentsQuery } from '@/entities/comment/api/commentApi';
 import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
 import { useGetUsersQuery } from '@/entities/user/api/userApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 
 const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   const router = useRouter();
@@ -33,6 +34,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   const users = useGetUsersQuery();
   const comments = useGetCommentsQuery();
   const reviewers = useGetReviewersQuery();
+  const events = useGetEventsQuery();
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');
@@ -109,6 +111,9 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
               comments={comments.data}
               isCommentsLoading={comments.isLoading}
               isCommentsError={comments.isError}
+              events={events.data}
+              isEventsLoading={events.isLoading}
+              isEventsError={events.isError}
             />
           ))}
         </TableBody>

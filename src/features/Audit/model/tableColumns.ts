@@ -5,6 +5,7 @@ export const auditListItemDictionary: Record<keyof AuditLog, string> = {
   action: 'Действие',
   entityType: 'Сущность',
   entityId: 'ID сущности',
+  eventId: 'Событие',
   actorId: 'Пользователь',
   payload: 'Примечание',
   createdAt: 'Время',
@@ -15,6 +16,7 @@ export const auditListItemKeys: (keyof AuditLog)[] = [
   'action',
   'entityType',
   'entityId',
+  'eventId',
   'actorId',
   'payload',
   'createdAt',
@@ -39,6 +41,10 @@ export const auditTableWidthDictionary: Record<
   entityId: {
     width: 90,
     skeletonWidth: 70,
+  },
+  eventId: {
+    width: 210,
+    skeletonWidth: 190,
   },
   actorId: {
     width: 210,

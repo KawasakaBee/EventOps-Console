@@ -28,6 +28,9 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
   comments,
   isCommentsLoading,
   isCommentsError,
+  events,
+  isEventsLoading,
+  isEventsError,
 }) => {
   const sx = styles();
 
@@ -63,6 +66,19 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
         return auditEntitiesDictionary[data.entityType];
       case 'entityId':
         return data.entityId;
+      case 'eventId':
+        if (isEventsLoading)
+          return (
+            <Skeleton
+              variant="text"
+              width={auditTableWidthDictionary['eventId'].skeletonWidth}
+            />
+          );
+        if (isEventsError) return 'Не удалось определить событие';
+        const event = events
+          ? events.events.find((event) => event.id === data.eventId)
+          : null;
+        return event?.title ?? 'Не удалось определить событие';
       case 'actorId': {
         if (isUsersLoading)
           return (

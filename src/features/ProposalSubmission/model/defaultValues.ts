@@ -1,6 +1,7 @@
 import type { SubmitValues } from './schema';
 
 const defaultValues = {
+  eventId: '',
   title: '',
   format: 'talk',
   duration: '',

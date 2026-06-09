@@ -104,6 +104,9 @@ const useSubmissionAutosave = (
 
       autosaveTimerRef.current = setTimeout(async () => {
         const formValues = getValues();
+
+        if (formValues.eventId === '') return;
+
         const requestBody = buildDirtySubmitPayload(dirtyFields, formValues);
 
         const result = await changeProposal({

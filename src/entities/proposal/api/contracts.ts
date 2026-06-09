@@ -71,5 +71,6 @@ export interface GetProposalsByTrackIdResponse {
     id: ID;
     label: string;
     duration: number;
+    eventId: ID;
   }[];
 }

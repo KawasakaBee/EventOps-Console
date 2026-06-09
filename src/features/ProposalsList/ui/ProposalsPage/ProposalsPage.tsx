@@ -238,6 +238,7 @@ const ProposalsPage = () => {
           mode="single"
           onClose={handleReviewerAssignDialogClose}
           proposalId={assingReviewer.id}
+          eventIds={assingReviewer.eventIds}
         />
       )}
       {assingReviewer.type === 'multiple' && (
@@ -245,6 +246,7 @@ const ProposalsPage = () => {
           mode="multiple"
           onClose={handleReviewerAssignDialogClose}
           proposalIds={assingReviewer.ids}
+          eventIds={assingReviewer.eventIds}
           onSuccess={handleMultipleAssignReviewerSuccess}
         />
       )}

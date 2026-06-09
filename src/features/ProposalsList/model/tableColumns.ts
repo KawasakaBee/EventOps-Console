@@ -11,6 +11,7 @@ export const proposalListItemDictionary: Record<
   format: 'Формат',
   level: 'Уровень',
   trackId: 'Трек',
+  eventId: 'Событие',
   updatedAt: 'Последнее обновление',
   actions: 'Доступные действия',
 };
@@ -27,6 +28,7 @@ export const proposalListItemKeys: (
   'format',
   'level',
   'trackId',
+  'eventId',
   'updatedAt',
   'actions',
 ];
@@ -62,6 +64,10 @@ export const proposalTableWidthDictionary: Record<
   trackId: {
     width: 180,
     skeletonWidth: 160,
+  },
+  eventId: {
+    width: 210,
+    skeletonWidth: 190,
   },
   updatedAt: {
     width: 180,

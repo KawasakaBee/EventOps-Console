@@ -10,9 +10,9 @@ export const dashboardApi = baseApi.injectEndpoints({
       { id: ID; range: DashboardRange }
     >({
       query: ({ id, range }) => `/events/${id}/dashboard?range=${range}`,
-      providesTags: ['Dashboard'],
+      providesTags: [{ type: 'Dashboard', id: 'LIST' }],
     }),
   }),
 });
 
-export const { useGetDashboardQuery } = dashboardApi;
+export const { useLazyGetDashboardQuery } = dashboardApi;

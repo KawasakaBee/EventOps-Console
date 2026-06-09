@@ -19,6 +19,7 @@ import { ProposalListItem } from '@/entities/proposal/model/types';
 import { Track } from '@/entities/track/model/types';
 import MyProposalsRowActions from '../MyProposalsRowActions/MyProposalsRowActions';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { Event } from '@/entities/event/model/types';
 
 const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
   proposal,
@@ -27,6 +28,10 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
   isTracksLoading,
   isTracksError,
   tracksError,
+  events,
+  isEventsLoading,
+  isEventsError,
+  eventsError,
 }) => {
   const rowActions = useMemo(
     () => getProposalsListRowActions(role, proposal.status),
@@ -37,10 +42,16 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
     const foundTrack = tracks.find((track) => track.id === proposal.trackId);
     return (
       foundTrack ?? {
-        id: '',
         title: 'Трек не удалось загрузить',
-        description: '',
-        order: 0,
+      }
+    );
+  };
+
+  const event = (proposal: ProposalListItem, events: Event[]) => {
+    const foundEvent = events.find((event) => event.id === proposal.eventId);
+    return (
+      foundEvent ?? {
+        title: 'Событие не удалось загрузить',
       }
     );
   };
@@ -73,6 +84,20 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
           : tracks
             ? track(proposal, tracks.tracks).title
             : 'Не удалось загрузить трек';
+      }
+      case 'eventId': {
+        if (isEventsLoading)
+          return (
+            <Skeleton
+              variant="text"
+              width={myProposalTableWidthDictionary[rowName].skeletonWidth}
+            />
+          );
+        return isEventsError
+          ? getApiErrorMessage(eventsError)
+          : events
+            ? event(proposal, events.events).title
+            : 'Не удалось загрузить событие';
       }
       case 'updatedAt':
         return formatIsoDateTime(data.updatedAt);

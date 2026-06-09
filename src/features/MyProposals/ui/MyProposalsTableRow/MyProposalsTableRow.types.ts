@@ -1,3 +1,4 @@
+import { GetEventsListResponse } from '@/entities/event/api/contracts';
 import { ProposalListItem } from '@/entities/proposal/model/types';
 import { GetTracksResponse } from '@/entities/track/api/contracts';
 import { Role } from '@/entities/user/model/types';
@@ -11,6 +12,10 @@ export interface IMyProposalsTableRowProps {
   isTracksLoading: boolean;
   isTracksError: boolean;
   tracksError: AppBaseQueryError | SerializedError | undefined;
+  events: GetEventsListResponse | undefined;
+  isEventsLoading: boolean;
+  isEventsError: boolean;
+  eventsError: AppBaseQueryError | SerializedError | undefined;
 }
 
 export interface IMyTableRowProps {

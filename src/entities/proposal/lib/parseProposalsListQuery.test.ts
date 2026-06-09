@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { parseProposalsListQuery } from './parseProposalsListQuery';
 
 const testUrl =
-  'http://localhost:3000/proposals?search=Docker&status=accepted&trackId=4&level=middle&format=lightning&reviewerId=reviewer-007&page=1';
+  'http://localhost:3000/proposals?search=Docker&status=accepted&trackId=4&eventId=1&level=middle&format=lightning&reviewerId=reviewer-007&page=1';
 
 const testProposalList = {
   page: 1,
@@ -10,6 +10,7 @@ const testProposalList = {
   search: 'Docker',
   status: ['accepted'],
   trackId: ['4'],
+  eventId: ['1'],
   level: ['middle'],
   format: ['lightning'],
   reviewerId: 'reviewer-007',
@@ -24,6 +25,7 @@ const testEmptyProposalList = {
   search: null,
   status: [],
   trackId: [],
+  eventId: [],
   level: [],
   format: [],
   reviewerId: null,

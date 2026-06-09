@@ -14,11 +14,24 @@ import {
 } from '@/entities/speaker/api/dictionary';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 
 const SummaryStep = () => {
   const { getValues } = useFormContext<SubmitValues>();
 
   const { data, isLoading, isError, error } = useGetTracksQuery();
+  const events = useGetEventsQuery();
+
+  const currentEvent = useMemo(
+    () =>
+      !events.isLoading &&
+      !events.isError &&
+      events.data &&
+      events.data.events.length !== 0
+        ? events.data.events.find((event) => event.id === getValues('eventId'))
+        : undefined,
+    [events.data, getValues, events.isError, events.isLoading],
+  );
 
   const currentTrack = useMemo(
     () =>
@@ -34,7 +47,26 @@ const SummaryStep = () => {
         <Typography variant="h2">Основное:</Typography>
         <Stack spacing={1}>
           {steps.basic.fields.map((field) =>
-            field === 'trackId' ? (
+            field === 'eventId' ? (
+              <Stack key={field} direction="row" spacing={1}>
+                <Typography variant="subtitle2">
+                  {proposalSubmitFieldsDictionary[field]}:
+                </Typography>
+                {events.isLoading ? (
+                  <Skeleton variant="text" width={250} />
+                ) : events.isError ? (
+                  <Typography variant="body2">
+                    {getApiErrorMessage(events.error)}
+                  </Typography>
+                ) : !currentEvent ? (
+                  <Typography variant="body2">
+                    Не удалось определить событие
+                  </Typography>
+                ) : (
+                  <Typography variant="body2">{currentEvent.title}</Typography>
+                )}
+              </Stack>
+            ) : field === 'trackId' ? (
               <Stack key={field} direction="row" spacing={1}>
                 <Typography variant="subtitle2">
                   {proposalSubmitFieldsDictionary[field]}:

@@ -10,6 +10,7 @@ export const myProposalListItemDictionary: Record<
   format: 'Формат',
   level: 'Уровень',
   trackId: 'Трек',
+  eventId: 'Событие',
   updatedAt: 'Последнее обновление',
   actions: 'Доступные действия',
 };
@@ -21,6 +22,7 @@ export const myProposalListItemKeys: (keyof ProposalListItem | 'actions')[] = [
   'format',
   'level',
   'trackId',
+  'eventId',
   'updatedAt',
   'actions',
 ];
@@ -52,6 +54,10 @@ export const myProposalTableWidthDictionary: Record<
   trackId: {
     width: 180,
     skeletonWidth: 160,
+  },
+  eventId: {
+    width: 210,
+    skeletonWidth: 190,
   },
   updatedAt: {
     width: 180,

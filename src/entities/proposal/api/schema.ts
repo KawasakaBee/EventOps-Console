@@ -11,6 +11,7 @@ import {
 
 export const proposalDraftSchema = z.object({
   status: z.literal('draft'),
+  eventId: z.string().trim().min(1, 'Обязательное поле'),
   title: z.string().trim().optional(),
   format: z.enum(proposalFormats, 'Некорректный формат'),
   duration: z.number().optional(),
@@ -31,6 +32,7 @@ export const proposalDraftSchema = z.object({
 
 const proposalSubmitSchema = z.object({
   status: z.literal('submitted'),
+  eventId: z.string().trim().min(1, 'Обязательное поле'),
   title: z
     .string()
     .trim()

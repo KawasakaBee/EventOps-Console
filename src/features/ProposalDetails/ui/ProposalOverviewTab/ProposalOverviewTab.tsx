@@ -21,6 +21,8 @@ import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { Proposal } from '@/entities/proposal/model/types';
 import { Track } from '@/entities/track/model/types';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
+import { useMemo } from 'react';
 
 const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
   proposal,
@@ -28,6 +30,7 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
   const sx = styles();
 
   const { data, isLoading, isError, error } = useGetTracksQuery();
+  const events = useGetEventsQuery();
 
   const track = (proposalData: Proposal, tracks: Track[]) => {
     const foundTrack = tracks.find(
@@ -39,6 +42,11 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
       }
     );
   };
+
+  const currentEvent = useMemo(
+    () => events.data?.events.find((event) => event.id === proposal?.eventId),
+    [events.data, proposal?.eventId],
+  );
 
   return proposal ? (
     <Stack spacing={6}>
@@ -114,6 +122,22 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
                 <Typography variant="h3">Метаданные</Typography>
                 <Divider sx={sx.abstractDivider} />
               </Box>
+              <Stack spacing={1}>
+                <Typography variant="h3">Событие: </Typography>
+                {events.isLoading ? (
+                  <Skeleton variant="text" width={200} />
+                ) : events.isError ? (
+                  <Typography>{getApiErrorMessage(events.error)}</Typography>
+                ) : currentEvent ? (
+                  <>
+                    <Typography variant="body2">
+                      {currentEvent.title}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="body2">Нет событий</Typography>
+                )}
+              </Stack>
               <Stack spacing={1}>
                 <Typography variant="h3">Формат: </Typography>
                 <Typography variant="body2">

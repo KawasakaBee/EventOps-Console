@@ -25,13 +25,33 @@ import TitleRow from './TitleRow';
 import DurationRow from './DurationRow';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
+import { useGetProposalQuery } from '@/entities/proposal/api/proposalApi';
+import { isId } from '@/shared/utils/typeGuards';
+import { useParams } from 'next/navigation';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 const BasicStep = () => {
   const { register, control, setValue, getValues } =
     useFormContext<BasicValues>();
 
-  const { data, isLoading, isError, error, refetch } = useGetTracksQuery();
+  const draftId = useParams().id;
+  const proposalId = isId(draftId) ? draftId : skipToken;
+  const draft = useGetProposalQuery(proposalId, {
+    refetchOnMountOrArgChange: true,
+  });
 
+  const { data, isLoading, isError, error, refetch } = useGetTracksQuery();
+  const events = useGetEventsQuery();
+
+  const isEventsSelectDisabled =
+    (proposalId &&
+      draft.data &&
+      draft.data.proposal.status !== 'draft' &&
+      events.isLoading) ||
+    events.isError ||
+    !events.data ||
+    events.data.events.length === 0;
   const isTracksSelectDisabled =
     isLoading || isError || !data || data.tracks.length === 0;
 
@@ -39,6 +59,97 @@ const BasicStep = () => {
 
   const basicInput = (type: keyof BasicValues) => {
     switch (type) {
+      case 'eventId':
+        return (
+          <Controller
+            key={type}
+            name={type}
+            control={control}
+            render={({ field, fieldState }) => {
+              const selectedEventExists = events.data?.events.some(
+                (event) => event.id === field.value,
+              );
+              return (
+                <Stack spacing={2} sx={sx.tracksWrapper}>
+                  <FormControl
+                    fullWidth
+                    error={!!fieldState.error}
+                    disabled={isEventsSelectDisabled}
+                    required
+                  >
+                    {events.isLoading ? (
+                      <InputLabel id={`${type}-label`} disabled>
+                        Загрузка событий
+                      </InputLabel>
+                    ) : events.isError ? (
+                      <InputLabel id={`${type}-label`} disabled>
+                        {getApiErrorMessage(events.error)}
+                      </InputLabel>
+                    ) : events.data ? (
+                      events.data.events.length === 0 ? (
+                        <InputLabel id={`${type}-label`} disabled>
+                          Нет событий для выбора
+                        </InputLabel>
+                      ) : (
+                        <InputLabel id={`${type}-label`}>
+                          {proposalSubmitFieldsDictionary[type]}
+                        </InputLabel>
+                      )
+                    ) : (
+                      <InputLabel id={`${type}-label`}>
+                        Не удалось загрузить событие
+                      </InputLabel>
+                    )}
+                    <Select
+                      {...field}
+                      value={selectedEventExists ? field.value : ''}
+                      labelId={`${type}-label`}
+                      id={type}
+                      label={proposalSubmitFieldsDictionary[type]}
+                      disabled={isEventsSelectDisabled}
+                    >
+                      {events.isLoading ? (
+                        <MenuItem>Загрузка событий</MenuItem>
+                      ) : events.isError ? (
+                        <MenuItem>{getApiErrorMessage(events.error)}</MenuItem>
+                      ) : events.data ? (
+                        events.data.events.length === 0 ? (
+                          <MenuItem>Нет событий для выбора</MenuItem>
+                        ) : (
+                          events.data.events.map((event) => (
+                            <MenuItem key={event.id} value={event.id}>
+                              {event.title}
+                            </MenuItem>
+                          ))
+                        )
+                      ) : (
+                        <MenuItem>Не удалось загрузить событие</MenuItem>
+                      )}
+                    </Select>
+                    {fieldState.error && (
+                      <FormHelperText>
+                        {fieldState.error.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                  {(events.isError ||
+                    !events.data ||
+                    events.data.events.length === 0) && (
+                    <Button
+                      mode="button"
+                      variant="contained"
+                      size="small"
+                      type="button"
+                      onClick={events.refetch}
+                    >
+                      Повторить
+                    </Button>
+                  )}
+                </Stack>
+              );
+            }}
+          />
+        );
       case 'format':
         return (
           <Controller

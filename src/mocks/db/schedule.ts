@@ -3,43 +3,100 @@ import { Schedule, ScheduleSlot } from '@/entities/schedule/model/types';
 import { ID } from '@/shared/types/primitives.types';
 
 export const initialSchedule = {
-  eventId: '1',
-
   days: [
     {
       date: '2026-04-21',
+      eventId: '1',
       title: 'День 1',
     },
     {
       date: '2026-04-22',
+      eventId: '1',
       title: 'День 2',
     },
     {
       date: '2026-04-23',
+      eventId: '1',
       title: 'День 3',
+    },
+    {
+      eventId: '2',
+      date: '2026-05-12',
+      title: 'День 1',
+    },
+    {
+      eventId: '2',
+      date: '2026-05-13',
+      title: 'День 2',
+    },
+    {
+      eventId: '3',
+      date: '2026-06-16',
+      title: 'День 1',
+    },
+    {
+      eventId: '3',
+      date: '2026-06-17',
+      title: 'День 2',
+    },
+    {
+      eventId: '4',
+      date: '2026-09-08',
+      title: 'День 1',
+    },
+    {
+      eventId: '4',
+      date: '2026-09-09',
+      title: 'День 2',
     },
   ],
 
   times: [
-    '2026-04-21T10:00:00.00Z',
-    '2026-04-21T11:00:00.00Z',
-    '2026-04-21T12:00:00.00Z',
-    '2026-04-21T14:00:00.00Z',
+    { time: '2026-04-21T10:00:00.00Z', eventId: '1' },
+    { time: '2026-04-21T11:00:00.00Z', eventId: '1' },
+    { time: '2026-04-21T12:00:00.00Z', eventId: '1' },
+    { time: '2026-04-21T14:00:00.00Z', eventId: '1' },
+    { time: '2026-04-22T10:00:00.00Z', eventId: '1' },
+    { time: '2026-04-22T11:00:00.00Z', eventId: '1' },
+    { time: '2026-04-22T12:00:00.00Z', eventId: '1' },
+    { time: '2026-04-22T14:00:00.00Z', eventId: '1' },
+    { time: '2026-04-23T10:00:00.00Z', eventId: '1' },
+    { time: '2026-04-23T11:00:00.00Z', eventId: '1' },
+    { time: '2026-04-23T12:00:00.00Z', eventId: '1' },
+    { time: '2026-04-23T14:00:00.00Z', eventId: '1' },
 
-    '2026-04-22T10:00:00.00Z',
-    '2026-04-22T11:00:00.00Z',
-    '2026-04-22T12:00:00.00Z',
-    '2026-04-22T14:00:00.00Z',
+    { time: '2026-05-12T10:00:00.00Z', eventId: '2' },
+    { time: '2026-05-12T11:00:00.00Z', eventId: '2' },
+    { time: '2026-05-12T12:00:00.00Z', eventId: '2' },
+    { time: '2026-05-12T14:00:00.00Z', eventId: '2' },
+    { time: '2026-05-13T10:00:00.00Z', eventId: '2' },
+    { time: '2026-05-13T11:00:00.00Z', eventId: '2' },
+    { time: '2026-05-13T12:00:00.00Z', eventId: '2' },
+    { time: '2026-05-13T14:00:00.00Z', eventId: '2' },
 
-    '2026-04-23T10:00:00.00Z',
-    '2026-04-23T11:00:00.00Z',
-    '2026-04-23T12:00:00.00Z',
-    '2026-04-23T14:00:00.00Z',
+    { time: '2026-06-16T10:00:00.00Z', eventId: '3' },
+    { time: '2026-06-16T11:00:00.00Z', eventId: '3' },
+    { time: '2026-06-16T12:00:00.00Z', eventId: '3' },
+    { time: '2026-06-16T14:00:00.00Z', eventId: '3' },
+    { time: '2026-06-17T10:00:00.00Z', eventId: '3' },
+    { time: '2026-06-17T11:00:00.00Z', eventId: '3' },
+    { time: '2026-06-17T12:00:00.00Z', eventId: '3' },
+    { time: '2026-06-17T14:00:00.00Z', eventId: '3' },
+
+    { time: '2026-09-08T10:00:00.00Z', eventId: '4' },
+    { time: '2026-09-08T11:00:00.00Z', eventId: '4' },
+    { time: '2026-09-08T12:00:00.00Z', eventId: '4' },
+    { time: '2026-09-08T14:00:00.00Z', eventId: '4' },
+    { time: '2026-09-09T10:00:00.00Z', eventId: '4' },
+    { time: '2026-09-09T11:00:00.00Z', eventId: '4' },
+    { time: '2026-09-09T12:00:00.00Z', eventId: '4' },
+    { time: '2026-09-09T14:00:00.00Z', eventId: '4' },
   ],
 
   slots: [
     {
       id: 'schedule-slot-001',
+      eventId: '1',
       trackId: '1',
       date: '2026-04-21',
       startTime: '2026-04-21T10:00:00.00Z',
@@ -48,6 +105,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-003',
+      eventId: '1',
       trackId: '3',
       date: '2026-04-21',
       startTime: '2026-04-21T10:00:00.00Z',
@@ -56,6 +114,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-043',
+      eventId: '1',
       trackId: '5',
       date: '2026-04-21',
       startTime: '2026-04-21T10:00:00.00Z',
@@ -64,6 +123,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-044',
+      eventId: '1',
       trackId: '3',
       date: '2026-04-21',
       startTime: '2026-04-21T11:00:00.00Z',
@@ -72,6 +132,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-009',
+      eventId: '1',
       trackId: '4',
       date: '2026-04-21',
       startTime: '2026-04-21T11:00:00.00Z',
@@ -80,6 +141,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-045',
+      eventId: '1',
       trackId: '1',
       date: '2026-04-21',
       startTime: '2026-04-21T12:00:00.00Z',
@@ -88,6 +150,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-017',
+      eventId: '1',
       trackId: '2',
       date: '2026-04-21',
       startTime: '2026-04-21T14:00:00.00Z',
@@ -96,6 +159,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-046',
+      eventId: '1',
       trackId: '1',
       date: '2026-04-22',
       startTime: '2026-04-22T10:00:00.00Z',
@@ -104,6 +168,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-025',
+      eventId: '1',
       trackId: '5',
       date: '2026-04-22',
       startTime: '2026-04-22T10:00:00.00Z',
@@ -112,6 +177,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-047',
+      eventId: '1',
       trackId: '3',
       date: '2026-04-22',
       startTime: '2026-04-22T11:00:00.00Z',
@@ -120,6 +186,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-032',
+      eventId: '1',
       trackId: '2',
       date: '2026-04-22',
       startTime: '2026-04-22T12:00:00.00Z',
@@ -128,6 +195,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-048',
+      eventId: '1',
       trackId: '5',
       date: '2026-04-22',
       startTime: '2026-04-22T12:00:00.00Z',
@@ -136,6 +204,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-039',
+      eventId: '1',
       trackId: '4',
       date: '2026-04-22',
       startTime: '2026-04-22T14:00:00.00Z',
@@ -144,6 +213,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-042',
+      eventId: '1',
       trackId: '2',
       date: '2026-04-23',
       startTime: '2026-04-23T10:00:00.00Z',
@@ -152,6 +222,7 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-049',
+      eventId: '1',
       trackId: '3',
       date: '2026-04-23',
       startTime: '2026-04-23T10:00:00.00Z',
@@ -160,17 +231,80 @@ export const initialSchedule = {
     },
     {
       id: 'schedule-slot-050',
+      eventId: '1',
       trackId: '5',
       date: '2026-04-23',
       startTime: '2026-04-23T14:00:00.00Z',
       endTime: '2026-04-23T14:45:00.00Z',
       proposalId: 'proposal-090',
     },
+    {
+      id: 'schedule-slot-051',
+      eventId: '2',
+      trackId: '2',
+      date: '2026-05-12',
+      startTime: '2026-05-12T10:00:00.00Z',
+      endTime: '2026-05-12T11:30:00.00Z',
+      proposalId: 'proposal-101',
+    },
+    {
+      id: 'schedule-slot-052',
+      eventId: '2',
+      trackId: '3',
+      date: '2026-05-12',
+      startTime: '2026-05-12T11:00:00.00Z',
+      endTime: '2026-05-12T11:45:00.00Z',
+      proposalId: 'proposal-102',
+    },
+    {
+      id: 'schedule-slot-053',
+      eventId: '3',
+      trackId: '4',
+      date: '2026-06-16',
+      startTime: '2026-06-16T10:00:00.00Z',
+      endTime: '2026-06-16T11:30:00.00Z',
+      proposalId: 'proposal-107',
+    },
+    {
+      id: 'schedule-slot-054',
+      eventId: '3',
+      trackId: '5',
+      date: '2026-06-16',
+      startTime: '2026-06-16T12:00:00.00Z',
+      endTime: '2026-06-16T12:45:00.00Z',
+      proposalId: 'proposal-108',
+    },
+    {
+      id: 'schedule-slot-055',
+      eventId: '4',
+      trackId: '5',
+      date: '2026-09-08',
+      startTime: '2026-09-08T10:00:00.00Z',
+      endTime: '2026-09-08T11:30:00.00Z',
+      proposalId: 'proposal-113',
+    },
+    {
+      id: 'schedule-slot-056',
+      eventId: '4',
+      trackId: '1',
+      date: '2026-09-08',
+      startTime: '2026-09-08T11:00:00.00Z',
+      endTime: '2026-09-08T11:45:00.00Z',
+      proposalId: 'proposal-114',
+    },
+    {
+      id: 'schedule-slot-057',
+      eventId: '4',
+      trackId: '2',
+      date: '2026-09-09',
+      startTime: '2026-09-09T10:00:00.00Z',
+      endTime: '2026-09-09T10:45:00.00Z',
+      proposalId: 'proposal-115',
+    },
   ],
 } satisfies Schedule;
 
 export const schedule: Schedule = {
-  eventId: initialSchedule.eventId,
   days: [...initialSchedule.days],
   times: [...initialSchedule.times],
   slots: [...initialSchedule.slots],
@@ -179,9 +313,11 @@ export const schedule: Schedule = {
 const createScheduleSlot = (
   payload: PatchScheduleAssignRequest,
 ): ScheduleSlot => {
-  const { trackId, date, startTime, endTime, proposalId } = payload;
+  const { trackId, date, startTime, endTime, proposalId, eventId } = payload;
+
   const slot: ScheduleSlot = {
     id: crypto.randomUUID(),
+    eventId,
     trackId,
     date,
     startTime,

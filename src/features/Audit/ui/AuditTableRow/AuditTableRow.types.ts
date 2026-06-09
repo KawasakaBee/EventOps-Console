@@ -1,5 +1,6 @@
 import { AuditLog } from '@/entities/audit/model/types';
 import { GetCommentsResponse } from '@/entities/comment/api/contracts';
+import { GetEventsListResponse } from '@/entities/event/api/contracts';
 import { GetReviewersResponse } from '@/entities/reviewer/api/contracts';
 import { GetUsersListResponse } from '@/entities/user/api/contracts';
 import { AppBaseQueryError } from '@/shared/api/baseApi';
@@ -17,6 +18,9 @@ export interface IAuditTableRowProps {
   comments: GetCommentsResponse | undefined;
   isCommentsLoading: boolean;
   isCommentsError: boolean;
+  events: GetEventsListResponse | undefined;
+  isEventsLoading: boolean;
+  isEventsError: boolean;
 }
 
 export interface IAuditRenderCellProps {

@@ -114,7 +114,12 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
 
   const handleReviewerAssignDialogOpen = () => {
     if (!details.proposal) return;
-    dispatch(openSingleAssignReviewer({ id: details.proposal.id }));
+    dispatch(
+      openSingleAssignReviewer({
+        id: details.proposal.id,
+        eventIds: [details.proposal.eventId],
+      }),
+    );
   };
 
   const handleReviewCreateDialogOpen = () => {
@@ -129,7 +134,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
 
   const handleToScheduleRedirect = () => {
     if (!proposal || proposal.status !== 'accepted') return;
-    router.push('/schedule');
+    router.push(`/schedule?eventId=${proposal.eventId}`);
   };
 
   return (

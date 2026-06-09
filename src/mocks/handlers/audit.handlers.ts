@@ -9,6 +9,7 @@ import { paginateAudit } from '../utils/auditList';
 import { parseAuditListQuery } from '@/entities/audit/lib/parseAuditListQuery';
 import { GetAuditListResponse } from '@/entities/audit/api/contracts';
 import { audit } from '../db/audit';
+import { AuditLog } from '@/entities/audit/model/types';
 
 export const auditHandlers = [
   http.get('/api/audit', ({ request, cookies }) => {
@@ -23,7 +24,9 @@ export const auditHandlers = [
     if (!access) return forbiddenError();
 
     const queryParams = parseAuditListQuery(request.url);
-    let result = audit;
+    let result: AuditLog[] = audit.filter((item) =>
+      user.eventIds.includes(item.eventId),
+    );
 
     result = applyAuditSearch(queryParams, result);
     result = applyAuditFilters(queryParams, result);

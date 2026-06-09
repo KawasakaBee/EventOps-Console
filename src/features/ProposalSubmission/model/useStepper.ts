@@ -45,6 +45,11 @@ const useStepper = (id: ID | null, clearStorage: () => void) => {
 
     const formValues = getValues();
 
+    if (activeStep === 'basic' && formValues.eventId === '') {
+      await trigger('eventId', { shouldFocus: true });
+      return;
+    }
+
     const { duration, ...restValues } = formValues;
     const normalizeDuration = Number(duration);
 

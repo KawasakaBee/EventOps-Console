@@ -13,12 +13,19 @@ import { ID } from '@/shared/types/primitives.types';
 
 export const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getSchedule: build.query<GetScheduleResponse, string>({
-      query: (searchParams) => `/schedule?${searchParams}`,
+    getSchedule: build.query<
+      GetScheduleResponse,
+      { id: ID; searchParams: string }
+    >({
+      query: ({ id, searchParams }) => `/schedule/${id}?${searchParams}`,
       providesTags: [{ type: 'Schedule', id: 'LIST' }],
     }),
-    getProposalsByTrackId: build.query<GetProposalsByTrackIdResponse, ID>({
-      query: (id) => `/schedule/proposals/${id}`,
+    getProposalsByTrackId: build.query<
+      GetProposalsByTrackIdResponse,
+      { eventId: ID; trackId: ID }
+    >({
+      query: ({ eventId, trackId }) =>
+        `/schedule/${eventId}/proposals/${trackId}`,
       providesTags: [{ type: 'Proposal', id: 'LIST' }],
     }),
     assignProposal: build.mutation<
@@ -33,6 +40,7 @@ export const scheduleApi = baseApi.injectEndpoints({
       invalidatesTags: [
         { type: 'Schedule', id: 'LIST' },
         { type: 'Proposal', id: 'LIST' },
+        { type: 'Audit', id: 'LIST' },
       ],
     }),
     unassignProposal: build.mutation<
@@ -47,13 +55,14 @@ export const scheduleApi = baseApi.injectEndpoints({
       invalidatesTags: [
         { type: 'Schedule', id: 'LIST' },
         { type: 'Proposal', id: 'LIST' },
+        { type: 'Audit', id: 'LIST' },
       ],
     }),
   }),
 });
 
 export const {
-  useGetScheduleQuery,
+  useLazyGetScheduleQuery,
   useLazyGetProposalsByTrackIdQuery,
   useAssignProposalMutation,
   useUnassignProposalMutation,

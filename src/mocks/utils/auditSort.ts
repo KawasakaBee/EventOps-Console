@@ -5,6 +5,7 @@ import {
 import { SortOrder } from '@/shared/types/primitives.types';
 import { AuditLog } from '@/entities/audit/model/types';
 import { AuditListQuery } from '@/entities/audit/model/query';
+import { events } from '../db/events';
 
 const sortByAuditId = (
   audit: AuditLog[],
@@ -27,6 +28,29 @@ const sortByAuditEntityId = (
     return sortOrder === 'asc'
       ? a[sortBy].localeCompare(b[sortBy], 'en')
       : b[sortBy].localeCompare(a[sortBy], 'en');
+  });
+};
+
+const sortByEventId = (
+  audit: AuditLog[],
+  sortBy: 'eventId',
+  sortOrder: SortOrder,
+): AuditLog[] => {
+  const eventsById = new Map(events.map((event) => [event.id, event]));
+
+  return audit.toSorted((a, b) => {
+    const aValue = eventsById.get(a[sortBy]);
+    const bValue = eventsById.get(b[sortBy]);
+
+    if (!aValue || !bValue) {
+      return sortOrder === 'asc'
+        ? Number(a[sortBy]) - Number(b[sortBy])
+        : Number(b[sortBy]) - Number(a[sortBy]);
+    }
+
+    return sortOrder === 'asc'
+      ? aValue.title.localeCompare(bValue.title, 'ru')
+      : bValue.title.localeCompare(aValue.title, 'ru');
   });
 };
 
@@ -97,6 +121,7 @@ export const applyAuditSort = (
     return sortByAuditEntity(audit, sortBy, sortOrder);
   if (sortBy === 'entityId')
     return sortByAuditEntityId(audit, sortBy, sortOrder);
+  if (sortBy === 'eventId') return sortByEventId(audit, sortBy, sortOrder);
   if (sortBy === 'actorId') return sortByAuditActorId(audit, sortBy, sortOrder);
   if (sortBy === 'action') return sortByAuditAction(audit, sortBy, sortOrder);
   if (sortBy === 'createdAt')

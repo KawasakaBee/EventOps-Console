@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import {
   NEXT_HEADER_ROWS,
@@ -7,7 +7,7 @@ import {
 } from '@/shared/config/layout';
 import { getMinutesDiff } from '@/entities/schedule/lib/grid';
 import {
-  useGetScheduleQuery,
+  useLazyGetScheduleQuery,
   useUnassignProposalMutation,
 } from '../api/scheduleApi';
 import { addHourToIso } from '@/shared/utils/formatTimeAndDate';
@@ -20,7 +20,7 @@ const useScheduleData = () => {
   // state
   const searchParams = useSearchParams();
   const stringifySearchParams = searchParams.toString();
-  const schedule = useGetScheduleQuery(stringifySearchParams);
+  const [getSchedule, getState] = useLazyGetScheduleQuery();
   const tracks = useGetTracksQuery();
   const [unassignProposal, unassignState] = useUnassignProposalMutation();
 
@@ -35,20 +35,21 @@ const useScheduleData = () => {
   const [unassignConfirm, setUnassignConfirm] = useState<
     { opened: true; id: string } | { opened: false }
   >({ opened: false });
+  const selectedEvent = searchParams.get('eventId') ?? '';
 
   const timeIntervals: { from: string; to: string }[] = useMemo(() => {
-    const data = schedule.data;
+    const data = getState.data;
     if (!data) return [];
 
     return data.times.map((time, idx) => {
-      const nextTime = data.times[idx + 1];
+      const nextTime = data.times[idx + 1]?.time;
 
       return {
-        from: time,
-        to: nextTime ?? addHourToIso(time),
+        from: time.time,
+        to: nextTime ?? addHourToIso(time.time),
       };
     });
-  }, [schedule.data]);
+  }, [getState.data]);
 
   const rowsCount = useMemo(
     () =>
@@ -80,6 +81,14 @@ const useScheduleData = () => {
       }, []),
     [timeIntervals],
   );
+
+  // useEffect
+
+  useEffect(() => {
+    if (selectedEvent === '') return;
+
+    getSchedule({ id: selectedEvent, searchParams: stringifySearchParams });
+  }, [selectedEvent, getSchedule, stringifySearchParams]);
 
   // handlers
 
@@ -113,7 +122,7 @@ const useScheduleData = () => {
   };
 
   return {
-    schedule,
+    schedule: getState,
     tracks,
     unassignState,
     timeIntervals,
@@ -122,6 +131,9 @@ const useScheduleData = () => {
     selectedSlot,
     unassignResult,
     unassignConfirm,
+    selectedEvent,
+    stringifySearchParams,
+    getSchedule,
     setSelectedSlot,
     setUnassignConfirm,
     handleUnassignClose,

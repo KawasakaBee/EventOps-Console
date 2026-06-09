@@ -12,6 +12,7 @@ export interface ProposalListQuery {
   search: string | null;
   status: ProposalStatus[];
   trackId: ID[];
+  eventId: ID[];
   level: ProposalLevel[];
   format: ProposalFormat[];
   reviewerId: string | null;

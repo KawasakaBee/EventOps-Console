@@ -22,6 +22,7 @@ import {
 } from '../../model/tableColumns';
 import getProposalsListRowActions from '@/entities/proposal/lib/getProposalsListRowActions';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
+import { Event } from '@/entities/event/model/types';
 
 const ProposalsTableRow = memo(
   ({
@@ -33,6 +34,10 @@ const ProposalsTableRow = memo(
     isTracksLoading,
     isTracksError,
     tracksError,
+    events,
+    isEventsLoading,
+    isEventsError,
+    eventsError,
   }: IProposalTableRowProps) => {
     const dispatch = useAppDispatch();
 
@@ -49,6 +54,15 @@ const ProposalsTableRow = memo(
           title: 'Трек не удалось загрузить',
           description: '',
           order: 0,
+        }
+      );
+    };
+
+    const event = (proposal: ProposalListItem, events: Event[]) => {
+      const foundEvent = events.find((event) => event.id === proposal.eventId);
+      return (
+        foundEvent ?? {
+          title: 'Событие не удалось загрузить',
         }
       );
     };
@@ -82,6 +96,20 @@ const ProposalsTableRow = memo(
               ? track(proposal, tracks.tracks).title
               : 'Не удалось загрузить трек';
         }
+        case 'eventId': {
+          if (isEventsLoading)
+            return (
+              <Skeleton
+                variant="text"
+                width={proposalTableWidthDictionary[rowName].skeletonWidth}
+              />
+            );
+          return isEventsError
+            ? getApiErrorMessage(eventsError)
+            : events
+              ? event(proposal, events.events).title
+              : 'Не удалось загрузить событие';
+        }
         case 'updatedAt':
           return formatIsoDateTime(data.updatedAt);
         case 'actions':
@@ -111,6 +139,7 @@ const ProposalsTableRow = memo(
               <ProposalsRowActions
                 actions={rowActions}
                 proposalId={proposal.id}
+                proposalEventId={proposal.eventId}
                 proposalStatus={proposal.status}
                 availableStatuses={proposal.availableStatuses}
               />

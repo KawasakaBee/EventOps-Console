@@ -45,6 +45,7 @@ import SearchInput from '@/shared/ui/SearchInput/SearchInput';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 
 const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   searchParams,
@@ -59,10 +60,12 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   );
 
   const tracks = useGetTracksQuery();
+  const events = useGetEventsQuery();
   const reviewers = useGetReviewersQuery();
 
   const statusesList = filters.status;
   const trackIdsList = filters.trackId;
+  const eventIdsList = filters.eventId;
   const levelsList = filters.level;
   const formatsList = filters.format;
 
@@ -87,13 +90,14 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   const sx = styles();
 
   useEffect(() => {
-    const { search, status, trackId, level, format, reviewerId } =
+    const { search, status, trackId, eventId, level, format, reviewerId } =
       parseProposalsListQuery(`${pathname}?${queryString}`);
 
     const filtersStoreBody: FiltersState['draftFilters'] = {
       search,
       status,
       trackId,
+      eventId,
       level,
       format,
       reviewerId,
@@ -121,6 +125,10 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
 
   const handleTrackIdFilter = (value: ID[] | string) => {
     filterArrayQueryParams(value, 'trackId', isId);
+  };
+
+  const handleEventIdFilter = (value: ID[] | string) => {
+    filterArrayQueryParams(value, 'eventId', isId);
   };
 
   const handleLevelFilter = (value: ProposalLevel[] | string) => {
@@ -153,6 +161,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
     if (
       queryType === 'status' ||
       queryType === 'trackId' ||
+      queryType === 'eventId' ||
       queryType === 'level' ||
       queryType === 'format'
     ) {
@@ -172,6 +181,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
     setFilterParam('search', params);
     setFilterParam('status', params);
     setFilterParam('trackId', params);
+    setFilterParam('eventId', params);
     setFilterParam('level', params);
     setFilterParam('format', params);
     setFilterParam('reviewerId', params);
@@ -204,6 +214,41 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
               </MenuItem>
             ))}
           </Select>
+        </FormControl>
+
+        <FormControl
+          disabled={isDisabled || events.isLoading || events.isError}
+          sx={sx.filterInput}
+        >
+          {events.isLoading ? (
+            <Skeleton variant="text" />
+          ) : (
+            <>
+              <InputLabel id="proposal-eventId-select">Событие</InputLabel>
+              <Select
+                value={eventIdsList}
+                labelId="proposal-eventId-select"
+                label="Событие"
+                multiple
+                onChange={(event) => handleEventIdFilter(event.target.value)}
+              >
+                {events.isError ? (
+                  <MenuItem>{getApiErrorMessage(events.error)}</MenuItem>
+                ) : events.data ? (
+                  events.data.events.map((event) => (
+                    <MenuItem
+                      key={`Select-option-${event.id}`}
+                      value={event.id}
+                    >
+                      {event.title}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem>Нет доступных событий</MenuItem>
+                )}
+              </Select>
+            </>
+          )}
         </FormControl>
 
         <FormControl

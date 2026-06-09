@@ -15,6 +15,7 @@ import {
 } from '@/entities/proposal/model/types';
 import { mapProposalsToListItems } from '../utils/proposalList';
 import { Role } from '@/entities/user/model/types';
+import { ID } from '@/shared/types/primitives.types';
 
 const getKpis = (proposals: Proposal[]): DashboardKpis => {
   return {
@@ -142,13 +143,20 @@ const getAttentionItems = (proposals: Proposal[]): AttentionItem[] => {
   ];
 };
 
-export const getDashboard = (days: DashboardRange, role: Role): Dashboard => {
-  const proposals = getProposalsInsideRange(dbProposals, days);
+export const getDashboard = (
+  eventId: ID,
+  days: DashboardRange,
+  role: Role,
+): Dashboard => {
+  const eventProposals = dbProposals.filter(
+    (proposal) => proposal.eventId === eventId,
+  );
+  const proposals = getProposalsInsideRange(eventProposals, days);
   const kpis = getKpis(proposals);
   const submissionsByStatus = getSubmissionsByStatus(proposals);
   const byTrack = getProposalsByTrackId(proposals);
   const recentSubmissions = getRecentSubmissions(proposals, role);
-  const attentionItems = getAttentionItems(dbProposals);
+  const attentionItems = getAttentionItems(eventProposals);
 
   return {
     kpis,

@@ -22,6 +22,7 @@ export const parseProposalsListQuery = (
     search: url.searchParams.get('search'),
     status: url.searchParams.getAll('status').filter(isProposalStatus),
     trackId: url.searchParams.getAll('trackId'),
+    eventId: url.searchParams.getAll('eventId'),
     level: url.searchParams.getAll('level').filter(isProposalLevel),
     format: url.searchParams.getAll('format').filter(isProposalFormat),
     reviewerId: url.searchParams.get('reviewerId'),

@@ -26,7 +26,7 @@ export const stepsNumbersByName: Record<SubmitStep, number> = {
 export const steps = {
   basic: {
     id: 'basic',
-    fields: ['title', 'format', 'duration', 'level', 'trackId'],
+    fields: ['eventId', 'title', 'format', 'duration', 'level', 'trackId'],
   },
   description: {
     id: 'description',

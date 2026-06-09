@@ -8,6 +8,7 @@ import {
 } from './schema';
 
 const validBasicCourse = {
+  eventId: '1',
   title:
     'Дизайн-система в реальном продукте: где заканчивается UI kit на реальном кейсе',
   format: 'workshop',

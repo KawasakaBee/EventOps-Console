@@ -19,6 +19,7 @@ export const mapProposalsToListItems = (
     format: p.format,
     level: p.level,
     trackId: p.trackId,
+    eventId: p.eventId,
     updatedAt: p.updatedAt,
     availableStatuses: getAvailableProposalStatuses(
       p.status,

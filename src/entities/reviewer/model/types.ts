@@ -9,4 +9,6 @@ export interface Reviewer {
   reviews: Review[];
 }
 
-export type ReviewerListItem = Pick<Reviewer, 'id' | 'name'>;
+export type ReviewerListItem = Pick<Reviewer, 'id' | 'name'> & {
+  eventIds: ID[];
+};

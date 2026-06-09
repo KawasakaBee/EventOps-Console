@@ -17,6 +17,7 @@ import {
 import { useAuth } from '@/entities/user/model/AuthProvider';
 import MyProposalsTableRow from '../MyProposalsTableRow/MyProposalsTableRow';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 
 const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
   proposalsList,
@@ -24,6 +25,7 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
   const { user } = useAuth();
 
   const { data, isLoading, isError, error } = useGetTracksQuery();
+  const events = useGetEventsQuery();
 
   const sx = styles();
 
@@ -61,6 +63,10 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
               isTracksLoading={isLoading}
               isTracksError={isError}
               tracksError={error}
+              events={events.data}
+              isEventsLoading={events.isLoading}
+              isEventsError={events.isError}
+              eventsError={events.error}
             />
           ))}
         </TableBody>

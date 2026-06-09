@@ -7,6 +7,7 @@ const validTestPayload = {
   startTime: '2026-04-21T10:00:00.00Z',
   endTime: '2026-04-21T11:30:00.00Z',
   proposalId: 'proposal-067',
+  eventId: '1',
 };
 
 describe('isValidScheduleAssignment', () => {
@@ -32,6 +33,7 @@ describe('isValidScheduleAssignment', () => {
         trackId: '3',
         startTime: '2026-04-22T12:00:00.00Z',
         endTime: '2026-04-22T14:00:00.00Z',
+        eventId: '1',
       }),
     ).toBe(true);
   });
@@ -109,6 +111,7 @@ describe('isValidScheduleAssignment', () => {
         date: '2026-04-22',
         startTime: '2026-04-22T12:00:00.00Z',
         endTime: '2026-04-22T12:30:00.00Z',
+        eventId: '1',
       }),
     ).toBe('TIME_CONFLICT');
   });
@@ -121,6 +124,7 @@ describe('isValidScheduleAssignment', () => {
         date: '2026-04-22',
         startTime: '2026-04-22T10:00:00.00Z',
         endTime: '2026-04-22T10:45:00.00Z',
+        eventId: '1',
       }),
     ).toBe('SPEAKER_CONFLICT');
   });

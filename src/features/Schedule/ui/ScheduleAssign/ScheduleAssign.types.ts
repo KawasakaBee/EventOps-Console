@@ -19,4 +19,5 @@ export interface IScheduleAssignProps {
       endTime: string;
     } | null>
   >;
+  selectedEvent: ID;
 }

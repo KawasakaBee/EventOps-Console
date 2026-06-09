@@ -16,6 +16,7 @@ export const reviewerAssignApi = baseApi.injectEndpoints({
       invalidatesTags: (_result, _error, arg) => [
         { type: 'Proposal', id: arg.id },
         { type: 'Proposal', id: 'LIST' },
+        { type: 'Dashboard', id: 'LIST' },
       ],
     }),
   }),

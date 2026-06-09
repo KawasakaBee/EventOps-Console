@@ -17,6 +17,7 @@ export interface AuditLog {
   id: ID;
   entityType: AuditEntity;
   entityId: ID;
+  eventId: ID;
   action: AuditAction;
   actorId: ID;
   payload: Record<string, unknown>;

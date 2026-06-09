@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import {
   forbiddenError,
   proposalError,
+  queryError,
   scheduleAssignError,
   slotError,
   unassignError,
@@ -32,18 +33,30 @@ import zodErrorParse from '../utils/zodErrorParse';
 import { isValidScheduleAssignment } from '../utils/isValidScheduleAssignment';
 import scheduleAssignErrorParse from '../utils/scheduleAssignErrorParse';
 import { proposals, updateProposalStatus } from '../db/proposals';
-import { appendProposalHistory } from '../db/history';
+import { appendProposalHistory, createScheduleHistory } from '../db/history';
+import { isId } from '@/shared/utils/typeGuards';
+import { Schedule } from '@/entities/schedule/model/types';
 
 export const scheduleHandlers = [
-  http.get('/api/schedule', ({ request, cookies }) => {
+  http.get('/api/schedule/:id', ({ request, cookies, params }) => {
     const userId = cookies[AUTH_SESSION_COOKIE];
     const user = getUserById(userId);
 
     if (!user) return unauthorizedError();
     if (!isManagerLike(user.role)) return forbiddenError();
 
-    const queryParams = parseScheduleQuery(request.url, schedule);
-    let result = schedule;
+    const id = params.id;
+    if (!isId(id)) return queryError();
+
+    if (!user.eventIds.includes(id)) return forbiddenError();
+
+    let result: Schedule = {
+      days: schedule.days.filter((day) => day.eventId === id),
+      times: schedule.times.filter((time) => time.eventId === id),
+      slots: schedule.slots.filter((slot) => slot.eventId === id),
+    };
+
+    const queryParams = parseScheduleQuery(request.url, result);
 
     result = applyScheduleFilters(queryParams, result);
     const slots = scheduleSlotToResponseSlot(result.slots);
@@ -70,6 +83,8 @@ export const scheduleHandlers = [
 
     const body = parsedBody.data;
 
+    if (!user.eventIds.includes(body.eventId)) return forbiddenError();
+
     const assignmentValidation = isValidScheduleAssignment(body);
 
     if (assignmentValidation !== true) {
@@ -85,9 +100,12 @@ export const scheduleHandlers = [
 
     const [slot] = scheduleSlotToResponseSlot([assignScheduleSlot(body)]);
 
+    createScheduleHistory(slot.slot.id, userId, slot.slot.eventId, 'scheduled');
+
     const history = appendProposalHistory(
       proposal.id,
       userId,
+      proposal.eventId,
       { status: 'scheduled' },
       'status_changed',
     );
@@ -119,8 +137,9 @@ export const scheduleHandlers = [
     const { slotId } = parsedBody.data;
 
     const slot = schedule.slots.find((item) => item.id === slotId);
-
     if (!slot) return slotError();
+
+    if (!user.eventIds.includes(slot.eventId)) return forbiddenError();
 
     const proposal = proposals.find(
       (proposal) => proposal.id === slot.proposalId,
@@ -133,9 +152,12 @@ export const scheduleHandlers = [
     const usassignResult = unassignScheduleSlot(slot.id);
     if (usassignResult === null) return unassignError();
 
+    createScheduleHistory(slot.id, userId, slot.eventId, 'unscheduled');
+
     const history = appendProposalHistory(
       proposal.id,
       userId,
+      proposal.eventId,
       { status: 'accepted' },
       'status_changed',
     );

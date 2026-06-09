@@ -7,11 +7,22 @@ import { addHourToIso } from '@/shared/utils/formatTimeAndDate';
 import { getMinutesDiff } from '@/entities/schedule/lib/grid';
 import { AssignmentError } from './scheduleAssignErrorParse';
 import { speakers } from '../db/speakers';
+import { events } from '../db/events';
+import { Schedule } from '@/entities/schedule/model/types';
 
 export const isValidScheduleAssignment = (
   payload: PatchScheduleAssignRequest,
 ): true | AssignmentError => {
-  const { trackId, date, startTime, endTime, proposalId } = payload;
+  const { trackId, date, startTime, endTime, proposalId, eventId } = payload;
+
+  const event = events.find((event) => event.id === eventId);
+  if (!event) return 'EVENT_NOT_FOUND';
+
+  const scheduleByEventId: Schedule = {
+    days: schedule.days.filter((day) => day.eventId === event.id),
+    times: schedule.times.filter((time) => time.eventId === event.id),
+    slots: schedule.slots.filter((slot) => slot.eventId === event.id),
+  };
 
   const proposal = proposals.find((proposal) => proposal.id === proposalId);
   if (!proposal) return 'PROPOSAL_NOT_FOUND';
@@ -25,9 +36,10 @@ export const isValidScheduleAssignment = (
 
   if (!isTrackValid) return 'TRACK_MISMATCH';
 
-  const isDateValid = schedule.days.some((day) => day.date === date);
+  const scheduleDay = scheduleByEventId.days.find((day) => day.date === date);
 
-  if (!isDateValid) return 'INVALID_DAY';
+  if (!scheduleDay) return 'INVALID_DAY';
+  if (scheduleDay.eventId !== proposal.eventId) return 'INVALID_DAY';
 
   const intervalsDiff = getMinutesDiff(startTime, endTime);
 
@@ -44,14 +56,14 @@ export const isValidScheduleAssignment = (
     return 'INVALID_INTERVAL';
   }
 
-  const dayTimes = schedule.times
-    .filter((time) => time.startsWith(date))
-    .sort((a, b) => toMs(a) - toMs(b));
+  const dayTimes = scheduleByEventId.times
+    .filter((time) => time.time.startsWith(date))
+    .sort((a, b) => toMs(a.time) - toMs(b.time));
 
   if (dayTimes.length === 0) return 'INVALID_INTERVAL';
 
-  const dayStart = toMs(dayTimes[0]);
-  const dayEnd = toMs(addHourToIso(dayTimes[dayTimes.length - 1]));
+  const dayStart = toMs(dayTimes[0].time);
+  const dayEnd = toMs(addHourToIso(dayTimes[dayTimes.length - 1].time));
 
   const isInsideScheduleDay = dayStart <= assignFrom && assignTo <= dayEnd;
 
@@ -63,18 +75,20 @@ export const isValidScheduleAssignment = (
 
   if (busySpeakers.length === 0) return 'SPEAKERS_NOT_FOUND';
 
-  const speakersAnotherScheduleSlots = schedule.slots.filter((slot) => {
-    if (slot.date !== date) return false;
+  const speakersAnotherScheduleSlots = scheduleByEventId.slots.filter(
+    (slot) => {
+      if (slot.date !== date) return false;
 
-    const scheduledProposal = proposals.find(
-      (proposal) => proposal.id === slot.proposalId,
-    );
-    if (!scheduledProposal) return false;
+      const scheduledProposal = proposals.find(
+        (proposal) => proposal.id === slot.proposalId,
+      );
+      if (!scheduledProposal) return false;
 
-    for (const speaker of busySpeakers) {
-      if (scheduledProposal.speakerIds.includes(speaker.id)) return true;
-    }
-  });
+      for (const speaker of busySpeakers) {
+        if (scheduledProposal.speakerIds.includes(speaker.id)) return true;
+      }
+    },
+  );
 
   const hasSpeakersOverlap = speakersAnotherScheduleSlots.some((slot) => {
     const slotFrom = toMs(slot.startTime);
@@ -85,7 +99,7 @@ export const isValidScheduleAssignment = (
 
   if (hasSpeakersOverlap) return 'SPEAKER_CONFLICT';
 
-  const busySlots = schedule.slots.filter(
+  const busySlots = scheduleByEventId.slots.filter(
     (slot) =>
       slot.trackId === trackId &&
       slot.date === date &&

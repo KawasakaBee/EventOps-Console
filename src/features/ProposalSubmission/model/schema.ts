@@ -20,6 +20,7 @@ export const speakerBaseSchema = z.object({
 });
 
 const proposalSubmissionBaseSchema = z.object({
+  eventId: z.string().trim().min(1, 'Обязательное поле'),
   title: z
     .string()
     .trim()
@@ -52,6 +53,7 @@ const proposalSubmissionBaseSchema = z.object({
 
 export const basicSchema = proposalSubmissionBaseSchema
   .pick({
+    eventId: true,
     title: true,
     format: true,
     duration: true,

@@ -288,6 +288,97 @@ export const initialComments = [
       'После ревью можно будет принять решение по статусу без дополнительного созвона.',
     createdAt: '2026-03-03T14:00:00.00Z',
   },
+
+  {
+    id: 'comment-033',
+    proposalId: 'proposal-101',
+    actorId: '2',
+    actorRole: 'manager',
+    message:
+      'Сильный workshop для API Forum: хорошо закрывает тему contract governance и подходит для opening блока Backend & API.',
+    createdAt: '2026-04-18T09:00:00.00Z',
+  },
+  {
+    id: 'comment-034',
+    proposalId: 'proposal-102',
+    actorId: 'reviewer-006',
+    actorRole: 'reviewer',
+    message:
+      'Материал полезный, но важно оставить больше времени на конкретные примеры incident review.',
+    createdAt: '2026-04-19T09:00:00.00Z',
+  },
+  {
+    id: 'comment-035',
+    proposalId: 'proposal-105',
+    actorId: 'reviewer-004',
+    actorRole: 'reviewer',
+    message:
+      'Нужно сузить тему: сейчас в заявке одновременно resilience, API governance и frontend architecture.',
+    createdAt: '2026-04-21T09:00:00.00Z',
+  },
+  {
+    id: 'comment-036',
+    proposalId: 'proposal-107',
+    actorId: 'manager-003',
+    actorRole: 'manager',
+    message:
+      'Хорошо ложится в продуктовую повестку события, можно использовать как anchor-workshop первого дня.',
+    createdAt: '2026-05-22T09:00:00.00Z',
+  },
+  {
+    id: 'comment-037',
+    proposalId: 'proposal-109',
+    actorId: 'reviewer-003',
+    actorRole: 'reviewer',
+    message:
+      'Заявка сильная, но слот пока не найден: тема может конкурировать с frontend platform блоком.',
+    createdAt: '2026-05-19T09:00:00.00Z',
+  },
+  {
+    id: 'comment-038',
+    proposalId: 'proposal-111',
+    actorId: 'reviewer-002',
+    actorRole: 'reviewer',
+    message:
+      'Хорошая идея для analytics секции, но стоит доказать, что воркшоп на 120 минут даст практический результат.',
+    createdAt: '2026-05-13T09:00:00.00Z',
+  },
+  {
+    id: 'comment-039',
+    proposalId: 'proposal-113',
+    actorId: '2',
+    actorRole: 'manager',
+    message:
+      'Отличный opening для AI/Data трека: есть data contracts, ownership и production-подход.',
+    createdAt: '2026-08-15T09:00:00.00Z',
+  },
+  {
+    id: 'comment-040',
+    proposalId: 'proposal-114',
+    actorId: 'reviewer-003',
+    actorRole: 'reviewer',
+    message:
+      'Сильная связка UX и AI: важно показать не только паттерны, но и failure states.',
+    createdAt: '2026-08-16T09:00:00.00Z',
+  },
+  {
+    id: 'comment-041',
+    proposalId: 'proposal-117',
+    actorId: 'reviewer-005',
+    actorRole: 'reviewer',
+    message:
+      'Нужно больше инженерной конкретики, иначе lightning talk уйдёт в общие privacy-принципы.',
+    createdAt: '2026-08-02T09:00:00.00Z',
+  },
+  {
+    id: 'comment-042',
+    proposalId: 'proposal-118',
+    actorId: 'reviewer-007',
+    actorRole: 'reviewer',
+    message:
+      'Попросил добавить конкретный rejected use case и критерии stop/go для roadmap.',
+    createdAt: '2026-08-04T09:00:00.00Z',
+  },
 ] satisfies Comment[];
 
 export const comments: Comment[] = [...initialComments];

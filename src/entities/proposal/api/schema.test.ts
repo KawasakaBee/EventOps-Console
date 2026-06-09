@@ -3,6 +3,7 @@ import { proposalDraftSchema } from './schema';
 
 const validDraftCourse = {
   status: 'draft',
+  eventId: '1',
   title:
     'Дизайн-система в реальном продукте: где заканчивается UI kit на реальном кейсе',
   format: 'workshop',

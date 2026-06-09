@@ -104,6 +104,7 @@ const ProposalPage = () => {
                 mode="single"
                 onClose={handleReviewerAssignDialogClose}
                 proposalId={assingReviewer.id}
+                eventIds={assingReviewer.eventIds}
               />
             )}
             {createReview.type === 'open' && (

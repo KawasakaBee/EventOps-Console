@@ -42,6 +42,7 @@ export const mapDraftToSubmitValues = (
   const draftSpeakers = draft.draftSpeakers.map(mapDraftSpeakerToSubmitSpeaker);
 
   return {
+    eventId: draft.eventId,
     title: draft.title,
     format: draft.format,
     duration: draft.duration === 0 ? '' : String(draft.duration),

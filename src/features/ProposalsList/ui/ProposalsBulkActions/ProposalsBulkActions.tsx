@@ -34,6 +34,16 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
     null,
   );
 
+  const selectedProposals = useMemo(
+    () => proposals.filter((proposal) => selectedIds.includes(proposal.id)),
+    [proposals, selectedIds],
+  );
+
+  const selectedEventIds = useMemo(
+    () => [...new Set(selectedProposals.map((proposal) => proposal.eventId))],
+    [selectedProposals],
+  );
+
   const availableActions: ProposalListAction[] = useMemo(() => {
     if (!proposals || proposals.length === 0 || selectedIds.length === 0)
       return [];
@@ -101,7 +111,12 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   };
 
   const handleReviewerAssign = () => {
-    dispatch(openMultipleAssignReviewer({ ids: selectedIds }));
+    dispatch(
+      openMultipleAssignReviewer({
+        ids: selectedIds,
+        eventIds: selectedEventIds,
+      }),
+    );
     handleStatusesMenuClose();
     handleActionsMenuClose();
   };

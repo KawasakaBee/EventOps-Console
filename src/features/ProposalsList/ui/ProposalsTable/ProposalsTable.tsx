@@ -24,6 +24,7 @@ import {
   proposalTableWidthDictionary,
 } from '../../model/tableColumns';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
@@ -38,6 +39,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
   );
 
   const { data, isLoading, isError, error } = useGetTracksQuery();
+  const events = useGetEventsQuery();
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');
@@ -148,6 +150,10 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
               isTracksLoading={isLoading}
               isTracksError={isError}
               tracksError={error}
+              events={events.data}
+              isEventsLoading={events.isLoading}
+              isEventsError={events.isError}
+              eventsError={events.error}
             />
           ))}
         </TableBody>

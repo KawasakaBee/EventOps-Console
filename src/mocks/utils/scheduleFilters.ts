@@ -9,7 +9,7 @@ export const applyScheduleFilters = (
   if (!day || day === '') return schedule;
   return {
     ...schedule,
-    times: schedule.times.filter((time) => time.slice(0, 10) === day),
+    times: schedule.times.filter((item) => item.time.slice(0, 10) === day),
     slots: schedule.slots.filter((slot) => slot.date === day),
   };
 };

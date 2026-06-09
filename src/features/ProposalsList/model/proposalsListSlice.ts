@@ -11,6 +11,7 @@ export type FiltersState = {
     search: string | null;
     status: ProposalStatus[];
     trackId: ID[];
+    eventId: ID[];
     level: ProposalLevel[];
     format: ProposalFormat[];
     reviewerId: ID | null;
@@ -23,6 +24,7 @@ const initialState: FiltersState = {
     search: null,
     status: [],
     trackId: [],
+    eventId: [],
     level: [],
     format: [],
     reviewerId: null,

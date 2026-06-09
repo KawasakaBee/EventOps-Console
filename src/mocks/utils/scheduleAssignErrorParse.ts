@@ -8,7 +8,8 @@ export type AssignmentError =
   | 'INVALID_INTERVAL'
   | 'TIME_CONFLICT'
   | 'SPEAKERS_NOT_FOUND'
-  | 'SPEAKER_CONFLICT';
+  | 'SPEAKER_CONFLICT'
+  | 'EVENT_NOT_FOUND';
 
 const scheduleAssignErrorParse = (error: AssignmentError): string => {
   switch (error) {
@@ -32,6 +33,8 @@ const scheduleAssignErrorParse = (error: AssignmentError): string => {
       return 'Спикеры не найдены';
     case 'SPEAKER_CONFLICT':
       return 'Спикеры данной заявки выступают в это время в другом треке';
+    case 'EVENT_NOT_FOUND':
+      return 'Событие не найдено';
     default:
       return 'Ошибка назначения';
   }

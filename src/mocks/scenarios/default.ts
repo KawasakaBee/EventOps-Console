@@ -1,6 +1,6 @@
-import { historyItemToAuditItem } from '../db/audit';
+import { historyItemToAuditItem, scheduleSlotToAuditItem } from '../db/audit';
 import { comments } from '../db/comments';
-import { history } from '../db/history';
+import { history, scheduleHistory } from '../db/history';
 import { proposals } from '../db/proposals';
 import { reviewers, reviews } from '../db/reviews';
 import { schedule } from '../db/schedule';
@@ -19,7 +19,11 @@ const defaultScenarioSnapshot: MockScenario = {
   reviewers: clone(reviewers),
   comments: clone(comments),
   history: clone(history),
-  audit: clone(history.map(historyItemToAuditItem)),
+  scheduleHistory: clone(scheduleHistory),
+  audit: [
+    ...clone(history.map(historyItemToAuditItem)),
+    ...clone(scheduleHistory.map(scheduleSlotToAuditItem)),
+  ],
   tracks: clone(tracks),
   schedule: clone(schedule),
 };
@@ -35,9 +39,10 @@ export const buildEmptyProposals = (): MockScenario => ({
   reviewers: [],
   comments: [],
   history: [],
+  scheduleHistory: [],
   audit: [],
   tracks: [],
-  schedule: { eventId: '', days: [], times: [], slots: [] },
+  schedule: { days: [], times: [], slots: [] },
 });
 
 export const buildEmptyWithProposals = (): MockScenario => ({
@@ -48,7 +53,8 @@ export const buildEmptyWithProposals = (): MockScenario => ({
   reviewers: [],
   comments: [],
   history: [],
+  scheduleHistory: [],
   audit: [],
   tracks: clone(defaultScenarioSnapshot.tracks),
-  schedule: { eventId: '', days: [], times: [], slots: [] },
+  schedule: { days: [], times: [], slots: [] },
 });

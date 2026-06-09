@@ -5,6 +5,7 @@ const getSubmissionErrorState = (
   error: ErrorEnvelope['error'],
   actions: {
     retry: () => void;
+    onClose?: () => void;
   },
 ): ErrorStateProps => {
   switch (error.code) {
@@ -15,10 +16,15 @@ const getSubmissionErrorState = (
         subtitle: 'Некоторые поля не прошли проверку:',
         fullHeight: true,
         fields: error.fields,
-        action: {
-          handler: actions.retry,
-          buttonName: 'Вернуться к заполнению',
-        },
+        action: actions.onClose
+          ? {
+              handler: actions.onClose,
+              buttonName: 'Вернуться к заполнению',
+            }
+          : {
+              handler: actions.retry,
+              buttonName: 'Попытаться ещё раз',
+            },
       };
     }
     case 'FORBIDDEN':

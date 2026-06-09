@@ -12,6 +12,7 @@ export const sortBy = [
   'format',
   'level',
   'trackId',
+  'eventId',
   'updatedAt',
 ] as const;
 
@@ -22,6 +23,7 @@ export const auditSortBy = [
   'action',
   'entityType',
   'entityId',
+  'eventId',
   'actorId',
   'createdAt',
 ] as const;

@@ -7,6 +7,7 @@ const validSchemaCourse = {
   startTime: 'testStartTime',
   endTime: 'testEndTime',
   proposalId: 'testProposalId',
+  eventId: '1',
 };
 
 describe('scheduleSchema', () => {

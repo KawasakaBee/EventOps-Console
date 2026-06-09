@@ -19,6 +19,7 @@ export type ProposalSubmitField = (typeof proposalSumbitFields)[number];
 
 export type ProposalSubmitFieldsName =
   | 'Статус'
+  | 'Событие'
   | 'Название'
   | 'Формат'
   | 'Продолжительность, мин'
@@ -38,6 +39,7 @@ export const proposalSubmitFieldsDictionary: Record<
   ProposalSubmitFieldsName
 > = {
   status: 'Статус',
+  eventId: 'Событие',
   title: 'Название',
   format: 'Формат',
   duration: 'Продолжительность, мин',

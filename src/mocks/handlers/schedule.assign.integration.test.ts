@@ -13,6 +13,7 @@ const validTestPayload = {
   startTime: '2026-04-21T10:00:00.00Z',
   endTime: '2026-04-21T11:30:00.00Z',
   proposalId: 'proposal-067',
+  eventId: '1',
 };
 
 describe('/api/schedule/assign', () => {
@@ -33,13 +34,15 @@ describe('/api/schedule/assign', () => {
       schedule.slots.findIndex((slot) => slot.id === body.slot.slot.id),
     ).not.toBe(-1);
 
-    const scheduleResponse = await fetch('/api/schedule?date=2026-04-21', {
+    const scheduleResponse = await fetch('/api/schedule/1?date=2026-04-21', {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
         Cookie: `${AUTH_SESSION_COOKIE}=2`,
       },
     });
+
+    expect(scheduleResponse.status).toBe(200);
 
     const updatedSchedule: GetScheduleResponse = await scheduleResponse.json();
 
@@ -185,6 +188,7 @@ describe('/api/schedule/assign', () => {
         date: '2026-04-22',
         startTime: '2026-04-22T10:00:00.00Z',
         endTime: '2026-04-22T10:45:00.00Z',
+        eventId: '1',
       }),
     });
 
@@ -238,13 +242,15 @@ describe('/api/schedule/unassign', () => {
       schedule.slots.findIndex((slot) => slot.id === 'schedule-slot-001'),
     ).toBe(-1);
 
-    const scheduleResponse = await fetch('/api/schedule?date=2026-04-21', {
+    const scheduleResponse = await fetch('/api/schedule/1?date=2026-04-21', {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
         Cookie: `${AUTH_SESSION_COOKIE}=2`,
       },
     });
+
+    expect(scheduleResponse.status).toBe(200);
 
     const updatedSchedule: GetScheduleResponse = await scheduleResponse.json();
 

@@ -39,6 +39,7 @@ import {
   queryError,
   reviewerError,
   unauthorizedError,
+  userError,
   validationError,
 } from '../utils/httpErrors';
 import {
@@ -82,6 +83,8 @@ import { createReviewSchema } from '@/entities/review/api/schema';
 import { addCommentSchema } from '@/entities/comment/api/schema';
 import { tracks } from '../db/tracks';
 import { schedule } from '../db/schedule';
+import { events } from '../db/events';
+import { Proposal } from '@/entities/proposal/model/types';
 
 export const proposalHandlers = [
   http.get('/api/proposals', async ({ request, cookies }) => {
@@ -92,7 +95,9 @@ export const proposalHandlers = [
 
     const userRole = user.role;
 
-    let result = proposals;
+    let result: Proposal[] = proposals.filter((proposal) =>
+      user.eventIds.includes(proposal.eventId),
+    );
 
     const queryParams = parseProposalsListQuery(request.url);
     const access = getProposalsListAccess(userRole, queryParams.owner);
@@ -133,6 +138,8 @@ export const proposalHandlers = [
 
     const proposal = getProposalById(id);
     if (!proposal) return proposalError();
+
+    if (!user.eventIds.includes(proposal.eventId)) return forbiddenError();
 
     const isUserHaveAccess = canReadProposal(userRole, userId, {
       proposalId: proposal.id,
@@ -202,10 +209,12 @@ export const proposalHandlers = [
     if (user.role !== 'speaker') return forbiddenError();
     if (!user.speakerId) return forbiddenError();
 
+    if (!user.eventIds.includes(body.eventId)) return forbiddenError();
+
     const proposal = createProposal(body, user.speakerId);
 
     const response: PostProposalResponse = { proposal };
-    createHistory(proposal.id, userId, 'created');
+    createHistory(proposal.id, userId, proposal.eventId, 'created');
 
     return HttpResponse.json(response, { status: 201 });
   }),
@@ -235,8 +244,27 @@ export const proposalHandlers = [
 
     const body = parsedBody.data;
 
+    if (body.eventId && !user.eventIds.includes(body.eventId))
+      return forbiddenError();
+
     const prevProposal = getProposalById(id);
     if (!prevProposal) return proposalError();
+
+    if (
+      prevProposal.status !== 'draft' &&
+      prevProposal.status !== 'changes_requested'
+    )
+      return forbiddenError();
+
+    if (
+      prevProposal.status === 'changes_requested' &&
+      body.eventId !== undefined &&
+      body.eventId !== prevProposal.eventId
+    ) {
+      return forbiddenError();
+    }
+
+    if (!user.eventIds.includes(prevProposal.eventId)) return forbiddenError();
 
     const proposalBody = mapProposalRequestToProposalBody(
       body,
@@ -248,8 +276,15 @@ export const proposalHandlers = [
       !isHistoryValueEqual(prevProposal.status, body.status);
 
     const historyAction = isStatusChanged ? 'status_changed' : 'updated';
+    const historyEventId = body.eventId ?? prevProposal.eventId;
 
-    appendProposalHistory(id, userId, proposalBody, historyAction);
+    appendProposalHistory(
+      id,
+      userId,
+      historyEventId,
+      proposalBody,
+      historyAction,
+    );
 
     const proposal = updateProposal(id, proposalBody);
     if (!proposal) return proposalError();
@@ -260,7 +295,6 @@ export const proposalHandlers = [
 
     return HttpResponse.json(response);
   }),
-
   http.patch(
     '/api/proposals/:id/status',
     async ({ request, params, cookies }) => {
@@ -280,6 +314,9 @@ export const proposalHandlers = [
 
       const prevProposal = proposals.find((proposal) => proposal.id === id);
       if (!prevProposal) return proposalError();
+
+      if (!user.eventIds.includes(prevProposal.eventId))
+        return forbiddenError();
 
       const canUserChangeProposalStatus = isManagerLike(userRole);
       if (!canUserChangeProposalStatus) return forbiddenError();
@@ -306,6 +343,7 @@ export const proposalHandlers = [
       const history = appendProposalHistory(
         id,
         userId,
+        prevProposal.eventId,
         { status },
         'status_changed',
         { reason },
@@ -366,8 +404,15 @@ export const proposalHandlers = [
       const reviewer = reviewers.find((item) => item.id === reviewerId);
       if (!reviewer) return reviewerError();
 
+      const reviewerUser = getUserById(reviewer.id);
+      if (!reviewerUser) return userError();
+
       const proposal = proposals.find((proposal) => proposal.id === id);
       if (!proposal) return proposalError();
+
+      if (!user.eventIds.includes(proposal.eventId)) return forbiddenError();
+      if (!reviewerUser.eventIds.includes(proposal.eventId))
+        return forbiddenError();
 
       const canUserChangeProposalStatus = isManagerLike(userRole);
       if (!canUserChangeProposalStatus) return forbiddenError();
@@ -376,9 +421,15 @@ export const proposalHandlers = [
         return forbiddenError();
 
       assignReviewer(id, reviewer);
-      appendAdditionalHistory(id, userId, 'reviewer_assigned', {
-        reviewerId: reviewer.id,
-      });
+      appendAdditionalHistory(
+        id,
+        userId,
+        proposal.eventId,
+        'reviewer_assigned',
+        {
+          reviewerId: reviewer.id,
+        },
+      );
 
       const response: PostAssignReviewerResponse = {
         proposalId: id,
@@ -409,16 +460,27 @@ export const proposalHandlers = [
         return validationError(errorBody);
       }
 
+      const proposal = proposals.find((proposal) => proposal.id === id);
+      if (!proposal) return proposalError();
+
+      if (!user.eventIds.includes(proposal.eventId)) return forbiddenError();
+
       const body = parsedBody.data;
 
       const isUserCanCreateReview = canCreateReview(userRole, id, userId);
       if (!isUserCanCreateReview) return forbiddenError();
 
       const review = createReview(id, userId, body);
-      const history = appendAdditionalHistory(id, userId, 'review_added', {
-        reviewId: review.id,
-        recommendation: review.recommendation,
-      });
+      const history = appendAdditionalHistory(
+        id,
+        userId,
+        proposal.eventId,
+        'review_added',
+        {
+          reviewId: review.id,
+          recommendation: review.recommendation,
+        },
+      );
 
       if (!history) return proposalError();
 
@@ -454,15 +516,26 @@ export const proposalHandlers = [
         return validationError(errorBody);
       }
 
+      const proposal = proposals.find((proposal) => proposal.id === id);
+      if (!proposal) return proposalError();
+
+      if (!user.eventIds.includes(proposal.eventId)) return forbiddenError();
+
       const body = parsedBody.data;
 
       const isUserCanCreateComment = canUserCreateComment(userRole, id, userId);
       if (!isUserCanCreateComment) return forbiddenError();
 
       const comment = createComment(id, userId, userRole, body.message);
-      const history = appendAdditionalHistory(id, userId, 'comment_added', {
-        commentId: comment.id,
-      });
+      const history = appendAdditionalHistory(
+        id,
+        userId,
+        proposal.eventId,
+        'comment_added',
+        {
+          commentId: comment.id,
+        },
+      );
 
       if (!history) return proposalError();
 
@@ -474,36 +547,46 @@ export const proposalHandlers = [
       return HttpResponse.json(response, { status: 201 });
     },
   ),
-  http.get('/api/schedule/proposals/:id', async ({ params, cookies }) => {
-    const userId = cookies[AUTH_SESSION_COOKIE];
-    const user = getUserById(userId);
+  http.get(
+    '/api/schedule/:eventId/proposals/:trackId',
+    async ({ params, cookies }) => {
+      const userId = cookies[AUTH_SESSION_COOKIE];
+      const user = getUserById(userId);
 
-    if (!user) return unauthorizedError();
-    if (!isManagerLike(user.role)) return forbiddenError();
+      if (!user) return unauthorizedError();
+      if (!isManagerLike(user.role)) return forbiddenError();
 
-    const trackId = params.id;
+      const eventId = params.eventId;
+      const trackId = params.trackId;
 
-    if (!isId(trackId)) return queryError();
+      if (!isId(trackId) || !isId(eventId)) return queryError();
 
-    const track = tracks.find((track) => track.id === trackId);
+      const event = events.find((event) => event.id === eventId);
+      if (!event) return queryError();
 
-    if (!track) return queryError();
+      if (!user.eventIds.includes(eventId)) return forbiddenError();
 
-    const response: GetProposalsByTrackIdResponse = {
-      proposals: proposals
-        .filter(
-          (proposal) =>
-            proposal.trackId === track.id &&
-            proposal.status === 'accepted' &&
-            !schedule.slots.some((slot) => slot.proposalId === proposal.id),
-        )
-        .map(({ id, title, duration }) => ({
-          id,
-          label: title,
-          duration,
-        })),
-    };
+      const track = tracks.find((track) => track.id === trackId);
+      if (!track) return queryError();
 
-    return HttpResponse.json(response);
-  }),
+      const response: GetProposalsByTrackIdResponse = {
+        proposals: proposals
+          .filter(
+            (proposal) =>
+              proposal.eventId === event.id &&
+              proposal.trackId === track.id &&
+              proposal.status === 'accepted' &&
+              !schedule.slots.some((slot) => slot.proposalId === proposal.id),
+          )
+          .map(({ id, title, duration, eventId }) => ({
+            id,
+            label: title,
+            duration,
+            eventId,
+          })),
+      };
+
+      return HttpResponse.json(response);
+    },
+  ),
 ];

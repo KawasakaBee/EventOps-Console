@@ -27,6 +27,9 @@ export const applyProposalFilters = (
   const trackSet = queryParams.trackId.length
     ? new Set(queryParams.trackId)
     : null;
+  const eventSet = queryParams.eventId.length
+    ? new Set(queryParams.eventId)
+    : null;
   const levelSet = queryParams.level.length ? new Set(queryParams.level) : null;
   const formatSet = queryParams.format.length
     ? new Set(queryParams.format)
@@ -40,6 +43,7 @@ export const applyProposalFilters = (
     return (
       (!statusSet || statusSet.has(proposal.status)) &&
       (!trackSet || trackSet.has(proposal.trackId)) &&
+      (!eventSet || eventSet.has(proposal.eventId)) &&
       (!levelSet || levelSet.has(proposal.level)) &&
       (!formatSet || formatSet.has(proposal.format)) &&
       (!reviewerSet || reviewerSet.has(proposal.id))

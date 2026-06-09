@@ -7,6 +7,7 @@ import {
   statusDictionary,
 } from '@/entities/proposal/model/dictionaries';
 import { ProposalListQuery } from '@/entities/proposal/model/query';
+import { events } from '../db/events';
 
 const sortById = (
   proposals: Proposal[],
@@ -105,6 +106,29 @@ const sortByTrackId = (
   });
 };
 
+const sortByEventId = (
+  proposals: Proposal[],
+  sortBy: 'eventId',
+  sortOrder: SortOrder,
+): Proposal[] => {
+  const eventsById = new Map(events.map((event) => [event.id, event]));
+
+  return proposals.toSorted((a, b) => {
+    const aValue = eventsById.get(a[sortBy]);
+    const bValue = eventsById.get(b[sortBy]);
+
+    if (!aValue || !bValue) {
+      return sortOrder === 'asc'
+        ? Number(a[sortBy]) - Number(b[sortBy])
+        : Number(b[sortBy]) - Number(a[sortBy]);
+    }
+
+    return sortOrder === 'asc'
+      ? aValue.title.localeCompare(bValue.title, 'ru')
+      : bValue.title.localeCompare(aValue.title, 'ru');
+  });
+};
+
 const sortByUpdatedTime = (
   proposals: Proposal[],
   sortBy: 'updatedAt',
@@ -132,6 +156,7 @@ export const applyProposalSort = (
   if (sortBy === 'format') return sortByFormat(proposals, sortBy, sortOrder);
   if (sortBy === 'level') return sortByLevel(proposals, sortBy, sortOrder);
   if (sortBy === 'trackId') return sortByTrackId(proposals, sortBy, sortOrder);
+  if (sortBy === 'eventId') return sortByEventId(proposals, sortBy, sortOrder);
   if (sortBy === 'updatedAt')
     return sortByUpdatedTime(proposals, sortBy, sortOrder);
 

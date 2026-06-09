@@ -26,6 +26,7 @@ const useScheduleAssignData = (
       endTime: string;
     } | null>
   >,
+  selectedEvent: ID,
 ) => {
   // state
   const searchParams = useSearchParams();
@@ -37,6 +38,7 @@ const useScheduleAssignData = (
   const [selectedTrack, setSelectedTrack] = useState('');
   const [selectedProposal, setSelectedProposal] = useState<{
     id: ID;
+    eventId: ID;
     label: string;
     duration: number;
   } | null>(null);
@@ -101,11 +103,11 @@ const useScheduleAssignData = (
     setSelectedTrack(track);
     setSelectedProposal(null);
     setSelectedInterval('');
-    getProposals(track);
+    getProposals({ eventId: selectedEvent, trackId: track });
   };
 
   const handleProposalSelect = (
-    proposal: { id: ID; label: string; duration: number } | null,
+    proposal: { id: ID; label: string; duration: number; eventId: ID } | null,
   ) => {
     if (selectedTrack === '') return;
 
@@ -127,7 +129,12 @@ const useScheduleAssignData = (
   };
 
   const handleProposalAssign = async () => {
-    if (selectedTrack === '' || !selectedProposal || selectedInterval === '')
+    if (
+      selectedTrack === '' ||
+      !selectedProposal ||
+      selectedInterval === '' ||
+      selectedEvent === ''
+    )
       return;
 
     const [startTime, endTime] = selectedInterval.split(',');
@@ -135,6 +142,7 @@ const useScheduleAssignData = (
     const payload: PatchScheduleAssignRequest = {
       trackId: selectedTrack,
       proposalId: selectedProposal.id,
+      eventId: selectedEvent,
       startTime,
       endTime,
       date: searchParams.get('date') ?? days[0].date,

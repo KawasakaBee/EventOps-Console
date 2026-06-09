@@ -74,6 +74,7 @@ export type ProposalActionName = (typeof proposalActionsNames)[number];
 
 export interface Proposal {
   id: ID;
+  eventId: string;
   title: string;
   abstract: string;
   takeaways: string;
@@ -95,7 +96,14 @@ export interface Proposal {
 
 export type ProposalListItem = Pick<
   Proposal,
-  'id' | 'title' | 'status' | 'format' | 'level' | 'trackId' | 'updatedAt'
+  | 'id'
+  | 'title'
+  | 'status'
+  | 'format'
+  | 'level'
+  | 'trackId'
+  | 'eventId'
+  | 'updatedAt'
 > & {
   availableStatuses: ProposalStatus[];
 };
@@ -111,6 +119,7 @@ export const proposalEditableKeys = [
   'level',
   'duration',
   'trackId',
+  'eventId',
   'speakerIds',
   'tags',
   'notes',
@@ -129,6 +138,7 @@ export type ProposalEditPayload = Pick<
   | 'level'
   | 'duration'
   | 'trackId'
+  | 'eventId'
   | 'speakerIds'
   | 'tags'
   | 'notes'

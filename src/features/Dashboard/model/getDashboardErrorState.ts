@@ -4,15 +4,73 @@ import { ErrorStateProps } from '../../../shared/ui/ErrorState/ErrorState.types'
 const getDashboardErrorState = (
   error: ErrorEnvelope['error'],
   actions: {
-    onClose: () => void;
+    retry: () => void;
   },
 ): ErrorStateProps => {
-  return {
-    type: 'snackbar',
-    title: 'Ошибка авторизации',
-    open: true,
-    onClose: actions.onClose,
-  };
+  switch (error.code) {
+    case 'FORBIDDEN':
+      return {
+        type: 'state',
+        title: 'Доступ заблокирован',
+        subtitle: 'Вы попали на страницу, к которой у Вас нет доступа.',
+        link: {
+          to: '/login',
+          buttonName: 'Перейти на страницу авторизации',
+        },
+      };
+    case 'AUTH_REQUIRED':
+      return {
+        type: 'state',
+        title: 'Ошибка авторизации',
+        subtitle:
+          'Сервис не может Вас авторизовать, попробуйте авторизоваться заново.',
+        fullHeight: true,
+        link: {
+          to: '/login',
+          buttonName: 'Перейти на страницу авторизации',
+        },
+      };
+    case 'INVALID_RESPONSE':
+      return {
+        type: 'state',
+        title: 'Запрос не удался',
+        subtitle: 'Попробуйте отправить запрос снова.',
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
+        },
+      };
+    case 'UNKNOWN_ERROR':
+      return {
+        type: 'state',
+        title: 'Неизвестная ошибка',
+        subtitle: 'Попробуйте отправить запрос снова.',
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
+        },
+      };
+    case 'NETWORK_ERROR':
+      return {
+        type: 'state',
+        title: 'Не удалось подключиться к серверу',
+        subtitle: 'Проверьте соединение и попробуйте снова.',
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
+        },
+      };
+    default:
+      return {
+        type: 'state',
+        title: 'Что-то пошло не так...',
+        subtitle: 'Попробуйте отправить запрос снова.',
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
+        },
+      };
+  }
 };
 
 export default getDashboardErrorState;

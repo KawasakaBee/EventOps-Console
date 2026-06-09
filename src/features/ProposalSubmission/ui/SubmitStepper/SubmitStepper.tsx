@@ -151,6 +151,7 @@ const SubmitStepper: React.FC<ISubmitStepperProps> = ({
                     <ErrorState
                       {...getSubmissionErrorState(createState.error.error, {
                         retry: handleDraftSubmit,
+                        onClose: handleDraftDialogClose,
                       })}
                     />
                   )}

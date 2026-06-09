@@ -20,11 +20,17 @@ const useReviewerAssignData = (props: AssignReviewerProps) => {
 
   const reviewersOptions = useMemo(
     () =>
-      (reviewers.data?.reviewers ?? []).map((item) => ({
-        label: item.name,
-        id: item.id,
-      })),
-    [reviewers.data],
+      (reviewers.data?.reviewers ?? [])
+        .filter((reviewer) =>
+          props.eventIds.every((eventId) =>
+            reviewer.eventIds.includes(eventId),
+          ),
+        )
+        .map((item) => ({
+          label: item.name,
+          id: item.id,
+        })),
+    [reviewers.data, props.eventIds],
   );
 
   // handlers

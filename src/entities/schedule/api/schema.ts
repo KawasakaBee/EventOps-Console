@@ -6,6 +6,7 @@ export const scheduleSchema = z.object({
   startTime: z.string().min(1, 'Обязательное значение'),
   endTime: z.string().min(1, 'Обязательное значение'),
   proposalId: z.string().min(1, 'Обязательное значение'),
+  eventId: z.string().min(1, 'Обязательное значение'),
 });
 
 export const unassignScheduleSchema = z.object({

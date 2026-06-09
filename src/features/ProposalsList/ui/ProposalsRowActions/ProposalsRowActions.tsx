@@ -17,6 +17,7 @@ import { openCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCrea
 const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
   actions,
   proposalId,
+  proposalEventId,
   proposalStatus,
   availableStatuses,
 }) => {
@@ -76,7 +77,9 @@ const ProposalsRowActions: React.FC<IProposalsRowActionProps> = ({
   };
 
   const handleReviewerAssign = () => {
-    dispatch(openSingleAssignReviewer({ id: proposalId }));
+    dispatch(
+      openSingleAssignReviewer({ id: proposalId, eventIds: [proposalEventId] }),
+    );
     handleMenuClose();
   };
 

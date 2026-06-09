@@ -1,6 +1,9 @@
 import { ProposalFormat } from '@/entities/proposal/model/types';
-import { ScheduleDay, ScheduleSlot } from '@/entities/schedule/model/types';
-import { ID } from '@/shared/types/primitives.types';
+import {
+  ScheduleDay,
+  ScheduleSlot,
+  ScheduleTime,
+} from '@/entities/schedule/model/types';
 
 export interface ResponseScheduleSlot {
   slot: ScheduleSlot;
@@ -11,9 +14,8 @@ export interface ResponseScheduleSlot {
 }
 
 export type GetScheduleResponse = {
-  eventId: ID;
   days: ScheduleDay[];
-  times: string[];
+  times: ScheduleTime[];
   slots: ResponseScheduleSlot[];
 };
 

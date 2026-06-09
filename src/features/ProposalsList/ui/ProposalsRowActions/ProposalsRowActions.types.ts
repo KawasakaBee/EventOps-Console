@@ -7,6 +7,7 @@ import { ID } from '@/shared/types/primitives.types';
 export interface IProposalsRowActionProps {
   actions: ProposalListRowAction[];
   proposalId: ID;
+  proposalEventId: ID;
   proposalStatus: ProposalStatus;
   availableStatuses: ProposalStatus[];
 }
