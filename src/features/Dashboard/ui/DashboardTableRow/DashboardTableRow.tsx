@@ -17,6 +17,8 @@ import {
 } from '../../model/tableColumns';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
+import { useRouter } from 'next/navigation';
+import { styles } from './styles';
 
 const DashboardTableRow = ({
   proposal,
@@ -29,6 +31,8 @@ const DashboardTableRow = ({
   isEventsError,
   eventsError,
 }: IDashboardTableRowProps) => {
+  const router = useRouter();
+
   const track = (proposal: ProposalListItem, tracks: Track[]) => {
     const foundTrack = tracks.find((track) => track.id === proposal.trackId);
     return (
@@ -48,6 +52,12 @@ const DashboardTableRow = ({
         title: 'Событие не удалось загрузить',
       }
     );
+  };
+
+  const sx = styles();
+
+  const handleToDetailsRedirect = () => {
+    router.push(`/proposals/${proposal.id}`);
   };
 
   const renderCell = ({ rowName, data }: ITableRowProps) => {
@@ -101,7 +111,7 @@ const DashboardTableRow = ({
   };
 
   return (
-    <TableRow>
+    <TableRow onClick={handleToDetailsRedirect} sx={sx.dashboardRow}>
       {recentListItemKeys.map((key) => (
         <TableCell key={`Table-body-cell-${key}`}>
           {renderCell({

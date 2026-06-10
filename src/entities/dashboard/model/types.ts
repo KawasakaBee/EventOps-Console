@@ -32,10 +32,18 @@ export interface AttentionItem {
   count: number;
 }
 
+export interface ReviewerWorkflowItem {
+  reviewerId: ID;
+  reviewerName: string;
+  assignedCount: number;
+  completedReviewsCount: number;
+}
+
 export interface Dashboard {
   kpis: DashboardKpis;
   submissionsByStatus: SubmissionsByStatusItem[];
   byTrack: ByTrackItem[];
   recentSubmissions: ProposalListItem[];
   attentionItems: AttentionItem[];
+  reviewersWorkflow: ReviewerWorkflowItem[];
 }

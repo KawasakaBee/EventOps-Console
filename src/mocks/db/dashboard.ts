@@ -4,10 +4,11 @@ import {
   Dashboard,
   DashboardKpis,
   DashboardRange,
+  ReviewerWorkflowItem,
   SubmissionsByStatusItem,
 } from '@/entities/dashboard/model/types';
 import { proposals as dbProposals } from './proposals';
-import { reviewers } from './reviews';
+import { reviewers, reviews } from './reviews';
 import {
   Proposal,
   ProposalListItem,
@@ -143,6 +144,46 @@ const getAttentionItems = (proposals: Proposal[]): AttentionItem[] => {
   ];
 };
 
+const getReviewersWorkflow = (
+  proposals: Proposal[],
+): ReviewerWorkflowItem[] => {
+  const assignedReviewers = reviewers.filter((reviewer) =>
+    proposals.some((proposal) => reviewer.proposalIds.includes(proposal.id)),
+  );
+
+  const assignedProposalsCount = new Map(
+    assignedReviewers.map((reviewer) => [
+      reviewer.id,
+      reviewer.proposalIds.filter((id) =>
+        proposals.some((proposal) => proposal.id === id),
+      ),
+    ]),
+  );
+
+  const completedProposalsCount = new Map(
+    assignedReviewers.map((reviewer) => [
+      reviewer.id,
+      reviewer.proposalIds
+        .filter((id) => proposals.some((proposal) => proposal.id === id))
+        .reduce((acc, v) => {
+          const foundReview = reviews.filter(
+            (review) =>
+              review.reviewerId === reviewer.id && review.proposalId === v,
+          );
+          if (foundReview.length === 0) return acc;
+          return acc + foundReview.length;
+        }, 0),
+    ]),
+  );
+
+  return assignedReviewers.map((reviewer) => ({
+    reviewerId: reviewer.id,
+    reviewerName: reviewer.name,
+    assignedCount: assignedProposalsCount.get(reviewer.id)?.length ?? 0,
+    completedReviewsCount: completedProposalsCount.get(reviewer.id) ?? 0,
+  }));
+};
+
 export const getDashboard = (
   eventId: ID,
   days: DashboardRange,
@@ -157,6 +198,7 @@ export const getDashboard = (
   const byTrack = getProposalsByTrackId(proposals);
   const recentSubmissions = getRecentSubmissions(proposals, role);
   const attentionItems = getAttentionItems(eventProposals);
+  const reviewersWorkflow = getReviewersWorkflow(proposals);
 
   return {
     kpis,
@@ -164,5 +206,6 @@ export const getDashboard = (
     byTrack,
     recentSubmissions,
     attentionItems,
+    reviewersWorkflow,
   };
 };

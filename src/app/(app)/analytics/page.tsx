@@ -1,5 +1,7 @@
+import AnalyticsPage from '@/features/Analytics/ui/AnalyticsPage/AnalyticsPage';
+
 const Analytics = () => {
-  return <>This is analytics page</>;
+  return <AnalyticsPage />;
 };
 
 export default Analytics;
