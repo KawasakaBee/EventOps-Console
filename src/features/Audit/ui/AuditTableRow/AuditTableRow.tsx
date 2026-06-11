@@ -3,10 +3,7 @@ import {
   IAuditRenderCellProps,
   IAuditTableRowProps,
 } from './AuditTableRow.types';
-import {
-  auditListItemKeys,
-  auditTableWidthDictionary,
-} from '../../model/tableColumns';
+import { auditListItemKeys } from '../../model/tableColumns';
 import {
   auditActionsDictionary,
   auditEntitiesDictionary,
@@ -31,6 +28,7 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
   events,
   isEventsLoading,
   isEventsError,
+  columnsWidth,
 }) => {
   const sx = styles();
 
@@ -71,7 +69,7 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
           return (
             <Skeleton
               variant="text"
-              width={auditTableWidthDictionary['eventId'].skeletonWidth}
+              width={columnsWidth['eventId'].skeletonWidth}
             />
           );
         if (isEventsError) return 'Не удалось определить событие';
@@ -84,7 +82,7 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
           return (
             <Skeleton
               variant="text"
-              width={auditTableWidthDictionary['actorId'].skeletonWidth}
+              width={columnsWidth['actorId'].skeletonWidth}
             />
           );
         if (isUsersError) return getApiErrorMessage(usersError);

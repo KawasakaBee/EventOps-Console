@@ -24,6 +24,7 @@ const SpeakerRow: React.FC<ISpeakerRowProps> = memo(
         label={speakerFieldsDictionary[field]}
         {...register(fieldName)}
         error={!!fieldError}
+        multiline
         helperText={fieldError?.message}
         slotProps={{
           inputLabel: {

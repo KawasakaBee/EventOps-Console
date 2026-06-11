@@ -9,6 +9,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import StatusChip from '@/shared/ui/StatusChip/StatusChip';
 import { formatIsoDateTime } from '@/shared/utils/formatTimeAndDate';
@@ -41,6 +42,8 @@ import { openCreateReviewDialog } from '@/features/ReviewCreate/model/reviewCrea
 import { openAddCommentDialog } from '@/features/CommentAdd/model/commentAddSlice';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
+import { theme } from '@/shared/theme/theme';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   details,
@@ -66,7 +69,10 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   const isAcceptAndRejectButtonDisable = details.reviews.length === 0;
   const isStatusMenuOpened = !!statusMenuAnchorEl;
 
-  const sx = styles({ action: 'edit' });
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+  const sx = styles({ isDesktop, isLaptop, viewportWidth });
 
   const track = (proposal: Proposal, tracks: Track[]) => {
     const foundTrack = tracks.find((track) => track.id === proposal.trackId);
@@ -185,7 +191,8 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                         )
                       }
                       isDisabled={isAcceptAndRejectButtonDisable}
-                      sx={styles({ action }).criticalButton}
+                      sx={sx.actionButton}
+                      intent={action === 'accept' ? 'success' : 'danger'}
                     >
                       {availableActionsDictionary[action]}
                     </Button>
@@ -197,7 +204,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="contained"
                   size="small"
-                  sx={styles({ action }).criticalButton}
+                  sx={sx.actionButton}
                   onClick={handleToEditRedirect}
                 >
                   {availableActionsDictionary[action]}
@@ -217,7 +224,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                       variant="outlined"
                       size="small"
                       onClick={handleStatusMenuOpen}
-                      sx={sx.statusButton}
+                      sx={sx.actionButton}
                     >
                       {availableActionsDictionary[action]}
                     </Button>
@@ -249,6 +256,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
+                  sx={sx.actionButton}
                   onClick={() => handlePendingStatusChange('changes_requested')}
                 >
                   {availableActionsDictionary[action]}
@@ -259,6 +267,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
+                  sx={sx.actionButton}
                   onClick={handleReviewerAssignDialogOpen}
                 >
                   {availableActionsDictionary[action]}
@@ -269,6 +278,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
+                  sx={sx.actionButton}
                   onClick={handleReviewCreateDialogOpen}
                 >
                   {availableActionsDictionary[action]}
@@ -279,30 +289,24 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
+                  sx={sx.actionButton}
                   onClick={handleCommentAddDialogOpen}
                 >
                   {availableActionsDictionary[action]}
                 </Button>
-              ) : action === 'schedule' ? (
-                <Button
-                  key={action}
-                  mode="button"
-                  variant="outlined"
-                  size="small"
-                  onClick={handleToScheduleRedirect}
-                >
-                  {availableActionsDictionary[action]}
-                </Button>
               ) : (
-                <Button
-                  key={action}
-                  mode="button"
-                  variant="outlined"
-                  size="small"
-                  isDisabled
-                >
-                  {availableActionsDictionary[action]}
-                </Button>
+                action === 'schedule' && (
+                  <Button
+                    key={action}
+                    mode="button"
+                    variant="outlined"
+                    size="small"
+                    sx={sx.actionButton}
+                    onClick={handleToScheduleRedirect}
+                  >
+                    {availableActionsDictionary[action]}
+                  </Button>
+                )
               ),
             )}
           </Stack>

@@ -11,6 +11,7 @@ const NotesRaw: React.FC<INotesRawProps> = ({ control, register }) => {
       label={proposalSubmitFieldsDictionary['notes']}
       {...register('notes')}
       error={!!errors['notes']}
+      multiline
       helperText={errors['notes']?.message}
     />
   );

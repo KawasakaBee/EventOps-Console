@@ -16,10 +16,7 @@ import {
   formatDictionary,
   levelDictionary,
 } from '@/entities/proposal/model/dictionaries';
-import {
-  proposalListItemKeys,
-  proposalTableWidthDictionary,
-} from '../../model/tableColumns';
+import { proposalListItemKeys } from '../../model/tableColumns';
 import getProposalsListRowActions from '@/entities/proposal/lib/getProposalsListRowActions';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { Event } from '@/entities/event/model/types';
@@ -38,6 +35,7 @@ const ProposalsTableRow = memo(
     isEventsLoading,
     isEventsError,
     eventsError,
+    columnsWidth,
   }: IProposalTableRowProps) => {
     const dispatch = useAppDispatch();
 
@@ -87,7 +85,7 @@ const ProposalsTableRow = memo(
             return (
               <Skeleton
                 variant="text"
-                width={proposalTableWidthDictionary[rowName].skeletonWidth}
+                width={columnsWidth[rowName].skeletonWidth}
               />
             );
           return isTracksError
@@ -101,7 +99,7 @@ const ProposalsTableRow = memo(
             return (
               <Skeleton
                 variant="text"
-                width={proposalTableWidthDictionary[rowName].skeletonWidth}
+                width={columnsWidth[rowName].skeletonWidth}
               />
             );
           return isEventsError

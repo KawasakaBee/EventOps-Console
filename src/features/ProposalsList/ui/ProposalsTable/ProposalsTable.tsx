@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  useMediaQuery,
 } from '@mui/material';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { isSortBy, isSortOrder } from '@/shared/utils/typeGuards';
@@ -25,6 +26,8 @@ import {
 } from '../../model/tableColumns';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
+import { theme } from '@/shared/theme/theme';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
@@ -40,6 +43,10 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
 
   const { data, isLoading, isError, error } = useGetTracksQuery();
   const events = useGetEventsQuery();
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');
@@ -61,7 +68,12 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
     [proposals, selectedIdsSet],
   );
 
-  const sx = useMemo(() => styles(), []);
+  const sx = useMemo(() => styles({ viewportWidth }), [viewportWidth]);
+
+  const columnsWidth = useMemo(
+    () => proposalTableWidthDictionary({ isDesktop, isLaptop, viewportWidth }),
+    [isDesktop, isLaptop, viewportWidth],
+  );
 
   const handleSort = (by: SortBy | 'actions' | 'availableStatuses') => {
     if (by === 'actions' || by === 'availableStatuses') return;
@@ -96,7 +108,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <colgroup>
-          {Object.entries(proposalTableWidthDictionary).map(([key, value]) => (
+          {Object.entries(columnsWidth).map(([key, value]) => (
             <col key={key} style={{ width: value.width }} />
           ))}
         </colgroup>
@@ -154,6 +166,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
               isEventsLoading={events.isLoading}
               isEventsError={events.isError}
               eventsError={events.error}
+              columnsWidth={columnsWidth}
             />
           ))}
         </TableBody>

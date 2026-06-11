@@ -1,8 +1,5 @@
 import { Skeleton, TableCell, TableRow } from '@mui/material';
-import {
-  myProposalListItemKeys,
-  myProposalTableWidthDictionary,
-} from '../../model/tableColumns';
+import { myProposalListItemKeys } from '../../model/tableColumns';
 import {
   IMyProposalsTableRowProps,
   IMyTableRowProps,
@@ -32,6 +29,7 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
   isEventsLoading,
   isEventsError,
   eventsError,
+  columnsWidth,
 }) => {
   const rowActions = useMemo(
     () => getProposalsListRowActions(role, proposal.status),
@@ -76,7 +74,7 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
           return (
             <Skeleton
               variant="text"
-              width={myProposalTableWidthDictionary[rowName].skeletonWidth}
+              width={columnsWidth[rowName].skeletonWidth}
             />
           );
         return isTracksError
@@ -90,7 +88,7 @@ const MyProposalsTableRow: React.FC<IMyProposalsTableRowProps> = ({
           return (
             <Skeleton
               variant="text"
-              width={myProposalTableWidthDictionary[rowName].skeletonWidth}
+              width={columnsWidth[rowName].skeletonWidth}
             />
           );
         return isEventsError

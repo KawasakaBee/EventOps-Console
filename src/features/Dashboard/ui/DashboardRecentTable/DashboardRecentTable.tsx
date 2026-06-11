@@ -1,4 +1,5 @@
 import {
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -16,6 +17,7 @@ import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 import DashboardTableRow from '../DashboardTableRow/DashboardTableRow';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import EmptyState from '@/shared/ui/EmptyState/EmptyState';
+import { styles } from './styles';
 
 const DashboardRecentTable: React.FC<IDashboardRecentTableProps> = ({
   dashboard,
@@ -24,6 +26,8 @@ const DashboardRecentTable: React.FC<IDashboardRecentTableProps> = ({
 
   const tracks = useGetTracksQuery();
   const events = useGetEventsQuery();
+
+  const sx = styles();
 
   return (
     <SectionCard title="Последние обновлённые заявки">
@@ -62,10 +66,12 @@ const DashboardRecentTable: React.FC<IDashboardRecentTableProps> = ({
           </Table>
         </TableContainer>
       ) : (
-        <EmptyState
-          title="Заявок пока нет"
-          subtitle="Когда спикеры отправят заявки, они появятся в этом списке."
-        />
+        <Stack sx={sx.emptyWrapper}>
+          <EmptyState
+            title="Заявок пока нет"
+            subtitle="Когда спикеры отправят заявки, они появятся в этом списке."
+          />
+        </Stack>
       )}
     </SectionCard>
   );

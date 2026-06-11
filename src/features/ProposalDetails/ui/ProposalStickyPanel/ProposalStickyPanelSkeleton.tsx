@@ -1,11 +1,16 @@
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
-import { Box, Skeleton, Stack } from '@mui/material';
+import { Box, Skeleton, Stack, useMediaQuery } from '@mui/material';
 
 import SecondaryStickyButtonsSkeleton from '../SecondaryStickyButtons/SecondaryStickyButtonsSkeleton';
 import { styles } from './styles';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import { theme } from '@/shared/theme/theme';
 
 const ProposalStickyPanelSkeleton = () => {
-  const sx = styles({ action: 'edit' });
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+  const sx = styles({ isDesktop, isLaptop, viewportWidth });
 
   return (
     <SectionCard title={null}>

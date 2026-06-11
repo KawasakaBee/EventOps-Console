@@ -6,22 +6,22 @@ const DashboardKpisSkeleton = () => {
     <Grid container spacing={2}>
       <Grid size={3}>
         <SectionCard title="Всего отправлено заявок">
-          <Skeleton variant="text" width={150} />
+          <Skeleton variant="text" width={80} />
         </SectionCard>
       </Grid>
       <Grid size={3}>
         <SectionCard title="Заявок в ревью">
-          <Skeleton variant="text" width={150} />
+          <Skeleton variant="text" width={80} />
         </SectionCard>
       </Grid>
       <Grid size={3}>
         <SectionCard title="Принято заявок">
-          <Skeleton variant="text" width={150} />
+          <Skeleton variant="text" width={80} />
         </SectionCard>
       </Grid>
       <Grid size={3}>
         <SectionCard title="Отклонено заявок">
-          <Skeleton variant="text" width={150} />
+          <Skeleton variant="text" width={80} />
         </SectionCard>
       </Grid>
     </Grid>

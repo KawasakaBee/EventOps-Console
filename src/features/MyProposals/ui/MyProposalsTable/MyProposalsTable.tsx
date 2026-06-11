@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useMediaQuery,
 } from '@mui/material';
 import { IMyProposalsTableProps } from './MyProposalsTable.types';
 import { styles } from './styles';
@@ -18,6 +19,9 @@ import { useAuth } from '@/entities/user/model/AuthProvider';
 import MyProposalsTableRow from '../MyProposalsTableRow/MyProposalsTableRow';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import { theme } from '@/shared/theme/theme';
+import { useMemo } from 'react';
 
 const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
   proposalsList,
@@ -27,17 +31,24 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
   const { data, isLoading, isError, error } = useGetTracksQuery();
   const events = useGetEventsQuery();
 
-  const sx = styles();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+  const sx = useMemo(() => styles({ viewportWidth }), [viewportWidth]);
+
+  const columnsWidth = useMemo(
+    () =>
+      myProposalTableWidthDictionary({ isDesktop, isLaptop, viewportWidth }),
+    [isDesktop, isLaptop, viewportWidth],
+  );
 
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <colgroup>
-          {Object.entries(myProposalTableWidthDictionary).map(
-            ([key, value]) => (
-              <col key={key} style={{ width: value.width }} />
-            ),
-          )}
+          {Object.entries(columnsWidth).map(([key, value]) => (
+            <col key={key} style={{ width: value.width }} />
+          ))}
         </colgroup>
 
         <TableHead>
@@ -67,6 +78,7 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
               isEventsLoading={events.isLoading}
               isEventsError={events.isError}
               eventsError={events.error}
+              columnsWidth={columnsWidth}
             />
           ))}
         </TableBody>

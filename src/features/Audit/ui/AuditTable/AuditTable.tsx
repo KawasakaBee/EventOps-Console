@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  useMediaQuery,
 } from '@mui/material';
 import { styles } from './styles';
 import {
@@ -24,6 +25,9 @@ import { useGetCommentsQuery } from '@/entities/comment/api/commentApi';
 import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
 import { useGetUsersQuery } from '@/entities/user/api/userApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
+import { theme } from '@/shared/theme/theme';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import { useMemo } from 'react';
 
 const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   const router = useRouter();
@@ -45,7 +49,15 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
       ? untypedSortOrder
       : 'asc';
 
-  const sx = styles();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+  const sx = useMemo(() => styles({ viewportWidth }), [viewportWidth]);
+
+  const columnsWidth = useMemo(
+    () => auditTableWidthDictionary({ isDesktop, isLaptop, viewportWidth }),
+    [isDesktop, isLaptop, viewportWidth],
+  );
 
   const handleSort = (by: AuditSortBy) => {
     const params = new URLSearchParams(stringifySearchParams);
@@ -68,7 +80,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <colgroup>
-          {Object.entries(auditTableWidthDictionary).map(([key, value]) => (
+          {Object.entries(columnsWidth).map(([key, value]) => (
             <col key={key} style={{ width: value.width }} />
           ))}
         </colgroup>
@@ -114,6 +126,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
               events={events.data}
               isEventsLoading={events.isLoading}
               isEventsError={events.isError}
+              columnsWidth={columnsWidth}
             />
           ))}
         </TableBody>

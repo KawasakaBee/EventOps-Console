@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useMediaQuery,
 } from '@mui/material';
 import { styles } from './styles';
 import {
@@ -14,19 +15,28 @@ import {
   myProposalTableWidthDictionary,
 } from '../../model/tableColumns';
 import MyProposalsTableRowSkeleton from '../MyProposalsTableRow/MyProposalsTableRowSkeleton';
+import { theme } from '@/shared/theme/theme';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
 
 const MyProposalsTableSkeleton = () => {
-  const sx = styles();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+  const sx = styles({ viewportWidth });
 
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <colgroup>
-          {Object.entries(myProposalTableWidthDictionary).map(
-            ([key, value]) => (
-              <col key={key} style={{ width: value.width }} />
-            ),
-          )}
+          {Object.entries(
+            myProposalTableWidthDictionary({
+              isDesktop,
+              isLaptop,
+              viewportWidth,
+            }),
+          ).map(([key, value]) => (
+            <col key={key} style={{ width: value.width }} />
+          ))}
         </colgroup>
 
         <TableHead>

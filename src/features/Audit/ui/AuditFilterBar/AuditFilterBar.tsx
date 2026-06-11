@@ -5,6 +5,7 @@ import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import {
   Autocomplete,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -70,7 +71,7 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
         isDisabled={isDisabled}
         handleSearchChange={handleSearchChange}
       />
-      <Stack direction="row" sx={sx.filtersWrapper}>
+      <Grid container spacing={2}>
         <FormControl disabled={isDisabled} sx={sx.filterInput}>
           <InputLabel id="proposal-action-select">Тип действия</InputLabel>
           <Select
@@ -137,7 +138,7 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
             Сбросить фильтры
           </Button>
         </Stack>
-      </Stack>
+      </Grid>
     </SectionCard>
   );
 };

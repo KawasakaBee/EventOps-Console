@@ -2,11 +2,11 @@ import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import {
   Autocomplete,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
   Skeleton,
-  Stack,
   TextField,
 } from '@mui/material';
 import { IProposalsFilterBarProps } from './ProposalsFilterBar.types';
@@ -198,7 +198,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
         isDisabled={isDisabled}
         handleSearchChange={handleSearchChange}
       />
-      <Stack direction="row" sx={sx.filtersWrapper}>
+      <Grid container spacing={2}>
         <FormControl disabled={isDisabled} sx={sx.filterInput}>
           <InputLabel id="proposal-status-select">Статус заявки</InputLabel>
           <Select
@@ -348,7 +348,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
         >
           Сбросить фильтры
         </Button>
-      </Stack>
+      </Grid>
     </SectionCard>
   );
 };

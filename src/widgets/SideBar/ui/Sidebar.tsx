@@ -1,7 +1,6 @@
 'use client';
 
 import { Drawer, Link } from '@mui/material';
-import { ISidebarProps } from './Sidebar.types';
 import NextLink from 'next/link';
 import { isNavigationRoute } from '@/shared/lib/routes/typeGuards';
 import { navigationDictionary } from '@/shared/lib/routes/dictionary';
@@ -9,13 +8,13 @@ import { routesByRole } from '@/entities/user/model/routeAccess';
 import { styles } from './styles';
 import { useAuth } from '@/entities/user/model/AuthProvider';
 
-const Sidebar: React.FC<ISidebarProps> = ({ sidebarSx }) => {
+const Sidebar = () => {
   const { user } = useAuth();
 
   const sx = styles();
 
   return (
-    <Drawer variant="permanent" sx={sidebarSx}>
+    <Drawer variant="permanent" sx={sx.sidebar}>
       {routesByRole[user.role].map((route) => {
         if (!isNavigationRoute(route)) return null;
 

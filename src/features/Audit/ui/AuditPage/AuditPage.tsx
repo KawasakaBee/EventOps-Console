@@ -3,7 +3,7 @@
 import { breadcrumbsDictionary } from '@/shared/lib/routes/dictionary';
 import { getBreadcrumbsRoute } from '@/shared/lib/routes/utils';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { usePathname, useSearchParams } from 'next/navigation';
 import useAuditData from '../../model/useAuditData';
 import { useMemo } from 'react';
@@ -57,7 +57,7 @@ const AuditPage = () => {
       >
         {null}
       </PageHeader>
-      {
+      <Stack spacing={4}>
         <InfoCards
           items={[
             { label: 'Всего действий:', value: data?.total },
@@ -70,46 +70,46 @@ const AuditPage = () => {
           ]}
           isLoading={isLoading}
         />
-      }
-      <AuditFilterBar
-        searchParams={stringifySearchParams}
-        isDisabled={isLoading || isError}
-        handleFiltersReset={auditFiltersReset}
-      />
-      {isLoading ? (
-        <AuditTableSkeleton />
-      ) : isError ? (
-        isAppBaseQueryError(error) && (
-          <ErrorState
-            {...getAuditErrorState(error.error, {
-              retry: refetch,
-              resetFilters: auditFiltersReset,
-            })}
+        <AuditFilterBar
+          searchParams={stringifySearchParams}
+          isDisabled={isLoading || isError}
+          handleFiltersReset={auditFiltersReset}
+        />
+        {isLoading ? (
+          <AuditTableSkeleton />
+        ) : isError ? (
+          isAppBaseQueryError(error) && (
+            <ErrorState
+              {...getAuditErrorState(error.error, {
+                retry: refetch,
+                resetFilters: auditFiltersReset,
+              })}
+            />
+          )
+        ) : data && data.items.length !== 0 ? (
+          <AuditTable audit={data.items} />
+        ) : activeFiltersCount === 0 ? (
+          <EmptyState
+            title="Данных пока нет"
+            subtitle="Когда будут совершены какие-либо действия, они появятся в этом списке."
           />
-        )
-      ) : data && data.items.length !== 0 ? (
-        <AuditTable audit={data.items} />
-      ) : activeFiltersCount === 0 ? (
-        <EmptyState
-          title="Данных пока нет"
-          subtitle="Когда будут совершены какие-либо действия, они появятся в этом списке."
-        />
-      ) : (
-        <EmptyState
-          title="По текущим фильтрам ничего не найдено"
-          subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
-          action={{
-            handler: auditFiltersReset,
-            buttonName: 'Сбросить фильтры',
-          }}
-        />
-      )}
-      {!isError && data?.totalPages !== 0 && (
-        <PaginationControl
-          totalPages={data?.totalPages}
-          isDisabled={isLoading}
-        />
-      )}
+        ) : (
+          <EmptyState
+            title="По текущим фильтрам ничего не найдено"
+            subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
+            action={{
+              handler: auditFiltersReset,
+              buttonName: 'Сбросить фильтры',
+            }}
+          />
+        )}
+        {!isError && data?.totalPages !== 0 && (
+          <PaginationControl
+            totalPages={data?.totalPages}
+            isDisabled={isLoading}
+          />
+        )}
+      </Stack>
     </>
   );
 };

@@ -19,6 +19,7 @@ const DescriptionStep = () => {
           label={proposalSubmitFieldsDictionary[field]}
           {...register(field)}
           error={!!errors[field]}
+          multiline
           helperText={errors[field]?.message}
         />
       ))}

@@ -19,6 +19,14 @@ export interface IProposalTableRowProps {
   isEventsLoading: boolean;
   isEventsError: boolean;
   eventsError: AppBaseQueryError | SerializedError | undefined;
+  columnsWidth: Record<
+    | Exclude<keyof ProposalListItem, 'availableStatuses'>
+    | ('actions' | 'checkbox'),
+    {
+      width: number;
+      skeletonWidth: number;
+    }
+  >;
 }
 
 export interface ITableRowProps {

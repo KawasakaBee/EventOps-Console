@@ -16,6 +16,10 @@ export interface IMyProposalsTableRowProps {
   isEventsLoading: boolean;
   isEventsError: boolean;
   eventsError: AppBaseQueryError | SerializedError | undefined;
+  columnsWidth: Record<
+    Exclude<keyof ProposalListItem, 'availableStatuses'> | 'actions',
+    { width: number; skeletonWidth: number }
+  >;
 }
 
 export interface IMyTableRowProps {

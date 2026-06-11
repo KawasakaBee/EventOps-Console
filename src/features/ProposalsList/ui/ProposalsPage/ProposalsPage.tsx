@@ -162,7 +162,7 @@ const ProposalsPage = () => {
           </Button>
         </Stack>
       </PageHeader>
-      {
+      <Stack spacing={4}>
         <InfoCards
           items={[
             { label: 'Всего заявок:', value: pagination.data?.total },
@@ -172,48 +172,48 @@ const ProposalsPage = () => {
           ]}
           isLoading={pagination.isLoading}
         />
-      }
-      <ProposalsFilterBar
-        searchParams={searchParams}
-        isDisabled={!pagination.isSuccess}
-        handleResetFilters={handleFiltersReset}
-      />
-      {pagination.isLoading ? (
-        <ProposalsTableSkeleton />
-      ) : pagination.isError ? (
-        isAppBaseQueryError(pagination.error) && (
-          <ErrorState
-            {...getProposalsErrorState(pagination.error.error, {
-              retry: pagination.refetch,
-              resetFilters: handleFiltersReset,
-            })}
-          />
-        )
-      ) : proposalList && proposalList.length !== 0 ? (
-        <ProposalsTable proposals={proposalList} role={user.role} />
-      ) : pagination.isSuccess && activeFiltersCount === 0 ? (
-        <EmptyState
-          title="Заявок пока нет"
-          subtitle="Когда спикеры отправят заявки, они появятся в этом списке."
+        <ProposalsFilterBar
+          searchParams={searchParams}
+          isDisabled={!pagination.isSuccess}
+          handleResetFilters={handleFiltersReset}
         />
-      ) : (
-        pagination.isSuccess && (
+        {pagination.isLoading ? (
+          <ProposalsTableSkeleton />
+        ) : pagination.isError ? (
+          isAppBaseQueryError(pagination.error) && (
+            <ErrorState
+              {...getProposalsErrorState(pagination.error.error, {
+                retry: pagination.refetch,
+                resetFilters: handleFiltersReset,
+              })}
+            />
+          )
+        ) : proposalList && proposalList.length !== 0 ? (
+          <ProposalsTable proposals={proposalList} role={user.role} />
+        ) : pagination.isSuccess && activeFiltersCount === 0 ? (
           <EmptyState
-            title="По текущим фильтрам ничего не найдено"
-            subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
-            action={{
-              handler: handleFiltersReset,
-              buttonName: 'Сбросить фильтры',
-            }}
+            title="Заявок пока нет"
+            subtitle="Когда спикеры отправят заявки, они появятся в этом списке."
           />
-        )
-      )}
-      {!pagination.isError && pagination.data?.totalPages !== 0 && (
-        <PaginationControl
-          totalPages={pagination.data?.totalPages}
-          isDisabled={pagination.isLoading}
-        />
-      )}
+        ) : (
+          pagination.isSuccess && (
+            <EmptyState
+              title="По текущим фильтрам ничего не найдено"
+              subtitle="Попробуйте изменить условия поиска или сбросить фильтры."
+              action={{
+                handler: handleFiltersReset,
+                buttonName: 'Сбросить фильтры',
+              }}
+            />
+          )
+        )}
+        {!pagination.isError && pagination.data?.totalPages !== 0 && (
+          <PaginationControl
+            totalPages={pagination.data?.totalPages}
+            isDisabled={pagination.isLoading}
+          />
+        )}
+      </Stack>
       {transition.type === 'single' && (
         <ProposalStatusTransitionDialog
           mode="single"

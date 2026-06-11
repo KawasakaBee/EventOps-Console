@@ -21,6 +21,10 @@ export interface IAuditTableRowProps {
   events: GetEventsListResponse | undefined;
   isEventsLoading: boolean;
   isEventsError: boolean;
+  columnsWidth: Record<
+    keyof AuditLog,
+    { width: number; skeletonWidth: number }
+  >;
 }
 
 export interface IAuditRenderCellProps {

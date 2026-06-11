@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  useMediaQuery,
 } from '@mui/material';
 import { styles } from './styles';
 import {
@@ -15,15 +16,27 @@ import {
   proposalListItemKeys,
   proposalTableWidthDictionary,
 } from '../../model/tableColumns';
+import { theme } from '@/shared/theme/theme';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
 
 const ProposalsTableSkeleton = () => {
-  const sx = styles();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+
+  const sx = styles({ viewportWidth });
 
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <colgroup>
-          {Object.entries(proposalTableWidthDictionary).map(([key, value]) => (
+          {Object.entries(
+            proposalTableWidthDictionary({
+              isDesktop,
+              isLaptop,
+              viewportWidth,
+            }),
+          ).map(([key, value]) => (
             <col key={key} style={{ width: value.width }} />
           ))}
         </colgroup>
@@ -59,7 +72,13 @@ const ProposalsTableSkeleton = () => {
                     <TableCell key={key}>
                       <Skeleton
                         variant="text"
-                        width={proposalTableWidthDictionary[key].skeletonWidth}
+                        width={
+                          proposalTableWidthDictionary({
+                            isDesktop,
+                            isLaptop,
+                            viewportWidth,
+                          })[key].skeletonWidth
+                        }
                       />
                     </TableCell>
                   );

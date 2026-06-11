@@ -2,18 +2,20 @@
 
 import Button from '@/shared/ui/Button/Button';
 import { AppBar as MuiAppBar, Typography } from '@mui/material';
-import { IAppBarProps } from './AppBar.types';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import { useAuth } from '@/entities/user/model/AuthProvider';
 import useAppBarData from '../model/useAppBarData';
+import { styles } from './styles';
 
-const AppBar: React.FC<IAppBarProps> = ({ sx }) => {
+const AppBar = () => {
   const { user } = useAuth();
 
   const { errorProps, handleLogout } = useAppBarData();
 
+  const sx = styles();
+
   return (
-    <MuiAppBar sx={sx}>
+    <MuiAppBar sx={sx.appbar}>
       <Typography variant="h2" sx={{ mb: 0 }}>
         {user.name}
       </Typography>

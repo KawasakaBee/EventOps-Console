@@ -32,7 +32,7 @@ const DashboardRecentTableSkeleton = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.from({ length: 20 }).map((_, rowIdx) => {
+          {Array.from({ length: 5 }).map((_, rowIdx) => {
             return (
               <TableRow key={rowIdx}>
                 {recentListItemKeys.map((key) => {

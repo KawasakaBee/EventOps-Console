@@ -80,7 +80,7 @@ const ProposalPage = () => {
               {null}
             </PageHeader>
             <Grid container spacing={2}>
-              <Grid size="grow">
+              <Grid size={10}>
                 <ProposalContent
                   data={pageData.data}
                   speakers={pageData.data.speakers}

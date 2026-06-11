@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  useMediaQuery,
 } from '@mui/material';
 import { styles } from './styles';
 import {
@@ -15,15 +16,22 @@ import {
   auditListItemKeys,
   auditTableWidthDictionary,
 } from '../../model/tableColumns';
+import { theme } from '@/shared/theme/theme';
+import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
 
 const AuditTableSkeleton = () => {
-  const sx = styles();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
+  const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
+  const viewportWidth = useResizeWindow();
+  const sx = styles({ viewportWidth });
 
   return (
     <TableContainer component={Paper} sx={sx.table}>
       <Table>
         <colgroup>
-          {Object.entries(auditTableWidthDictionary).map(([key, value]) => (
+          {Object.entries(
+            auditTableWidthDictionary({ isDesktop, isLaptop, viewportWidth }),
+          ).map(([key, value]) => (
             <col key={key} style={{ width: value.width }} />
           ))}
         </colgroup>
@@ -52,7 +60,13 @@ const AuditTableSkeleton = () => {
                   <TableCell key={key}>
                     <Skeleton
                       variant="text"
-                      width={auditTableWidthDictionary[key].skeletonWidth}
+                      width={
+                        auditTableWidthDictionary({
+                          isDesktop,
+                          isLaptop,
+                          viewportWidth,
+                        })[key].skeletonWidth
+                      }
                     />
                   </TableCell>
                 ))}

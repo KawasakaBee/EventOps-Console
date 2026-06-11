@@ -1,4 +1,5 @@
 import { AuditLog } from '@/entities/audit/model/types';
+import getResponsiveValue from '@/shared/utils/getResponsiveValue';
 
 export const auditListItemDictionary: Record<keyof AuditLog, string> = {
   id: 'ID действия',
@@ -22,40 +23,113 @@ export const auditListItemKeys: (keyof AuditLog)[] = [
   'createdAt',
 ];
 
-export const auditTableWidthDictionary: Record<
-  keyof AuditLog,
-  { width: number; skeletonWidth: number }
-> = {
+export const auditTableWidthDictionary: ({
+  isDesktop,
+  isLaptop,
+  viewportWidth,
+}: {
+  isDesktop: boolean;
+  isLaptop: boolean;
+  viewportWidth: number;
+}) => Record<keyof AuditLog, { width: number; skeletonWidth: number }> = ({
+  isDesktop,
+  isLaptop,
+  viewportWidth,
+}) => ({
   id: {
-    width: 90,
-    skeletonWidth: 70,
+    width: isDesktop
+      ? getResponsiveValue(90, 70, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(70, 60, 1440, 1366, viewportWidth)
+        : 60,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(70, 60, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(60, 50, 1440, 1366, viewportWidth)
+        : 50,
   },
   action: {
-    width: 210,
-    skeletonWidth: 190,
+    width: isDesktop
+      ? getResponsiveValue(210, 190, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(190, 170, 1440, 1366, viewportWidth)
+        : 170,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(190, 130, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(130, 120, 1440, 1366, viewportWidth)
+        : 120,
   },
   entityType: {
-    width: 210,
-    skeletonWidth: 190,
+    width: isDesktop
+      ? getResponsiveValue(210, 190, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(190, 170, 1440, 1366, viewportWidth)
+        : 170,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(190, 130, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(130, 120, 1440, 1366, viewportWidth)
+        : 120,
   },
   entityId: {
-    width: 90,
-    skeletonWidth: 70,
+    width: isDesktop
+      ? getResponsiveValue(90, 70, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(70, 60, 1440, 1366, viewportWidth)
+        : 60,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(70, 60, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(60, 50, 1440, 1366, viewportWidth)
+        : 50,
   },
   eventId: {
-    width: 210,
-    skeletonWidth: 190,
+    width: isDesktop
+      ? getResponsiveValue(210, 190, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(190, 170, 1440, 1366, viewportWidth)
+        : 170,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(190, 130, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(130, 120, 1440, 1366, viewportWidth)
+        : 120,
   },
   actorId: {
-    width: 210,
-    skeletonWidth: 190,
+    width: isDesktop
+      ? getResponsiveValue(210, 190, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(190, 170, 1440, 1366, viewportWidth)
+        : 170,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(190, 170, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(170, 160, 1440, 1366, viewportWidth)
+        : 160,
   },
   payload: {
-    width: 210,
-    skeletonWidth: 190,
+    width: isDesktop
+      ? getResponsiveValue(210, 190, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(190, 170, 1440, 1366, viewportWidth)
+        : 170,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(190, 170, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(170, 160, 1440, 1366, viewportWidth)
+        : 160,
   },
   createdAt: {
-    width: 180,
-    skeletonWidth: 140,
+    width: isDesktop
+      ? getResponsiveValue(180, 140, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(140, 120, 1440, 1366, viewportWidth)
+        : 120,
+    skeletonWidth: isDesktop
+      ? getResponsiveValue(140, 120, 1920, 1440, viewportWidth)
+      : isLaptop
+        ? getResponsiveValue(120, 110, 1440, 1366, viewportWidth)
+        : 110,
   },
-};
+});

@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'link';
+type Key = 'sidebar' | 'link';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,6 +8,15 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
+    sidebar: {
+      gridArea: 'sidebar',
+      '& .MuiDrawer-paper': {
+        position: 'relative',
+        alignItems: 'flex-start',
+        p: 2,
+        bgcolor: 'background.paper',
+      },
+    },
     link: {
       position: 'relative',
       display: 'inline',

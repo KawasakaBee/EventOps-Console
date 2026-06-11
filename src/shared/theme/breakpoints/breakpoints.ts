@@ -19,8 +19,8 @@ export const breakpoints = {
     mobile: 0,
     tabletXS: 480,
     tablet: 767,
-    laptop: 1200,
-    desktop: 1500,
+    laptop: 1366,
+    desktop: 1440,
     desktopXL: 1920,
   },
 };

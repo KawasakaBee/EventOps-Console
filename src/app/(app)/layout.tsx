@@ -1,16 +1,13 @@
 import { Box } from '@mui/material';
 import { styles } from './styles';
-import {
-  APPBAR_HEIGHT,
-  AUTH_SESSION_COOKIE,
-  SIDEBAR_WIDTH,
-} from '@/shared/config/layout';
+import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import Sidebar from '@/widgets/SideBar/ui/Sidebar';
 import AppBar from '@/widgets/AppBar/ui/AppBar';
 import { AuthProvider } from '@/entities/user/model/AuthProvider';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getUserById } from '@/entities/user/lib/userSelectors';
+import PageWrapper from '@/widgets/PageWrapper/ui/PageWrapper';
 
 const AppLayout = async ({
   children,
@@ -22,18 +19,15 @@ const AppLayout = async ({
 
   if (!user) redirect('/login');
 
-  const sx = styles({
-    sidebarWidth: SIDEBAR_WIDTH,
-    appbarHeight: APPBAR_HEIGHT,
-  });
+  const sx = styles();
 
   return (
     <AuthProvider initialUser={user}>
-      <Box sx={sx.page}>
-        <Sidebar sidebarSx={sx.sidebar} />
-        <AppBar sx={sx.appbar} />
+      <PageWrapper>
+        <Sidebar />
+        <AppBar />
         <Box sx={sx.content}>{children}</Box>
-      </Box>
+      </PageWrapper>
     </AuthProvider>
   );
 };

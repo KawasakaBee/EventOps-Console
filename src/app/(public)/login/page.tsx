@@ -31,9 +31,11 @@ const Login = () => {
   };
 
   return (
-    <>
-      <Typography variant="h1">Авторизация с помощью Демо-роли</Typography>
-      <Stack direction="row" spacing={2}>
+    <Stack sx={{ p: 4 }}>
+      <Typography variant="h1" sx={{ textAlign: 'center' }}>
+        Авторизация с помощью Демо-роли:
+      </Typography>
+      <Stack spacing={3} sx={{ alignSelf: 'center' }}>
         {demoRoles.map((role) => (
           <Button
             key={role}
@@ -41,12 +43,13 @@ const Login = () => {
             variant="contained"
             size="medium"
             onClick={() => handleDemoLogin(role)}
+            sx={{ minWidth: 320 }}
           >
             Войти как {role}
           </Button>
         ))}
       </Stack>
-    </>
+    </Stack>
   );
 };
 

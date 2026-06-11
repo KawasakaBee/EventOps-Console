@@ -1,16 +1,17 @@
-import { CriticalAction } from '@/entities/proposal/model/types';
+import getResponsiveValue from '@/shared/utils/getResponsiveValue';
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
   | 'statusWrapper'
   | 'lastUpdateTime'
-  | 'criticalButton'
-  | 'statusButton'
+  | 'actionButton'
   | 'skeletonButton';
 
 interface IStyleOptionProps {
-  action: CriticalAction;
+  isDesktop: boolean;
+  isLaptop: boolean;
+  viewportWidth: number;
 }
 
 type Style = (options: IStyleOptionProps) => {
@@ -18,22 +19,7 @@ type Style = (options: IStyleOptionProps) => {
 };
 
 export const styles: Style = (options) => {
-  const { action } = options;
-
-  const buttonColor =
-    action === 'accept'
-      ? 'success.main'
-      : action === 'reject'
-        ? 'error.main'
-        : 'primary.main';
-
-  const hoverColor =
-    action === 'accept'
-      ? 'success.darken'
-      : action === 'reject'
-        ? 'error.darken'
-        : 'primary.light';
-
+  const { isDesktop, isLaptop, viewportWidth } = options;
   return {
     statusWrapper: {
       alignItems: 'flex-start',
@@ -41,18 +27,18 @@ export const styles: Style = (options) => {
     lastUpdateTime: {
       opacity: 0.5,
     },
-    criticalButton: {
+    actionButton: {
       width: 1,
-      borderColor: buttonColor,
-      color: 'text.secondary',
-      bgcolor: buttonColor,
-      '&:hover': {
-        borderColor: hoverColor,
-        bgcolor: hoverColor,
-      },
-    },
-    statusButton: {
-      width: 1,
+      minWidth: isDesktop
+        ? getResponsiveValue(220, 160, 1920, 1440, viewportWidth)
+        : isLaptop
+          ? getResponsiveValue(160, 140, 1920, 1440, viewportWidth)
+          : 140,
+      fontSize: isDesktop
+        ? getResponsiveValue(16, 14, 1920, 1440, viewportWidth)
+        : isLaptop
+          ? getResponsiveValue(14, 12, 1920, 1440, viewportWidth)
+          : 12,
     },
     skeletonButton: {
       height: 60,
