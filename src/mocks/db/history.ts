@@ -8178,7 +8178,7 @@ const initialScheduleHistory = [
     eventId: '4',
     action: 'scheduled',
     createdAt: '2026-08-17T10:00:00.00Z',
-  }
+  },
 ] satisfies ScheduleSlotEntry[];
 
 export const history: HistoryEntry[] = [...initialHistory];

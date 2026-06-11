@@ -11,6 +11,7 @@ import { auditHandlers } from './handlers/audit.handlers';
 import { commentsHandlers } from './handlers/comments.handlers';
 import { scheduleHandlers } from './handlers/schedule.handlers';
 import { eventsHandlers } from './handlers/events.handlers';
+import { settingsHandlers } from './handlers/settings.handlers';
 
 export const worker = setupWorker(
   ...dashboardHandlers,
@@ -25,4 +26,5 @@ export const worker = setupWorker(
   ...commentsHandlers,
   ...scheduleHandlers,
   ...eventsHandlers,
+  ...settingsHandlers,
 );

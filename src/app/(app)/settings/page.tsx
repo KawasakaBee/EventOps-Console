@@ -1,5 +1,7 @@
+import SettingsPage from '@/features/Settings/ui/SettingsPage/SettingsPage';
+
 const Settings = () => {
-  return <>This is settings page</>;
+  return <SettingsPage />;
 };
 
 export default Settings;

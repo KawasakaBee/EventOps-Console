@@ -39,7 +39,6 @@ export const config = {
     '/proposals/:path*',
     '/my-proposals/:path*',
     '/submit/:path*',
-    '/speakers/:path*',
     '/schedule/:path*',
     '/analytics/:path*',
     '/settings/:path*',

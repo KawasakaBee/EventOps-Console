@@ -1,6 +1,17 @@
 import { ErrorEnvelope } from '@/shared/types/api.types';
 import { HttpResponse } from 'msw';
 
+export const inclusiveEventError = () =>
+  HttpResponse.json(
+    {
+      error: {
+        code: 'INCLUSIVE_EVENT_ERROR',
+        message: 'Такое событие уже существует',
+      },
+    } satisfies ErrorEnvelope,
+    { status: 400 },
+  );
+
 export const unassignError = () =>
   HttpResponse.json(
     {
@@ -121,17 +132,6 @@ export const unknownError = () =>
       },
     } satisfies ErrorEnvelope,
     { status: 500 },
-  );
-
-export const roleError = () =>
-  HttpResponse.json(
-    {
-      error: {
-        code: 'INVALID_ROLE',
-        message: 'Недопустимая demo-роль',
-      },
-    } satisfies ErrorEnvelope,
-    { status: 403 },
   );
 
 export const unauthorizedError = () =>

@@ -17,12 +17,10 @@ export interface ErrorEnvelope {
 }
 
 export const errorCodes = [
+  'INCLUSIVE_EVENT_ERROR',
   'UNASSIGN_ERROR',
   'SLOT_NOT_FOUND',
-  'REQUEST_ABORTED',
   'AUTH_REQUIRED',
-  'INVALID_ROLE',
-  'ROLE_NOT_FOUND',
   'USER_NOT_FOUND',
   'PROPOSAL_NOT_FOUND',
   'REVIEWER_NOT_FOUND',

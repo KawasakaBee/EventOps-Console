@@ -4,7 +4,8 @@ import { MockScenario } from './types';
 
 const getDatePart = (value: string): string => value.slice(0, 10);
 
-const isValidDate = (value: string): boolean => !Number.isNaN(Date.parse(value));
+const isValidDate = (value: string): boolean =>
+  !Number.isNaN(Date.parse(value));
 
 const getDurationMinutes = (startTime: string, endTime: string): number => {
   const startMs = new Date(startTime).getTime();
@@ -139,9 +140,7 @@ export const assertIntegrity = (data: MockScenario) => {
     const reviewerUser = usersById.get(reviewer.id);
 
     if (!reviewerUser) {
-      errors.push(
-        `Reviewer ${reviewer.id} не найден среди пользователей`,
-      );
+      errors.push(`Reviewer ${reviewer.id} не найден среди пользователей`);
     } else if (reviewerUser.role !== 'reviewer') {
       errors.push(
         `Reviewer ${reviewer.id} связан с пользователем роли ${reviewerUser.role}, а не reviewer`,

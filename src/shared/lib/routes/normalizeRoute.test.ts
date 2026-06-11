@@ -16,7 +16,6 @@ describe('normalizeRoute', () => {
     expect(normalizeRoute('/dashboard')).toBe('/dashboard');
     expect(normalizeRoute('/proposals')).toBe('/proposals');
     expect(normalizeRoute('/my-proposals')).toBe('/my-proposals');
-    expect(normalizeRoute('/speakers')).toBe('/speakers');
     expect(normalizeRoute('/schedule')).toBe('/schedule');
     expect(normalizeRoute('/analytics')).toBe('/analytics');
     expect(normalizeRoute('/settings')).toBe('/settings');

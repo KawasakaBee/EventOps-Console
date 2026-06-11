@@ -1,5 +1,6 @@
 import { Event } from '@/entities/event/model/types';
 import { tracks } from './tracks';
+import { SettingsValues } from '@/entities/event/api/schema';
 
 const initialEvents = [
   {
@@ -45,3 +46,45 @@ const initialEvents = [
 ] satisfies Event[];
 
 export const events: Event[] = [...initialEvents];
+
+export const createEvent = (payload: SettingsValues): Event => {
+  const { title, description, place, startTime } = payload;
+
+  const event: Event = {
+    id: crypto.randomUUID(),
+    title,
+    description,
+    place,
+    startTime: new Date(startTime).toISOString(),
+    trackIds: tracks.map((track) => track.id),
+    createdAt: new Date().toISOString(),
+  };
+
+  return event;
+};
+
+export const appendEventToData = (event: Event): { ok: boolean } => {
+  const hasSameEvent = events.some((item) => {
+    const testItem = {
+      title: item.title,
+      description: item.description,
+      place: item.place,
+      startTime: item.startTime,
+    };
+
+    const testNew = {
+      title: event.title,
+      description: event.description,
+      place: event.place,
+      startTime: event.startTime,
+    };
+
+    return JSON.stringify(testItem) === JSON.stringify(testNew);
+  });
+
+  if (hasSameEvent) return { ok: false };
+
+  events.push(event);
+
+  return { ok: true };
+};

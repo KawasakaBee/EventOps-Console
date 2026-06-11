@@ -10,7 +10,6 @@ describe('canAccessRoute', () => {
     expect(canAccessRoute('admin', '/audit')).toBe(true);
     expect(canAccessRoute('admin', '/settings')).toBe(true);
     expect(canAccessRoute('admin', '/schedule')).toBe(true);
-    expect(canAccessRoute('admin', '/speakers')).toBe(true);
   });
 
   it('Разрешён ли доступ менеджеру к станицам заявок', () => {
@@ -24,7 +23,6 @@ describe('canAccessRoute', () => {
     expect(canAccessRoute('manager', '/audit')).toBe(true);
     expect(canAccessRoute('manager', '/settings')).toBe(true);
     expect(canAccessRoute('manager', '/schedule')).toBe(true);
-    expect(canAccessRoute('manager', '/speakers')).toBe(true);
   });
 
   it('Разрешён ли доступ ревьюеру к списку заявок, но не к списку заявок спикера', () => {

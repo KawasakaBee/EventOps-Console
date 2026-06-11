@@ -26,7 +26,6 @@ export const normalizeRoute = (value: string): Route | null => {
   if (pathname === '/submit') return '/submit';
   if (/^\/submit\/[^/]+$/.test(pathname)) return '/submit/[id]';
   if (pathname === '/my-proposals') return '/my-proposals';
-  if (pathname === '/speakers') return '/speakers';
   if (pathname === '/schedule') return '/schedule';
   if (pathname === '/analytics') return '/analytics';
   if (pathname === '/settings') return '/settings';
