@@ -15,8 +15,8 @@ const AppBar = () => {
   const sx = styles();
 
   return (
-    <MuiAppBar sx={sx.appbar}>
-      <Typography variant="h2" sx={{ mb: 0 }}>
+    <MuiAppBar sx={sx.appBar}>
+      <Typography variant="h2" sx={sx.appBarTitle}>
         {user.name}
       </Typography>
       <Button

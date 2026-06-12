@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'dashboardRow';
+type Key = 'dashboardTableRow';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,7 +8,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    dashboardRow: {
+    dashboardTableRow: {
       cursor: 'pointer',
       transition:
         'box-shadow 150ms ease, transform 150ms ease, background-color 150ms ease',

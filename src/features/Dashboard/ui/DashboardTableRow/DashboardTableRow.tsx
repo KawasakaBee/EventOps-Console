@@ -111,7 +111,7 @@ const DashboardTableRow = ({
   };
 
   return (
-    <TableRow onClick={handleToDetailsRedirect} sx={sx.dashboardRow}>
+    <TableRow onClick={handleToDetailsRedirect} sx={sx.dashboardTableRow}>
       {recentListItemKeys.map((key) => (
         <TableCell key={`Table-body-cell-${key}`}>
           {renderCell({

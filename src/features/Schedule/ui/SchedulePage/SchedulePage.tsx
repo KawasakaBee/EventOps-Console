@@ -117,8 +117,8 @@ const SchedulePage = () => {
             ) : (
               <ScheduleTabs days={schedule.data?.days ?? []} />
             )}
-            <Box sx={sx.scheduleContainer}>
-              <Box sx={sx.scheduleWrapper}>
+            <Box sx={sx.schedulePageContainer}>
+              <Box sx={sx.schedulePageWrap}>
                 <Box />
                 {isGridLoading
                   ? Array.from({ length: tracksLength }).map((_, idx) => (
@@ -193,7 +193,7 @@ const SchedulePage = () => {
                           respSlot={respSlot}
                           tracks={tracks.data?.tracks ?? []}
                           dayStart={dayStart}
-                          setUnssign={setUnassignConfirm}
+                          setUnassign={setUnassignConfirm}
                         />
                       );
                     })}
@@ -224,7 +224,7 @@ const SchedulePage = () => {
         <Dialog
           open
           onClose={handleUnassignConfirmDialogClose}
-          slotProps={{ paper: { sx: sx.dialogPaper } }}
+          slotProps={{ paper: { sx: sx.shadulePageDialogPaper } }}
         >
           <DialogTitle>Убрать выбранную заявку из расписания?</DialogTitle>
           <DialogContent>
@@ -259,7 +259,7 @@ const SchedulePage = () => {
         <Dialog
           open
           onClose={handleUnassignClose}
-          slotProps={{ paper: { sx: sx.dialogPaper } }}
+          slotProps={{ paper: { sx: sx.shadulePageDialogPaper } }}
         >
           {unassignResult.ok ? (
             <>

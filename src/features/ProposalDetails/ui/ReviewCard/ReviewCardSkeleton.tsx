@@ -5,17 +5,12 @@ const ReviewCardSkeleton = () => {
   const sx = styles();
 
   return (
-    <Grid
-      container
-      columnSpacing={1}
-      rowSpacing={2}
-      sx={sx.reviewCardContainer}
-    >
+    <Grid container columnSpacing={1} rowSpacing={2} sx={sx.reviewCard}>
       <Grid
         size={12}
         container
         columnSpacing={2}
-        sx={sx.reviewCardReviewerWrapper}
+        sx={sx.reviewCardReviewerWrap}
       >
         <Grid size="auto">
           <Skeleton variant="text" width={200} />
@@ -24,7 +19,7 @@ const ReviewCardSkeleton = () => {
           <Skeleton variant="text" width={100} />
         </Grid>
       </Grid>
-      <Grid size={12} sx={sx.reviewerCardScoreWrapper}>
+      <Grid size={12} sx={sx.reviewCardScoreWrap}>
         <Stack
           direction="row"
           spacing={2}

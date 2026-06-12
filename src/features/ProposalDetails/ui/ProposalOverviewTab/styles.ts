@@ -2,14 +2,13 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
-  | 'overviewHead'
-  | 'overviewList'
-  | 'overviewTitle'
-  | 'contentContainer'
-  | 'abstractWrapper'
-  | 'abstractDivider'
-  | 'metadataContainer'
-  | 'metadataWrapper';
+  | 'proposalOverviewTabHead'
+  | 'proposalOverviewTabList'
+  | 'proposalOverviewTabTitle'
+  | 'proposalOverviewTabContent'
+  | 'proposalOverviewTabAbstractWrap'
+  | 'proposalOverviewTabAbstractDivider'
+  | 'proposalOverviewTabMetadata';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -17,30 +16,30 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    overviewHead: {
+    proposalOverviewTabHead: {
       mb: 4,
     },
-    overviewList: {
+    proposalOverviewTabList: {
       alignItems: 'center',
     },
-    overviewTitle: {
+    proposalOverviewTabTitle: {
       mb: 3,
     },
-    contentContainer: {
+    proposalOverviewTabContent: {
       width: 1,
     },
-    abstractWrapper: {
+    proposalOverviewTabAbstractWrap: {
       p: 3,
       border: '1px solid',
       borderColor: 'neutral.main',
       borderRadius: '12px 0 0 12px',
       bgcolor: 'background.default',
     },
-    abstractDivider: {
+    proposalOverviewTabAbstractDivider: {
       mb: 1,
       borderColor: 'neutral.main',
     },
-    metadataContainer: {
+    proposalOverviewTabMetadata: {
       alignContent: 'flex-start',
       p: 3,
       border: '1px solid',
@@ -48,9 +47,6 @@ export const styles: Style = () => {
       borderRadius: '0 12px 12px 0',
       borderLeft: 0,
       bgcolor: 'background.default',
-    },
-    metadataWrapper: {
-      alignItems: 'center',
     },
   };
 };

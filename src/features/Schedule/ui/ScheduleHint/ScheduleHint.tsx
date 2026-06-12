@@ -52,7 +52,7 @@ const ScheduleHint: React.FC<IScheduleHintProps> = ({
       title={hintTitle}
       placement="right-start"
       slotProps={{
-        tooltip: { sx: sx.tooltip },
+        tooltip: { sx: sx.scheduleHintTooltip },
         popper: {
           popperOptions: {
             strategy: 'fixed',
@@ -81,7 +81,7 @@ const ScheduleHint: React.FC<IScheduleHintProps> = ({
         },
       }}
     >
-      <Box sx={sx.cellHint} />
+      <Box sx={sx.scheduleHint} />
     </Tooltip>
   );
 };

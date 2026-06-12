@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'emptyWrapper';
+type Key = 'dashboardRecentTableEmptyWrap';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,7 +8,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    emptyWrapper: {
+    dashboardRecentTableEmptyWrap: {
       justifyContent: 'center',
       minHeight: 300,
     },

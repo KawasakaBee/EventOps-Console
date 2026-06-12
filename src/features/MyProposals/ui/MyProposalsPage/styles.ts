@@ -1,7 +1,8 @@
+import tabsSx from '@/shared/styles/tabsSx';
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'proposalTab' | 'tabCard' | 'paginationWrapper';
+type Key = 'myProposalsPageTabs';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,21 +10,6 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    proposalTab: {
-      textTransform: 'initial',
-      color: 'primary.main',
-      '& .Mui-disabled': {
-        color: 'text.disabled',
-      },
-    },
-    tabCard: {
-      p: 2,
-      '& > h3': {
-        mb: 3,
-      },
-    },
-    paginationWrapper: {
-      alignItems: 'center',
-    },
+    myProposalsPageTabs: tabsSx,
   };
 };

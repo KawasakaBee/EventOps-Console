@@ -50,7 +50,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
     return (
       <Box>
         {normalizePayload.map((obj, idx) => (
-          <Typography key={idx} variant="body2" sx={sx.payload}>
+          <Typography key={idx} variant="body2" sx={sx.historyItemPayload}>
             {obj}
           </Typography>
         ))}
@@ -64,12 +64,12 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
         <TimelineDot />
         {!isLastItem && <TimelineConnector />}
       </TimelineSeparator>
-      <TimelineContent sx={sx.timelineContent}>
+      <TimelineContent sx={sx.historyTimeLineContent}>
         <Stack>
-          <Typography variant="caption" sx={sx.itemTime}>
+          <Typography variant="caption" sx={sx.historyItemTime}>
             {formatIsoDateTime(item.createdAt)}
           </Typography>
-          <Stack direction="row" spacing={2} sx={sx.itemChangesWrapper}>
+          <Stack direction="row" spacing={2} sx={sx.historyItemChangesWrapper}>
             <Typography variant="subtitle1">
               <b>{auditActionsDictionary[item.action]}</b>
             </Typography>
@@ -77,7 +77,7 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
               <Stack
                 spacing={1}
                 divider={<Divider orientation="horizontal" flexItem />}
-                sx={sx.timelineContentWrapper}
+                sx={sx.historyItemChangesWrap}
               >
                 {item.changes.map((act) => {
                   const [prev, next] = formatHistoryChangeValues(
@@ -89,18 +89,28 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({
                       key={act.field}
                       direction="row"
                       spacing={1}
-                      sx={sx.itemChangesContainer}
+                      sx={sx.historyItemChangesContainer}
                     >
-                      <Stack sx={sx.timelineChanges}>
+                      <Stack sx={sx.historyTimeLineChanges}>
                         <Typography variant="caption">
                           <b>{proposalSubmitFieldsDictionary[act.field]}:</b>
                         </Typography>
-                        <Stack direction="row" spacing={2} sx={sx.itemChanges}>
-                          <Typography variant="subtitle2" sx={sx.changesPrev}>
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          sx={sx.historyItemChanges}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            sx={sx.historyItemChangesPrev}
+                          >
                             {prev}
                           </Typography>
                           <ArrowRightAltIcon />
-                          <Typography variant="subtitle2" sx={sx.changesNext}>
+                          <Typography
+                            variant="subtitle2"
+                            sx={sx.historyItemChangesNext}
+                          >
                             {next}
                           </Typography>
                         </Stack>

@@ -70,12 +70,12 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
               key={tab}
               label={tabsDictionary[tab]}
               value={tab}
-              sx={sx.proposalTab}
+              sx={sx.proposalContentTabs}
             />
           ))}
         </Tabs>
       </SectionCard>
-      <SectionCard title={null} restSx={sx.tabCard}>
+      <SectionCard title={null} restSx={sx.proposalContentTabCard}>
         {currentTab === 'overview' && (
           <Box>
             {data.proposal ? (

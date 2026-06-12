@@ -64,7 +64,7 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
   };
 
   return (
-    <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
+    <SectionCard title="Фильтры" restSx={sx.auditFilterBar}>
       <SearchInput
         searchValue={filters.search ?? ''}
         label="Поиск по ID действия или ID сущности"
@@ -72,7 +72,7 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
         handleSearchChange={handleSearchChange}
       />
       <Grid container spacing={2}>
-        <FormControl disabled={isDisabled} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.auditFilterBarInput}>
           <InputLabel id="proposal-action-select">Тип действия</InputLabel>
           <Select
             value={actionsList}
@@ -89,7 +89,7 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
           </Select>
         </FormControl>
 
-        <FormControl disabled={isDisabled} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.auditFilterBarInput}>
           <InputLabel id="proposal-entity-select">Сущность</InputLabel>
           <Select
             value={entitiesList}
@@ -106,7 +106,7 @@ const AuditFilterBar: React.FC<IAuditFilterBarProps> = ({
           </Select>
         </FormControl>
 
-        <FormControl sx={sx.filterInput}>
+        <FormControl sx={sx.auditFilterBarInput}>
           <Autocomplete
             options={usersOptions}
             value={selectedUser}

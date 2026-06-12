@@ -11,10 +11,10 @@ const SearchInput: React.FC<ISearchInputProps> = ({
   const sx = styles();
 
   return (
-    <FormControl sx={sx.formControl}>
+    <FormControl sx={sx.searchInput}>
       <TextField
         value={searchValue}
-        sx={sx.searchInput}
+        sx={sx.searchInputField}
         label={label}
         onChange={handleSearchChange}
         disabled={isDisabled}

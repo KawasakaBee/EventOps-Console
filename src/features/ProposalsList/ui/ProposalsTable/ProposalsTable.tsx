@@ -105,7 +105,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
   };
 
   return (
-    <TableContainer component={Paper} sx={sx.table}>
+    <TableContainer component={Paper} sx={sx.proposalsTable}>
       <Table>
         <colgroup>
           {Object.entries(columnsWidth).map(([key, value]) => (
@@ -125,7 +125,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
                 >
                   {key === 'checkbox' && (
                     <Checkbox
-                      sx={sx.tableCheckbox}
+                      sx={sx.proposalsTableCheckbox}
                       checked={allVisibleSelected}
                       indeterminate={someVisibleSelected && !allVisibleSelected}
                       onChange={(event) =>
@@ -139,7 +139,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
                     <TableSortLabel
                       active={sortBy === key}
                       direction={sortBy === key ? sortOrder : 'asc'}
-                      sx={sx.tableSortLabel}
+                      sx={sx.proposalsTableSortLabel}
                       onClick={() => handleSort(key)}
                     >
                       {proposalListItemDictionary[key]}
@@ -155,7 +155,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
             <ProposalsTableRow
               key={`Table-body-row-${proposal.id}`}
               proposal={proposal}
-              sx={sx.tableCheckbox}
+              sx={sx.proposalsTableCheckbox}
               isSelected={selectedIdsSet.has(proposal.id)}
               role={role}
               tracks={data}

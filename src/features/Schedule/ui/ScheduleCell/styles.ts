@@ -1,13 +1,13 @@
 import type { SxProps, Theme } from '@mui/material';
 
 type Key =
-  | 'slotCell'
-  | 'slotContainer'
-  | 'slotWrapper'
-  | 'speakerName'
-  | 'popover'
-  | 'popoverPaper'
-  | 'popoverCloseButton';
+  | 'scheduleCell'
+  | 'scheduleCellSlotContainer'
+  | 'scheduleCellSlotWrap'
+  | 'scheduleCellSpeakerName'
+  | 'scheduleCellPopover'
+  | 'scheduleCellPopoverPaper'
+  | 'scheduleCellPopoverCloseButton';
 
 type IStyleProps = {
   column: number;
@@ -23,7 +23,7 @@ export const styles: Style = (options) => {
   const { column, startRow, endRow } = options;
 
   return {
-    slotCell: {
+    scheduleCell: {
       zIndex: 2,
       gridColumn: column,
       gridRowStart: startRow,
@@ -42,29 +42,29 @@ export const styles: Style = (options) => {
         borderColor: 'primary.main',
       },
     },
-    slotContainer: {
+    scheduleCellSlotContainer: {
       height: 1,
       minHeight: 0,
       textDecoration: 'none',
       cursor: 'pointer',
       overflowY: 'auto',
     },
-    slotWrapper: {
+    scheduleCellSlotWrap: {
       justifyContent: 'space-between',
       alignItems: 'center',
     },
-    speakerName: {
+    scheduleCellSpeakerName: {
       opacity: 0.5,
     },
-    popover: {
+    scheduleCellPopover: {
       pointerEvents: 'none',
     },
-    popoverPaper: {
+    scheduleCellPopoverPaper: {
       pointerEvents: 'auto',
       p: 2,
       pr: 6,
     },
-    popoverCloseButton: {
+    scheduleCellPopoverCloseButton: {
       position: 'absolute',
       right: '10px',
       top: '50%',

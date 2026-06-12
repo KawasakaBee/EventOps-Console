@@ -81,7 +81,7 @@ const MyProposalsRowActions: React.FC<IMyProposalsRowActionsProps> = ({
   };
 
   return (
-    <Stack direction="row" spacing={1} sx={sx.actionsContainer}>
+    <Stack direction="row" spacing={1} sx={sx.myProposalsRowActionsContainer}>
       {actions.includes('viewDetails') && (
         <Button
           mode="link"

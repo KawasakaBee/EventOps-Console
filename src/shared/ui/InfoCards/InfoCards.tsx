@@ -18,10 +18,10 @@ const InfoCards: React.FC<IInfoCardsProps> = ({ items, isLoading }) => {
         <Grid
           key={`${item.label}-${item.value}`}
           size={gridColumnSize}
-          sx={sx.infoCardContainer}
+          sx={sx.infoCardsItemContainer}
         >
           {
-            <SectionCard title={item.label} restSx={sx.infoCardsWrapper}>
+            <SectionCard title={item.label} restSx={sx.infoCards}>
               {isLoading ? (
                 <Skeleton
                   variant="text"

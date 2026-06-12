@@ -11,10 +11,10 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { styles } from './styles';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { statusChipConfig } from '@/shared/ui/StatusChip/StatusChip.types';
+import { styles } from '../shared/styles';
 
 const AnalyticsFunnelChart: React.FC<IAnalyticsFunnelChartProps> = ({
   byStatus,

@@ -3,10 +3,10 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
-  | 'statusWrapper'
-  | 'lastUpdateTime'
-  | 'actionButton'
-  | 'skeletonButton';
+  | 'proposalStickyPanelStatusWrap'
+  | 'proposalStickyPanelLastUpdateTime'
+  | 'proposalStickyPanelActionButton'
+  | 'proposalStickyPanelSkeletonButton';
 
 interface IStyleOptionProps {
   isDesktop: boolean;
@@ -21,13 +21,13 @@ type Style = (options: IStyleOptionProps) => {
 export const styles: Style = (options) => {
   const { isDesktop, isLaptop, viewportWidth } = options;
   return {
-    statusWrapper: {
+    proposalStickyPanelStatusWrap: {
       alignItems: 'flex-start',
     },
-    lastUpdateTime: {
+    proposalStickyPanelLastUpdateTime: {
       opacity: 0.5,
     },
-    actionButton: {
+    proposalStickyPanelActionButton: {
       width: 1,
       minWidth: isDesktop
         ? getResponsiveValue(220, 160, 1920, 1440, viewportWidth)
@@ -40,7 +40,7 @@ export const styles: Style = (options) => {
           ? getResponsiveValue(14, 12, 1920, 1440, viewportWidth)
           : 12,
     },
-    skeletonButton: {
+    proposalStickyPanelSkeletonButton: {
       height: 60,
     },
   };

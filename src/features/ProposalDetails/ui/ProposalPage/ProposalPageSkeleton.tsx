@@ -21,7 +21,7 @@ const ProposalPageSkeleton = () => {
         <Grid size="grow">
           <ProposalContentSkeleton />
         </Grid>
-        <Grid size={2} sx={sx.proposalStickyPanel}>
+        <Grid size={2} sx={sx.proposalPageStickyPanel}>
           <ProposalStickyPanelSkeleton />
         </Grid>
       </Grid>

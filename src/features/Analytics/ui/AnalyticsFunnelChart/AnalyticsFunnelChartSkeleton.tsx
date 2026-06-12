@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Grid } from '@mui/material';
-import { styles } from './styles';
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
+import { styles } from '../shared/styles';
 
 const AnalyticsFunnelChartSkeleton = () => {
   const sx = styles();

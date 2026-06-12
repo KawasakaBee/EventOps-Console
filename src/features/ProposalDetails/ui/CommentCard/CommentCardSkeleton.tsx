@@ -10,11 +10,11 @@ const CommentCardSkeleton = () => {
         <Skeleton variant="text" width={40} />
       </Grid>
       <Grid size="grow">
-        <Stack direction="row" spacing={1} sx={sx.bioWrapper}>
+        <Stack direction="row" spacing={1} sx={sx.commentCardBioWrap}>
           <Skeleton variant="text" width={150} />
           <Skeleton variant="text" width={80} />
         </Stack>
-        <Box sx={sx.timeWrapper}>
+        <Box sx={sx.commentCardTimeWrap}>
           <Skeleton variant="text" width={250} />
         </Box>
         <Box>

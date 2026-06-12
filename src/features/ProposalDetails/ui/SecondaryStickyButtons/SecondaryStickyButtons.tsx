@@ -108,7 +108,7 @@ const SecondaryStickyButtons = () => {
         autoHideDuration={6000}
         onClose={() => setIsSnackbarOpen(false)}
         message="Ссылка успешно скопирована!"
-        sx={sx.snackbar}
+        sx={sx.secondaryStickyButtonsSnackbar}
       />
     </Stack>
   );

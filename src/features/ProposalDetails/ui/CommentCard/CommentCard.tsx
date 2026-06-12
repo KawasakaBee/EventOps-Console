@@ -24,7 +24,7 @@ const CommentCard: React.FC<ICommentCardProps> = ({
   return (
     <Grid container columnSpacing={2}>
       <Grid size="auto">
-        <Avatar sx={sx.avatar}>
+        <Avatar sx={sx.commentCardAvatar}>
           {isUsersError
             ? 'U'
             : users
@@ -33,18 +33,21 @@ const CommentCard: React.FC<ICommentCardProps> = ({
         </Avatar>
       </Grid>
       <Grid size="grow">
-        <Stack direction="row" spacing={1} sx={sx.bioWrapper}>
-          <Typography variant="body2" sx={sx.userName}>
+        <Stack direction="row" spacing={1} sx={sx.commentCardBioWrap}>
+          <Typography variant="body2" sx={sx.commentCardUserName}>
             {isUsersError
               ? getApiErrorMessage(usersError)
               : users
                 ? user(comment, users.users).name
                 : 'Не удалось загрузить пользователя'}
           </Typography>
-          <Chip label={rolesDictionary[comment.actorRole]} sx={sx.userRole} />
+          <Chip
+            label={rolesDictionary[comment.actorRole]}
+            sx={sx.commentCardUserRole}
+          />
         </Stack>
-        <Box sx={sx.timeWrapper}>
-          <Typography variant="caption" sx={sx.commentTime}>
+        <Box sx={sx.commentCardTimeWrap}>
+          <Typography variant="caption" sx={sx.commentCardTime}>
             {formatIsoDateTime(comment.createdAt)}
           </Typography>
         </Box>

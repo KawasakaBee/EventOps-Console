@@ -11,7 +11,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
   const sx = styles();
 
   return (
-    <Stack spacing={2} sx={sx.emptyStateContainer}>
+    <Stack spacing={2} sx={sx.emptyState}>
       <Typography variant="h2" data-testid="empty-state-title">
         {title}
       </Typography>

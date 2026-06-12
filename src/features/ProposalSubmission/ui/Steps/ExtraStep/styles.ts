@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'tagsWrapper' | 'consentCheckbox';
+type Key = 'extraStepTagsWrap' | 'extraStepConsentCheckbox';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,10 +8,10 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    tagsWrapper: {
+    extraStepTagsWrap: {
       alignItems: 'flex-start',
     },
-    consentCheckbox: {
+    extraStepConsentCheckbox: {
       color: 'primary.main',
     },
   };

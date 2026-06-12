@@ -5,21 +5,25 @@ const SpeakerCardSkeleton = () => {
   const sx = styles();
 
   return (
-    <Stack spacing={4} sx={sx.cardWrapper}>
-      <Stack direction="row" spacing={2} sx={sx.headingWrapper}>
+    <Stack spacing={4} sx={sx.speakerCard}>
+      <Stack direction="row" spacing={2} sx={sx.speakerCardHeadingWrap}>
         <Stack>
-          <Stack direction="row" spacing={2} sx={sx.cardNameWrapper}>
-            <Skeleton variant="text" width={50} sx={sx.avatarSkeleton} />
+          <Stack direction="row" spacing={2} sx={sx.speakerCardNameWrap}>
+            <Skeleton
+              variant="text"
+              width={50}
+              sx={sx.speakerCardAvatarSkeleton}
+            />
             <Skeleton variant="text" width={250} />
           </Stack>
           <Skeleton variant="text" />
         </Stack>
-        <Stack spacing={1} sx={sx.cardInfoWrapper}>
-          <Stack direction="row" spacing={1} sx={sx.cardInfoEmailWrapper}>
+        <Stack spacing={1} sx={sx.speakerCardInfoWrap}>
+          <Stack direction="row" spacing={1} sx={sx.speakerCardInfoEmailWrap}>
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton variant="text" width={100} />
           </Stack>
-          <Stack direction="row" spacing={1} sx={sx.cardContactsWrapper}>
+          <Stack direction="row" spacing={1} sx={sx.speakerCardContactsWrap}>
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton variant="text" width={100} />
           </Stack>

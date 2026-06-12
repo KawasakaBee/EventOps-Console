@@ -1,7 +1,11 @@
-import getResponsiveValue from '@/shared/utils/getResponsiveValue';
+import tableSortLabelSx from '@/shared/styles/tableSortLabelSx';
+import tableSx from '@/shared/styles/tableSx';
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'table' | 'tableCheckbox' | 'tableSortLabel';
+type Key =
+  | 'proposalsTable'
+  | 'proposalsTableCheckbox'
+  | 'proposalsTableSortLabel';
 
 type IStyleProps = {
   viewportWidth: number;
@@ -15,37 +19,10 @@ export const styles: Style = (options) => {
   const { viewportWidth } = options;
 
   return {
-    table: {
-      mb: 2,
-
-      '& .MuiTableCell-root': {
-        p: getResponsiveValue(2, 1, 1920, 1440, viewportWidth),
-      },
-      '& .MuiCheckbox-root': {
-        p: getResponsiveValue(1, 0.5, 1920, 1440, viewportWidth),
-      },
-    },
-    tableCheckbox: {
+    proposalsTable: tableSx(viewportWidth),
+    proposalsTableCheckbox: {
       color: 'divider',
     },
-    tableSortLabel: {
-      '&.MuiTableSortLabel-root': {
-        '&:hover': {
-          color: 'text.primary',
-          '& .MuiTableSortLabel-icon': {
-            opacity: 1,
-          },
-        },
-        '& .MuiTableSortLabel-icon': {
-          opacity: 0.5,
-        },
-        '&.Mui-active': {
-          '& .MuiTableSortLabel-icon': {
-            color: 'text.primary',
-            opacity: 1,
-          },
-        },
-      },
-    },
+    proposalsTableSortLabel: tableSortLabelSx,
   };
 };

@@ -25,7 +25,7 @@ const MyProposalsTableSkeleton = () => {
   const sx = styles({ viewportWidth });
 
   return (
-    <TableContainer component={Paper} sx={sx.table}>
+    <TableContainer component={Paper} sx={sx.myProposalsTable}>
       <Table>
         <colgroup>
           {Object.entries(

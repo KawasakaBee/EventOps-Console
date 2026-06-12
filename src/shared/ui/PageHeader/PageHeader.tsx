@@ -10,7 +10,7 @@ const PageHeader: React.FC<IPageHeader> = (props) => {
 
   const sx = styles();
 
-  const breacdrumbs = () => {
+  const breadcrumbs = () => {
     if (mode !== 'inner') return null;
 
     const { to } = props;
@@ -23,7 +23,7 @@ const PageHeader: React.FC<IPageHeader> = (props) => {
         size="small"
         to={to}
         isRelativeLink
-        sx={sx.backButton}
+        sx={sx.pageHeaderBackButton}
       >
         Назад в {navigationDictionary[to]}
       </Button>
@@ -32,7 +32,7 @@ const PageHeader: React.FC<IPageHeader> = (props) => {
 
   return (
     <Box sx={sx.pageHeader}>
-      {breacdrumbs()}
+      {breadcrumbs()}
       {pageName && <Typography variant="h1">{pageName}</Typography>}
       <Stack spacing={2}>
         <Box>{title}</Box>

@@ -2,7 +2,7 @@ import { SCHEDULE_STEP_MINUTES } from '@/shared/config/layout';
 import type { Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
 
-type Key = 'timeCell';
+type Key = 'scheduleTime';
 
 type IStyleProps = {
   rowDurationMinutes: number;
@@ -17,7 +17,7 @@ export const styles: Style = (options) => {
   const { rowDurationMinutes, startRow } = options;
 
   return {
-    timeCell: {
+    scheduleTime: {
       zIndex: 1,
       gridRowStart: startRow,
       gridRowEnd: startRow + rowDurationMinutes / SCHEDULE_STEP_MINUTES,

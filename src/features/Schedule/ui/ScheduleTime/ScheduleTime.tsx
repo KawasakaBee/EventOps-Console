@@ -17,7 +17,7 @@ const ScheduleTime: React.FC<IScheduleTimeProps> = ({ time, startRow }) => {
 
   return (
     <>
-      <SectionCard title={null} restSx={sx.timeCell}>
+      <SectionCard title={null} restSx={sx.scheduleTime}>
         <Typography variant="subtitle2">
           C {formatScheduleTime(time.from)}
         </Typography>

@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'content';
+type Key = 'appLayoutContent';
 
 type Styles = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,7 +8,7 @@ type Styles = () => {
 
 export const styles: Styles = () => {
   return {
-    content: {
+    appLayoutContent: {
       gridArea: 'content',
       p: 2,
       overflowY: 'scroll',

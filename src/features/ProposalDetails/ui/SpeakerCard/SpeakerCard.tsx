@@ -12,10 +12,10 @@ const SpeakerCard: React.FC<ISpeakerCardProps> = ({ speaker }) => {
   const sx = styles();
 
   return (
-    <Stack spacing={4} sx={sx.cardWrapper}>
-      <Stack direction="row" spacing={2} sx={sx.headingWrapper}>
+    <Stack spacing={4} sx={sx.speakerCard}>
+      <Stack direction="row" spacing={2} sx={sx.speakerCardHeadingWrap}>
         <Stack spacing={4}>
-          <Stack direction="row" spacing={2} sx={sx.cardNameWrapper}>
+          <Stack direction="row" spacing={2} sx={sx.speakerCardNameWrap}>
             <Avatar
               src={isAvatarError ? undefined : speaker.avatarUrl}
               alt={speaker.name}
@@ -36,8 +36,8 @@ const SpeakerCard: React.FC<ISpeakerCardProps> = ({ speaker }) => {
             </i>
           </Typography>
         </Stack>
-        <Stack spacing={1} sx={sx.cardInfoWrapper}>
-          <Stack direction="row" spacing={1} sx={sx.cardInfoEmailWrapper}>
+        <Stack spacing={1} sx={sx.speakerCardInfoWrap}>
+          <Stack direction="row" spacing={1} sx={sx.speakerCardInfoEmailWrap}>
             <Typography variant="subtitle1">Email:</Typography>
             <Button
               mode="link"
@@ -45,13 +45,13 @@ const SpeakerCard: React.FC<ISpeakerCardProps> = ({ speaker }) => {
               size="small"
               to={`mailto:${speaker.email}`}
               isNewTab
-              sx={sx.cardInfoEmail}
+              sx={sx.speakerCardInfoEmail}
               isRelativeLink={false}
             >
               {speaker.email}
             </Button>
           </Stack>
-          <Stack direction="row" spacing={1} sx={sx.cardContactsWrapper}>
+          <Stack direction="row" spacing={1} sx={sx.speakerCardContactsWrap}>
             <Typography variant="subtitle1">Контакты:</Typography>
             <Button
               mode="link"
@@ -59,7 +59,7 @@ const SpeakerCard: React.FC<ISpeakerCardProps> = ({ speaker }) => {
               size="small"
               to={speaker.contacts}
               isNewTab
-              sx={sx.contactsIcon}
+              sx={sx.speakerCardContactsIcon}
               isRelativeLink={false}
             >
               <TelegramIcon />
@@ -69,7 +69,7 @@ const SpeakerCard: React.FC<ISpeakerCardProps> = ({ speaker }) => {
       </Stack>
       <Typography variant="body1">{speaker.bio}</Typography>
       {speaker.pastTalks && (
-        <Typography variant="caption" sx={sx.pastTalks}>
+        <Typography variant="caption" sx={sx.speakerCardPastTalks}>
           {speaker.pastTalks}
         </Typography>
       )}

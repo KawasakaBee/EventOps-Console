@@ -66,7 +66,7 @@ const DashboardRecentTable: React.FC<IDashboardRecentTableProps> = ({
           </Table>
         </TableContainer>
       ) : (
-        <Stack sx={sx.emptyWrapper}>
+        <Stack sx={sx.dashboardRecentTableEmptyWrap}>
           <EmptyState
             title="Заявок пока нет"
             subtitle="Когда спикеры отправят заявки, они появятся в этом списке."

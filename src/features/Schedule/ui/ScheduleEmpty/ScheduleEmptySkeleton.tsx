@@ -18,7 +18,7 @@ const ScheduleEmptySkeleton: React.FC<IScheduleEmptySkeletonProps> = ({
   });
 
   return (
-    <Box sx={sx.cellEmpty}>
+    <Box sx={sx.scheduleEmpty}>
       <Skeleton variant="text" width={160} />
     </Box>
   );

@@ -2,16 +2,16 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
-  | 'itemTime'
-  | 'timelineContent'
-  | 'timelineContentWrapper'
-  | 'itemChangesContainer'
-  | 'timelineChanges'
-  | 'itemChangesWrapper'
-  | 'itemChanges'
-  | 'changesPrev'
-  | 'changesNext'
-  | 'payload';
+  | 'historyItemTime'
+  | 'historyTimeLineContent'
+  | 'historyItemChangesWrap'
+  | 'historyItemChangesContainer'
+  | 'historyTimeLineChanges'
+  | 'historyItemChangesWrapper'
+  | 'historyItemChanges'
+  | 'historyItemChangesPrev'
+  | 'historyItemChangesNext'
+  | 'historyItemPayload';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -19,38 +19,38 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    itemTime: {
+    historyItemTime: {
       opacity: 0.5,
     },
-    timelineContent: {
+    historyTimeLineContent: {
       minWidth: 0,
       p: 3,
     },
-    timelineContentWrapper: {
+    historyItemChangesWrap: {
       minWidth: 0,
     },
-    itemChangesContainer: {
+    historyItemChangesContainer: {
       alignItems: 'center',
     },
-    timelineChanges: {
+    historyTimeLineChanges: {
       minWidth: 0,
     },
-    itemChangesWrapper: {
+    historyItemChangesWrapper: {
       alignItems: 'center',
     },
-    itemChanges: {
+    historyItemChanges: {
       alignItems: 'center',
     },
-    changesPrev: {
+    historyItemChangesPrev: {
       minWidth: 0,
       overflowWrap: 'anywhere',
       wordBreak: 'break-word',
     },
-    changesNext: {
+    historyItemChangesNext: {
       overflowWrap: 'anywhere',
       wordBreak: 'break-word',
     },
-    payload: {
+    historyItemPayload: {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },

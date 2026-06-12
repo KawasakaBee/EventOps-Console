@@ -168,7 +168,7 @@ const SpeakerBlock: React.FC<ISpeakerBlockProps> = memo(
             )}
 
             {field === 'email' && (
-              <Typography variant="caption" sx={sx.emailClue}>
+              <Typography variant="caption" sx={sx.speakerBlockEmailClue}>
                 Вы можете ввести Email спикера для автозаполнения данных.
               </Typography>
             )}

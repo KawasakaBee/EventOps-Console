@@ -92,7 +92,7 @@ const ScheduleAssign: React.FC<IScheduleAssignProps> = ({
               )}
               onChange={(_, option) => handleProposalSelect(option)}
               disabled={selectedTrack === '' || isLoading}
-              slotProps={{ paper: { sx: sx.noOptionText } }}
+              slotProps={{ paper: { sx: sx.scheduleAssignNoOptionText } }}
             />
           </FormControl>
 
@@ -138,7 +138,7 @@ const ScheduleAssign: React.FC<IScheduleAssignProps> = ({
         <Dialog
           open={isAssignDialogOpened}
           onClose={handleCloseAssignDialog}
-          slotProps={{ paper: { sx: sx.dialogPaper } }}
+          slotProps={{ paper: { sx: sx.scheduleAssignDialogPaper } }}
         >
           {!assignState.isError && (
             <DialogTitle>Заявка успешно назначена</DialogTitle>

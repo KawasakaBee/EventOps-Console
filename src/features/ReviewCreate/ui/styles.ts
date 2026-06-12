@@ -1,7 +1,8 @@
+import paperDialogSx from '@/shared/styles/paperDialogSx';
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'dialogPaper' | 'dialogContent';
+type Key = 'reviewCreateDialogPaper' | 'reviewCreateDialogContent';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,15 +10,8 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    dialogPaper: {
-      alignItems: 'center',
-      minWidth: 600,
-      p: 4,
-      '& .MuiDialogTitle-root + .MuiDialogContent-root': {
-        pt: 2,
-      },
-    },
-    dialogContent: {
+    reviewCreateDialogPaper: paperDialogSx,
+    reviewCreateDialogContent: {
       width: 1,
     },
   };

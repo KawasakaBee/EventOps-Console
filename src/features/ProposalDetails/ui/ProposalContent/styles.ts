@@ -1,7 +1,8 @@
+import tabsSx from '@/shared/styles/tabsSx';
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'proposalTab' | 'tabCard';
+type Key = 'proposalContentTabs' | 'proposalContentTabCard';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,14 +10,8 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    proposalTab: {
-      textTransform: 'initial',
-      color: 'primary.main',
-      '& .Mui-disabled': {
-        color: 'text.disabled',
-      },
-    },
-    tabCard: {
+    proposalContentTabs: tabsSx,
+    proposalContentTabCard: {
       p: 2,
       '& > h3': {
         mb: 3,

@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'cellEmpty';
+type Key = 'scheduleEmpty';
 
 type IStyleProps = {
   column: number;
@@ -16,7 +16,7 @@ export const styles: Style = (options) => {
   const { column, startRow, endRow } = options;
 
   return {
-    cellEmpty: {
+    scheduleEmpty: {
       zIndex: 0,
       gridColumn: column,
       gridRowStart: startRow,

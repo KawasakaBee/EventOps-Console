@@ -26,7 +26,7 @@ const AuditTableSkeleton = () => {
   const sx = styles({ viewportWidth });
 
   return (
-    <TableContainer component={Paper} sx={sx.table}>
+    <TableContainer component={Paper} sx={sx.auditTable}>
       <Table>
         <colgroup>
           {Object.entries(
@@ -43,7 +43,7 @@ const AuditTableSkeleton = () => {
                 <TableSortLabel
                   active={true}
                   direction="asc"
-                  sx={sx.tableSortLabel}
+                  sx={sx.auditTableSortLabel}
                   disabled={true}
                 >
                   {auditListItemDictionary[key]}

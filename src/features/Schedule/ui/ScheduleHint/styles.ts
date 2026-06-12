@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'cellHint' | 'tooltip';
+type Key = 'scheduleHint' | 'scheduleHintTooltip';
 
 type IStyleProps = {
   column: number;
@@ -17,7 +17,7 @@ export const styles: Style = (options) => {
   const { column, startRow, endRow, hasOverlap } = options;
 
   return {
-    cellHint: {
+    scheduleHint: {
       zIndex: 3,
       gridColumn: column,
       gridRowStart: startRow,
@@ -37,7 +37,7 @@ export const styles: Style = (options) => {
       )
     `,
     },
-    tooltip: {
+    scheduleHintTooltip: {
       bgcolor: hasOverlap ? 'error.main' : 'success.main',
     },
   };

@@ -19,7 +19,7 @@ const ProposalHistoryTab: React.FC<IProposalHistoryTabProps> = ({
   const reviewers = useGetReviewersQuery();
 
   return history.length !== 0 ? (
-    <Timeline sx={sx.timeline}>
+    <Timeline sx={sx.proposalHistoryTabTimeLine}>
       {history.map((item, idx) => {
         return users.isLoading || tracks.isLoading || reviewers.isLoading ? (
           <HistoryItemSkeleton key={item.id} />

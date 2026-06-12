@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'paginationWrapper';
+type Key = 'paginationControl';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,7 +8,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    paginationWrapper: {
+    paginationControl: {
       alignItems: 'center',
     },
   };

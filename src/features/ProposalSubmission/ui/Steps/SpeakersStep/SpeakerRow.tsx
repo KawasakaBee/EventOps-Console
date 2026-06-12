@@ -34,7 +34,7 @@ const SpeakerRow: React.FC<ISpeakerRowProps> = memo(
             readOnly: isReadonly,
           },
         }}
-        sx={sx.speakerTextField}
+        sx={sx.speakersStepTextField}
       />
     );
   },

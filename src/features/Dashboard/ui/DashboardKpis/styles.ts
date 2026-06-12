@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'kpiWrapper' | 'kpiCard' | 'kptPointer';
+type Key = 'dashboardKpisItemWrap' | 'dashboardKpisCard';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,11 +8,11 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    kpiWrapper: {
+    dashboardKpisItemWrap: {
       height: 1,
       cursor: 'pointer',
     },
-    kpiCard: {
+    dashboardKpisCard: {
       height: 1,
       p: 1.5,
       transition:
@@ -27,9 +27,6 @@ export const styles: Style = () => {
       '& h3': {
         cursor: 'pointer',
       },
-    },
-    kptPointer: {
-      cursor: 'pointer',
     },
   };
 };

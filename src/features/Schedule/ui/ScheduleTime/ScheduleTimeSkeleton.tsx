@@ -10,7 +10,7 @@ const ScheduleTimeSkeleton: React.FC<IScheduleTimeSkeletonProps> = ({
 
   return (
     <>
-      <SectionCard title={null} restSx={sx.timeCell}>
+      <SectionCard title={null} restSx={sx.scheduleTime}>
         <Skeleton variant="text" width={50} />
         <Skeleton variant="text" width={50} />
       </SectionCard>

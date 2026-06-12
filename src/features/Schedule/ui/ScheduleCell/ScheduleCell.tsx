@@ -16,7 +16,7 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
   respSlot,
   tracks,
   dayStart,
-  setUnssign,
+  setUnassign,
 }) => {
   const router = useRouter();
 
@@ -75,7 +75,7 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
   };
 
   const handleProposalUnassign = () => {
-    setUnssign({ opened: true, id: respSlot.slot.id });
+    setUnassign({ opened: true, id: respSlot.slot.id });
   };
 
   return (
@@ -93,10 +93,10 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
-        sx={sx.popover}
+        sx={sx.scheduleCellPopover}
         slotProps={{
           paper: {
-            sx: sx.popoverPaper,
+            sx: sx.scheduleCellPopoverPaper,
             onMouseEnter: handlePopoverKeepOpen,
             onMouseLeave: handlePopoverCloseDelayed,
           },
@@ -109,7 +109,7 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
           ariaLabel="Кнопка закрытия поповера"
           icon={CloseIcon}
           onClick={handlePopoverClose}
-          sx={sx.popoverCloseButton}
+          sx={sx.scheduleCellPopoverCloseButton}
         />
         <Button
           mode="button"
@@ -120,16 +120,16 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
           Убрать из расписания
         </Button>
       </Popover>
-      <SectionCard key={respSlot.slot.id} title={null} restSx={sx.slotCell}>
+      <SectionCard key={respSlot.slot.id} title={null} restSx={sx.scheduleCell}>
         <Stack
           spacing={1}
           component={'div'}
           onClick={() => handleToDetailsRoute(respSlot.slot.proposalId)}
-          sx={sx.slotContainer}
+          sx={sx.scheduleCellSlotContainer}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverCloseDelayed}
         >
-          <Stack direction="row" spacing={1} sx={sx.slotWrapper}>
+          <Stack direction="row" spacing={1} sx={sx.scheduleCellSlotWrap}>
             <Typography variant="caption">
               {respSlot.slot.startTime.slice(11, 16)} —{' '}
               {respSlot.slot.endTime.slice(11, 16)}
@@ -161,7 +161,11 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
               <Typography variant="subtitle2">Спикеры:</Typography>
               <Stack direction="row" spacing={0.5} divider={<>,</>}>
                 {respSlot.speakerNames.map((name) => (
-                  <Typography key={name} variant="caption" sx={sx.speakerName}>
+                  <Typography
+                    key={name}
+                    variant="caption"
+                    sx={sx.scheduleCellSpeakerName}
+                  >
                     {name}
                   </Typography>
                 ))}

@@ -34,7 +34,7 @@ const MyProposalsPage = () => {
               key={tab}
               label={myProposalsTabsDictionary[tab]}
               value={tab}
-              sx={sx.proposalTab}
+              sx={sx.myProposalsPageTabs}
             />
           ))}
         </Tabs>

@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'actionsWrapper';
+type Key = 'proposalsBulkActions';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,7 +8,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    actionsWrapper: {
+    proposalsBulkActions: {
       alignItems: 'center',
     },
   };

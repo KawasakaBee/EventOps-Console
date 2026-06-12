@@ -6,7 +6,7 @@ export interface IScheduleCellProps {
   respSlot: ResponseScheduleSlot;
   tracks: Track[];
   dayStart: string;
-  setUnssign: Dispatch<
+  setUnassign: Dispatch<
     SetStateAction<
       | {
           opened: true;

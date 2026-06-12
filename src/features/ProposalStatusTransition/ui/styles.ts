@@ -2,14 +2,14 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
-  | 'dialog'
-  | 'dialogContainer'
-  | 'statusContainer'
-  | 'statusPrev'
-  | 'statusNext'
-  | 'formControl'
-  | 'reasonInput'
-  | 'buttonsContainer';
+  | 'proposalStatusTransitionDialogPaper'
+  | 'proposalStatusTransitionDialogContainer'
+  | 'proposalStatusTransitionDialogStatus'
+  | 'proposalStatusTransitionDialogStatusPrev'
+  | 'proposalStatusTransitionDialogStatusNext'
+  | 'proposalStatusTransitionDialogReasonControl'
+  | 'proposalStatusTransitionDialogReasonInput'
+  | 'proposalStatusTransitionDialogActions';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -17,29 +17,29 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    dialog: {
+    proposalStatusTransitionDialogPaper: {
       minWidth: 600,
       p: 4,
     },
-    dialogContainer: {
+    proposalStatusTransitionDialogContainer: {
       alignItems: 'center',
     },
-    statusContainer: {
+    proposalStatusTransitionDialogStatus: {
       alignItems: 'center',
     },
-    statusPrev: {
+    proposalStatusTransitionDialogStatusPrev: {
       color: 'error.main',
     },
-    statusNext: {
+    proposalStatusTransitionDialogStatusNext: {
       color: 'success.main',
     },
-    formControl: {
+    proposalStatusTransitionDialogReasonControl: {
       width: 1,
     },
-    reasonInput: {
+    proposalStatusTransitionDialogReasonInput: {
       minHeight: 120,
     },
-    buttonsContainer: {
+    proposalStatusTransitionDialogActions: {
       justifyContent: 'center',
     },
   };

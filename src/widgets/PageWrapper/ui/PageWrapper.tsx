@@ -15,7 +15,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
     appbarHeight: APPBAR_HEIGHT,
   });
 
-  return <Box sx={sx.page}>{children}</Box>;
+  return <Box sx={sx.pageWrapper}>{children}</Box>;
 };
 
 export default PageWrapper;

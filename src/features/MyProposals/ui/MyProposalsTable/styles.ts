@@ -1,7 +1,7 @@
-import getResponsiveValue from '@/shared/utils/getResponsiveValue';
+import tableSx from '@/shared/styles/tableSx';
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'table';
+type Key = 'myProposalsTable';
 
 type IStyleProps = {
   viewportWidth: number;
@@ -15,15 +15,6 @@ export const styles: Style = (options) => {
   const { viewportWidth } = options;
 
   return {
-    table: {
-      mb: 2,
-
-      '& .MuiTableCell-root': {
-        p: getResponsiveValue(2, 1, 1920, 1440, viewportWidth),
-      },
-      '& .MuiCheckbox-root': {
-        p: getResponsiveValue(1, 0.5, 1920, 1440, viewportWidth),
-      },
-    },
+    myProposalsTable: tableSx(viewportWidth),
   };
 };

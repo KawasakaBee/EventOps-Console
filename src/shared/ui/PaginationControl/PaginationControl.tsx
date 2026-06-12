@@ -57,7 +57,7 @@ const PaginationControl: React.FC<IPaginationControlProps> = ({
   };
 
   return (
-    <Stack direction="row" spacing={4} sx={sx.paginationWrapper}>
+    <Stack direction="row" spacing={4} sx={sx.paginationControl}>
       <Pagination
         count={totalPages}
         page={selectedPage}

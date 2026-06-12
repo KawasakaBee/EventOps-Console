@@ -54,7 +54,7 @@ const SettingsPage = () => {
       <Dialog
         open={isCreateDialogOpened}
         onClose={handleCreateDialogClose}
-        slotProps={{ paper: { sx: sx.dialogPaper } }}
+        slotProps={{ paper: { sx: sx.settingsPageDialogPaper } }}
       >
         {!createState.isError && (
           <DialogTitle>Событие успешно создано</DialogTitle>

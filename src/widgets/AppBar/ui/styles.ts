@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'appbar';
+type Key = 'appBar' | 'appBarTitle';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,7 +8,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    appbar: {
+    appBar: {
       position: 'static',
       gridArea: 'appbar',
       display: 'flex',
@@ -18,5 +18,6 @@ export const styles: Style = () => {
       p: 2,
       bgcolor: 'background.paper',
     },
+    appBarTitle: { mb: 0 },
   };
 };

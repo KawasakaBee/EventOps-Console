@@ -2,16 +2,16 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
-  | 'cardWrapper'
-  | 'headingWrapper'
-  | 'cardNameWrapper'
-  | 'cardInfoWrapper'
-  | 'cardInfoEmailWrapper'
-  | 'cardInfoEmail'
-  | 'cardContactsWrapper'
-  | 'contactsIcon'
-  | 'pastTalks'
-  | 'avatarSkeleton';
+  | 'speakerCard'
+  | 'speakerCardHeadingWrap'
+  | 'speakerCardNameWrap'
+  | 'speakerCardInfoWrap'
+  | 'speakerCardInfoEmailWrap'
+  | 'speakerCardInfoEmail'
+  | 'speakerCardContactsWrap'
+  | 'speakerCardContactsIcon'
+  | 'speakerCardPastTalks'
+  | 'speakerCardAvatarSkeleton';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -19,44 +19,44 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    cardWrapper: {
+    speakerCard: {
       p: 2,
       border: '2px solid',
       borderColor: 'primary.main',
       borderRadius: 1.5,
     },
-    headingWrapper: {
+    speakerCardHeadingWrap: {
       justifyContent: 'space-between',
     },
-    cardNameWrapper: {
+    speakerCardNameWrap: {
       alignItems: 'center',
     },
-    cardInfoWrapper: {
+    speakerCardInfoWrap: {
       p: 2,
       border: '1px dotted',
       borderColor: 'text.disabled',
       borderRadius: 1.5,
     },
-    cardInfoEmailWrapper: {
+    speakerCardInfoEmailWrap: {
       alignItems: 'center',
     },
-    cardInfoEmail: {
+    speakerCardInfoEmail: {
       border: 0,
     },
-    cardContactsWrapper: {
+    speakerCardContactsWrap: {
       alignItems: 'center',
     },
-    contactsIcon: {
+    speakerCardContactsIcon: {
       minWidth: 'unset',
       width: 32,
       height: 32,
       border: 0,
       borderRadius: '50%',
     },
-    pastTalks: {
+    speakerCardPastTalks: {
       opacity: 0.5,
     },
-    avatarSkeleton: {
+    speakerCardAvatarSkeleton: {
       height: 80,
       borderRadius: '50%',
     },

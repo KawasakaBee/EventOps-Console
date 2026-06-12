@@ -58,9 +58,12 @@ const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
   return (
     <Grid container spacing={2}>
       <Grid size={3}>
-        <Box sx={sx.kpiWrapper} onClick={handleToTotalRedirect}>
-          <SectionCard title="Всего отправлено заявок" restSx={sx.kpiCard}>
-            <Typography variant="h4" sx={sx.kptPointer}>
+        <Box sx={sx.dashboardKpisItemWrap} onClick={handleToTotalRedirect}>
+          <SectionCard
+            title="Всего отправлено заявок"
+            restSx={sx.dashboardKpisCard}
+          >
+            <Typography variant="h4">
               {dashboard.kpis.totalSubmissions}
             </Typography>
             <Typography variant="caption">Кроме черновиков</Typography>
@@ -68,20 +71,16 @@ const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
         </Box>
       </Grid>
       <Grid size={3}>
-        <Box sx={sx.kpiWrapper} onClick={handleToInReviewRedirect}>
-          <SectionCard title="Заявок в ревью" restSx={sx.kpiCard}>
-            <Typography variant="h4" sx={sx.kptPointer}>
-              {dashboard.kpis.inReview}
-            </Typography>
+        <Box sx={sx.dashboardKpisItemWrap} onClick={handleToInReviewRedirect}>
+          <SectionCard title="Заявок в ревью" restSx={sx.dashboardKpisCard}>
+            <Typography variant="h4">{dashboard.kpis.inReview}</Typography>
           </SectionCard>
         </Box>
       </Grid>
       <Grid size={3}>
-        <Box sx={sx.kpiWrapper} onClick={handleToAcceptedRedirect}>
-          <SectionCard title="Принято заявок" restSx={sx.kpiCard}>
-            <Typography variant="h4" sx={sx.kptPointer}>
-              {dashboard.kpis.accepted}
-            </Typography>
+        <Box sx={sx.dashboardKpisItemWrap} onClick={handleToAcceptedRedirect}>
+          <SectionCard title="Принято заявок" restSx={sx.dashboardKpisCard}>
+            <Typography variant="h4">{dashboard.kpis.accepted}</Typography>
             <Typography variant="caption">
               В статусе «Принята» и «В расписании»
             </Typography>
@@ -89,11 +88,9 @@ const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
         </Box>
       </Grid>
       <Grid size={3}>
-        <Box sx={sx.kpiWrapper} onClick={handleToRejectedRedirect}>
-          <SectionCard title="Отклонено заявок" restSx={sx.kpiCard}>
-            <Typography variant="h4" sx={sx.kptPointer}>
-              {dashboard.kpis.rejected}
-            </Typography>
+        <Box sx={sx.dashboardKpisItemWrap} onClick={handleToRejectedRedirect}>
+          <SectionCard title="Отклонено заявок" restSx={sx.dashboardKpisCard}>
+            <Typography variant="h4">{dashboard.kpis.rejected}</Typography>
           </SectionCard>
         </Box>
       </Grid>

@@ -46,7 +46,7 @@ const EmailRow: React.FC<IEmailRowProps> = memo(
             readOnly: ownerIdx === idx,
           },
         }}
-        sx={sx.speakerTextField}
+        sx={sx.speakersStepTextField}
       />
     );
   },

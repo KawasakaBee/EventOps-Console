@@ -23,7 +23,7 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
     const { subtitle, action, link, fields } = props;
 
     return (
-      <Stack spacing={2} sx={sx.errorStateContainer}>
+      <Stack spacing={2} sx={sx.errorState}>
         <Typography variant="h2" data-testid="error-state-title">
           {title}
         </Typography>
@@ -70,7 +70,7 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
     return (
       <Snackbar
         open={open}
-        sx={sx.snackbar}
+        sx={sx.errorStateSnackbar}
         autoHideDuration={6000}
         onClose={onClose}
       >
@@ -100,20 +100,20 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
         onClose={onClose}
         slotProps={{
           paper: {
-            sx: sx.dialogPaper,
+            sx: sx.errorStateDialogPaper,
           },
         }}
         aria-labelledby="error-dialog-title"
         aria-describedby="error-dialog-description"
         data-testid="error-state-dialog"
       >
-        <DialogTitle sx={sx.dialogTitleWrapper} id="error-dialog-title">
+        <DialogTitle sx={sx.errorStateDialogTitleWrap} id="error-dialog-title">
           {SvgIcon && <SvgIcon />}
 
           {title}
         </DialogTitle>
         <DialogContent id="error-dialog-description">{subtitle}</DialogContent>
-        <DialogActions sx={sx.dialogActions}>
+        <DialogActions sx={sx.errorStateDialogActions}>
           {'link' in action ? (
             <Button
               mode="link"
@@ -125,7 +125,7 @@ const ErrorState: React.FC<ErrorStateProps> = (props) => {
               {action.link.buttonName}
             </Button>
           ) : (
-            <Box sx={sx.dialogButtons}>
+            <Box sx={sx.errorStateDialogButtons}>
               <Button
                 mode="button"
                 variant="contained"

@@ -26,12 +26,12 @@ const ProposalStickyPanelSkeleton = () => {
           </Box>
         </Stack>
         <Stack>
-          <Skeleton variant="text" sx={sx.skeletonButton} />
-          <Skeleton variant="text" sx={sx.skeletonButton} />
+          <Skeleton variant="text" sx={sx.proposalStickyPanelSkeletonButton} />
+          <Skeleton variant="text" sx={sx.proposalStickyPanelSkeletonButton} />
         </Stack>
         <Stack>
-          <Skeleton variant="text" sx={sx.skeletonButton} />
-          <Skeleton variant="text" sx={sx.skeletonButton} />
+          <Skeleton variant="text" sx={sx.proposalStickyPanelSkeletonButton} />
+          <Skeleton variant="text" sx={sx.proposalStickyPanelSkeletonButton} />
         </Stack>
 
         <SecondaryStickyButtonsSkeleton />

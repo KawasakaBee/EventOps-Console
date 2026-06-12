@@ -1,6 +1,6 @@
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
-import { styles } from './styles';
 import { Box, CircularProgress } from '@mui/material';
+import { styles } from '../shared/styles';
 
 const AnalyticsReviewerWorkloadSkeleton = () => {
   const sx = styles();

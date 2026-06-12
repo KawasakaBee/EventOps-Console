@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'sidebar' | 'link';
+type Key = 'sidebar' | 'sidebarLink';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -17,7 +17,7 @@ export const styles: Style = () => {
         bgcolor: 'background.paper',
       },
     },
-    link: {
+    sidebarLink: {
       position: 'relative',
       display: 'inline',
       mb: 2,

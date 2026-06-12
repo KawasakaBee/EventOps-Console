@@ -147,7 +147,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     <SectionCard title={null}>
       <Stack spacing={4}>
         <Stack spacing={2}>
-          <Stack sx={sx.statusWrapper}>
+          <Stack sx={sx.proposalStickyPanelStatusWrap}>
             <Typography variant="subtitle2">Статус:</Typography>
             {proposal ? (
               <StatusChip
@@ -163,7 +163,10 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
           <Box>
             <Typography variant="subtitle2">Последнее обновление:</Typography>
             {proposal ? (
-              <Typography variant="caption" sx={sx.lastUpdateTime}>
+              <Typography
+                variant="caption"
+                sx={sx.proposalStickyPanelLastUpdateTime}
+              >
                 {formatIsoDateTime(proposal.updatedAt)}
               </Typography>
             ) : (
@@ -191,7 +194,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                         )
                       }
                       isDisabled={isAcceptAndRejectButtonDisable}
-                      sx={sx.actionButton}
+                      sx={sx.proposalStickyPanelActionButton}
                       intent={action === 'accept' ? 'success' : 'danger'}
                     >
                       {availableActionsDictionary[action]}
@@ -204,7 +207,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="contained"
                   size="small"
-                  sx={sx.actionButton}
+                  sx={sx.proposalStickyPanelActionButton}
                   onClick={handleToEditRedirect}
                 >
                   {availableActionsDictionary[action]}
@@ -224,7 +227,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                       variant="outlined"
                       size="small"
                       onClick={handleStatusMenuOpen}
-                      sx={sx.actionButton}
+                      sx={sx.proposalStickyPanelActionButton}
                     >
                       {availableActionsDictionary[action]}
                     </Button>
@@ -256,7 +259,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
-                  sx={sx.actionButton}
+                  sx={sx.proposalStickyPanelActionButton}
                   onClick={() => handlePendingStatusChange('changes_requested')}
                 >
                   {availableActionsDictionary[action]}
@@ -267,7 +270,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
-                  sx={sx.actionButton}
+                  sx={sx.proposalStickyPanelActionButton}
                   onClick={handleReviewerAssignDialogOpen}
                 >
                   {availableActionsDictionary[action]}
@@ -278,7 +281,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
-                  sx={sx.actionButton}
+                  sx={sx.proposalStickyPanelActionButton}
                   onClick={handleReviewCreateDialogOpen}
                 >
                   {availableActionsDictionary[action]}
@@ -289,7 +292,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                   mode="button"
                   variant="outlined"
                   size="small"
-                  sx={sx.actionButton}
+                  sx={sx.proposalStickyPanelActionButton}
                   onClick={handleCommentAddDialogOpen}
                 >
                   {availableActionsDictionary[action]}
@@ -301,7 +304,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                     mode="button"
                     variant="outlined"
                     size="small"
-                    sx={sx.actionButton}
+                    sx={sx.proposalStickyPanelActionButton}
                     onClick={handleToScheduleRedirect}
                   >
                     {availableActionsDictionary[action]}

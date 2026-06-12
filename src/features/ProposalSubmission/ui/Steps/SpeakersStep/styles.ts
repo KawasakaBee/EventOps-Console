@@ -1,6 +1,9 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'countWrapper' | 'emailClue' | 'speakerTextField';
+type Key =
+  | 'speakersStepCountWrap'
+  | 'speakerBlockEmailClue'
+  | 'speakersStepTextField';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,14 +11,14 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    countWrapper: {
+    speakersStepCountWrap: {
       alignItems: 'center',
     },
-    emailClue: {
+    speakerBlockEmailClue: {
       mt: 0,
       opacity: 0.5,
     },
-    speakerTextField: {
+    speakersStepTextField: {
       borderColor: 'neutral.main',
 
       '& fieldset': {

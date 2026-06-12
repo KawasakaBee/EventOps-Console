@@ -22,7 +22,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { styles } from './styles';
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
 import TitleRow from './TitleRow';
-import DurationRow from './DurationRow';
+import DurationRow from './DurationRow/DurationRow';
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
@@ -70,7 +70,7 @@ const BasicStep = () => {
                 (event) => event.id === field.value,
               );
               return (
-                <Stack spacing={2} sx={sx.tracksWrapper}>
+                <Stack spacing={2} sx={sx.basicStepTracksWrap}>
                   <FormControl
                     fullWidth
                     error={!!fieldState.error}
@@ -239,7 +239,7 @@ const BasicStep = () => {
             name={type}
             control={control}
             render={({ field, fieldState }) => (
-              <Stack spacing={2} sx={sx.tracksWrapper}>
+              <Stack spacing={2} sx={sx.basicStepTracksWrap}>
                 <FormControl
                   fullWidth
                   error={!!fieldState.error}

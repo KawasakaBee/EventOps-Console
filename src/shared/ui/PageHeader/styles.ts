@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'pageHeader' | 'backButton';
+type Key = 'pageHeader' | 'pageHeaderBackButton';
 
 type Styles = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -15,7 +15,7 @@ export const styles: Styles = () => {
       bgcolor: 'background.paper',
       boxShadow: 3,
     },
-    backButton: {
+    pageHeaderBackButton: {
       maxWidth: 200,
       mb: 2,
     },

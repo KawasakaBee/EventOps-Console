@@ -46,7 +46,7 @@ const AuditTableRow: React.FC<IAuditTableRowProps> = ({
     return (
       <Box>
         {normalizePayload.map((obj, idx) => (
-          <Typography key={idx} variant="body2" sx={sx.payload}>
+          <Typography key={idx} variant="body2" sx={sx.auditTableRowPayload}>
             {obj}
           </Typography>
         ))}

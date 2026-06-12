@@ -1,7 +1,8 @@
+import tabsSx from '@/shared/styles/tabsSx';
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'proposalTab';
+type Key = 'scheduleTabs';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,12 +10,6 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    proposalTab: {
-      textTransform: 'initial',
-      color: 'primary.main',
-      '& .Mui-disabled': {
-        color: 'text.disabled',
-      },
-    },
+    scheduleTabs: tabsSx,
   };
 };

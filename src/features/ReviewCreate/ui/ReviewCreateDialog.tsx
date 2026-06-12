@@ -91,7 +91,7 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
       onClose={onClose}
       slotProps={{
         paper: {
-          sx: sx.dialogPaper,
+          sx: sx.reviewCreateDialogPaper,
         },
       }}
     >
@@ -124,7 +124,7 @@ const ReviewCreateDialog: React.FC<IReviewCreateDialogProps> = ({
         <>
           <DialogTitle>Добавить ревью</DialogTitle>
           <form onSubmit={handleSubmit(handleCreateReviewSubmit)}>
-            <DialogContent sx={sx.dialogContent}>
+            <DialogContent sx={sx.reviewCreateDialogContent}>
               <Stack spacing={3}>
                 <Stack direction="row" spacing={2}>
                   {scoreElement('scoreContent')}

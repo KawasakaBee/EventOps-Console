@@ -49,7 +49,7 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
       onClose={onClose}
       slotProps={{
         paper: {
-          sx: sx.dialogPaper,
+          sx: sx.commentAddDialogPaper,
         },
       }}
     >
@@ -81,7 +81,7 @@ const CommentAddDialog: React.FC<ICommentAddDialogProps> = ({
         <>
           <DialogTitle>Добавить комментарий</DialogTitle>
           <form onSubmit={handleSubmit(handleAddCommentSubmit)}>
-            <DialogContent sx={sx.dialogContent}>
+            <DialogContent sx={sx.commentAddDialogContent}>
               <Stack spacing={3}>
                 <TextField
                   {...register('message')}

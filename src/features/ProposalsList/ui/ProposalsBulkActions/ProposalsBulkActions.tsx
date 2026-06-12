@@ -122,7 +122,7 @@ const ProposalsBulkActions: React.FC<IProposalsBulkActionsProps> = ({
   };
 
   return (
-    <Stack direction="row" spacing={1} sx={sx.actionsWrapper}>
+    <Stack direction="row" spacing={1} sx={sx.proposalsBulkActions}>
       <Button
         mode="button"
         variant="contained"

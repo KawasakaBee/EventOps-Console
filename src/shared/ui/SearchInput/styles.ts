@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'formControl' | 'searchInput';
+type Key = 'searchInput' | 'searchInputField';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,10 +8,10 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    formControl: {
+    searchInput: {
       minWidth: 220,
     },
-    searchInput: {
+    searchInputField: {
       width: 400,
       mb: 2,
     },

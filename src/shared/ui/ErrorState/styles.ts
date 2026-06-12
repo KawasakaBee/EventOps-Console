@@ -1,12 +1,12 @@
 import { SxProps, Theme } from '@mui/material';
 
 type Key =
-  | 'errorStateContainer'
-  | 'snackbar'
-  | 'dialogPaper'
-  | 'dialogTitleWrapper'
-  | 'dialogActions'
-  | 'dialogButtons';
+  | 'errorState'
+  | 'errorStateSnackbar'
+  | 'errorStateDialogPaper'
+  | 'errorStateDialogTitleWrap'
+  | 'errorStateDialogActions'
+  | 'errorStateDialogButtons';
 
 interface IStyleOptions {
   fullHeight: boolean;
@@ -20,32 +20,32 @@ export const styles: Style = (options) => {
   const { fullHeight } = options;
 
   return {
-    errorStateContainer: {
+    errorState: {
       height: fullHeight ? 1 : 'auto',
       justifyContent: 'center',
       alignItems: 'center',
     },
-    snackbar: {
+    errorStateSnackbar: {
       zIndex: 1800,
       maxWidth: 400,
       width: 'max-content',
     },
-    dialogPaper: {
+    errorStateDialogPaper: {
       minWidth: 400,
       p: 3,
     },
-    dialogTitleWrapper: {
+    errorStateDialogTitleWrap: {
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
       gap: 1,
     },
-    dialogActions: {
+    errorStateDialogActions: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
     },
-    dialogButtons: {
+    errorStateDialogButtons: {
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',

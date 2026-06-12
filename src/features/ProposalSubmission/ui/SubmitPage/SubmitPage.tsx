@@ -103,10 +103,7 @@ const SubmitPage = () => {
         scheduleAutosave={scheduleAutosave}
         scheduleRecoveryAutosave={scheduleRecoveryAutosave}
       />
-      <form
-        onSubmit={handleSubmit(handleFormSubmit)}
-        style={{ height: '100%' }}
-      >
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
         {draft.isLoading ? (
           <SubmitStepperSkeleton />
         ) : draft.isError ? (
@@ -130,17 +127,17 @@ const SubmitPage = () => {
         onClose={handleRecoveryDialogClose}
         slotProps={{
           paper: {
-            sx: sx.recoveryDialogPaper,
+            sx: sx.submitPageRecoveryDialogPaper,
           },
         }}
       >
-        <DialogTitle sx={sx.recoveryDialogTitle}>
+        <DialogTitle sx={sx.submitPageDialogCentered}>
           Найдена незавершённая заявка!
         </DialogTitle>
-        <DialogContent sx={sx.recoveryDialogContent}>
+        <DialogContent sx={sx.submitPageDialogCentered}>
           Продолжить заполнение найденной заявки?
         </DialogContent>
-        <DialogActions sx={sx.recoveryDialogActions}>
+        <DialogActions sx={sx.submitPageDialogCentered}>
           <Button
             mode="button"
             variant="contained"
@@ -166,20 +163,20 @@ const SubmitPage = () => {
         onClose={handleSubmitDialogClose}
         slotProps={{
           paper: {
-            sx: sx.submitDialogPaper,
+            sx: sx.submitPageSubmitDialogPaper,
           },
         }}
       >
         {createState.isLoading || changeState.isLoading ? (
-          <CircularProgress sx={sx.submitCircularProgress} />
+          <CircularProgress sx={sx.submitPageDialogCentered} />
         ) : (
           <>
-            <DialogTitle sx={sx.submitDialogTitle}>
+            <DialogTitle sx={sx.submitPageDialogCentered}>
               {createState.isError || changeState.isError
                 ? 'Не удалось создать заявку...'
                 : 'Заявка успешно создана!'}
             </DialogTitle>
-            <DialogContent sx={sx.submitDialogContent}>
+            <DialogContent sx={sx.submitPageDialogCentered}>
               {createState.isError || changeState.isError ? (
                 <Stack>
                   {!proposalId && (
@@ -206,7 +203,7 @@ const SubmitPage = () => {
                 'Вы можете продолжить работу с заявкой на её странице'
               )}
             </DialogContent>
-            <DialogActions sx={sx.submitDialogActions}>
+            <DialogActions sx={sx.submitPageDialogCentered}>
               {!createState.isError && !changeState.isError && (
                 <Button
                   mode="button"

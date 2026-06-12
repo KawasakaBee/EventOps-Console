@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'proposalTitleWrapper' | 'proposalStickyPanel';
+type Key = 'proposalPageTitleWrap' | 'proposalPageStickyPanel';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,11 +8,11 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    proposalTitleWrapper: {
+    proposalPageTitleWrap: {
       alignItems: 'center',
       mb: 2,
     },
-    proposalStickyPanel: {
+    proposalPageStickyPanel: {
       position: 'sticky',
       top: 0,
       zIndex: 1200,

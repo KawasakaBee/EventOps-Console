@@ -1,15 +1,9 @@
 import type { SxProps, Theme } from '@mui/material';
 
 type Key =
-  | 'recoveryDialogPaper'
-  | 'submitDialogPaper'
-  | 'recoveryDialogTitle'
-  | 'submitDialogTitle'
-  | 'recoveryDialogContent'
-  | 'submitDialogContent'
-  | 'recoveryDialogActions'
-  | 'submitDialogActions'
-  | 'submitCircularProgress';
+  | 'submitPageRecoveryDialogPaper'
+  | 'submitPageSubmitDialogPaper'
+  | 'submitPageDialogCentered';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -17,40 +11,22 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    recoveryDialogPaper: {
+    submitPageRecoveryDialogPaper: {
       minWidth: 600,
       p: 4,
       '&:focus-visible': {
         outline: 'none',
       },
     },
-    submitDialogPaper: {
+    submitPageSubmitDialogPaper: {
       minWidth: 600,
       p: 4,
       '&:focus-visible': {
         outline: 'none',
       },
     },
-    recoveryDialogTitle: {
+    submitPageDialogCentered: {
       textAlign: 'center',
-    },
-    submitDialogTitle: {
-      textAlign: 'center',
-    },
-    recoveryDialogContent: {
-      textAlign: 'center',
-    },
-    submitDialogContent: {
-      textAlign: 'center',
-    },
-    recoveryDialogActions: {
-      justifyContent: 'center',
-    },
-    submitDialogActions: {
-      justifyContent: 'center',
-    },
-    submitCircularProgress: {
-      alignSelf: 'center',
     },
   };
 };

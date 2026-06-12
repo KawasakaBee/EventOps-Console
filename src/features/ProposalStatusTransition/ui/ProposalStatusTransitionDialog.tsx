@@ -39,7 +39,7 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
       onClose={onClose}
       slotProps={{
         paper: {
-          sx: sx.dialog,
+          sx: sx.proposalStatusTransitionDialogPaper,
         },
       }}
     >
@@ -53,7 +53,7 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
           />
         )
       ) : changeState.data ? (
-        <Stack spacing={2} sx={sx.dialogContainer}>
+        <Stack spacing={2} sx={sx.proposalStatusTransitionDialogContainer}>
           <Typography variant="h2">
             Статус заявки успешно изменён на{' '}
             <b>{statusDictionary[nextStatus]}</b>
@@ -69,25 +69,35 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
           </Button>
         </Stack>
       ) : (
-        <Stack spacing={4} sx={sx.dialogContainer}>
+        <Stack spacing={4} sx={sx.proposalStatusTransitionDialogContainer}>
           <Typography variant="h2">
             {mode === 'single'
               ? 'Вы собираетесь сменить статус заявки:'
               : 'Вы собираетесь сменить статус выбранных заявок:'}
           </Typography>
-          <Stack direction="row" spacing={2} sx={sx.statusContainer}>
-            <Typography variant="h3" sx={sx.statusPrev}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={sx.proposalStatusTransitionDialogStatus}
+          >
+            <Typography
+              variant="h3"
+              sx={sx.proposalStatusTransitionDialogStatusPrev}
+            >
               {statusDictionary[prevStatus]}
             </Typography>
             <ArrowRightAltIcon />
-            <Typography variant="h3" sx={sx.statusNext}>
+            <Typography
+              variant="h3"
+              sx={sx.proposalStatusTransitionDialogStatusNext}
+            >
               {statusDictionary[nextStatus]}
             </Typography>
           </Stack>
           <Box component={'form'} onSubmit={handleStatusChange}>
             <FormControl
               required={isMustHaveReason}
-              sx={sx.formControl}
+              sx={sx.proposalStatusTransitionDialogReasonControl}
               disabled={changeState.isLoading}
             >
               <Stack spacing={2}>
@@ -111,13 +121,17 @@ const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
                     variant="outlined"
                     slotProps={{
                       input: {
-                        sx: sx.reasonInput,
+                        sx: sx.proposalStatusTransitionDialogReasonInput,
                       },
                     }}
                   />
                 )}
 
-                <Stack direction="row" spacing={2} sx={sx.buttonsContainer}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={sx.proposalStatusTransitionDialogActions}
+                >
                   <Button
                     mode="button"
                     variant="contained"

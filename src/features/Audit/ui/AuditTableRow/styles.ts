@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'payload';
+type Key = 'auditTableRowPayload';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -9,7 +9,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    payload: {
+    auditTableRowPayload: {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },

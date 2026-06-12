@@ -1,7 +1,11 @@
 import { SCHEDULE_STEP_HEIGHT } from '@/shared/config/layout';
+import paperDialogSx from '@/shared/styles/paperDialogSx';
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'scheduleContainer' | 'scheduleWrapper' | 'dialogPaper';
+type Key =
+  | 'schedulePageContainer'
+  | 'schedulePageWrap'
+  | 'shadulePageDialogPaper';
 
 type IStyleProps = {
   tracksLength: number;
@@ -16,8 +20,8 @@ export const styles: Style = (options) => {
   const { tracksLength, rowsCount } = options;
 
   return {
-    scheduleContainer: { overflowX: 'auto' },
-    scheduleWrapper: {
+    schedulePageContainer: { overflowX: 'auto' },
+    schedulePageWrap: {
       display: 'grid',
       gridTemplateColumns: `140px repeat(${tracksLength}, minmax(220px, 1fr))`,
       gridTemplateRows: `auto repeat(${rowsCount === 0 ? 50 : rowsCount}, ${SCHEDULE_STEP_HEIGHT}px)`,
@@ -26,13 +30,6 @@ export const styles: Style = (options) => {
       minWidth: 140 + tracksLength * 220,
       alignItems: 'stretch',
     },
-    dialogPaper: {
-      alignItems: 'center',
-      minWidth: 600,
-      p: 4,
-      '& .MuiDialogTitle-root + .MuiDialogContent-root': {
-        pt: 2,
-      },
-    },
+    shadulePageDialogPaper: paperDialogSx,
   };
 };

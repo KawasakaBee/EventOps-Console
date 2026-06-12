@@ -37,7 +37,7 @@ const ExtraStep = () => {
             name={type}
             control={control}
             render={({ field, fieldState }) => (
-              <Stack spacing={2} sx={sx.tagsWrapper}>
+              <Stack spacing={2} sx={sx.extraStepTagsWrap}>
                 <FormControl
                   fullWidth
                   error={!!fieldState.error}
@@ -122,7 +122,7 @@ const ExtraStep = () => {
                         onChange={(_, checked) => field.onChange(checked)}
                         onBlur={field.onBlur}
                         ref={field.ref}
-                        sx={sx.consentCheckbox}
+                        sx={sx.extraStepConsentCheckbox}
                       />
                     }
                   />

@@ -16,8 +16,8 @@ const DashboardAttentionsSkeleton = () => {
     <Grid container columnSpacing={2}>
       {Array.from({ length: 3 }).map((_, idx) => (
         <Grid key={idx} size={4}>
-          <SectionCard title={null} restSx={sx.attentionWrapper}>
-            <Stack direction="row" spacing={2} sx={sx.attentionCard}>
+          <SectionCard title={null} restSx={sx.dashboardAttentions}>
+            <Stack direction="row" spacing={2} sx={sx.dashboardAttentionsCard}>
               <Stack direction="row" spacing={1}>
                 <Skeleton variant="text" width={skeletonWidth} />{' '}
                 <Skeleton variant="text" width={skeletonWidth / 5} />

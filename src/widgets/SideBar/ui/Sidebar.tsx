@@ -26,7 +26,7 @@ const Sidebar = () => {
             key={route}
             href={route}
             underline="none"
-            sx={sx.link}
+            sx={sx.sidebarLink}
           >
             {path}
           </Link>

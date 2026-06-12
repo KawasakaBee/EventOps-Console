@@ -51,7 +51,7 @@ const ScheduleTabs: React.FC<IScheduleTabsProps> = ({ days }) => {
               key={day.date}
               value={day.date}
               label={day.title}
-              sx={sx.proposalTab}
+              sx={sx.scheduleTabs}
             />
           ))}
         </Tabs>

@@ -26,7 +26,7 @@ const AppLayout = async ({
       <PageWrapper>
         <Sidebar />
         <AppBar />
-        <Box sx={sx.content}>{children}</Box>
+        <Box sx={sx.appLayoutContent}>{children}</Box>
       </PageWrapper>
     </AuthProvider>
   );

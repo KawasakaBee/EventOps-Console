@@ -27,7 +27,7 @@ const ProposalsTableSkeleton = () => {
   const sx = styles({ viewportWidth });
 
   return (
-    <TableContainer component={Paper} sx={sx.table}>
+    <TableContainer component={Paper} sx={sx.proposalsTable}>
       <Table>
         <colgroup>
           {Object.entries(
@@ -51,7 +51,7 @@ const ProposalsTableSkeleton = () => {
                   <TableSortLabel
                     active={true}
                     direction="asc"
-                    sx={sx.tableSortLabel}
+                    sx={sx.proposalsTableSortLabel}
                     disabled={true}
                   >
                     {proposalListItemDictionary[key]}

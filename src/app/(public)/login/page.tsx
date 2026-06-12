@@ -6,6 +6,7 @@ import { demoRoles } from '@/entities/user/model/types';
 import Button from '@/shared/ui/Button/Button';
 import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { styles } from './styles';
 
 const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
   manager: '/dashboard',
@@ -16,6 +17,8 @@ const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
 const Login = () => {
   const router = useRouter();
   const [login] = useLoginDemoMutation();
+
+  const sx = styles();
 
   const handleDemoLogin = async (role: PostDemoLoginRequest['role']) => {
     try {
@@ -31,11 +34,11 @@ const Login = () => {
   };
 
   return (
-    <Stack sx={{ p: 4 }}>
-      <Typography variant="h1" sx={{ textAlign: 'center' }}>
+    <Stack sx={sx.login}>
+      <Typography variant="h1" sx={sx.loginTitle}>
         Авторизация с помощью Демо-роли:
       </Typography>
-      <Stack spacing={3} sx={{ alignSelf: 'center' }}>
+      <Stack spacing={3} sx={sx.loginActions}>
         {demoRoles.map((role) => (
           <Button
             key={role}
@@ -43,7 +46,7 @@ const Login = () => {
             variant="contained"
             size="medium"
             onClick={() => handleDemoLogin(role)}
-            sx={{ minWidth: 320 }}
+            sx={sx.loginButton}
           >
             Войти как {role}
           </Button>

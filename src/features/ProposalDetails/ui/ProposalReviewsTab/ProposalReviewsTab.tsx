@@ -25,9 +25,9 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
             direction="row"
             spacing={2}
             divider={<Divider orientation="vertical" flexItem />}
-            sx={sx.reviewsSummary}
+            sx={sx.proposalReviewsTabSummary}
           >
-            <Typography variant="body2" sx={sx.reviewsSummaryItem}>
+            <Typography variant="body2" sx={sx.proposalReviewsTabSummaryItem}>
               Средняя оценка:{' '}
               <b>
                 {calculateAverageReviewScore(reviews) ??
@@ -35,10 +35,10 @@ const ProposalReviewsTab: React.FC<IProposalReviewsTabProps> = ({
                 / 10
               </b>
             </Typography>
-            <Typography variant="body2" sx={sx.reviewsSummaryItem}>
+            <Typography variant="body2" sx={sx.proposalReviewsTabSummaryItem}>
               Рекомендация: <b>{getFinalReviewRecommendation(reviews)}</b>
             </Typography>
-            <Typography variant="body2" sx={sx.reviewsSummaryItem}>
+            <Typography variant="body2" sx={sx.proposalReviewsTabSummaryItem}>
               Количество ревью: <b>{reviews.length}</b>
             </Typography>
           </Stack>

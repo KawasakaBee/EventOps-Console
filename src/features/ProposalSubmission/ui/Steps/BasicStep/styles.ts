@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'durationCaption' | 'tracksWrapper';
+type Key = 'basicStepTracksWrap';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,10 +8,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    durationCaption: {
-      opacity: 0.5,
-    },
-    tracksWrapper: {
+    basicStepTracksWrap: {
       alignItems: 'flex-start',
     },
   };

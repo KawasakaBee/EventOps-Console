@@ -191,7 +191,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
   };
 
   return (
-    <SectionCard title="Фильтры" restSx={sx.filtersContainer}>
+    <SectionCard title="Фильтры" restSx={sx.proposalsFilterBar}>
       <SearchInput
         searchValue={filters.search ?? ''}
         label="Поиск по названию"
@@ -199,7 +199,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
         handleSearchChange={handleSearchChange}
       />
       <Grid container spacing={2}>
-        <FormControl disabled={isDisabled} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.proposalsFilterBarInput}>
           <InputLabel id="proposal-status-select">Статус заявки</InputLabel>
           <Select
             value={statusesList}
@@ -218,7 +218,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
 
         <FormControl
           disabled={isDisabled || events.isLoading || events.isError}
-          sx={sx.filterInput}
+          sx={sx.proposalsFilterBarInput}
         >
           {events.isLoading ? (
             <Skeleton variant="text" />
@@ -253,7 +253,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
 
         <FormControl
           disabled={isDisabled || tracks.isLoading || tracks.isError}
-          sx={sx.filterInput}
+          sx={sx.proposalsFilterBarInput}
         >
           {tracks.isLoading ? (
             <Skeleton variant="text" />
@@ -286,7 +286,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
           )}
         </FormControl>
 
-        <FormControl disabled={isDisabled} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.proposalsFilterBarInput}>
           <InputLabel id="proposal-level-select">Уровень заявки</InputLabel>
           <Select
             value={levelsList}
@@ -303,7 +303,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
           </Select>
         </FormControl>
 
-        <FormControl disabled={isDisabled} sx={sx.filterInput}>
+        <FormControl disabled={isDisabled} sx={sx.proposalsFilterBarInput}>
           <InputLabel id="proposal-format-select">Формат заявки</InputLabel>
           <Select
             value={formatsList}
@@ -320,7 +320,7 @@ const ProposalsFilterBar: React.FC<IProposalsFilterBarProps> = ({
           </Select>
         </FormControl>
 
-        <FormControl sx={sx.filterInput}>
+        <FormControl sx={sx.proposalsFilterBarInput}>
           <Autocomplete
             options={reviewerOptions}
             value={selectedReviewer}

@@ -17,7 +17,7 @@ const ProposalContentSkeleton = () => {
           <Skeleton variant="text" width={'5%'} />
         </Stack>
       </SectionCard>
-      <SectionCard title={null} restSx={sx.tabCard}>
+      <SectionCard title={null} restSx={sx.proposalContentTabCard}>
         <Box>
           <ProposalOverviewTabSkeleton />
         </Box>

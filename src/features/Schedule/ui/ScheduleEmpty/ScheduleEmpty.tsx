@@ -20,7 +20,7 @@ const ScheduleEmpty: React.FC<IScheduleEmptyProps> = ({
   });
 
   return (
-    <Box sx={sx.cellEmpty}>
+    <Box sx={sx.scheduleEmpty}>
       <Typography variant="body2">Свободно</Typography>
     </Box>
   );

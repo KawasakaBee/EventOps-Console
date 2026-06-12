@@ -1,6 +1,5 @@
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
 import { IAnalyticsReviewerWorkloadProps } from './AnalyticsReviewerWorkload.types';
-import { styles } from './styles';
 import { Box, useTheme } from '@mui/material';
 import {
   Bar,
@@ -13,6 +12,7 @@ import {
   YAxis,
 } from 'recharts';
 import { useMemo } from 'react';
+import { styles } from '../shared/styles';
 
 const AnalyticsReviewerWorkload: React.FC<IAnalyticsReviewerWorkloadProps> = ({
   workflow,

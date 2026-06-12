@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'filtersContainer' | 'filterSearchInput' | 'filterInput';
+type Key = 'auditFilterBar' | 'auditFilterBarInput';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,14 +8,10 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    filtersContainer: {
+    auditFilterBar: {
       mb: 4,
     },
-    filterSearchInput: {
-      width: 400,
-      mb: 2,
-    },
-    filterInput: {
+    auditFilterBarInput: {
       minWidth: 360,
     },
   };

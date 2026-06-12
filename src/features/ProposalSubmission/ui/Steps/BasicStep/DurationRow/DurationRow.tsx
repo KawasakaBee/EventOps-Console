@@ -1,5 +1,5 @@
 import { Controller, useWatch } from 'react-hook-form';
-import { IDurationRowProps } from './BasicStep.types';
+import { IDurationRowProps } from '../BasicStep.types';
 import {
   FormControl,
   FormHelperText,
@@ -46,7 +46,7 @@ const DurationRow: React.FC<IDurationRowProps> = ({ control }) => {
           </FormControl>
         )}
       />
-      <Typography variant="caption" sx={sx.durationCaption}>
+      <Typography variant="caption" sx={sx.durationRowCaption}>
         Варианты продолжительности для выбранного формата доклада:{' '}
         <b>
           {formatDurationMap[format].map((time) => time + ' минут').join(', ')}

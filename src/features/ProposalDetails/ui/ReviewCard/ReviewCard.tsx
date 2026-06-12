@@ -28,17 +28,12 @@ const ReviewCard: React.FC<IReviewCardProps> = ({
   };
 
   return (
-    <Grid
-      container
-      columnSpacing={1}
-      rowSpacing={2}
-      sx={sx.reviewCardContainer}
-    >
+    <Grid container columnSpacing={1} rowSpacing={2} sx={sx.reviewCard}>
       <Grid
         size={12}
         container
         columnSpacing={2}
-        sx={sx.reviewCardReviewerWrapper}
+        sx={sx.reviewCardReviewerWrap}
       >
         <Grid size="auto">
           {isReviewersLoading ? (
@@ -61,7 +56,7 @@ const ReviewCard: React.FC<IReviewCardProps> = ({
           />
         </Grid>
       </Grid>
-      <Grid size={12} sx={sx.reviewerCardScoreWrapper}>
+      <Grid size={12} sx={sx.reviewCardScoreWrap}>
         <Stack
           direction="row"
           spacing={2}

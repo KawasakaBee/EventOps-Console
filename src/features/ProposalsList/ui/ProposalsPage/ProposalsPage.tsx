@@ -261,21 +261,21 @@ const ProposalsPage = () => {
         message="Функция появится в ближайшее время!"
         onClose={handleCloseExportSnackbar}
         autoHideDuration={6000}
-        sx={sx.exportSnackbar}
+        sx={sx.proposalsPageSnackbar}
       />
       <Snackbar
         open={!!multipleErrorsCount}
         message={`У некоторых заявок не удалось изменить статус: ${multipleErrorsCount}`}
         onClose={closeErrorSnackbar}
         autoHideDuration={6000}
-        sx={sx.exportSnackbar}
+        sx={sx.proposalsPageSnackbar}
       />
       <Snackbar
         open={!!multipleAssignErrorsCount}
         message={`Для некоторых заявок не удалось назначить ревьюера: ${multipleAssignErrorsCount}`}
         onClose={closeAssignErrorSnackbar}
         autoHideDuration={6000}
-        sx={sx.exportSnackbar}
+        sx={sx.proposalsPageSnackbar}
       />
     </>
   );

@@ -52,15 +52,15 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
     <Stack spacing={6}>
       <Grid container columnSpacing={4} rowSpacing={2}>
         <Grid size={12}>
-          <Typography variant="h2" sx={sx.overviewTitle}>
+          <Typography variant="h2" sx={sx.proposalOverviewTabTitle}>
             {proposal.title}
           </Typography>
         </Grid>
-        <Grid size={12} sx={sx.overviewHead}>
+        <Grid size={12} sx={sx.proposalOverviewTabHead}>
           <Stack
             direction="row"
             spacing={2}
-            sx={sx.overviewList}
+            sx={sx.proposalOverviewTabList}
             divider={<Divider orientation="vertical" flexItem />}
           >
             <StatusChip
@@ -87,40 +87,45 @@ const ProposalOverviewTab: React.FC<IProposalOverviewTabProps> = ({
             </Typography>
           </Stack>
         </Grid>
-        <Grid container columnSpacing={0} sx={sx.contentContainer}>
-          <Grid size={8} sx={sx.abstractWrapper}>
+        <Grid container columnSpacing={0} sx={sx.proposalOverviewTabContent}>
+          <Grid size={8} sx={sx.proposalOverviewTabAbstractWrap}>
             <Stack spacing={6}>
               <Box>
                 <Typography variant="h3">Описание</Typography>
-                <Divider sx={sx.abstractDivider} />
+                <Divider sx={sx.proposalOverviewTabAbstractDivider} />
                 <Typography variant="body1">{proposal.abstract}</Typography>
               </Box>
               <Box>
                 <Typography variant="h3">Целевая аудитория</Typography>
-                <Divider sx={sx.abstractDivider} />
+                <Divider sx={sx.proposalOverviewTabAbstractDivider} />
                 <Typography variant="body1">
                   {proposal.targetAudience}
                 </Typography>
               </Box>
               <Box>
                 <Typography variant="h3">Требования</Typography>
-                <Divider sx={sx.abstractDivider} />
+                <Divider sx={sx.proposalOverviewTabAbstractDivider} />
                 <Typography variant="body1">
                   {proposal.prerequisites}
                 </Typography>
               </Box>
               <Box>
                 <Typography variant="h3">Ключевые выводы</Typography>
-                <Divider sx={sx.abstractDivider} />
+                <Divider sx={sx.proposalOverviewTabAbstractDivider} />
                 <Typography variant="body1">{proposal.takeaways}</Typography>
               </Box>
             </Stack>
           </Grid>
-          <Grid container size={4} rowSpacing={4} sx={sx.metadataContainer}>
+          <Grid
+            container
+            size={4}
+            rowSpacing={4}
+            sx={sx.proposalOverviewTabMetadata}
+          >
             <Grid size={12}>
               <Box>
                 <Typography variant="h3">Метаданные</Typography>
-                <Divider sx={sx.abstractDivider} />
+                <Divider sx={sx.proposalOverviewTabAbstractDivider} />
               </Box>
               <Stack spacing={1}>
                 <Typography variant="h3">Событие: </Typography>

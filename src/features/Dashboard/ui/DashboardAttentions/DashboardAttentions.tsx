@@ -41,8 +41,8 @@ const DashboardAttentions: React.FC<IDashboardAttentionsProps> = ({
     <Grid container columnSpacing={2}>
       {dashboard.attentionItems.map((item) => (
         <Grid key={item.id} size={4}>
-          <SectionCard title={null} restSx={sx.attentionWrapper}>
-            <Stack direction="row" spacing={2} sx={sx.attentionCard}>
+          <SectionCard title={null} restSx={sx.dashboardAttentions}>
+            <Stack direction="row" spacing={2} sx={sx.dashboardAttentionsCard}>
               <Stack direction="row" spacing={1}>
                 <Typography variant="subtitle2">
                   {item.title}:{'\u00A0'}

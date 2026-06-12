@@ -44,7 +44,7 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
       onClose={() => handleCloseDialog(onClose)}
       slotProps={{
         paper: {
-          sx: sx.dialogPaper,
+          sx: sx.reviewerAssignDialogPaper,
         },
       }}
     >
@@ -75,8 +75,8 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
       ) : (
         <>
           <DialogTitle>Назначить ревьюера</DialogTitle>
-          <DialogContent sx={sx.dialogContent}>
-            <FormControl sx={sx.formControl}>
+          <DialogContent sx={sx.reviewerAssignDialogContent}>
+            <FormControl sx={sx.reviewerAssignDialogControl}>
               {reviewers.isLoading ? (
                 <Skeleton variant="text" />
               ) : (
@@ -108,7 +108,7 @@ const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
                     }
                   />
                   {!!emptyReviewerError && (
-                    <FormHelperText sx={sx.formHelperTest}>
+                    <FormHelperText sx={sx.reviewerAssignDialogHelperText}>
                       {emptyReviewerError}
                     </FormHelperText>
                   )}

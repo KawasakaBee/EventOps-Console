@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'page';
+type Key = 'pageWrapper';
 
 interface IStyledProps {
   sidebarWidth?: number;
@@ -15,7 +15,7 @@ export const styles: Styles = (options: IStyledProps = {}) => {
   const { sidebarWidth, appbarHeight } = options;
 
   return {
-    page: {
+    pageWrapper: {
       display: 'grid',
       gridTemplateAreas: "'sidebar appbar' 'sidebar content'",
       gridTemplateColumns: `${sidebarWidth}px minmax(0, 1fr)`,

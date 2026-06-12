@@ -60,7 +60,7 @@ const SpeakersStep: React.FC<ISpeakersStepProps> = ({ errorMessage }) => {
 
   return (
     <Stack spacing={2}>
-      <Stack direction="row" spacing={1} sx={sx.countWrapper}>
+      <Stack direction="row" spacing={1} sx={sx.speakersStepCountWrap}>
         <Typography variant="subtitle2">Спикеров: {fields.length}</Typography>
         <Button
           mode="iconButton"

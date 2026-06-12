@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'infoCardsWrapper' | 'infoCardContainer';
+type Key = 'infoCards' | 'infoCardsItemContainer';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,11 +8,11 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    infoCardsWrapper: {
+    infoCards: {
       width: 1,
       mb: 2,
     },
-    infoCardContainer: {
+    infoCardsItemContainer: {
       '& .MuiPaper-root': {
         height: 1,
       },

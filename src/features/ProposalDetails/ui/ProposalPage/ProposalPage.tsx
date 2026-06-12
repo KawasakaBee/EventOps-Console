@@ -39,7 +39,7 @@ const ProposalPage = () => {
   const sx = styles();
 
   const proposalTitle = pageData.data?.proposal?.title ? (
-    <Stack direction="row" spacing={2} sx={sx.proposalTitleWrapper}>
+    <Stack direction="row" spacing={2} sx={sx.proposalPageTitleWrap}>
       <Typography variant="h2">{pageData.data.proposal.title}</Typography>
       <StatusChip
         status={pageData.data.proposal.status}
@@ -86,7 +86,7 @@ const ProposalPage = () => {
                   speakers={pageData.data.speakers}
                 />
               </Grid>
-              <Grid size={2} sx={sx.proposalStickyPanel}>
+              <Grid size={2} sx={sx.proposalPageStickyPanel}>
                 <ProposalStickyPanel details={pageData.data} />
               </Grid>
             </Grid>

@@ -2,7 +2,7 @@ import { timelineItemClasses } from '@mui/lab';
 import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
-type Key = 'timeline';
+type Key = 'proposalHistoryTabTimeLine';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -10,7 +10,7 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    timeline: {
+    proposalHistoryTabTimeLine: {
       [`& .${timelineItemClasses.root}:before`]: {
         flex: 0,
         padding: 0,

@@ -3,12 +3,12 @@ import { SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 
 type Key =
-  | 'bioWrapper'
-  | 'avatar'
-  | 'userName'
-  | 'userRole'
-  | 'timeWrapper'
-  | 'commentTime';
+  | 'commentCardBioWrap'
+  | 'commentCardAvatar'
+  | 'commentCardUserName'
+  | 'commentCardUserRole'
+  | 'commentCardTimeWrap'
+  | 'commentCardTime';
 
 interface IStyleOptionProps {
   role: Role;
@@ -29,23 +29,23 @@ export const styles: Style = (options) => {
   const { role } = options;
 
   return {
-    bioWrapper: {
+    commentCardBioWrap: {
       alignItems: 'center',
     },
-    avatar: {
+    commentCardAvatar: {
       bgcolor: rolePalette[role],
     },
-    userName: {
+    commentCardUserName: {
       fontWeight: 900,
     },
-    userRole: {
+    commentCardUserRole: {
       bgcolor: 'primary.main',
       color: 'text.secondary',
     },
-    timeWrapper: {
+    commentCardTimeWrap: {
       mb: 3,
     },
-    commentTime: {
+    commentCardTime: {
       opacity: 0.5,
     },
   };

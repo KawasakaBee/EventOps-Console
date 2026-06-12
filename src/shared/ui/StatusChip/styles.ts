@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material';
 
-type Key = 'statusChipIcon' | 'statusChipWrapper' | 'statusChipLabel';
+type Key = 'statusChip' | 'statusChipIcon' | 'statusChipLabel';
 
 interface IStyledProps {
   color: string;
@@ -17,7 +17,7 @@ export const styles: Styles = (options: IStyledProps) => {
   const { color, shape, size, type } = options;
 
   return {
-    statusChipWrapper: {
+    statusChip: {
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',

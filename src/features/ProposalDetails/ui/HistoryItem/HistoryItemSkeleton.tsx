@@ -20,7 +20,7 @@ const HistoryItemSkeleton = () => {
       <TimelineContent>
         <Stack>
           <Skeleton variant="text" width={80} />
-          <Stack direction="row" spacing={2} sx={sx.itemChangesWrapper}>
+          <Stack direction="row" spacing={2} sx={sx.historyItemChangesWrapper}>
             <Skeleton variant="text" width={150} />
             <Skeleton variant="text" width={100} />
           </Stack>

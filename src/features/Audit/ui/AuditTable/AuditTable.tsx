@@ -77,7 +77,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   };
 
   return (
-    <TableContainer component={Paper} sx={sx.table}>
+    <TableContainer component={Paper} sx={sx.auditTable}>
       <Table>
         <colgroup>
           {Object.entries(columnsWidth).map(([key, value]) => (
@@ -98,7 +98,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
                   <TableSortLabel
                     active={sortBy === key}
                     direction={sortBy === key ? sortOrder : 'asc'}
-                    sx={sx.tableSortLabel}
+                    sx={sx.auditTableSortLabel}
                     onClick={() => handleSort(key)}
                   >
                     {auditListItemDictionary[key]}

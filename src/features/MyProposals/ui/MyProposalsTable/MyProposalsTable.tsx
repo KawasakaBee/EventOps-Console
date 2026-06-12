@@ -43,7 +43,7 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
   );
 
   return (
-    <TableContainer component={Paper} sx={sx.table}>
+    <TableContainer component={Paper} sx={sx.myProposalsTable}>
       <Table>
         <colgroup>
           {Object.entries(columnsWidth).map(([key, value]) => (
