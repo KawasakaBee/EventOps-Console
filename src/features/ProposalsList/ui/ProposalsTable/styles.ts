@@ -7,9 +7,9 @@ type Key =
   | 'proposalsTableCheckbox'
   | 'proposalsTableSortLabel';
 
-type IStyleProps = {
+interface IStyleProps {
   viewportWidth: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;

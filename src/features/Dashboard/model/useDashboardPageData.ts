@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const useDashboardPageData = () => {
   // state
   const searchParams = useSearchParams();
-  const [getDashboard, getState] = useLazyGetDashboardQuery();
+  const [getDashboard, dashboardQuery] = useLazyGetDashboardQuery();
 
   const currentEventId = searchParams.get('eventId') ?? '';
   const currentRange = searchParams.get('range') ?? '';
@@ -20,7 +20,7 @@ const useDashboardPageData = () => {
   }, [currentEventId, currentRange, getDashboard]);
 
   return {
-    dashboard: getState,
+    dashboard: dashboardQuery,
     currentEventId,
     currentRange,
     getDashboard,

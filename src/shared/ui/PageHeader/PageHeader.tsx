@@ -1,11 +1,11 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { styles } from './styles';
-import { IPageHeader } from './PageHeader.types';
+import { PageHeaderProps } from './PageHeader.types';
 import Button from '../Button/Button';
 import { isNavigationRoute } from '@/shared/lib/routes/typeGuards';
 import { navigationDictionary } from '@/shared/lib/routes/dictionary';
 
-const PageHeader: React.FC<IPageHeader> = (props) => {
+const PageHeader: React.FC<PageHeaderProps> = (props) => {
   const { pageName, title, children, mode } = props;
 
   const sx = styles();

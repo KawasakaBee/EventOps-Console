@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 
-type Key = 'dashboardAttentions' | 'dashboardAttentionsCard';
+type Key = 'DashboardAttentionItems' | 'DashboardAttentionItemsCard';
 
 type Style = () => {
   readonly [key in Key]: SxProps<Theme>;
@@ -8,11 +8,11 @@ type Style = () => {
 
 export const styles: Style = () => {
   return {
-    dashboardAttentions: {
+    DashboardAttentionItems: {
       height: 1,
       p: 2,
     },
-    dashboardAttentionsCard: {
+    DashboardAttentionItemsCard: {
       height: 1,
       alignItems: 'center',
       justifyContent: 'space-between',

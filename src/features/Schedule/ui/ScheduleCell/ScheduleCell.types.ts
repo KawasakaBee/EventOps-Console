@@ -3,7 +3,7 @@ import { Track } from '@/entities/track/model/types';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface IScheduleCellProps {
-  respSlot: ResponseScheduleSlot;
+  scheduleSlot: ResponseScheduleSlot;
   tracks: Track[];
   dayStart: string;
   setUnassign: Dispatch<

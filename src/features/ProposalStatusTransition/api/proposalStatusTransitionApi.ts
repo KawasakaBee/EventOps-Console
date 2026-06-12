@@ -1,7 +1,5 @@
-import {
-  PatchProposalStatusRequest,
-  PatchProposalStatusResponse,
-} from '@/entities/proposal/api/contracts';
+import { PatchProposalStatusResponse } from '@/entities/proposal/api/contracts';
+import { PatchProposalStatusRequest } from '@/entities/proposal/api/schema';
 import { baseApi } from '@/shared/api/baseApi';
 import { ID } from '@/shared/types/primitives.types';
 

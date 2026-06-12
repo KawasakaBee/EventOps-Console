@@ -44,7 +44,7 @@ const SchedulePage = () => {
     unassignResult,
     unassignConfirm,
     selectedEvent,
-    stringifySearchParams,
+    serializedSearchParams,
     getSchedule,
     setSelectedSlot,
     setUnassignConfirm,
@@ -82,7 +82,7 @@ const SchedulePage = () => {
                 retry: () =>
                   getSchedule({
                     id: selectedEvent,
-                    searchParams: stringifySearchParams,
+                    searchParams: serializedSearchParams,
                   }),
               })}
             />
@@ -163,7 +163,8 @@ const SchedulePage = () => {
                         if (!dayStart) return;
 
                         const busySlots = scheduleSlots.filter(
-                          (respSlot) => respSlot.slot.trackId === track.id,
+                          (scheduleSlot) =>
+                            scheduleSlot.slot.trackId === track.id,
                         );
 
                         const freeIntervals = getFreeIntervals(
@@ -184,13 +185,13 @@ const SchedulePage = () => {
                         ));
                       }),
                     )}
-                    {scheduleSlots.map((respSlot) => {
+                    {scheduleSlots.map((scheduleSlot) => {
                       if (!dayStart) return;
 
                       return (
                         <ScheduleCell
-                          key={respSlot.slot.id}
-                          respSlot={respSlot}
+                          key={scheduleSlot.slot.id}
+                          scheduleSlot={scheduleSlot}
                           tracks={tracks.data?.tracks ?? []}
                           dayStart={dayStart}
                           setUnassign={setUnassignConfirm}
@@ -224,7 +225,7 @@ const SchedulePage = () => {
         <Dialog
           open
           onClose={handleUnassignConfirmDialogClose}
-          slotProps={{ paper: { sx: sx.shadulePageDialogPaper } }}
+          slotProps={{ paper: { sx: sx.schedulePageDialogPaper } }}
         >
           <DialogTitle>Убрать выбранную заявку из расписания?</DialogTitle>
           <DialogContent>
@@ -259,7 +260,7 @@ const SchedulePage = () => {
         <Dialog
           open
           onClose={handleUnassignClose}
-          slotProps={{ paper: { sx: sx.shadulePageDialogPaper } }}
+          slotProps={{ paper: { sx: sx.schedulePageDialogPaper } }}
         >
           {unassignResult.ok ? (
             <>

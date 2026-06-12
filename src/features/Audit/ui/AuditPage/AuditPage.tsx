@@ -21,11 +21,11 @@ import getAuditErrorState from '../../model/getAuditErrorState';
 const AuditPage = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
   const breadcrumbsRoute = getBreadcrumbsRoute(pathname);
 
   const { data, isLoading, isError, error, refetch } =
-    useGetAuditPaginationQuery(stringifySearchParams);
+    useGetAuditPaginationQuery(serializedSearchParams);
   const { auditFiltersReset } = useAuditData();
 
   const activeFiltersCount = useMemo((): number => {
@@ -71,7 +71,7 @@ const AuditPage = () => {
           isLoading={isLoading}
         />
         <AuditFilterBar
-          searchParams={stringifySearchParams}
+          searchParams={serializedSearchParams}
           isDisabled={isLoading || isError}
           handleFiltersReset={auditFiltersReset}
         />

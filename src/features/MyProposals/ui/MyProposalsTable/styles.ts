@@ -3,9 +3,9 @@ import { SxProps, Theme } from '@mui/material';
 
 type Key = 'myProposalsTable';
 
-type IStyleProps = {
+interface IStyleProps {
   viewportWidth: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;

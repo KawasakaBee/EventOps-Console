@@ -87,7 +87,7 @@ const ProposalsPage = () => {
   const transition = useAppSelector(
     (store) => store.statusTransition.transition,
   );
-  const assingReviewer = useAppSelector(
+  const assignReviewer = useAppSelector(
     (store) => store.assignReviewer.assignReviewer,
   );
   const createReview = useAppSelector(
@@ -98,10 +98,8 @@ const ProposalsPage = () => {
   );
 
   const proposalList = pagination.data?.items;
-  const {
-    selectedProposalsMultipleStatuses,
-    availableProposalsMultipleStatuses,
-  } = getCommonAvailableStatuses(proposalList, selectedIds);
+  const { selectedStatuses, commonAvailableStatuses } =
+    getCommonAvailableStatuses(proposalList, selectedIds);
 
   const sx = styles();
 
@@ -147,8 +145,8 @@ const ProposalsPage = () => {
               proposals={proposalList ?? []}
               selectedIds={selectedIds}
               isDisabled={!pagination.isSuccess}
-              availableStatuses={availableProposalsMultipleStatuses()}
-              currentStatuses={selectedProposalsMultipleStatuses}
+              availableStatuses={commonAvailableStatuses()}
+              currentStatuses={selectedStatuses}
             />
           )}
           <Button
@@ -233,20 +231,20 @@ const ProposalsPage = () => {
           onSuccess={handleMultipleStatusSuccess}
         />
       )}
-      {assingReviewer.type === 'single' && (
+      {assignReviewer.type === 'single' && (
         <ReviewerAssignDialog
           mode="single"
           onClose={handleReviewerAssignDialogClose}
-          proposalId={assingReviewer.id}
-          eventIds={assingReviewer.eventIds}
+          proposalId={assignReviewer.id}
+          eventIds={assignReviewer.eventIds}
         />
       )}
-      {assingReviewer.type === 'multiple' && (
+      {assignReviewer.type === 'multiple' && (
         <ReviewerAssignDialog
           mode="multiple"
           onClose={handleReviewerAssignDialogClose}
-          proposalIds={assingReviewer.ids}
-          eventIds={assingReviewer.eventIds}
+          proposalIds={assignReviewer.ids}
+          eventIds={assignReviewer.eventIds}
           onSuccess={handleMultipleAssignReviewerSuccess}
         />
       )}

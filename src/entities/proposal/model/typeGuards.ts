@@ -1,4 +1,4 @@
-import { ProposalSubmitField, proposalSumbitFields } from '../api/dictionary';
+import { ProposalSubmitField, proposalSubmitFields } from '../api/dictionary';
 import {
   AdditionalAction,
   additionalActions,
@@ -37,4 +37,4 @@ export const isAdditionalAvailableAction = (
 
 export const isProposalField = (value: unknown): value is ProposalSubmitField =>
   typeof value === 'string' &&
-  proposalSumbitFields.some((field) => field === value);
+  proposalSubmitFields.some((field) => field === value);

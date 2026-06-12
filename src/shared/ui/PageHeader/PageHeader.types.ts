@@ -18,4 +18,4 @@ interface IPageHeaderInnerProps extends IPageHeaderBaseProps {
   to: NavigationRoute;
 }
 
-export type IPageHeader = IPageHeaderOuterProps | IPageHeaderInnerProps;
+export type PageHeaderProps = IPageHeaderOuterProps | IPageHeaderInnerProps;

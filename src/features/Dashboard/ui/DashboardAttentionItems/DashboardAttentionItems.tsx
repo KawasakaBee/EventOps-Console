@@ -1,23 +1,23 @@
 import SectionCard from '@/shared/ui/SectionCard/SectionCard';
-import { IDashboardAttentionsProps } from './DashboardAttentions.types';
 import { Grid, Stack, Typography } from '@mui/material';
 import { styles } from './styles';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Button from '@/shared/ui/Button/Button';
+import { IDashboardAttentionItemsProps } from './DashboardAttentionItems.types';
 
-const DashboardAttentions: React.FC<IDashboardAttentionsProps> = ({
+const DashboardAttentionItems: React.FC<IDashboardAttentionItemsProps> = ({
   dashboard,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
 
   const sx = styles();
 
   const handleAttentionRedirect = (
     type: 'missing_reviewer' | 'accepted_unscheduled' | 'stale_draft',
   ) => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('range');
     params.delete('status');
@@ -41,8 +41,12 @@ const DashboardAttentions: React.FC<IDashboardAttentionsProps> = ({
     <Grid container columnSpacing={2}>
       {dashboard.attentionItems.map((item) => (
         <Grid key={item.id} size={4}>
-          <SectionCard title={null} restSx={sx.dashboardAttentions}>
-            <Stack direction="row" spacing={2} sx={sx.dashboardAttentionsCard}>
+          <SectionCard title={null} restSx={sx.DashboardAttentionItems}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={sx.DashboardAttentionItemsCard}
+            >
               <Stack direction="row" spacing={1}>
                 <Typography variant="subtitle2">
                   {item.title}:{'\u00A0'}
@@ -64,4 +68,4 @@ const DashboardAttentions: React.FC<IDashboardAttentionsProps> = ({
     </Grid>
   );
 };
-export default DashboardAttentions;
+export default DashboardAttentionItems;

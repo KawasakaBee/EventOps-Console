@@ -2,12 +2,12 @@ import type { SxProps, Theme } from '@mui/material';
 
 type Key = 'scheduleHint' | 'scheduleHintTooltip';
 
-type IStyleProps = {
+interface IStyleProps {
   column: number;
   startRow: number;
   endRow: number;
   hasOverlap: boolean;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;

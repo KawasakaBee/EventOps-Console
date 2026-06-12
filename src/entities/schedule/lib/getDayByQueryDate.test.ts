@@ -11,7 +11,7 @@ describe('getDayByQueryDate', () => {
     expect(getDayByQueryDate('2026-04-22', schedule)).toBe(testValidResult);
   });
 
-  it('Невалидная дата врзвращает 1 день расписания', () => {
+  it('Невалидная дата возвращает 1 день расписания', () => {
     expect(getDayByQueryDate('04.2056-15', schedule)).toBe(defaultResult);
   });
 

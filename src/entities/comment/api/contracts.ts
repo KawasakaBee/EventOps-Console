@@ -1,5 +1,5 @@
 import { Comment } from '../model/types';
 
-export type GetCommentsResponse = {
+export interface GetCommentsResponse {
   comments: Comment[];
-};
+}

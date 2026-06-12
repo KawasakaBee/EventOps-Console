@@ -2,11 +2,11 @@ import type { SxProps, Theme } from '@mui/material';
 
 type Key = 'scheduleEmpty';
 
-type IStyleProps = {
+interface IStyleProps {
   column: number;
   startRow: number;
   endRow: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;

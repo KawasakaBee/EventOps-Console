@@ -1,6 +1,7 @@
 import {
   proposalFormats,
   proposalLevels,
+  proposalStatuses,
 } from '@/entities/proposal/model/types';
 import { z } from 'zod';
 import { tags } from '@/entities/tag/model/types';
@@ -82,3 +83,16 @@ export const postProposalRequestSchema = z.discriminatedUnion('status', [
 ]);
 
 export type PostProposalRequest = z.infer<typeof postProposalRequestSchema>;
+
+export const statusSchema = z.object({
+  status: z.enum(proposalStatuses, 'Несуществующий статус'),
+  reason: z.string().trim().optional(),
+});
+
+export type PatchProposalStatusRequest = z.infer<typeof statusSchema>;
+
+export const reviewerAssignSchema = z.object({
+  reviewerId: z.string().trim().min(1, 'Обязательное значение'),
+});
+
+export type PostAssignReviewerRequest = z.infer<typeof reviewerAssignSchema>;

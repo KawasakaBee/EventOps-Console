@@ -30,24 +30,14 @@ export interface PostProposalResponse {
 
 export type PatchProposalRequest = Partial<ProposalEditPayload>;
 
-export type PatchProposalResponse = {
+export interface PatchProposalResponse {
   proposal: Proposal;
-};
-
-export interface PatchProposalStatusRequest {
-  status: ProposalStatus;
-  reason?: string;
 }
-
 export interface PatchProposalStatusResponse {
   proposal: Proposal;
   historyEntry: HistoryEntry;
   availableActions: ProposalAction[];
   availableStatuses: ProposalStatus[];
-}
-
-export interface PostAssignReviewerRequest {
-  reviewerId: ID;
 }
 
 export interface PostAssignReviewerResponse {

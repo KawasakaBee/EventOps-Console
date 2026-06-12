@@ -26,8 +26,8 @@ export const palette = {
     paper: '#fff',
   },
   text: {
-    primary: '#0a0a0aff',
-    secondary: '#ffffff',
+    primary: '#0a0a0a',
+    secondary: '#b1aeae',
     disabled: '#68676862',
   },
   divider: '#000000',

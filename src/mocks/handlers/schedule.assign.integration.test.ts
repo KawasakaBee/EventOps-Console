@@ -324,7 +324,7 @@ describe('/api/schedule/unassign', () => {
   });
 
   it('Нельзя удалить неназначенную заявку из расписания', async () => {
-    const unvalidResponse = await fetch('/api/schedule/unassign', {
+    const invalidResponse = await fetch('/api/schedule/unassign', {
       method: 'PATCH',
       headers: {
         'Content-type': 'application/json',
@@ -333,6 +333,6 @@ describe('/api/schedule/unassign', () => {
       body: JSON.stringify({ slotId: 'schedule-slot-12342134' }),
     });
 
-    expect(unvalidResponse.status).toBe(404);
+    expect(invalidResponse.status).toBe(404);
   });
 });

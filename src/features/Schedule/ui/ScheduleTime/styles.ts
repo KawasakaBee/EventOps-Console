@@ -4,10 +4,10 @@ import { SystemStyleObject } from '@mui/system';
 
 type Key = 'scheduleTime';
 
-type IStyleProps = {
+interface IStyleProps {
   rowDurationMinutes: number;
   startRow: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SystemStyleObject<Theme>;

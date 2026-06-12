@@ -8,12 +8,12 @@ import { proposalStatuses } from '@/entities/proposal/model/types';
 const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
 
   const sx = styles();
 
   const handleToTotalRedirect = () => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('range');
     params.delete('status');
@@ -27,7 +27,7 @@ const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
   };
 
   const handleToInReviewRedirect = () => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('range');
     params.set('status', 'in_review');
@@ -36,7 +36,7 @@ const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
   };
 
   const handleToAcceptedRedirect = () => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('range');
     params.delete('status');
@@ -47,7 +47,7 @@ const DashboardKpis: React.FC<IDashboardKpisProps> = ({ dashboard }) => {
   };
 
   const handleToRejectedRedirect = () => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('range');
     params.set('status', 'rejected');

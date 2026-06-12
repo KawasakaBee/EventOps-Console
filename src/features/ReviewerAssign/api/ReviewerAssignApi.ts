@@ -1,17 +1,18 @@
 import { ID } from '@/shared/types/primitives.types';
 import { PostAssignReviewerResponse } from '@/entities/proposal/api/contracts';
 import { baseApi } from '@/shared/api/baseApi';
+import { PostAssignReviewerRequest } from '@/entities/proposal/api/schema';
 
 export const reviewerAssignApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     assignReviewer: build.mutation<
       PostAssignReviewerResponse,
-      { id: ID; reviewerId: ID }
+      { id: ID; payload: PostAssignReviewerRequest }
     >({
-      query: ({ id, reviewerId }) => ({
+      query: ({ id, payload }) => ({
         url: `/proposals/${id}/assign-reviewer`,
         method: 'POST',
-        body: { reviewerId },
+        body: { reviewerId: payload.reviewerId },
       }),
       invalidatesTags: (_result, _error, arg) => [
         { type: 'Proposal', id: arg.id },

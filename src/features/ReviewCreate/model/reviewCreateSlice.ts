@@ -8,7 +8,7 @@ const initialState: CreateReviewState = {
   createReview: { type: 'idle' },
 };
 
-const createReviewSlise = createSlice({
+const createReviewSlice = createSlice({
   name: 'createReviewSlice',
   initialState,
   reducers: {
@@ -22,6 +22,6 @@ const createReviewSlise = createSlice({
 });
 
 export const { openCreateReviewDialog, closeCreateReviewDialog } =
-  createReviewSlise.actions;
+  createReviewSlice.actions;
 
-export const createReviewReducer = createReviewSlise.reducer;
+export const createReviewReducer = createReviewSlice.reducer;

@@ -1,4 +1,4 @@
-export const proposalSumbitFields = [
+export const proposalSubmitFields = [
   'status',
   'title',
   'format',
@@ -15,7 +15,7 @@ export const proposalSumbitFields = [
   'consent',
 ];
 
-export type ProposalSubmitField = (typeof proposalSumbitFields)[number];
+export type ProposalSubmitField = (typeof proposalSubmitFields)[number];
 
 export type ProposalSubmitFieldsName =
   | 'Статус'
@@ -30,7 +30,7 @@ export type ProposalSubmitFieldsName =
   | 'Целевая аудитория'
   | 'Требования'
   | 'Спикеры'
-  | 'Тэги'
+  | 'Теги'
   | 'Дополнительно'
   | 'Согласие';
 
@@ -50,7 +50,7 @@ export const proposalSubmitFieldsDictionary: Record<
   targetAudience: 'Целевая аудитория',
   prerequisites: 'Требования',
   speakers: 'Спикеры',
-  tags: 'Тэги',
+  tags: 'Теги',
   notes: 'Дополнительно',
   consent: 'Согласие',
 };

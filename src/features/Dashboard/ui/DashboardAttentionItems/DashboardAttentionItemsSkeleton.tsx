@@ -4,7 +4,7 @@ import { styles } from './styles';
 import Button from '@/shared/ui/Button/Button';
 import { theme } from '@/shared/theme/theme';
 
-const DashboardAttentionsSkeleton = () => {
+const DashboardAttentionItemsSkeleton = () => {
   const sx = styles();
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
@@ -16,8 +16,12 @@ const DashboardAttentionsSkeleton = () => {
     <Grid container columnSpacing={2}>
       {Array.from({ length: 3 }).map((_, idx) => (
         <Grid key={idx} size={4}>
-          <SectionCard title={null} restSx={sx.dashboardAttentions}>
-            <Stack direction="row" spacing={2} sx={sx.dashboardAttentionsCard}>
+          <SectionCard title={null} restSx={sx.DashboardAttentionItems}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={sx.DashboardAttentionItemsCard}
+            >
               <Stack direction="row" spacing={1}>
                 <Skeleton variant="text" width={skeletonWidth} />{' '}
                 <Skeleton variant="text" width={skeletonWidth / 5} />
@@ -32,4 +36,4 @@ const DashboardAttentionsSkeleton = () => {
     </Grid>
   );
 };
-export default DashboardAttentionsSkeleton;
+export default DashboardAttentionItemsSkeleton;

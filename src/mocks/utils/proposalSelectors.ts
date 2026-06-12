@@ -23,7 +23,7 @@ export const getCommentsByProposalId = (id: ID): Comment[] =>
   comments.filter((comment) => comment.proposalId === id);
 
 export const getHistoryByProposalId = (id: ID): HistoryEntry[] =>
-  history.filter((hstr) => hstr.proposalId === id);
+  history.filter((historyEntry) => historyEntry.proposalId === id);
 
 export const getSpeakerByEmail = (email: string): Speaker | undefined =>
   speakers.find((speaker) => speaker.email === email);

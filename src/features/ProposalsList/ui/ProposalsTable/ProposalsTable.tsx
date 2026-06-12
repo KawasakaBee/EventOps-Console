@@ -27,7 +27,7 @@ import {
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 import { theme } from '@/shared/theme/theme';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 
 const ProposalsTable: React.FC<IProposalsTableProps> = ({
   proposals,
@@ -46,7 +46,7 @@ const ProposalsTable: React.FC<IProposalsTableProps> = ({
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
 
   const untypedSortBy = searchParams.get('sortBy');
   const untypedSortOrder = searchParams.get('sortOrder');

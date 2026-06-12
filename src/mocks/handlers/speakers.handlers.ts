@@ -7,35 +7,13 @@ import {
 import {
   GetSpeakerFindResponse,
   GetSpeakerItemResponse,
-  GetSpeakersListResponse,
 } from '@/entities/speaker/api/contracts';
 import { getSpeakerByEmail } from '../utils/proposalSelectors';
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
 import { getUserById } from '@/entities/user/lib/userSelectors';
 import { getSpeakerById } from '@/entities/speaker/lib/speakerSelectors';
-import { speakers } from '../db/speakers';
 
 export const speakersHandlers = [
-  http.get('/api/speakers', ({ cookies }) => {
-    const userId = cookies[AUTH_SESSION_COOKIE];
-    const user = getUserById(userId);
-
-    if (!user) return unauthorizedError();
-
-    const response: GetSpeakersListResponse = {
-      speakers: speakers.map((s) => ({
-        id: s.id,
-        name: s.name,
-        email: s.email,
-        company: s.company,
-        position: s.position,
-        bio: s.bio,
-        contacts: s.contacts,
-      })),
-    };
-
-    return HttpResponse.json(response);
-  }),
   http.get('/api/speaker', ({ cookies }) => {
     const userId = cookies[AUTH_SESSION_COOKIE];
     const user = getUserById(userId);

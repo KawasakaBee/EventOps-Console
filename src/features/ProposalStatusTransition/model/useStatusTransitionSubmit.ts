@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { StatusTransitionSubmitProps } from './types';
 import { useChangeStatusMutation } from '../api/proposalStatusTransitionApi';
-import { PatchProposalStatusRequest } from '@/entities/proposal/api/contracts';
+import { PatchProposalStatusRequest } from '@/entities/proposal/api/schema';
 
 const useStatusTransitionSubmit = (props: StatusTransitionSubmitProps) => {
   // state

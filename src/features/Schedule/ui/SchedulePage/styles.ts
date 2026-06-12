@@ -5,12 +5,12 @@ import type { SxProps, Theme } from '@mui/material';
 type Key =
   | 'schedulePageContainer'
   | 'schedulePageWrap'
-  | 'shadulePageDialogPaper';
+  | 'schedulePageDialogPaper';
 
-type IStyleProps = {
+interface IStyleProps {
   tracksLength: number;
   rowsCount: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;
@@ -30,6 +30,6 @@ export const styles: Style = (options) => {
       minWidth: 140 + tracksLength * 220,
       alignItems: 'stretch',
     },
-    shadulePageDialogPaper: paperDialogSx,
+    schedulePageDialogPaper: paperDialogSx,
   };
 };

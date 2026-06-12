@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { styles } from './styles';
 import { AUTH_SESSION_COOKIE } from '@/shared/config/layout';
-import Sidebar from '@/widgets/SideBar/ui/Sidebar';
+import Sidebar from '@/widgets/Sidebar/ui/Sidebar';
 import AppBar from '@/widgets/AppBar/ui/AppBar';
 import { AuthProvider } from '@/entities/user/model/AuthProvider';
 import { cookies } from 'next/headers';

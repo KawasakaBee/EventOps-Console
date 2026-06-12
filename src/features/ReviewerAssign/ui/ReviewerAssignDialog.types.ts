@@ -1,5 +1,5 @@
 import { AssignReviewerProps } from '../model/types';
 
-export type IReviewerAssignDialogProps = AssignReviewerProps & {
+export type ReviewerAssignDialogProps = AssignReviewerProps & {
   onClose: () => void;
 };

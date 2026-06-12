@@ -9,11 +9,11 @@ type Key =
   | 'scheduleCellPopoverPaper'
   | 'scheduleCellPopoverCloseButton';
 
-type IStyleProps = {
+interface IStyleProps {
   column: number;
   startRow: number;
   endRow: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;

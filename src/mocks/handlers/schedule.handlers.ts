@@ -149,8 +149,8 @@ export const scheduleHandlers = [
 
     if (proposal.status !== 'scheduled') return forbiddenError();
 
-    const usassignResult = unassignScheduleSlot(slot.id);
-    if (usassignResult === null) return unassignError();
+    const unassignResult = unassignScheduleSlot(slot.id);
+    if (unassignResult === null) return unassignError();
 
     createScheduleHistory(slot.id, userId, slot.eventId, 'unscheduled');
 
@@ -166,7 +166,7 @@ export const scheduleHandlers = [
     const updatedProposal = updateProposalStatus(proposal.id, 'accepted');
     if (!updatedProposal) return proposalError();
 
-    const response: PatchScheduleUnassignResponse = usassignResult;
+    const response: PatchScheduleUnassignResponse = unassignResult;
 
     return HttpResponse.json(response);
   }),

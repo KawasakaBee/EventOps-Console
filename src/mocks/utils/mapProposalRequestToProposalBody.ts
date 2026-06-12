@@ -9,7 +9,7 @@ import { PatchProposalRequest } from '@/entities/proposal/api/contracts';
 import { speakerSubmitSchema } from '@/entities/speaker/api/schema';
 import { ID } from '@/shared/types/primitives.types';
 
-const addParameterToProposal = <T extends keyof ProposalEditPayload>(
+const setProposalField = <T extends keyof ProposalEditPayload>(
   proposal: PatchProposalRequest,
   key: T,
   payload: ProposalEditPayload[T] | undefined,
@@ -63,7 +63,7 @@ const mapProposalRequestToProposalBody = (
       return;
     }
 
-    addParameterToProposal(proposal, key, directPayload[key]);
+    setProposalField(proposal, key, directPayload[key]);
   });
 
   return proposal;

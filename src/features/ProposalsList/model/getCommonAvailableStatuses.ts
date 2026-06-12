@@ -11,14 +11,13 @@ const getCommonAvailableStatuses = (
     ? proposalList.filter((proposal) => selectedIds.includes(proposal.id))
     : [];
 
-  const selectedProposalsMultipleStatuses = new Set(
+  const selectedStatuses = new Set(
     selectedProposals.map((proposal) => proposal.status),
   );
 
-  const isSelectedStatusesIdentical =
-    selectedProposalsMultipleStatuses.size === 1;
+  const isSelectedStatusesIdentical = selectedStatuses.size === 1;
 
-  const availableProposalsMultipleStatuses = (): ProposalStatus[] => {
+  const commonAvailableStatuses = (): ProposalStatus[] => {
     if (selectedProposals.length === 0) return [];
     if (!isSelectedStatusesIdentical) return [];
 
@@ -34,8 +33,8 @@ const getCommonAvailableStatuses = (
   };
 
   return {
-    selectedProposalsMultipleStatuses,
-    availableProposalsMultipleStatuses,
+    selectedStatuses,
+    commonAvailableStatuses,
   };
 };
 

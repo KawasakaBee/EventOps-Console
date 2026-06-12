@@ -10,7 +10,7 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import { IReviewerAssignDialogProps } from './ReviewerAssignDialog.types';
+import { ReviewerAssignDialogProps } from './ReviewerAssignDialog.types';
 import useReviewerAssignData from '../model/useReviewerAssignData';
 import { styles } from './styles';
 import Button from '@/shared/ui/Button/Button';
@@ -21,7 +21,7 @@ import {
 } from '@/shared/api/getApiErrorMessage';
 import getAssignErrorState from '../model/getAssignErrorState';
 
-const ReviewerAssignDialog: React.FC<IReviewerAssignDialogProps> = (props) => {
+const ReviewerAssignDialog: React.FC<ReviewerAssignDialogProps> = (props) => {
   const {
     reviewers,
     reviewersOptions,

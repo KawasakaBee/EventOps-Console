@@ -1,3 +1,5 @@
 import { Dashboard } from '@/entities/dashboard/model/types';
 
-export type GetDashboardResponse = { dashboard: Dashboard };
+export interface GetDashboardResponse {
+  dashboard: Dashboard;
+}

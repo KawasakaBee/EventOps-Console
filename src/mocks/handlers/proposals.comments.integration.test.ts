@@ -110,7 +110,7 @@ describe('POST /api/proposals/:id/comments', () => {
   });
 
   it('Менеджер не может добавить комментарий для несуществующей заявки', async () => {
-    const response = await fetch('/api/proposals/trash-propsal-id/comments', {
+    const response = await fetch('/api/proposals/trash-proposal-id/comments', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

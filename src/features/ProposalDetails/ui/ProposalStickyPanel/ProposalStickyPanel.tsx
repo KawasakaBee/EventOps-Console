@@ -43,7 +43,7 @@ import { openAddCommentDialog } from '@/features/CommentAdd/model/commentAddSlic
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { theme } from '@/shared/theme/theme';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 
 const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   details,
@@ -66,12 +66,12 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
     [availableActions],
   );
 
-  const isAcceptAndRejectButtonDisable = details.reviews.length === 0;
+  const isAcceptAndRejectButtonDisabled = details.reviews.length === 0;
   const isStatusMenuOpened = !!statusMenuAnchorEl;
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const sx = styles({ isDesktop, isLaptop, viewportWidth });
 
   const track = (proposal: Proposal, tracks: Track[]) => {
@@ -96,7 +96,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   const handlePendingStatusChange = (status: ProposalStatus) => {
     if (
       (status === 'accepted' || status === 'rejected') &&
-      isAcceptAndRejectButtonDisable
+      isAcceptAndRejectButtonDisabled
     )
       return;
 
@@ -193,7 +193,7 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
                           action === 'accept' ? 'accepted' : 'rejected',
                         )
                       }
-                      isDisabled={isAcceptAndRejectButtonDisable}
+                      isDisabled={isAcceptAndRejectButtonDisabled}
                       sx={sx.proposalStickyPanelActionButton}
                       intent={action === 'accept' ? 'success' : 'danger'}
                     >

@@ -112,11 +112,11 @@ describe('parseProposalsListQuery', () => {
   });
 
   it('Невалидный формат', () => {
-    const trashFromat = parseProposalsListQuery(
+    const trashFormat = parseProposalsListQuery(
       'http://localhost:3000/proposals?format=unknown',
     );
 
-    expect(trashFromat.format).toStrictEqual([]);
+    expect(trashFormat.format).toStrictEqual([]);
   });
 
   it('Несколько id треков проходят', () => {
@@ -136,11 +136,11 @@ describe('parseProposalsListQuery', () => {
   });
 
   it('Desc порядок сортировки проходит', () => {
-    const deskSortOrder = parseProposalsListQuery(
+    const descSortOrder = parseProposalsListQuery(
       'http://localhost:3000/proposals?sortOrder=desc',
     );
 
-    expect(deskSortOrder.sortOrder).toBe('desc');
+    expect(descSortOrder.sortOrder).toBe('desc');
   });
 
   it('Невалидный порядок сортировки', () => {

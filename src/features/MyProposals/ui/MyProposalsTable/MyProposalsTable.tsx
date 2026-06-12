@@ -19,7 +19,7 @@ import { useAuth } from '@/entities/user/model/AuthProvider';
 import MyProposalsTableRow from '../MyProposalsTableRow/MyProposalsTableRow';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 import { theme } from '@/shared/theme/theme';
 import { useMemo } from 'react';
 
@@ -33,7 +33,7 @@ const MyProposalsTable: React.FC<IMyProposalsTableProps> = ({
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const sx = useMemo(() => styles({ viewportWidth }), [viewportWidth]);
 
   const columnsWidth = useMemo(

@@ -1,13 +1,13 @@
 import { ID } from '@/shared/types/primitives.types';
-import { AddCommentValues } from '../model/schema';
 import { PostCreateCommentResponse } from '@/entities/proposal/api/contracts';
 import { baseApi } from '@/shared/api/baseApi';
+import { PostAddCommentRequest } from '@/entities/comment/api/schema';
 
 export const commentAddApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     addComment: build.mutation<
       PostCreateCommentResponse,
-      { id: ID; payload: AddCommentValues }
+      { id: ID; payload: PostAddCommentRequest }
     >({
       query: ({ id, payload }) => ({
         url: `/proposals/${id}/comments`,

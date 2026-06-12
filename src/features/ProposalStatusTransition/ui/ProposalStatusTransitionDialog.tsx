@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { IStatusTransitionDialogProps } from './ProposalStatusTransitionDialog.types';
+import { StatusTransitionDialogProps } from './ProposalStatusTransitionDialog.types';
 import { styles } from './styles';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Button from '@/shared/ui/Button/Button';
@@ -17,7 +17,7 @@ import { statusDictionary } from '@/entities/proposal/model/dictionaries';
 import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
 import getStatusTransitionErrorState from '../model/getStatusTransitionErrorState';
 
-const ProposalStatusTransitionDialog: React.FC<IStatusTransitionDialogProps> = (
+const ProposalStatusTransitionDialog: React.FC<StatusTransitionDialogProps> = (
   props,
 ) => {
   const { mode, prevStatus, nextStatus, onClose } = props;

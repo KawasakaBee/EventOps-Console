@@ -25,7 +25,7 @@ const testEmptyProposalList = {
 
 const filteredProposals = mapProposalsToListItems(
   paginateProposals(testEmptyProposalList, proposals).filter(
-    (proiposal) => proiposal.eventId === '1' || proiposal.eventId === '3',
+    (proposal) => proposal.eventId === '1' || proposal.eventId === '3',
   ),
   'manager',
 );
@@ -67,8 +67,7 @@ describe('GET /api/proposals', () => {
             { ...testEmptyProposalList, eventId: ['1'] },
             proposals,
           ).filter(
-            (proiposal) =>
-              proiposal.eventId === '1' || proiposal.eventId === '3',
+            (proposal) => proposal.eventId === '1' || proposal.eventId === '3',
           ),
           'manager',
         ).filter((item) => item.eventId === '1'),
@@ -76,7 +75,7 @@ describe('GET /api/proposals', () => {
     );
   });
 
-  it('Пользователь не имующий доступа к запрашиваемым query eventId получит пустой список заявок', async () => {
+  it('Пользователь не имеющий доступа к запрашиваемым query eventId получит пустой список заявок', async () => {
     const response = await fetch('/api/proposals?eventId=2', {
       method: 'GET',
       headers: {

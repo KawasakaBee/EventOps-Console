@@ -1,7 +1,7 @@
 import { UseFormGetValues } from 'react-hook-form';
 import { CreateReviewValues } from './schema';
 import { ID } from '@/shared/types/primitives.types';
-import { useCreateReviewMutation } from '../api/ReviewCreateApi';
+import { useCreateReviewMutation } from '../api/reviewCreateApi';
 
 const useCreateReviewData = (
   getValues: UseFormGetValues<CreateReviewValues>,

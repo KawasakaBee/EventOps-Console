@@ -44,13 +44,13 @@ describe('getAvailableProposalStatuses', () => {
     ).toStrictEqual(['changes_requested']);
   });
 
-  it('Заявка в статусе изменений может быть переведана только в статус ревью', () => {
+  it('Заявка в статусе изменений может быть переведена только в статус ревью', () => {
     expect(
       getAvailableProposalStatuses('changes_requested', 5, 'manager'),
     ).toStrictEqual(['in_review']);
   });
 
-  it('Заявка в статусе изменений может быть переведана в статус ревью без наличия ревью', () => {
+  it('Заявка в статусе изменений может быть переведена в статус ревью без наличия ревью', () => {
     expect(
       getAvailableProposalStatuses('changes_requested', 0, 'manager'),
     ).toStrictEqual(['in_review']);
@@ -62,13 +62,13 @@ describe('getAvailableProposalStatuses', () => {
     ]);
   });
 
-  it('Заявка в статусе принята может быть переведана в статус в расписание на техническом уровне', () => {
+  it('Заявка в статусе принята может быть переведена в статус в расписание на техническом уровне', () => {
     expect(
       getAvailableProposalStatuses('accepted', 2, 'manager', true),
     ).toStrictEqual(['scheduled']);
   });
 
-  it('Заявка в статах отклонена/в расписании не может быть переведена в другие статусы', () => {
+  it('Заявка в статусах отклонена/в расписании не может быть переведена в другие статусы', () => {
     expect(
       getAvailableProposalStatuses('rejected', 2, 'manager'),
     ).toStrictEqual([]);

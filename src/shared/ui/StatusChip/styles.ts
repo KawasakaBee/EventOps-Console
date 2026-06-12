@@ -36,7 +36,7 @@ export const styles: Styles = (options: IStyledProps) => {
       mb: 0,
       fontSize: size === 'small' ? 12 : size === 'medium' ? 16 : 20,
       lineHeight: '1.2',
-      color: type === 'contained' ? 'text.secondary' : 'inherit',
+      color: type === 'contained' ? 'common.white' : 'inherit',
     },
   };
 };

@@ -20,7 +20,7 @@ const DashboardSelect = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
   const events = useGetEventsQuery();
 
   const currentEventId = searchParams.get('eventId') ?? '';
@@ -28,7 +28,7 @@ const DashboardSelect = () => {
 
   const handleEventSelect = (value: string) => {
     const eventId = value.trim();
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('eventId');
     if (eventId) params.set('eventId', value);
@@ -39,7 +39,7 @@ const DashboardSelect = () => {
   const handleRangeSelect = (value: string) => {
     if (!isDashboardRange(value) && value !== '') return;
 
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.set('range', value);
 

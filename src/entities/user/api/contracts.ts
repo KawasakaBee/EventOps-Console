@@ -4,9 +4,9 @@ export interface GetUsersListResponse {
   users: UserListItem[];
 }
 
-export type GetCurrentUserResponse = {
+export interface GetCurrentUserResponse {
   user: User;
-};
+}
 
 export interface PostDemoLoginRequest {
   role: DemoRole;

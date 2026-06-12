@@ -12,7 +12,7 @@ describe('canAccessRoute', () => {
     expect(canAccessRoute('admin', '/schedule')).toBe(true);
   });
 
-  it('Разрешён ли доступ менеджеру к станицам заявок', () => {
+  it('Разрешён ли доступ менеджеру к страницам заявок', () => {
     expect(canAccessRoute('manager', '/proposals')).toBe(true);
     expect(canAccessRoute('manager', '/proposals/[id]')).toBe(true);
   });
@@ -55,7 +55,7 @@ describe('canAccessRoute', () => {
     expect(canAccessRoute('speaker', '/settings')).toBe(false);
   });
 
-  it('Рарзешён ли всем ролям доступ к странице авторизации', () => {
+  it('Разрешён ли всем ролям доступ к странице авторизации', () => {
     expect(canAccessRoute('admin', '/login')).toBe(true);
     expect(canAccessRoute('manager', '/login')).toBe(true);
     expect(canAccessRoute('reviewer', '/login')).toBe(true);

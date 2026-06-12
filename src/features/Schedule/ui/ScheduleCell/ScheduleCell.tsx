@@ -13,7 +13,7 @@ import Button from '@/shared/ui/Button/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
 const ScheduleCell: React.FC<IScheduleCellProps> = ({
-  respSlot,
+  scheduleSlot,
   tracks,
   dayStart,
   setUnassign,
@@ -21,7 +21,7 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
   const router = useRouter();
 
   const trackIdx = tracks.findIndex(
-    (track) => track.id === respSlot.slot.trackId,
+    (track) => track.id === scheduleSlot.slot.trackId,
   );
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -33,8 +33,11 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
 
   const gridColumn = trackIdx + 2;
 
-  const gridStartRow = getGridLinesByTime(respSlot.slot.startTime, dayStart);
-  const gridEndRow = getGridLinesByTime(respSlot.slot.endTime, dayStart);
+  const gridStartRow = getGridLinesByTime(
+    scheduleSlot.slot.startTime,
+    dayStart,
+  );
+  const gridEndRow = getGridLinesByTime(scheduleSlot.slot.endTime, dayStart);
 
   const sx = styles({
     column: gridColumn,
@@ -75,7 +78,7 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
   };
 
   const handleProposalUnassign = () => {
-    setUnassign({ opened: true, id: respSlot.slot.id });
+    setUnassign({ opened: true, id: scheduleSlot.slot.id });
   };
 
   return (
@@ -120,19 +123,23 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
           Убрать из расписания
         </Button>
       </Popover>
-      <SectionCard key={respSlot.slot.id} title={null} restSx={sx.scheduleCell}>
+      <SectionCard
+        key={scheduleSlot.slot.id}
+        title={null}
+        restSx={sx.scheduleCell}
+      >
         <Stack
           spacing={1}
           component={'div'}
-          onClick={() => handleToDetailsRoute(respSlot.slot.proposalId)}
+          onClick={() => handleToDetailsRoute(scheduleSlot.slot.proposalId)}
           sx={sx.scheduleCellSlotContainer}
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverCloseDelayed}
         >
           <Stack direction="row" spacing={1} sx={sx.scheduleCellSlotWrap}>
             <Typography variant="caption">
-              {respSlot.slot.startTime.slice(11, 16)} —{' '}
-              {respSlot.slot.endTime.slice(11, 16)}
+              {scheduleSlot.slot.startTime.slice(11, 16)} —{' '}
+              {scheduleSlot.slot.endTime.slice(11, 16)}
             </Typography>
             <StatusChip
               shape="rounded"
@@ -143,24 +150,24 @@ const ScheduleCell: React.FC<IScheduleCellProps> = ({
           </Stack>
           <Typography variant="subtitle2">
             <b>
-              {respSlot.format
-                ? formatDictionary[respSlot.format]
+              {scheduleSlot.format
+                ? formatDictionary[scheduleSlot.format]
                 : 'Не удалось загрузить формат'}
             </b>
           </Typography>
           <Typography variant="caption">
-            {respSlot.duration
-              ? formatMinutesDuration(respSlot.duration)
+            {scheduleSlot.duration
+              ? formatMinutesDuration(scheduleSlot.duration)
               : 'Не удалось загрузить продолжительность'}
           </Typography>
           <Typography variant="subtitle2">
-            {respSlot.title ?? 'Не удалось загрузить название'}
+            {scheduleSlot.title ?? 'Не удалось загрузить название'}
           </Typography>
-          {respSlot.speakerNames.length > 0 && (
+          {scheduleSlot.speakerNames.length > 0 && (
             <Stack spacing={0.5}>
               <Typography variant="subtitle2">Спикеры:</Typography>
               <Stack direction="row" spacing={0.5} divider={<>,</>}>
-                {respSlot.speakerNames.map((name) => (
+                {scheduleSlot.speakerNames.map((name) => (
                   <Typography
                     key={name}
                     variant="caption"

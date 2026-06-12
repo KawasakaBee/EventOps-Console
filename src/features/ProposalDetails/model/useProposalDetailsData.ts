@@ -12,7 +12,7 @@ const useProposalDetailsData = (id: ID) => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const pageData = useGetProposalQuery(id, { refetchOnMountOrArgChange: true });
-  const assingReviewer = useAppSelector(
+  const assignReviewer = useAppSelector(
     (store) => store.assignReviewer.assignReviewer,
   );
   const transition = useAppSelector(
@@ -45,7 +45,7 @@ const useProposalDetailsData = (id: ID) => {
 
   return {
     pageData,
-    assingReviewer,
+    assignReviewer,
     transition,
     createReview,
     addComment,

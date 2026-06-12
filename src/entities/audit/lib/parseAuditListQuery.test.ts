@@ -120,11 +120,11 @@ describe('parseAuditListQuery', () => {
   });
 
   it('Desc порядок сортировки проходит', () => {
-    const deskSortOrder = parseAuditListQuery(
+    const descSortOrder = parseAuditListQuery(
       'http://localhost:3000/audit?sortOrder=desc',
     );
 
-    expect(deskSortOrder.sortOrder).toBe('desc');
+    expect(descSortOrder.sortOrder).toBe('desc');
   });
 
   it('Невалидный порядок сортировки', () => {

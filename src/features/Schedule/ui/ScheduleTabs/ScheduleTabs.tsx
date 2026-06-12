@@ -9,7 +9,7 @@ const ScheduleTabs: React.FC<IScheduleTabsProps> = ({ days }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
 
   const currentTab = useMemo(() => {
     if (days.length === 0) return;
@@ -30,7 +30,7 @@ const ScheduleTabs: React.FC<IScheduleTabsProps> = ({ days }) => {
     newValue: string | number,
   ) => {
     if (days.findIndex((day) => day.date === newValue) === -1) return;
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     params.delete('date');
     params.set('date', String(newValue));

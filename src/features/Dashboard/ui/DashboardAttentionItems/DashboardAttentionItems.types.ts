@@ -1,5 +1,5 @@
 import { GetDashboardResponse } from '@/entities/dashboard/api/contracts';
 
-export interface IDashboardAttentionsProps {
+export interface IDashboardAttentionItemsProps {
   dashboard: GetDashboardResponse['dashboard'];
 }

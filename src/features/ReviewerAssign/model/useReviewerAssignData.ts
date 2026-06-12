@@ -2,7 +2,7 @@ import { ID } from '@/shared/types/primitives.types';
 import { useMemo, useRef, useState } from 'react';
 import { AssignReviewerProps } from './types';
 import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
-import { useAssignReviewerMutation } from '../api/ReviewerAssignApi';
+import { useAssignReviewerMutation } from '../api/reviewerAssignApi';
 
 const useReviewerAssignData = (props: AssignReviewerProps) => {
   // state
@@ -54,7 +54,7 @@ const useReviewerAssignData = (props: AssignReviewerProps) => {
     if (props.mode === 'single') {
       await assignReviewer({
         id: props.proposalId,
-        reviewerId: currentReviewer.id,
+        payload: { reviewerId: currentReviewer.id },
       }).unwrap();
       return;
     }
@@ -66,7 +66,7 @@ const useReviewerAssignData = (props: AssignReviewerProps) => {
         try {
           const data = await assignReviewer({
             id: proposalId,
-            reviewerId: currentReviewer.id,
+            payload: { reviewerId: currentReviewer.id },
           }).unwrap();
 
           return {

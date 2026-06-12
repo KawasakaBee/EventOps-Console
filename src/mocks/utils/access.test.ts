@@ -21,7 +21,7 @@ describe('getProposalsListAccess', () => {
     expect(getProposalsListAccess('reviewer', null)).toBe('assignedToReviewer');
   });
 
-  it('Доступы для спикера с парметром me', () => {
+  it('Доступы для спикера с параметром me', () => {
     expect(getProposalsListAccess('speaker', 'me')).toBe('ownedBySpeaker');
   });
 

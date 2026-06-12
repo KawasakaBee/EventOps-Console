@@ -1,7 +1,7 @@
 import { ErrorStateProps } from '@/shared/ui/ErrorState/ErrorState.types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useLogoutMutation } from '../api/AppBarApi';
+import { useLogoutMutation } from '../api/appBarApi';
 import getAppBarErrorState from './getAppBarErrorState';
 
 const useAppBarData = () => {

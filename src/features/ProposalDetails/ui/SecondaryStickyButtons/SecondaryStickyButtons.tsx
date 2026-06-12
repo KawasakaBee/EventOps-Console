@@ -38,6 +38,7 @@ const SecondaryStickyButtons = () => {
       setPageErrorProps(
         getProposalErrorState(clipboardError, {
           retry: () => null,
+          onClose: () => setPageErrorProps(null),
         }),
       );
     }

@@ -41,8 +41,6 @@ export const routesNames = [
   'Аудит',
 ] as const;
 
-export type RouteName = (typeof routesNames)[number];
-
 export const navigationRoutesNames = routesNames.filter(
   (name) => name !== 'Авторизация' && name !== 'Заявка',
 );

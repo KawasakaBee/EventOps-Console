@@ -7,7 +7,7 @@ import { isId } from '@/shared/utils/typeGuards';
 import {
   useChangeProposalMutation,
   useCreateProposalMutation,
-} from '../api/ProposalSubmissionApi';
+} from '../api/proposalSubmissionApi';
 
 const useSubmissionSubmit = (
   methods: UseFormReturn<SubmitValues>,

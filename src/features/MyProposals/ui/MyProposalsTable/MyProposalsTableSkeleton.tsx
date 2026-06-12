@@ -1,5 +1,6 @@
 import {
   Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -14,14 +15,13 @@ import {
   myProposalListItemKeys,
   myProposalTableWidthDictionary,
 } from '../../model/tableColumns';
-import MyProposalsTableRowSkeleton from '../MyProposalsTableRow/MyProposalsTableRowSkeleton';
 import { theme } from '@/shared/theme/theme';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 
 const MyProposalsTableSkeleton = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const sx = styles({ viewportWidth });
 
   return (
@@ -54,7 +54,26 @@ const MyProposalsTableSkeleton = () => {
         </TableHead>
         <TableBody>
           {Array.from({ length: 10 }).map((_, idx) => (
-            <MyProposalsTableRowSkeleton key={idx} />
+            <TableRow key={idx}>
+              {myProposalListItemKeys.map((key) => {
+                if (key === 'availableStatuses') return null;
+
+                return (
+                  <TableCell key={`Table-body-cell-${key}`}>
+                    <Skeleton
+                      variant="text"
+                      width={
+                        myProposalTableWidthDictionary({
+                          isDesktop,
+                          isLaptop,
+                          viewportWidth,
+                        })[key].skeletonWidth
+                      }
+                    />
+                  </TableCell>
+                );
+              })}
+            </TableRow>
           ))}
         </TableBody>
       </Table>

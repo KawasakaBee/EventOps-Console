@@ -1,12 +1,8 @@
 import { SpeakerInput } from '@/entities/speaker/model/types';
 
-export type GetSpeakersListResponse = {
-  speakers: SpeakerInput[];
-};
-
-export type GetSpeakerItemResponse = {
+export interface GetSpeakerItemResponse {
   speaker: SpeakerInput;
-};
+}
 
 export type GetSpeakerFindResponse =
   | {

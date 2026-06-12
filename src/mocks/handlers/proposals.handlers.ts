@@ -10,9 +10,7 @@ import {
   GetProposalsByTrackIdResponse,
   GetProposalsListResponse,
   PatchProposalResponse,
-  PatchProposalStatusRequest,
   PatchProposalStatusResponse,
-  PostAssignReviewerRequest,
   PostAssignReviewerResponse,
   PostCreateCommentResponse,
   PostCreateReviewResponse,
@@ -69,10 +67,11 @@ import {
   isManagerLike,
 } from '../utils/proposalAccess';
 import getAvailableProposalStatuses from '../utils/proposalStatusTransitions';
-import { isProposalStatus } from '@/entities/proposal/model/typeGuards';
 import {
   patchProposalRequestSchema,
   postProposalRequestSchema,
+  reviewerAssignSchema,
+  statusSchema,
 } from '@/entities/proposal/api/schema';
 import zodErrorParse from '../utils/zodErrorParse';
 import mapProposalRequestToProposalBody from '../utils/mapProposalRequestToProposalBody';
@@ -195,7 +194,7 @@ export const proposalHandlers = [
     const isUserCanCreateProposal = canCreateProposal(userRole);
     if (!isUserCanCreateProposal) return forbiddenError();
 
-    const rawBody: unknown = await request.json();
+    const rawBody = await request.json();
 
     const parsedBody = postProposalRequestSchema.safeParse(rawBody);
 
@@ -233,7 +232,7 @@ export const proposalHandlers = [
     const isUserCanChangeProposal = canChangeProposal(userRole, id, userId);
     if (!isUserCanChangeProposal) return forbiddenError();
 
-    const rawBody: unknown = await request.json();
+    const rawBody = await request.json();
 
     const parsedBody = patchProposalRequestSchema.safeParse(rawBody);
 
@@ -305,12 +304,18 @@ export const proposalHandlers = [
 
       const userRole = user.role;
       const id = params.id;
-      const { status, reason } =
-        (await request.json()) as PatchProposalStatusRequest; //Провалидировать
+      const rawBody = await request.json();
 
       if (!isId(id)) return proposalError();
 
-      if (!isProposalStatus(status)) return queryError();
+      const parsedBody = statusSchema.safeParse(rawBody);
+
+      if (!parsedBody.success) {
+        const errorBody = zodErrorParse(parsedBody.error);
+        return validationError(errorBody);
+      }
+
+      const { status, reason } = parsedBody.data;
 
       const prevProposal = proposals.find((proposal) => proposal.id === id);
       if (!prevProposal) return proposalError();
@@ -396,10 +401,18 @@ export const proposalHandlers = [
 
       const userRole = user.role;
       const id = params.id;
-      const { reviewerId } =
-        (await request.json()) as PostAssignReviewerRequest; //Провалидировать
+      const rawBody = await request.json();
 
       if (!isId(id)) return proposalError();
+
+      const parsedBody = reviewerAssignSchema.safeParse(rawBody);
+
+      if (!parsedBody.success) {
+        const errorBody = zodErrorParse(parsedBody.error);
+        return validationError(errorBody);
+      }
+
+      const { reviewerId } = parsedBody.data;
 
       const reviewer = reviewers.find((item) => item.id === reviewerId);
       if (!reviewer) return reviewerError();
@@ -452,8 +465,8 @@ export const proposalHandlers = [
       const id = params.id;
       if (!isId(id)) return proposalError();
 
-      const bodyRaw = await request.json();
-      const parsedBody = createReviewSchema.safeParse(bodyRaw);
+      const rawBody = await request.json();
+      const parsedBody = createReviewSchema.safeParse(rawBody);
 
       if (!parsedBody.success) {
         const errorBody = zodErrorParse(parsedBody.error);
@@ -507,9 +520,9 @@ export const proposalHandlers = [
       const id = params.id;
       if (!isId(id)) return proposalError();
 
-      const bodyRaw = await request.json();
+      const rawBody = await request.json();
 
-      const parsedBody = addCommentSchema.safeParse(bodyRaw);
+      const parsedBody = addCommentSchema.safeParse(rawBody);
 
       if (!parsedBody.success) {
         const errorBody = zodErrorParse(parsedBody.error);

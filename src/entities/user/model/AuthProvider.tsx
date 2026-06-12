@@ -9,11 +9,11 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-type IAuthProviderProps = PropsWithChildren<{
+type AuthProviderProps = PropsWithChildren<{
   initialUser: User;
 }>;
 
-export const AuthProvider: React.FC<IAuthProviderProps> = ({
+export const AuthProvider: React.FC<AuthProviderProps> = ({
   initialUser,
   children,
 }) => {

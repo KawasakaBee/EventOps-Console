@@ -13,11 +13,11 @@ export interface ResponseScheduleSlot {
   speakerNames: string[];
 }
 
-export type GetScheduleResponse = {
+export interface GetScheduleResponse {
   days: ScheduleDay[];
   times: ScheduleTime[];
   slots: ResponseScheduleSlot[];
-};
+}
 
 export interface PatchScheduleAssignResponse {
   slot: ResponseScheduleSlot;

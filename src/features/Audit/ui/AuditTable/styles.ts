@@ -4,9 +4,9 @@ import { SxProps, Theme } from '@mui/material';
 
 type Key = 'auditTable' | 'auditTableSortLabel';
 
-type IStyleProps = {
+interface IStyleProps {
   viewportWidth: number;
-};
+}
 
 type Style = (options: IStyleProps) => {
   readonly [key in Key]: SxProps<Theme>;

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const useAnalyticsPageData = () => {
   // state
   const searchParams = useSearchParams();
-  const [getAnalytics, getState] = useLazyGetDashboardQuery();
+  const [getAnalytics, analyticsQuery] = useLazyGetDashboardQuery();
 
   const currentEventId = searchParams.get('eventId') ?? '';
   const currentRange = searchParams.get('range') ?? '';
@@ -20,7 +20,7 @@ const useAnalyticsPageData = () => {
   }, [currentEventId, currentRange, getAnalytics]);
 
   return {
-    analytics: getState,
+    analytics: analyticsQuery,
     currentEventId,
     currentRange,
     getAnalytics,

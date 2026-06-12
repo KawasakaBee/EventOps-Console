@@ -26,14 +26,14 @@ import { useGetReviewersQuery } from '@/entities/reviewer/api/reviewerApi';
 import { useGetUsersQuery } from '@/entities/user/api/userApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
 import { theme } from '@/shared/theme/theme';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
 import { useMemo } from 'react';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 
 const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
 
   const users = useGetUsersQuery();
   const comments = useGetCommentsQuery();
@@ -51,7 +51,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const sx = useMemo(() => styles({ viewportWidth }), [viewportWidth]);
 
   const columnsWidth = useMemo(
@@ -60,7 +60,7 @@ const AuditTable: React.FC<IAuditTableProps> = ({ audit }) => {
   );
 
   const handleSort = (by: AuditSortBy) => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
 
     const isSameColumn = sortBy === by;
     const nextSortOrder = isSameColumn

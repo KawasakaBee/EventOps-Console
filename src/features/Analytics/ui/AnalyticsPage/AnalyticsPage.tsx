@@ -6,12 +6,12 @@ import PageHeader from '@/shared/ui/PageHeader/PageHeader';
 import AnalyticsSelect from '../AnalyticsSelect/AnalyticsSelect';
 import { isAppBaseQueryError } from '@/shared/api/getApiErrorMessage';
 import ErrorState from '@/shared/ui/ErrorState/ErrorState';
-import getAnalyticsErrorState from '../../model/getAnalitycsErrorState';
 import { isDashboardRange } from '@/entities/dashboard/model/typeGuards';
 import AnalyticsFunnelChart from '../AnalyticsFunnelChart/AnalyticsFunnelChart';
 import AnalyticsReviewerWorkload from '../AnalyticsReviewerWorkload/AnalyticsReviewerWorkload';
 import AnalyticsFunnelChartSkeleton from '../AnalyticsFunnelChart/AnalyticsFunnelChartSkeleton';
 import AnalyticsReviewerWorkloadSkeleton from '../AnalyticsReviewerWorkload/AnalyticsReviewerWorkloadSkeleton';
+import getAnalyticsErrorState from '../../model/getAnalitycsErrorState';
 
 const AnalyticsPage = () => {
   const { analytics, currentEventId, currentRange, getAnalytics } =

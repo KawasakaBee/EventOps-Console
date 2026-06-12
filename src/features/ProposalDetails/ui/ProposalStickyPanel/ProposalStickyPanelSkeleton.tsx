@@ -3,13 +3,13 @@ import { Box, Skeleton, Stack, useMediaQuery } from '@mui/material';
 
 import SecondaryStickyButtonsSkeleton from '../SecondaryStickyButtons/SecondaryStickyButtonsSkeleton';
 import { styles } from './styles';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 import { theme } from '@/shared/theme/theme';
 
 const ProposalStickyPanelSkeleton = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const sx = styles({ isDesktop, isLaptop, viewportWidth });
 
   return (

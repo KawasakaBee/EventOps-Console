@@ -25,7 +25,7 @@ const ProposalPage = () => {
 
   const {
     pageData,
-    assingReviewer,
+    assignReviewer,
     transition,
     createReview,
     addComment,
@@ -99,12 +99,12 @@ const ProposalPage = () => {
                 onClose={handleStatusDialogClose}
               />
             )}
-            {assingReviewer.type === 'single' && (
+            {assignReviewer.type === 'single' && (
               <ReviewerAssignDialog
                 mode="single"
                 onClose={handleReviewerAssignDialogClose}
-                proposalId={assingReviewer.id}
-                eventIds={assingReviewer.eventIds}
+                proposalId={assignReviewer.id}
+                eventIds={assignReviewer.eventIds}
               />
             )}
             {createReview.type === 'open' && (

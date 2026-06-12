@@ -5,7 +5,7 @@ import { steps, stepsNumbersByName, SubmitStep } from './steps';
 import changeStep from './changeStep';
 import { useRouter } from 'next/navigation';
 import { ID } from '@/shared/types/primitives.types';
-import { useCreateProposalMutation } from '../api/ProposalSubmissionApi';
+import { useCreateProposalMutation } from '../api/proposalSubmissionApi';
 
 const useStepper = (id: ID | null, clearStorage: () => void) => {
   // state

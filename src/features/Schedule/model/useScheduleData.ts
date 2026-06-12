@@ -19,8 +19,8 @@ import getScheduleErrorState from './getScheduleErrorState';
 const useScheduleData = () => {
   // state
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
-  const [getSchedule, getState] = useLazyGetScheduleQuery();
+  const serializedSearchParams = searchParams.toString();
+  const [getSchedule, scheduleQuery] = useLazyGetScheduleQuery();
   const tracks = useGetTracksQuery();
   const [unassignProposal, unassignState] = useUnassignProposalMutation();
 
@@ -38,7 +38,7 @@ const useScheduleData = () => {
   const selectedEvent = searchParams.get('eventId') ?? '';
 
   const timeIntervals: { from: string; to: string }[] = useMemo(() => {
-    const data = getState.data;
+    const data = scheduleQuery.data;
     if (!data) return [];
 
     return data.times.map((time, idx) => {
@@ -49,7 +49,7 @@ const useScheduleData = () => {
         to: nextTime ?? addHourToIso(time.time),
       };
     });
-  }, [getState.data]);
+  }, [scheduleQuery.data]);
 
   const rowsCount = useMemo(
     () =>
@@ -87,8 +87,8 @@ const useScheduleData = () => {
   useEffect(() => {
     if (selectedEvent === '') return;
 
-    getSchedule({ id: selectedEvent, searchParams: stringifySearchParams });
-  }, [selectedEvent, getSchedule, stringifySearchParams]);
+    getSchedule({ id: selectedEvent, searchParams: serializedSearchParams });
+  }, [selectedEvent, getSchedule, serializedSearchParams]);
 
   // handlers
 
@@ -122,7 +122,7 @@ const useScheduleData = () => {
   };
 
   return {
-    schedule: getState,
+    schedule: scheduleQuery,
     tracks,
     unassignState,
     timeIntervals,
@@ -132,7 +132,7 @@ const useScheduleData = () => {
     unassignResult,
     unassignConfirm,
     selectedEvent,
-    stringifySearchParams,
+    serializedSearchParams,
     getSchedule,
     setSelectedSlot,
     setUnassignConfirm,

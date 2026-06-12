@@ -17,12 +17,12 @@ import {
   auditTableWidthDictionary,
 } from '../../model/tableColumns';
 import { theme } from '@/shared/theme/theme';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 
 const AuditTableSkeleton = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
   const isLaptop = useMediaQuery(theme.breakpoints.up('laptop'));
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const sx = styles({ viewportWidth });
 
   return (

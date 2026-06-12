@@ -3,17 +3,17 @@ import { useMemo } from 'react';
 import { proposalStatuses } from '@/entities/proposal/model/types';
 import { useGetMyProposalsQuery } from '../api/myProposalsApi';
 import { MyProposalsTab } from './types';
-import { isMyPropsalsTab } from './typeGuards';
+import { isMyProposalsTab } from './typeGuards';
 
 const useMyProposalsData = () => {
   // state
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const stringifySearchParams = searchParams.toString();
+  const serializedSearchParams = searchParams.toString();
 
   const submittedSearchParams = useMemo(() => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
     params.set('owner', 'me');
     params.delete('status');
     proposalStatuses.forEach((status) => {
@@ -22,14 +22,14 @@ const useMyProposalsData = () => {
       params.append('status', status);
     });
     return params.toString();
-  }, [stringifySearchParams]);
+  }, [serializedSearchParams]);
 
   const draftsSearchParams = useMemo(() => {
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
     params.set('owner', 'me');
     params.set('status', 'draft');
     return params.toString();
-  }, [stringifySearchParams]);
+  }, [serializedSearchParams]);
 
   const currentTab = useMemo(() => {
     const defaultTab: MyProposalsTab = 'proposals';
@@ -37,7 +37,7 @@ const useMyProposalsData = () => {
     if (!searchParams.has('tab')) return defaultTab;
 
     const tab = searchParams.get('tab');
-    if (!isMyPropsalsTab(tab)) return defaultTab;
+    if (!isMyProposalsTab(tab)) return defaultTab;
 
     return tab;
   }, [searchParams]);
@@ -55,9 +55,9 @@ const useMyProposalsData = () => {
     _: React.SyntheticEvent,
     newValue: string | number,
   ) => {
-    if (!isMyPropsalsTab(newValue)) return;
+    if (!isMyProposalsTab(newValue)) return;
 
-    const params = new URLSearchParams(stringifySearchParams);
+    const params = new URLSearchParams(serializedSearchParams);
     params.set('tab', newValue);
     params.set('page', '1');
     params.set('pageSize', '20');

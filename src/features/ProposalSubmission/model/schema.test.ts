@@ -324,7 +324,7 @@ describe('speakerBaseSchema', () => {
     }
   });
 
-  it('Не пропускает c пустым именем', () => {
+  it('Не пропускает с пустым именем', () => {
     const result = speakerBaseSchema.safeParse({
       ...validSpeakerCourse,
       name: '',
@@ -337,7 +337,7 @@ describe('speakerBaseSchema', () => {
     }
   });
 
-  it('Не пропускает c невалидные email', () => {
+  it('Не пропускает c невалидным email', () => {
     const result = speakerBaseSchema.safeParse({
       ...validSpeakerCourse,
       email: 'my-speaker.com@!ru',

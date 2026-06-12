@@ -9,7 +9,7 @@ const initialState: AddCommentState = {
 };
 
 const addCommentSliсe = createSlice({
-  name: 'addCommentSlise',
+  name: 'addCommentSlice',
   initialState,
   reducers: {
     openAddCommentDialog: (state, action: PayloadAction<{ id: ID }>) => {

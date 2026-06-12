@@ -10,8 +10,8 @@ import ErrorState from '@/shared/ui/ErrorState/ErrorState';
 import getDashboardErrorState from '../../model/getDashboardErrorState';
 import { isDashboardRange } from '@/entities/dashboard/model/typeGuards';
 import PageHeader from '@/shared/ui/PageHeader/PageHeader';
-import DashboardAttentions from '../DashboardAttentions/DashboardAttentions';
-import DashboardAttentionsSkeleton from '../DashboardAttentions/DashboardAttentionsSkeleton';
+import DashboardAttentionItems from '../DashboardAttentionItems/DashboardAttentionItems';
+import DashboardAttentionItemsSkeleton from '../DashboardAttentionItems/DashboardAttentionItemsSkeleton';
 import DashboardRecentTable from '../DashboardRecentTable/DashboardRecentTable';
 import DashboardRecentTableSkeleton from '../DashboardRecentTable/DashboardRecentTableSkeleton';
 
@@ -31,7 +31,7 @@ const DashboardPage = () => {
       {dashboard.isLoading ? (
         <>
           <DashboardKpisSkeleton />
-          <DashboardAttentionsSkeleton />
+          <DashboardAttentionItemsSkeleton />
           <DashboardRecentTableSkeleton />
         </>
       ) : dashboard.isError ? (
@@ -51,7 +51,7 @@ const DashboardPage = () => {
         dashboard.data && (
           <>
             <DashboardKpis dashboard={dashboard.data.dashboard} />
-            <DashboardAttentions dashboard={dashboard.data.dashboard} />
+            <DashboardAttentionItems dashboard={dashboard.data.dashboard} />
             <DashboardRecentTable dashboard={dashboard.data.dashboard} />
           </>
         )

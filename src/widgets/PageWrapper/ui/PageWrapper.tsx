@@ -3,11 +3,11 @@
 import { Box, useMediaQuery } from '@mui/material';
 import { styles } from './styles';
 import { APPBAR_HEIGHT, SIDEBAR_WIDTH } from '@/shared/config/layout';
-import useResizeWindow from '@/shared/utils/hooks/useResizeWindow';
+import useViewportWidth from '@/shared/utils/hooks/useViewportWidth';
 import { theme } from '@/shared/theme/theme';
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
-  const viewportWidth = useResizeWindow();
+  const viewportWidth = useViewportWidth();
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'));
 
   const sx = styles({

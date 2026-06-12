@@ -40,7 +40,7 @@ export const styles: Style = (options) => {
     },
     commentCardUserRole: {
       bgcolor: 'primary.main',
-      color: 'text.secondary',
+      color: 'common.white',
     },
     commentCardTimeWrap: {
       mb: 3,
