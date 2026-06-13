@@ -114,7 +114,11 @@ const ProposalStickyPanel: React.FC<IProposalStickyPanelProps> = ({
   };
 
   const handleToEditRedirect = () => {
-    if (!proposal || proposal.status !== 'draft') return;
+    if (
+      !proposal ||
+      (proposal.status !== 'draft' && proposal.status !== 'changes_requested')
+    )
+      return;
     router.push(`/submit/${proposal.id}`);
   };
 

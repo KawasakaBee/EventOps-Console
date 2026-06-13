@@ -45,10 +45,8 @@ const BasicStep = () => {
   const events = useGetEventsQuery();
 
   const isEventsSelectDisabled =
-    (proposalId &&
-      draft.data &&
-      draft.data.proposal.status !== 'draft' &&
-      events.isLoading) ||
+    (proposalId && draft.data && draft.data.proposal.status !== 'draft') ||
+    events.isLoading ||
     events.isError ||
     !events.data ||
     events.data.events.length === 0;

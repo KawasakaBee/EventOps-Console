@@ -31,6 +31,15 @@ const getAssignErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'VALIDATE_ERROR': {
+      return {
+        type: 'state',
+        title: 'Не удалось назначить ревьюера',
+        subtitle: 'Некоторые поля не прошли проверку:',
+        fullHeight: true,
+        fields: error.fields,
+      };
+    }
     case 'AUTH_REQUIRED':
       return {
         type: 'state',

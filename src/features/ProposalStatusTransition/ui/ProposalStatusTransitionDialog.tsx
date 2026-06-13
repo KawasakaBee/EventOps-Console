@@ -48,7 +48,6 @@ const ProposalStatusTransitionDialog: React.FC<StatusTransitionDialogProps> = (
           <ErrorState
             {...getStatusTransitionErrorState(changeState.error.error, {
               retry: () => null,
-              onClose,
             })}
           />
         )

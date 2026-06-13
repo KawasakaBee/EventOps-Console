@@ -18,6 +18,16 @@ const getAnalyticsErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'INVALID_QUERY':
+      return {
+        type: 'state',
+        title: 'Некорректные параметры запроса',
+        subtitle: 'Попробуйте запросить данные заново.',
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
+        },
+      };
     case 'AUTH_REQUIRED':
       return {
         type: 'state',

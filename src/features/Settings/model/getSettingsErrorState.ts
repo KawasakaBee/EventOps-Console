@@ -8,6 +8,18 @@ const getSettingsErrorState = (
   },
 ): ErrorStateProps => {
   switch (error.code) {
+    case 'AUTH_REQUIRED':
+      return {
+        type: 'state',
+        title: 'Ошибка авторизации',
+        subtitle:
+          'Сервис не может Вас авторизовать, попробуйте авторизоваться заново.',
+        fullHeight: true,
+        link: {
+          to: '/login',
+          buttonName: 'Перейти на страницу авторизации',
+        },
+      };
     case 'VALIDATE_ERROR': {
       return {
         type: 'state',

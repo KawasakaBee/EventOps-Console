@@ -2,7 +2,7 @@ import { SCHEDULE_STEP_MINUTES } from '@/shared/config/layout';
 import type { Theme } from '@mui/material';
 import { SystemStyleObject } from '@mui/system';
 
-type Key = 'scheduleTime';
+type Key = 'scheduleTime' | 'scheduleTimeText';
 
 interface IStyleProps {
   rowDurationMinutes: number;
@@ -31,6 +31,10 @@ export const styles: Style = (options) => {
       boxShadow: 'none',
       border: '1px solid',
       borderColor: 'divider',
+      overflowY: 'auto',
+    },
+    scheduleTimeText: {
+      wordBreak: 'break-word',
     },
   };
 };

@@ -30,16 +30,6 @@ const getMyProposalsErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
-    case 'INVALID_QUERY':
-      return {
-        type: 'state',
-        title: 'Ошибка пагинации',
-        subtitle: 'Попробуйте повторить запрос или перезагрузить страницу',
-        action: {
-          handler: actions.retry,
-          buttonName: 'Повторить',
-        },
-      };
     case 'INVALID_RESPONSE':
       return {
         type: 'state',

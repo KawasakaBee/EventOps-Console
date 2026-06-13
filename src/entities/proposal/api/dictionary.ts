@@ -22,7 +22,7 @@ export type ProposalSubmitFieldsName =
   | 'Событие'
   | 'Название'
   | 'Формат'
-  | 'Продолжительность, мин'
+  | 'Время доклада, мин'
   | 'Уровень'
   | 'Трек'
   | 'Описание доклада'
@@ -42,7 +42,7 @@ export const proposalSubmitFieldsDictionary: Record<
   eventId: 'Событие',
   title: 'Название',
   format: 'Формат',
-  duration: 'Продолжительность, мин',
+  duration: 'Время доклада, мин',
   level: 'Уровень',
   trackId: 'Трек',
   abstract: 'Описание доклада',

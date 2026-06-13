@@ -50,6 +50,18 @@ const getSubmissionErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'AUTH_REQUIRED':
+      return {
+        type: 'state',
+        title: 'Ошибка авторизации',
+        subtitle:
+          'Сервис не может Вас авторизовать, попробуйте авторизоваться заново.',
+        fullHeight: true,
+        link: {
+          to: '/login',
+          buttonName: 'Перейти на страницу авторизации',
+        },
+      };
     case 'PROPOSAL_NOT_FOUND':
       return {
         type: 'state',

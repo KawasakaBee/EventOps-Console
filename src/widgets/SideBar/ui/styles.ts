@@ -20,10 +20,12 @@ export const styles: Style = () => {
     sidebarLink: {
       position: 'relative',
       display: 'inline',
+      maxWidth: 1,
       mb: 2,
       fontSize: 16,
       lineHeight: '1.2',
       color: 'text.primary',
+      wordBreak: 'break-word',
       '&::before': {
         content: '""',
         position: 'absolute',

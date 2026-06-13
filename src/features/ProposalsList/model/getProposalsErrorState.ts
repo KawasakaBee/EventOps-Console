@@ -31,16 +31,6 @@ const getProposalsErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
-    case 'INVALID_QUERY':
-      return {
-        type: 'state',
-        title: 'Некорректные фильтры',
-        subtitle: 'Сбросьте фильтры и попробуйте снова.',
-        action: {
-          handler: actions.resetFilters,
-          buttonName: 'Сбросить фильтры',
-        },
-      };
     case 'INVALID_RESPONSE':
       return {
         type: 'state',

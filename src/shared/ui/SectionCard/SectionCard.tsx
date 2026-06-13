@@ -1,4 +1,4 @@
-import { Card, Typography } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
 import { styles } from './styles';
 import { ISectionCardProps } from './SectionCard.types';
 
@@ -18,7 +18,7 @@ const SectionCard: React.FC<ISectionCardProps> = ({
       ]}
     >
       {title && <Typography variant="h3">{title}</Typography>}
-      {actions}
+      <Box data-testid="actions">{actions}</Box>
       {children}
     </Card>
   );

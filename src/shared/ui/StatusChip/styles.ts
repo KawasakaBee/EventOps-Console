@@ -37,6 +37,7 @@ export const styles: Styles = (options: IStyledProps) => {
       fontSize: size === 'small' ? 12 : size === 'medium' ? 16 : 20,
       lineHeight: '1.2',
       color: type === 'contained' ? 'common.white' : 'inherit',
+      wordBreak: 'break-word',
     },
   };
 };

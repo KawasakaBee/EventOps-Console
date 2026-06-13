@@ -7,6 +7,8 @@ import Button from '@/shared/ui/Button/Button';
 import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { styles } from './styles';
+import { useAppDispatch } from '@/shared/store/hooks';
+import { baseApi } from '@/shared/api/baseApi';
 
 const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
   manager: '/dashboard',
@@ -15,6 +17,7 @@ const redirectByRole: Record<PostDemoLoginRequest['role'], string> = {
 };
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [login] = useLoginDemoMutation();
 
@@ -25,6 +28,8 @@ const Login = () => {
       const response = await login({ role }).unwrap();
 
       if (response.ok) {
+        dispatch(baseApi.util.resetApiState());
+
         router.push(redirectByRole[role]);
         router.refresh();
       }

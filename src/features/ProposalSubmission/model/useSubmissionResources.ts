@@ -29,7 +29,11 @@ const useSubmissionResources = (
 
   useEffect(() => {
     if (!draftId) return;
-    if (draft.data && draft.data.proposal.status !== 'draft') {
+    if (
+      draft.data &&
+      draft.data.proposal.status !== 'draft' &&
+      draft.data.proposal.status !== 'changes_requested'
+    ) {
       router.push(`/proposals/${draftId}`);
       return;
     }

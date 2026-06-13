@@ -27,7 +27,7 @@ const normalizeBaseQueryError = (
     };
   }
 
-  if (error.status === 'FETCH_ERROR') {
+  if (error.status === 'FETCH_ERROR' || error.status === 'TIMEOUT_ERROR') {
     return {
       status: error.status,
       error: {

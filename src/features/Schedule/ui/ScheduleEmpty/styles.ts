@@ -26,6 +26,7 @@ export const styles: Style = (options) => {
       border: '1px dashed',
       borderColor: 'divider',
       borderRadius: 1.5,
+      overflowY: 'auto',
     },
   };
 };

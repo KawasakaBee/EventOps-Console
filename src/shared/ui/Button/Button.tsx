@@ -63,6 +63,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     letterSpacing: '-0.05em',
     color: isSubmit ? submitColor : isDanger ? dangerColor : color,
     bgcolor: isSubmit ? submitBgcolor : isDanger ? dangerBgcolor : bgColor,
+    wordBreak: 'break-word' as const,
     '&:hover': {
       borderColor: isSubmit
         ? hoverSubmitBorderColor

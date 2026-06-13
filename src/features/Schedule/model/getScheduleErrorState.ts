@@ -50,6 +50,18 @@ const getScheduleErrorState = (
         fullHeight: true,
       };
     }
+    case 'PROPOSAL_NOT_FOUND':
+      return {
+        type: 'state',
+        title: 'Заявка не найдена',
+        subtitle:
+          'Убедитесь в правильном номере заявки и попробуйте отправить запрос снова.',
+        fullHeight: true,
+        action: {
+          handler: actions.retry,
+          buttonName: 'Повторить',
+        },
+      };
     case 'AUTH_REQUIRED':
       return {
         type: 'state',

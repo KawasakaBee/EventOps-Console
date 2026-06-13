@@ -30,6 +30,7 @@ describe('getAvailableProposalActions', () => {
       'assignReviewer',
       'addComment',
       'changeStatus',
+      'requestChanges',
       'accept',
       'reject',
     ]);
@@ -44,7 +45,12 @@ describe('getAvailableProposalActions', () => {
         '2',
         0,
       ),
-    ).toStrictEqual(['assignReviewer', 'addComment', 'changeStatus']);
+    ).toStrictEqual([
+      'assignReviewer',
+      'addComment',
+      'changeStatus',
+      'requestChanges',
+    ]);
     expect(
       getAvailableProposalActions(
         'manager',

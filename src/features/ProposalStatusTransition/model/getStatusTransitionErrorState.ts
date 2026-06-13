@@ -5,7 +5,6 @@ const getStatusTransitionErrorState = (
   error: ErrorEnvelope['error'],
   actions: {
     retry: () => void;
-    onClose?: () => void;
   },
 ): ErrorStateProps => {
   switch (error.code) {
@@ -20,7 +19,7 @@ const getStatusTransitionErrorState = (
           buttonName: 'Вернуться к списку заявок',
         },
       };
-    case 'USER_NOT_FOUND':
+    case 'AUTH_REQUIRED':
       return {
         type: 'state',
         title: 'Ошибка авторизации',
@@ -32,6 +31,15 @@ const getStatusTransitionErrorState = (
           buttonName: 'Перейти на страницу авторизации',
         },
       };
+    case 'VALIDATE_ERROR': {
+      return {
+        type: 'state',
+        title: 'Не удалось сменить статус',
+        subtitle: 'Некоторые поля не прошли проверку:',
+        fullHeight: true,
+        fields: error.fields,
+      };
+    }
     case 'PROPOSAL_NOT_FOUND':
       return {
         type: 'state',
@@ -77,15 +85,6 @@ const getStatusTransitionErrorState = (
           buttonName: 'Повторить',
         },
       };
-    case 'CLIPBOARD_ERROR':
-      if (actions.onClose) {
-        return {
-          type: 'snackbar',
-          title: error.message,
-          open: true,
-          onClose: actions.onClose,
-        };
-      }
     //fallthrough
     default:
       return {

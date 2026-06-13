@@ -53,7 +53,8 @@ export const canChangeProposal = (
   if (!proposal) return false;
   if (isManagerLike(role)) return true;
   if (role === 'speaker')
-    return proposal.status === 'draft'
+    return proposal.status === 'draft' ||
+      proposal.status === 'changes_requested'
       ? isProposalOwnedByUser(proposal.ownerId, userId)
       : false;
   return false;

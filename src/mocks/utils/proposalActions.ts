@@ -27,7 +27,12 @@ export const getAvailableProposalActions = (
       availableActions.push('assignReviewer', 'addComment', 'changeStatus');
     }
     if (status === 'in_review') {
-      availableActions.push('assignReviewer', 'addComment', 'changeStatus');
+      availableActions.push(
+        'assignReviewer',
+        'addComment',
+        'changeStatus',
+        'requestChanges',
+      );
       if (reviewerCount !== 0) {
         availableActions.push('accept', 'reject');
       }
@@ -51,7 +56,8 @@ export const getAvailableProposalActions = (
   if (role === 'speaker') {
     if (!isProposalOwnedByUser(ownerId, userId)) return [];
 
-    if (status === 'draft') availableActions.push('edit');
+    if (status === 'draft' || status === 'changes_requested')
+      availableActions.push('edit');
   }
 
   return availableActions;

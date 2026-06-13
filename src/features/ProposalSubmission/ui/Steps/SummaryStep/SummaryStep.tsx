@@ -1,5 +1,12 @@
 import { proposalSubmitFieldsDictionary } from '@/entities/proposal/api/dictionary';
-import { Chip, Skeleton, Stack, Typography } from '@mui/material';
+import {
+  Chip,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { useMemo } from 'react';
 import { steps } from '@/features/ProposalSubmission/model/steps';
@@ -15,6 +22,7 @@ import {
 import { getApiErrorMessage } from '@/shared/api/getApiErrorMessage';
 import { useGetTracksQuery } from '@/entities/track/api/trackApi';
 import { useGetEventsQuery } from '@/entities/event/api/eventApi';
+import { styles } from './styles';
 
 const SummaryStep = () => {
   const { getValues } = useFormContext<SubmitValues>();
@@ -41,82 +49,106 @@ const SummaryStep = () => {
     [data, getValues, isError, isLoading],
   );
 
+  const sx = styles();
+
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} sx={sx.summaryStep}>
       <Stack spacing={2}>
-        <Typography variant="h2">Основное:</Typography>
+        <Typography variant="subtitle1">Основное:</Typography>
         <Stack spacing={1}>
           {steps.basic.fields.map((field) =>
             field === 'eventId' ? (
-              <Stack key={field} direction="row" spacing={1}>
-                <Typography variant="subtitle2">
-                  {proposalSubmitFieldsDictionary[field]}:
-                </Typography>
-                {events.isLoading ? (
-                  <Skeleton variant="text" width={250} />
-                ) : events.isError ? (
-                  <Typography variant="body2">
-                    {getApiErrorMessage(events.error)}
+              <Grid key={field} container spacing={0.5}>
+                <Grid size={1}>
+                  <Typography variant="subtitle2" sx={sx.summaryStepFieldName}>
+                    {proposalSubmitFieldsDictionary[field]}:
                   </Typography>
-                ) : !currentEvent ? (
-                  <Typography variant="body2">
-                    Не удалось определить событие
-                  </Typography>
-                ) : (
-                  <Typography variant="body2">{currentEvent.title}</Typography>
-                )}
-              </Stack>
+                </Grid>
+                <Grid size={11}>
+                  {events.isLoading ? (
+                    <Skeleton variant="text" width={250} />
+                  ) : events.isError ? (
+                    <Typography variant="body2">
+                      {getApiErrorMessage(events.error)}
+                    </Typography>
+                  ) : !currentEvent ? (
+                    <Typography variant="body2">
+                      Не удалось определить событие
+                    </Typography>
+                  ) : (
+                    <Typography variant="body2">
+                      {currentEvent.title}
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
             ) : field === 'trackId' ? (
-              <Stack key={field} direction="row" spacing={1}>
-                <Typography variant="subtitle2">
-                  {proposalSubmitFieldsDictionary[field]}:
-                </Typography>
-                {isLoading ? (
-                  <Skeleton variant="text" width={250} />
-                ) : isError ? (
-                  <Typography variant="body2">
-                    {getApiErrorMessage(error)}
+              <Grid key={field} container spacing={0.5}>
+                <Grid size={1}>
+                  <Typography variant="subtitle2" sx={sx.summaryStepFieldName}>
+                    {proposalSubmitFieldsDictionary[field]}:
                   </Typography>
-                ) : !currentTrack ? (
-                  <Typography variant="body2">
-                    Не удалось определить трек
-                  </Typography>
-                ) : (
-                  <Typography variant="body2">{currentTrack.title}</Typography>
-                )}
-              </Stack>
+                </Grid>
+                <Grid size={11}>
+                  {isLoading ? (
+                    <Skeleton variant="text" width={250} />
+                  ) : isError ? (
+                    <Typography variant="body2">
+                      {getApiErrorMessage(error)}
+                    </Typography>
+                  ) : !currentTrack ? (
+                    <Typography variant="body2">
+                      Не удалось определить трек
+                    </Typography>
+                  ) : (
+                    <Typography variant="body2">
+                      {currentTrack.title}
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
             ) : (
-              <Stack key={field} direction="row" spacing={1}>
-                <Typography variant="subtitle2">
-                  {proposalSubmitFieldsDictionary[field]}:
-                </Typography>
-                <Typography variant="body2">
-                  {field === 'format'
-                    ? formatDictionary[getValues(field)]
-                    : field === 'level'
-                      ? levelDictionary[getValues(field)]
-                      : getValues(field)}
-                </Typography>
-              </Stack>
+              <Grid key={field} container spacing={0.5}>
+                <Grid size={1}>
+                  <Typography variant="subtitle2" sx={sx.summaryStepFieldName}>
+                    {proposalSubmitFieldsDictionary[field]}:
+                  </Typography>
+                </Grid>
+                <Grid size={11}>
+                  <Typography variant="body2">
+                    {field === 'format'
+                      ? formatDictionary[getValues(field)]
+                      : field === 'level'
+                        ? levelDictionary[getValues(field)]
+                        : getValues(field)}
+                  </Typography>
+                </Grid>
+              </Grid>
             ),
           )}
         </Stack>
       </Stack>
+      <Divider />
       <Stack spacing={2}>
-        <Typography variant="h2">Описание:</Typography>
-        <Stack spacing={1}>
+        <Typography variant="subtitle1">Описание:</Typography>
+        <Stack spacing={3}>
           {steps.description.fields.map((field) => (
-            <Stack key={field} direction="row" spacing={1}>
-              <Typography variant="subtitle2">
-                {proposalSubmitFieldsDictionary[field]}:
-              </Typography>
-              <Typography variant="body2">{getValues(field)}</Typography>
-            </Stack>
+            <Grid key={field} container columnSpacing={0.5}>
+              <Grid size={1}>
+                <Typography variant="subtitle2" sx={sx.summaryStepFieldName}>
+                  {proposalSubmitFieldsDictionary[field]}:
+                </Typography>
+              </Grid>
+              <Grid size={11}>
+                <Typography variant="body2">{getValues(field)}</Typography>
+              </Grid>
+            </Grid>
           ))}
         </Stack>
       </Stack>
+      <Divider />
       <Stack spacing={2}>
-        <Typography variant="h2">Спикеры:</Typography>
+        <Typography variant="subtitle1">Спикеры:</Typography>
         <Stack spacing={3}>
           {getValues('speakers').map((speaker, idx) => (
             <Stack key={`${speaker.email}-${idx}`} spacing={1}>
@@ -124,25 +156,29 @@ const SummaryStep = () => {
                 <b>Спикер - {idx + 1}</b>
               </Typography>
               {speakerFields.map((field) => (
-                <Stack
-                  key={`${speaker.email}-${field}`}
-                  direction="row"
-                  spacing={1}
-                >
-                  <Typography variant="subtitle2">
-                    {speakerFieldsDictionary[field]}:
-                  </Typography>
-                  <Typography variant="body2">
-                    {speaker[field] || '–'}
-                  </Typography>
-                </Stack>
+                <Grid key={`${speaker.email}-${field}`} container spacing={0.5}>
+                  <Grid size={1}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={sx.summaryStepFieldName}
+                    >
+                      {speakerFieldsDictionary[field]}:
+                    </Typography>
+                  </Grid>
+                  <Grid size={11}>
+                    <Typography variant="body2">
+                      {speaker[field] || '–'}
+                    </Typography>
+                  </Grid>
+                </Grid>
               ))}
             </Stack>
           ))}
         </Stack>
       </Stack>
+      <Divider />
       <Stack spacing={2}>
-        <Typography variant="h2">Дополнительно:</Typography>
+        <Typography variant="subtitle1">Дополнительно:</Typography>
         <Stack spacing={1}>
           {steps.extra.fields.map((field) => {
             if (field === 'consent') return null;
@@ -152,16 +188,21 @@ const SummaryStep = () => {
 
               return (
                 tags.length !== 0 && (
-                  <Stack key={field} direction="row" spacing={1}>
-                    <Typography variant="subtitle2">
-                      {proposalSubmitFieldsDictionary[field]}:
-                    </Typography>
-                    <Stack direction="row" spacing={1}>
+                  <Grid key={field} container spacing={0.5}>
+                    <Grid size={1}>
+                      <Typography
+                        variant="subtitle2"
+                        sx={sx.summaryStepFieldName}
+                      >
+                        {proposalSubmitFieldsDictionary[field]}:
+                      </Typography>
+                    </Grid>
+                    <Grid container spacing={1} size={11}>
                       {tags.map((tag) => (
                         <Chip key={tag} label={tag} />
                       ))}
-                    </Stack>
-                  </Stack>
+                    </Grid>
+                  </Grid>
                 )
               );
             }
@@ -170,12 +211,19 @@ const SummaryStep = () => {
 
             return (
               notes && (
-                <Stack key={field} direction="row" spacing={1}>
-                  <Typography variant="subtitle2">
-                    {proposalSubmitFieldsDictionary[field]}:
-                  </Typography>
-                  <Typography variant="body2">{getValues(field)}</Typography>
-                </Stack>
+                <Grid key={field} container spacing={0.5}>
+                  <Grid size={1}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={sx.summaryStepFieldName}
+                    >
+                      {proposalSubmitFieldsDictionary[field]}:
+                    </Typography>
+                  </Grid>
+                  <Grid size={11}>
+                    <Typography variant="body2">{getValues(field)}</Typography>
+                  </Grid>
+                </Grid>
               )
             );
           })}

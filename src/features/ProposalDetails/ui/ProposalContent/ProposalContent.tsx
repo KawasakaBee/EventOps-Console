@@ -64,7 +64,11 @@ const ProposalContent: React.FC<IProposalContentProps> = ({
   return (
     <Stack spacing={2}>
       <SectionCard title={null}>
-        <Tabs value={currentTab} onChange={handleChangeCurrentTab}>
+        <Tabs
+          value={currentTab}
+          onChange={handleChangeCurrentTab}
+          slotProps={{ list: { sx: sx.proposalContentTabsWrap } }}
+        >
           {proposalDetailsTabs.map((tab) => (
             <Tab
               key={tab}
